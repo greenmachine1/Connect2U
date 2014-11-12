@@ -14,14 +14,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var testObject = PFObject(className: "location")
-        testObject["long"] = 1.0
-        testObject["lat"] = 2.0
-        testObject.saveEventually()
         
-        
-        
-        
+
     }
 
     override func didReceiveMemoryWarning() {
