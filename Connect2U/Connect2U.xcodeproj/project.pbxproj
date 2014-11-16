@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */; };
+		E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D461A18A2A400971A24 /* LoggedIn.swift */; };
+		E5238D491A18A2BC00971A24 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D481A18A2BC00971A24 /* Settings.swift */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8D1A12E86000972580 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8B1A12E86000972580 /* Main.storyboard */; };
@@ -38,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCreationViewController.swift; sourceTree = "<group>"; };
+		E5238D461A18A2A400971A24 /* LoggedIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedIn.swift; sourceTree = "<group>"; };
+		E5238D481A18A2BC00971A24 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +137,9 @@
 				E5E6BC8E1A12E86000972580 /* Images.xcassets */,
 				E5E6BC901A12E86000972580 /* LaunchScreen.xib */,
 				E5E6BC851A12E86000972580 /* Supporting Files */,
+				E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */,
+				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
+				E5238D481A18A2BC00971A24 /* Settings.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -261,7 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
+				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
+				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
 				E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */,
+				E5238D491A18A2BC00971A24 /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +473,7 @@
 				E5E6BCA31A12E86000972580 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E5E6BCA41A12E86000972580 /* Build configuration list for PBXNativeTarget "Connect2UTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +482,7 @@
 				E5E6BCA61A12E86000972580 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
