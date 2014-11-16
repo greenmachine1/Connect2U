@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KNm-3n-rCe">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
@@ -51,7 +51,7 @@
                                     <rect key="frame" x="16" y="516" width="368" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="sHF-6D-6eZ" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="zU3-0I-QNk"/>
+                                    <segue destination="DFv-cq-0J2" kind="show" id="uRS-G0-748"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CH-yP-IQk">
@@ -64,7 +64,7 @@
                                     <rect key="frame" x="16" y="693" width="368" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="DP9-Mk-5EK" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="8bR-3s-Sob"/>
+                                    <segue destination="DP9-Mk-5EK" kind="show" id="mhk-aF-oGz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u77-u5-Ctk">
@@ -99,10 +99,11 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="PIq-gv-4MJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="349.5" y="420"/>
+            <point key="canvasLocation" x="1267.5" y="420"/>
         </scene>
         <!--Logged in-->
         <scene sceneID="4V9-m1-oZv">
@@ -126,7 +127,7 @@
                                     <rect key="frame" x="16" y="684" width="368" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="bgB-ty-AcX"/>
+                                    <segue destination="KNm-3n-rCe" kind="presentation" id="QdW-GU-JYr"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIM-Ci-37G">
@@ -169,14 +170,14 @@
                         <barButtonItem key="leftBarButtonItem" title="Friends" id="pVB-ob-XcJ"/>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="zqE-Hy-klK">
                             <connections>
-                                <segue destination="jX7-Ko-KNx" kind="show" id="aNB-JC-5nK"/>
+                                <segue destination="jX7-Ko-KNx" kind="show" id="Adt-nM-78B"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fZ-Ik-6ev" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2143.5" y="420"/>
+            <point key="canvasLocation" x="2431.5" y="372"/>
         </scene>
         <!--Settings-->
         <scene sceneID="0in-O4-tye">
@@ -188,12 +189,12 @@
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aPl-Iz-BCA">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.48835440899999999" green="0.80374187249999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yjV-Ux-4pi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3091.5" y="27"/>
+            <point key="canvasLocation" x="4009.5" y="27"/>
         </scene>
         <!--create account-->
         <scene sceneID="tul-1G-a1h">
@@ -213,34 +214,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="116" y="49" width="168" height="21"/>
+                                    <rect key="frame" x="116" y="92" width="168" height="21"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pSa-I9-W3b">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.70195709709999998" green="0.97875039360000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="16" y="649" width="368" height="30"/>
-                                </variation>
-                                <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="Q0e-VH-h3u"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.48835440899999999" green="0.80374187249999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="QsZ-Aq-O1P"/>
-                                <exclude reference="pSa-I9-W3b"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="QsZ-Aq-O1P"/>
-                                <include reference="pSa-I9-W3b"/>
                             </mask>
                         </variation>
                     </view>
@@ -250,25 +236,22 @@
             <point key="canvasLocation" x="349.5" y="1197"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="kFU-M5-Fz5">
+        <scene sceneID="3er-sq-Wo4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sHF-6D-6eZ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KNm-3n-rCe" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aTW-UN-Sxj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FnR-0E-TiB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="DFv-cq-0J2" kind="relationship" relationship="rootViewController" id="Iid-m0-e3e"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="yZL-2Y-q3f"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IgE-ll-FRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zdk-pA-5sZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1225.5" y="420"/>
+            <point key="canvasLocation" x="349.5" y="420"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Q0e-VH-h3u"/>
-    </inferredMetricsTieBreakers>
 </document>
