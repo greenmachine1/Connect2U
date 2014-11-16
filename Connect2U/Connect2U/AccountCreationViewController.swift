@@ -12,6 +12,15 @@ class AccountCreationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // centering the background image itself //
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        var backgroundImage = UIImage(named: "Color_strip.jpg")
+        backgroundImage?.drawInRect(self.view.bounds)
+        
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+        self.view.backgroundColor = UIColor(patternImage: image)
+        
 
         println("Account Creation")
     }
