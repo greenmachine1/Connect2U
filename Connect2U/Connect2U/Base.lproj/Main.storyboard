@@ -186,6 +186,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DH9-bS-LXc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aPl-Iz-BCA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </viewController>
