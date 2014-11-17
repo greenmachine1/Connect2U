@@ -8,15 +8,24 @@
 
 import UIKit
 import CoreLocation
+import Parse
 
 
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
-
+    
+    @IBOutlet weak var longLabel: UILabel!
+    @IBOutlet weak var latLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    
+    var updateCount:Int = 0
+    
     // allocating the location manager //
     var locationManager:CLLocationManager!
     
     // variable used to temporarily store the users location //
-    var location:CLLocation!
+    var longitude:Double = 0.0
+    var latitude:Double = 0.0
+    
     
     
     
@@ -27,10 +36,27 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         self.view.backgroundColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
         
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
         
+        locationManager.startUpdatingLocation()
         
+        countLabel.text = "Count :\(updateCount)"
         
-        
+        var newParseObject = PFObject(className: "location")
+        newParseObject["long"] = 0.0
+        newParseObject["lat"] = 0.0
+        newParseObject.saveInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
+            
+            if(success){
+                println("success on saving!")
+            }else{
+                println("error occured")
+            }
+            
+        }
         
         
         
@@ -42,15 +68,47 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // update that gets fired when the location data gets updated //
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
+        
+        var longTemp = locations.last?.coordinate.longitude
+        var latTemp = locations.last?.coordinate.latitude
+        
+        var longTempDouble = Double(longTemp!)
+        var latTempDouble = Double(latTemp!)
+        
+        
+        // setting the precision of the floating values //
+        var longTempString = NSString(format: "%.05f", longTempDouble)
+        var latTempString = NSString(format: "%.05f", latTempDouble)
+        
+        var doubleTempLongValue = longTempString.doubleValue
+        var doubleTempLatValue = latTempString.doubleValue
+        
+        
+        // checking to see if the numbers are the same //
+        if((doubleTempLongValue != longitude) || (doubleTempLatValue != latitude)){
+            
+            longitude = doubleTempLongValue
+            latitude = doubleTempLatValue
+            
+            longLabel.text = "\(longitude)"
+            latLabel.text = "\(latitude)"
+            
+            
+            
+            
+            
+            updateCount++
+            
+            countLabel.text = "Count :\(updateCount)"
+            
+        }
     }
-    */
-
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        
+        longLabel.text = "error"
+    }
 }
