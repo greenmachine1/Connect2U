@@ -51,6 +51,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         
         // initially creating a parse object under the location class //
+        /*
         var newParseObject = PFObject(className: "location")
         newParseObject["long"] = 0.0
         newParseObject["lat"] = 0.0
@@ -63,6 +64,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             }
             
         }
+        */
         
         
         
@@ -113,6 +115,34 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             
             longLabel.text = "\(longitude)"
             latLabel.text = "\(latitude)"
+            
+            
+            
+            
+            
+            
+            
+            // grabbing an object and then overridding its data
+            var query = PFQuery(className: "location")
+            query.getObjectInBackgroundWithId("leIs9GWS3W", block: { (object:PFObject!, error:NSError!) -> Void in
+                
+                if(error != nil){
+                    println("error")
+                }else{
+                    object["long"] = self.longitude
+                    object["lat"] = self.latitude
+                    object.saveEventually()
+                }
+                
+            })
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
