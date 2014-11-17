@@ -45,6 +45,12 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         countLabel.text = "Count :\(updateCount)"
         
+        
+        
+        
+        
+        
+        // initially creating a parse object under the location class //
         var newParseObject = PFObject(className: "location")
         newParseObject["long"] = 0.0
         newParseObject["lat"] = 0.0
@@ -67,6 +73,18 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     // update that gets fired when the location data gets updated //
