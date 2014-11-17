@@ -7,17 +7,34 @@
 //
 
 import UIKit
+import CoreLocation
 
-class LoggedIn: UIViewController {
 
+class LoggedIn: UIViewController, CLLocationManagerDelegate {
+
+    // allocating the location manager //
+    var locationManager:CLLocationManager!
+    
+    // variable used to temporarily store the users location //
+    var location:CLLocation!
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
         
-
-
-        println("Logged in")
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
