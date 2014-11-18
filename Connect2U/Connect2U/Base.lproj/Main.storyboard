@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KNm-3n-rCe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KNm-3n-rCe">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
@@ -99,6 +99,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="PIq-gv-4MJ"/>
+                    <connections>
+                        <outlet property="passwordTextField" destination="z5i-x9-Y3S" id="OCJ-En-ZBD"/>
+                        <outlet property="userNameTextField" destination="07T-cF-Lzq" id="pib-Wf-haM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -148,42 +152,19 @@
                                     <rect key="frame" x="0.0" y="751" width="400" height="49"/>
                                 </variation>
                             </tabBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irJ-Hh-LBe">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_100x100.png" translatesAutoresizingMaskIntoConstraints="NO" id="vB2-al-Y1I">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="110" y="191" width="180" height="21"/>
+                                    <rect key="frame" x="150" y="222" width="100" height="100"/>
                                 </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ckg-CA-mBy">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="110" y="280" width="180" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOS-Vv-efF">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="110" y="382" width="180" height="21"/>
-                                </variation>
-                            </label>
+                            </imageView>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="INy-iD-Ca1"/>
                                 <exclude reference="wIM-Ci-37G"/>
                                 <exclude reference="HFq-HW-OOT"/>
-                                <exclude reference="irJ-Hh-LBe"/>
-                                <exclude reference="Ckg-CA-mBy"/>
-                                <exclude reference="aOS-Vv-efF"/>
+                                <exclude reference="vB2-al-Y1I"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -191,9 +172,7 @@
                                 <include reference="INy-iD-Ca1"/>
                                 <include reference="wIM-Ci-37G"/>
                                 <include reference="HFq-HW-OOT"/>
-                                <include reference="irJ-Hh-LBe"/>
-                                <include reference="Ckg-CA-mBy"/>
-                                <include reference="aOS-Vv-efF"/>
+                                <include reference="vB2-al-Y1I"/>
                             </mask>
                         </variation>
                     </view>
@@ -206,9 +185,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="countLabel" destination="aOS-Vv-efF" id="EVT-WQ-4en"/>
-                        <outlet property="latLabel" destination="Ckg-CA-mBy" id="qA4-Vu-QVL"/>
-                        <outlet property="longLabel" destination="irJ-Hh-LBe" id="hAD-CB-vFw"/>
+                        <outlet property="mainProfilePic" destination="vB2-al-Y1I" id="fY9-xX-dfN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fZ-Ik-6ev" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -289,4 +266,7 @@
             <point key="canvasLocation" x="349.5" y="420"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="face_100x100.png" width="100" height="100"/>
+    </resources>
 </document>

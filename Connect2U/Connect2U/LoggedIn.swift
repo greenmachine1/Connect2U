@@ -13,63 +13,22 @@ import Parse
 
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
-    @IBOutlet weak var longLabel: UILabel!
-    @IBOutlet weak var latLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!
-    
-    var updateCount:Int = 0
-    
-    // allocating the location manager //
-    var locationManager:CLLocationManager!
-    
-    // variable used to temporarily store the users location //
-    var longitude:Double = 0.0
-    var latitude:Double = 0.0
-    
-    
-    
-    
-    
+    @IBOutlet weak var mainProfilePic: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
         
-        locationManager.startUpdatingLocation()
+        println("\(self.mainProfilePic.frame.size.width)")
         
-        countLabel.text = "Count :\(updateCount)"
-        
-        
-        
-        
-        
-        
-        // initially creating a parse object under the location class //
-        /*
-        var newParseObject = PFObject(className: "location")
-        newParseObject["long"] = 0.0
-        newParseObject["lat"] = 0.0
-        newParseObject.saveInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
-            
-            if(success){
-                println("success on saving!")
-            }else{
-                println("error occured")
-            }
-            
-        }
-        */
-        
-        
-        
+        // making the main users picture rounded //        
+        self.mainProfilePic.layer.cornerRadius = 50
+        self.mainProfilePic.clipsToBounds = true
         
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,6 +36,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     }
     
     
+}
     
     
     
@@ -88,7 +48,39 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     
     
+    /*
+
+    var updateCount:Int = 0
+
+    // allocating the location manager //
+    var locationManager:CLLocationManager!
+
+    // variable used to temporarily store the users location //
+    var longitude:Double = 0.0
+    var latitude:Double = 0.0
+
+
+    locationManager = CLLocationManager()
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.requestAlwaysAuthorization()
+
+    locationManager.startUpdatingLocation()
+
+    countLabel.text = "Count :\(updateCount)"
+
+    */
+
+
+
+
+
+
+
+
+
     
+    /*
     // update that gets fired when the location data gets updated //
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         
@@ -117,11 +109,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             latLabel.text = "\(latitude)"
             
             
-            
-            
-            
-            
-            
+        
             // grabbing an object and then overridding its data
             var query = PFQuery(className: "location")
             query.getObjectInBackgroundWithId("leIs9GWS3W", block: { (object:PFObject!, error:NSError!) -> Void in
@@ -136,27 +124,18 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
                 
             })
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             updateCount++
             
             countLabel.text = "Count :\(updateCount)"
             
         }
     }
-    
+
+    */
+    /*
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         
         longLabel.text = "error"
     }
-}
+    */
+
