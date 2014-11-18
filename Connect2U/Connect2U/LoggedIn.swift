@@ -12,7 +12,9 @@ import Parse
 
 
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
+    
     @IBOutlet weak var requestsButton: UIButton!
+    @IBOutlet weak var broadCast: UIButton!
     
     @IBOutlet weak var mainProfilePic: UIImageView!
     @IBOutlet weak var secondaryProfilePic: UIImageView!
@@ -43,6 +45,12 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     
     
+    
+    
+    
+    
+    
+    
     // function used to round images //
     func roundImageConvert(image:UIImageView){
         
@@ -62,6 +70,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
         
         self.view.backgroundColor = lightBlueColor
+        
+        // colors for the buttons //
+        broadCast.backgroundColor = greenColor
+        broadCast.tintColor = whiteColor
+        
+        requestsButton.backgroundColor = greenColor
+        requestsButton.tintColor = whiteColor
         
     }
     
