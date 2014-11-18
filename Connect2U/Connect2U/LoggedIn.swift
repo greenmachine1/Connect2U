@@ -14,6 +14,7 @@ import Parse
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mainProfilePic: UIImageView!
+    @IBOutlet weak var secondaryProfilePic: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +22,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         self.view.backgroundColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
         
         
-        println("\(self.mainProfilePic.frame.size.width)")
-        
         // making the main users picture rounded //        
         self.mainProfilePic.layer.cornerRadius = 50
         self.mainProfilePic.clipsToBounds = true
+        
+        self.secondaryProfilePic.layer.cornerRadius = 50
+        self.secondaryProfilePic.clipsToBounds = true
+        
         
     }
 
