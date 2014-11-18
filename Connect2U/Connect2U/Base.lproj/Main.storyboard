@@ -97,7 +97,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIM-Ci-37G">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Logged In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIM-Ci-37G">
                                 <rect key="frame" x="161" y="78" width="78" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="78" id="5wV-Kk-jD2"/>
@@ -107,7 +107,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFq-HW-OOT">
+                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HFq-HW-OOT">
                                 <rect key="frame" x="0.0" y="751" width="400" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
@@ -120,16 +120,7 @@
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Kevin.png" translatesAutoresizingMaskIntoConstraints="NO" id="eqt-v6-Xq8">
                                 <rect key="frame" x="222" y="149" width="100" height="100"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUd-YH-1Mv">
-                                <rect key="frame" x="0.0" y="651" width="414" height="85"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="85" id="bAW-ol-At4"/>
-                                </constraints>
-                                <state key="normal" title="Requests">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VF-KP-1L3">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VF-KP-1L3">
                                 <rect key="frame" x="16" y="573" width="382" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="rAN-Sn-uhM"/>
@@ -140,21 +131,15 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="lUd-YH-1Mv" secondAttribute="trailing" id="1wO-Wt-Hjt"/>
                             <constraint firstItem="5VF-KP-1L3" firstAttribute="leading" secondItem="uSN-Sq-7j8" secondAttribute="leadingMargin" id="4DK-Qq-gDJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HFq-HW-OOT" secondAttribute="trailing" constant="-2" id="6wc-At-fLs"/>
                             <constraint firstItem="eqt-v6-Xq8" firstAttribute="leading" secondItem="vB2-al-Y1I" secondAttribute="trailing" constant="62" id="GLa-bT-6Xb"/>
-                            <constraint firstItem="lUd-YH-1Mv" firstAttribute="leading" secondItem="uSN-Sq-7j8" secondAttribute="leading" id="Hk3-th-A8k"/>
                             <constraint firstItem="HFq-HW-OOT" firstAttribute="top" secondItem="R0S-ps-kuH" secondAttribute="bottom" constant="15" id="JkO-d0-aDR"/>
                             <constraint firstItem="wIM-Ci-37G" firstAttribute="centerX" secondItem="HFq-HW-OOT" secondAttribute="centerX" id="Qg1-PE-Axq"/>
                             <constraint firstItem="vB2-al-Y1I" firstAttribute="top" secondItem="cG7-Md-vja" secondAttribute="bottom" constant="155" id="Qnu-mV-ewt"/>
-                            <constraint firstItem="lUd-YH-1Mv" firstAttribute="leading" secondItem="HFq-HW-OOT" secondAttribute="leading" id="R33-1o-A4Q"/>
                             <constraint firstItem="eqt-v6-Xq8" firstAttribute="top" secondItem="wIM-Ci-37G" secondAttribute="bottom" constant="50" id="RbL-NB-UDL"/>
                             <constraint firstItem="wIM-Ci-37G" firstAttribute="top" secondItem="cG7-Md-vja" secondAttribute="bottom" constant="14" id="W6F-hI-h3g"/>
-                            <constraint firstItem="5VF-KP-1L3" firstAttribute="centerX" secondItem="lUd-YH-1Mv" secondAttribute="centerX" id="YeN-uU-kLS"/>
                             <constraint firstItem="vB2-al-Y1I" firstAttribute="leading" secondItem="uSN-Sq-7j8" secondAttribute="leadingMargin" constant="44" id="kWf-kc-Epm"/>
-                            <constraint firstItem="lUd-YH-1Mv" firstAttribute="top" secondItem="5VF-KP-1L3" secondAttribute="bottom" constant="32" id="nrg-bS-e1H"/>
-                            <constraint firstItem="lUd-YH-1Mv" firstAttribute="bottom" secondItem="R0S-ps-kuH" secondAttribute="top" id="zaa-AY-EBJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Connect2U" id="lIv-Eb-4zA">
@@ -169,7 +154,6 @@
                     <connections>
                         <outlet property="broadCast" destination="5VF-KP-1L3" id="PtI-76-e0V"/>
                         <outlet property="mainProfilePic" destination="vB2-al-Y1I" id="fY9-xX-dfN"/>
-                        <outlet property="requestsButton" destination="lUd-YH-1Mv" id="leA-uq-3gn"/>
                         <outlet property="secondaryProfilePic" destination="eqt-v6-Xq8" id="SGr-Xy-rSL"/>
                     </connections>
                 </viewController>
@@ -281,6 +265,7 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="onLogOut:" destination="HLD-GI-3h9" eventType="touchUpInside" id="VDE-og-6af"/>
+                                                        <segue destination="KNm-3n-rCe" kind="modal" id="tBX-yl-Xl1"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

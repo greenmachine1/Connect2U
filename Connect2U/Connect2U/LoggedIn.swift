@@ -13,7 +13,6 @@ import Parse
 
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
-    @IBOutlet weak var requestsButton: UIButton!
     @IBOutlet weak var broadCast: UIButton!
     
     @IBOutlet weak var mainProfilePic: UIImageView!
@@ -74,9 +73,6 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         // colors for the buttons //
         broadCast.backgroundColor = greenColor
         broadCast.tintColor = whiteColor
-        
-        requestsButton.backgroundColor = greenColor
-        requestsButton.tintColor = whiteColor
         
     }
     
