@@ -136,6 +136,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="mainProfilePic" destination="vB2-al-Y1I" id="fY9-xX-dfN"/>
+                        <outlet property="requestsButton" destination="lUd-YH-1Mv" id="leA-uq-3gn"/>
                         <outlet property="secondaryProfilePic" destination="eqt-v6-Xq8" id="SGr-Xy-rSL"/>
                     </connections>
                 </viewController>

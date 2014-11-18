@@ -12,6 +12,7 @@ import Parse
 
 
 class LoggedIn: UIViewController, CLLocationManagerDelegate {
+    @IBOutlet weak var requestsButton: UIButton!
     
     @IBOutlet weak var mainProfilePic: UIImageView!
     @IBOutlet weak var secondaryProfilePic: UIImageView!
@@ -19,15 +20,17 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
+        // setting the colors for the view //
+        self.setColors()
+        
+        // converting the images to round shapes //
+        self.roundImageConvert(mainProfilePic)
+        self.roundImageConvert(secondaryProfilePic)
+        
+    
         
         
-        // making the main users picture rounded //        
-        self.mainProfilePic.layer.cornerRadius = 50
-        self.mainProfilePic.clipsToBounds = true
         
-        self.secondaryProfilePic.layer.cornerRadius = 50
-        self.secondaryProfilePic.clipsToBounds = true
         
         
     }
@@ -36,6 +39,30 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    // function used to round images //
+    func roundImageConvert(image:UIImageView){
+        
+        // making the main users picture rounded //
+        image.layer.cornerRadius = 50
+        image.clipsToBounds = true
+        
+    }
+    
+    
+    // setting colors for the view //
+    func setColors(){
+        
+        var whiteColor:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        var lightBlueColor:UIColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
+        var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
+        var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
+        
+        self.view.backgroundColor = lightBlueColor
+        
     }
     
     
