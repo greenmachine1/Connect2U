@@ -93,35 +93,56 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         // personal settings //
         if(sender.tag == 0){
             
-            // takes you the user to your personal settings //
-            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-            
-            // setting the index number in the next view //
-            aboutViewController.personIndex = personSelected
-            aboutViewController.listOfPeoplesNames = listOfNamesArray
-            aboutViewController.personsPic = "face_100x100.png"
-            
-            self.navigationController?.pushViewController(aboutViewController, animated: true)
-            
+            self.showAlert()
         
         }
             
         else{
             
-            // the personal stuff from that person //
-            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-            
-            // setting the index number in the next view //
-            aboutViewController.personIndex = personSelected
-            aboutViewController.listOfPeoplesNames = listOfNamesArray
-            aboutViewController.personsPic = "face\(sender.tag - 1).png"
-            
-            
-            self.navigationController?.pushViewController(aboutViewController, animated: true)
-            
+            self.showAlert()
         
             
         }
+    }
+    
+    
+    
+    
+    
+    
+    
+    // this shows the alert giving the person the option to cancel, chat, or view profile //
+    func showAlert(){
+        
+        var alert:UIAlertController = UIAlertController(title: "What do you wnat to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        // the profile alert button //
+        alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { action in
+            
+            
+            // takes you the user to your personal settings //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+            
+            // setting the index number in the next view //
+            aboutViewController.personIndex = self.personSelected
+            aboutViewController.listOfPeoplesNames = self.listOfNamesArray
+            
+            if(self.personSelected == 0){
+                aboutViewController.personsPic = "face_100x100.png"
+            }else{
+                
+                println("\(self.personSelected!)")
+                aboutViewController.personsPic = "face\(self.personSelected! - 1).png"
+            }
+            
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
