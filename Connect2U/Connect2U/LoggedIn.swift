@@ -15,53 +15,73 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
-    @IBOutlet weak var mainProfilePic: UIImageView!
-    @IBOutlet weak var secondaryProfilePic: UIImageView!
+    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
-    
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // setting the colors for the view //
         self.setColors()
         
-        // converting the images to round shapes //
-        self.roundImageConvert(mainProfilePic)
-        self.roundImageConvert(secondaryProfilePic)
+        self.roundImageConvert()
         
     
         
         
-        
-        
-        
     }
-
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // function used to round images //
-    func roundImageConvert(image:UIImageView){
+    @IBAction func friendsOnClick(sender: AnyObject) {
         
-        // making the main users picture rounded //
-        image.layer.cornerRadius = 50
-        image.clipsToBounds = true
+
         
+        
+        
+    }
+    
+    
+    func doSomething(sender:UIButton){
+        
+        if(sender.tag == 0){
+            
+            println("tapped")
+        }else if(sender.tag == 1){
+            
+            println("other")
+        }
+        
+    }
+    
+    
+    
+    
+    
+    // static creation of people
+    func roundImageConvert(){
+        
+        var meButton:UIButton = UIButton(frame: CGRectMake(50.0, 200.0, 100.0, 100.0))
+        meButton.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
+        meButton.layer.cornerRadius = 50
+        meButton.clipsToBounds = true
+        meButton.tag = 0
+        meButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
+
+        self.view.addSubview(meButton)
+        
+        var otherPersonButton:UIButton = UIButton(frame: CGRectMake(250.0, 200.0, 100.0, 100.0))
+        otherPersonButton.setImage(UIImage(named: "Kevin.png"), forState: UIControlState.Normal)
+        otherPersonButton.layer.cornerRadius = 50
+        otherPersonButton.clipsToBounds = true
+        otherPersonButton.tag = 1
+        otherPersonButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(otherPersonButton)
     }
     
     

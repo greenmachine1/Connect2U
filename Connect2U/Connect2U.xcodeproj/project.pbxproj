@@ -146,8 +146,8 @@
 				E5E6BC901A12E86000972580 /* LaunchScreen.xib */,
 				E5E6BC851A12E86000972580 /* Supporting Files */,
 				E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */,
-				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
 				E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */,
+				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
 				E5AC1CF31A1C168A00517A89 /* FriendsViewController.swift */,
 			);
 			path = Connect2U;
