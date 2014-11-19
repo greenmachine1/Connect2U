@@ -18,7 +18,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     
-    var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
+    var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
     
     
     override func viewDidLoad() {
@@ -53,7 +53,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         // start of the label //
         var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe.text = "Cory"
+        nameLabelForMe.text = listOfNamesArray[0]
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
@@ -86,16 +86,34 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         println("\(sender.tag)")
         
         
-        // You are number 0 //
+        // You are number 0 , this should take you to your //
+        // personal settings //
         if(sender.tag == 0){
             
             println("tapped")
             
-        // everyone else is a different tag //
-        }else if(sender.tag == 1){
-            
-            println("other")
+        
         }
+            
+        else{
+            
+            // ask if they want to accept, decline, or see the persons profile first //
+            
+            /*
+            // MARK: - Navigation
+            
+            // In a storyboard-based application, you will often want to do a little preparation before navigation
+            override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+            // Get the new view controller using segue.destinationViewController.
+            // Pass the selected object to the new view controller.
+            }
+            */
+            
+        }
+        
+        
+        
+        
     }
     
     

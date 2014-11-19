@@ -16,11 +16,12 @@
 		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
 		E5BC88501A1C711900D3D0A5 /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884F1A1C711900D3D0A5 /* face2.png */; };
 		E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88511A1C71A300D3D0A5 /* face3.png */; };
+		E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */; };
+		E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */; };
 		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8E1A12E86000972580 /* Images.xcassets */; };
-		E5E6BC921A12E86000972580 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC901A12E86000972580 /* LaunchScreen.xib */; };
 		E5E6BC9E1A12E86000972580 /* Connect2UTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC9D1A12E86000972580 /* Connect2UTests.swift */; };
 		E5E6BCA91A12E9C800972580 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA71A12E9C800972580 /* Bolts.framework */; };
 		E5E6BCAA1A12E9C800972580 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA81A12E9C800972580 /* Parse.framework */; };
@@ -56,13 +57,14 @@
 		E5BC884D1A1C705400D3D0A5 /* face0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face0.png; sourceTree = "<group>"; };
 		E5BC884F1A1C711900D3D0A5 /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
 		E5BC88511A1C71A300D3D0A5 /* face3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face3.png; sourceTree = "<group>"; };
+		E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutThePersonViewController.swift; sourceTree = "<group>"; };
+		E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5E6BC891A12E86000972580 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E5E6BC8E1A12E86000972580 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E5E6BC911A12E86000972580 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E5E6BC971A12E86000972580 /* Connect2UTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Connect2UTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC9C1A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC9D1A12E86000972580 /* Connect2UTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect2UTests.swift; sourceTree = "<group>"; };
@@ -147,11 +149,12 @@
 				E5E6BC891A12E86000972580 /* ViewController.swift */,
 				E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */,
 				E5E6BC8E1A12E86000972580 /* Images.xcassets */,
-				E5E6BC901A12E86000972580 /* LaunchScreen.xib */,
+				E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */,
 				E5E6BC851A12E86000972580 /* Supporting Files */,
 				E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */,
 				E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */,
 				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
+				E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				TargetAttributes = {
 					E5E6BC811A12E86000972580 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = YM794S99T5;
 					};
 					E5E6BC961A12E86000972580 = {
 						CreatedOnToolsVersion = 6.1;
@@ -267,9 +271,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5E6BC921A12E86000972580 /* LaunchScreen.xib in Resources */,
 				E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */,
 				E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */,
+				E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
 				E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */,
 				E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */,
@@ -294,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
+				E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */,
 				E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */,
 				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
@@ -326,14 +331,6 @@
 				E5AC1CEF1A1C09AE00517A89 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E5E6BC901A12E86000972580 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E5E6BC911A12E86000972580 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -420,6 +417,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
@@ -427,6 +426,7 @@
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -434,6 +434,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
@@ -441,6 +443,7 @@
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

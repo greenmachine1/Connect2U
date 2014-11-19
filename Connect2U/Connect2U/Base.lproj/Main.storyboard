@@ -85,6 +85,25 @@
             </objects>
             <point key="canvasLocation" x="676" y="397.60000000000002"/>
         </scene>
+        <!--About The Person View Controller-->
+        <scene sceneID="fNI-X1-gn3">
+            <objects>
+                <viewController id="vag-8D-Ohm" customClass="AboutThePersonViewController" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0mB-lh-Lnz"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZZk-P9-o5d"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9dm-iB-dCj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lg7-w3-xfI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1294" y="-444"/>
+        </scene>
         <!--Logged in-->
         <scene sceneID="4V9-m1-oZv">
             <objects>
