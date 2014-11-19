@@ -18,6 +18,11 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mainProfilePic: UIImageView!
     @IBOutlet weak var secondaryProfilePic: UIImageView!
     
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
