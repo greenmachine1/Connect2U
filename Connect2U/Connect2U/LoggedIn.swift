@@ -151,7 +151,17 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             }))
         
         
-            alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: nil))
+            // the chat body //
+            alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
+            
+                let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+                
+                self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+            
+            }))
+            
+            // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }

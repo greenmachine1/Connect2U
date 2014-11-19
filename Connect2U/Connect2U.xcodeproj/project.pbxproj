@@ -22,6 +22,9 @@
 		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
 		E5BE00A81A1D220500543FE8 /* AgeSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */; };
 		E5BE00AE1A1D32AE00543FE8 /* InterestsMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */; };
+		E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */; };
+		E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */; };
+		E5BE00BC1A1D48E100543FE8 /* RightChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8E1A12E86000972580 /* Images.xcassets */; };
@@ -66,6 +69,9 @@
 		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeSelectionViewController.swift; sourceTree = "<group>"; };
 		E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestsMainTableViewController.swift; sourceTree = "<group>"; };
+		E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLeftCell.swift; sourceTree = "<group>"; };
+		E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightChatCell.swift; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +170,9 @@
 				E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */,
 				E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */,
 				E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */,
+				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
+				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
+				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -306,14 +315,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
 				E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */,
 				E5BE00A81A1D220500543FE8 /* AgeSelectionViewController.swift in Sources */,
+				E5BE00BC1A1D48E100543FE8 /* RightChatCell.swift in Sources */,
 				E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */,
 				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
 				E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
 				E5BE00AE1A1D32AE00543FE8 /* InterestsMainTableViewController.swift in Sources */,
+				E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */,
 				E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
