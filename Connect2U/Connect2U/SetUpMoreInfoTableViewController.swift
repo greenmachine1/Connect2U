@@ -11,7 +11,7 @@ import UIKit
 class SetUpMoreInfoTableViewController: UITableViewController {
 
     @IBOutlet weak var ageView: UIView!
-    @IBOutlet weak var genderView: UIView!
+    @IBOutlet weak var pictureView: UIView!
     @IBOutlet weak var interestsView: UIView!
 
     @IBOutlet weak var cancelButtonView: UIView!
@@ -40,10 +40,13 @@ class SetUpMoreInfoTableViewController: UITableViewController {
         
         self.view.backgroundColor = lightBlueColor
         
-        ageView.backgroundColor = darkGreenColor
-        genderView.backgroundColor = darkGreenColor
-        interestsView.backgroundColor = darkGreenColor
-        cancelButtonView.backgroundColor = lightBlueColor
+        ageView.backgroundColor = greenColor
+        ageView.tintColor = whiteColor
+        pictureView.backgroundColor = greenColor
+        interestsView.backgroundColor = greenColor
+        cancelButtonView.backgroundColor = greenColor
+        
+        
         
         cancelButton.backgroundColor = darkGreenColor
         

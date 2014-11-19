@@ -73,7 +73,7 @@ class SettingsTableViewController: UITableViewController {
         pictureView.backgroundColor = lightBlueColor
         
         
-        logOutButton.backgroundColor = greenColor
+        logOutButton.backgroundColor = darkGreenColor
         
         
     }
