@@ -98,22 +98,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         else{
             
             // ask if they want to accept, decline, or see the persons profile first //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
-            /*
-            // MARK: - Navigation
-            
-            // In a storyboard-based application, you will often want to do a little preparation before navigation
-            override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-            // Get the new view controller using segue.destinationViewController.
-            // Pass the selected object to the new view controller.
-            }
-            */
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+
+        
             
         }
-        
-        
-        
-        
     }
     
     

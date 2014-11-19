@@ -88,7 +88,7 @@
         <!--About The Person View Controller-->
         <scene sceneID="fNI-X1-gn3">
             <objects>
-                <viewController id="vag-8D-Ohm" customClass="AboutThePersonViewController" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutPerson" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vag-8D-Ohm" customClass="AboutThePersonViewController" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0mB-lh-Lnz"/>
                         <viewControllerLayoutGuide type="bottom" id="ZZk-P9-o5d"/>
