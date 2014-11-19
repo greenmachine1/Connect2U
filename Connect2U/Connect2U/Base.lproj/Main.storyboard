@@ -122,6 +122,9 @@
                                 <state key="normal" title="Broadcast">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="broadCastOnClick:" destination="DFv-cq-0J2" eventType="touchUpInside" id="txF-Bt-oyT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -336,39 +339,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zdk-pA-5sZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="186.40000000000001" y="397.60000000000002"/>
-        </scene>
-        <!--Friends List-->
-        <scene sceneID="Ued-0a-9FU">
-            <objects>
-                <viewController title="Friends List" id="HOW-n8-aYr" customClass="FriendsViewController" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="j4a-rg-gEX"/>
-                        <viewControllerLayoutGuide type="bottom" id="F2B-UW-RW6"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ukY-Un-vyv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friends List" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Keq-EA-IIW">
-                                <rect key="frame" x="163" y="35" width="89" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KK5-xI-AQ8">
-                                <rect key="frame" x="304" y="0.0" width="110" height="736"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <outlet property="sideImage" destination="KK5-xI-AQ8" id="N3L-jt-cYn"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q9a-E1-cde" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1280" y="-400"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="b5t-VK-Slc">

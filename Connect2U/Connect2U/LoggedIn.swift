@@ -15,16 +15,51 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    var meButton:UIButton?
+    var meButtonLocation:CGPoint?
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // setting the colors for the view //
         self.setColors()
         
-        self.roundImageConvert()
+
+
+        
+        
+        
+        
+        var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+        
+        // making the image of me in the very center of the screen //
+        meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
+        meButton!.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
+        meButton!.layer.cornerRadius = 50
+        meButton!.layer.borderWidth = 3.0
+        meButton!.layer.borderColor = UIColor.blackColor().CGColor
+        meButton!.clipsToBounds = true
+        
+        meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(meButton!)
+        
+        
+        // the current location of meButton //
+        meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
+        
+        // start of the label //
+        var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
+        nameLabelForMe.text = "Cory Green"
+        nameLabelForMe.textColor = UIColor.whiteColor()
+        nameLabelForMe.textAlignment = .Center
+        
+        self.view.addSubview(nameLabelForMe)
+        
+        
+        
+        
         
     
         
@@ -37,6 +72,9 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    // the friends list view exapand //
     @IBAction func friendsOnClick(sender: AnyObject) {
         
 
@@ -46,7 +84,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    func doSomething(sender:UIButton){
+    
+    
+    
+    // for when the person clicks on a picture
+    func personClicked(sender:UIButton){
+        
+        println("\(sender.tag)")
         
         if(sender.tag == 0){
             
@@ -55,63 +99,54 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             
             println("other")
         }
-        
     }
     
     
     
     
-    
-    // static creation of people
-    func roundImageConvert(){
-        
-        var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+    // the broadcast button //
+    @IBAction func broadCastOnClick(sender: UIButton) {
         
         
-        // making the image of me in the very center of the screen //
-        var meButton:UIButton = UIButton(frame: CGRectMake(screenCenter.x /* - 50 */, screenCenter.y - 50, 100.0, 100.0))
-        meButton.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
-        meButton.layer.cornerRadius = 50
-        meButton.layer.borderWidth = 3.0
-        meButton.layer.borderColor = UIColor.blackColor().CGColor
-        meButton.clipsToBounds = true
-        
-        meButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.view.addSubview(meButton)
-        
-        
-        // the current location of meButton //
-        var meButtonLocation:CGPoint = CGPoint(x: meButton.frame.origin.x, y: meButton.frame.origin.y)
-        
-        // start of the label //
-        var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation.x, meButtonLocation.y + 100, meButton.frame.size.width, 30.0))
-        nameLabelForMe.text = "Cory Green"
-        nameLabelForMe.textColor = UIColor.whiteColor()
-        nameLabelForMe.textAlignment = .Center
-        self.view.addSubview(nameLabelForMe)
-        
-        
-        
-        
-        
-        
-
         // the other person button //
-        var otherPersonButton:UIButton = UIButton(frame: CGRectMake(250.0, 200.0, 100.0, 100.0))
-        otherPersonButton.setImage(UIImage(named: "Kevin.png"), forState: UIControlState.Normal)
-        otherPersonButton.layer.cornerRadius = 50
-        otherPersonButton.layer.borderWidth = 3.0
-        otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
-        otherPersonButton.clipsToBounds = true
-        otherPersonButton.tag = 1
-        otherPersonButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
+        // this simulates finding people around you //
+        for(var i = 0; i < 3; i++){
+            
+            var tempIncrement:Double = Double(i) * 120.0
+            var numberFloat:CGFloat = CGFloat(tempIncrement)
+            
+            // creation and positioning of the other persons button //
+            var otherPersonButton:UIButton = UIButton(frame: CGRectMake(numberFloat, meButtonLocation!.y - 140, 100.0, 100.0))
+            otherPersonButton.setImage(UIImage(named: "Kevin.png"), forState: UIControlState.Normal)
+            otherPersonButton.layer.cornerRadius = 50
+            otherPersonButton.layer.borderWidth = 3.0
+            otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
+            otherPersonButton.clipsToBounds = true
+            otherPersonButton.tag = i + 1
+            otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            self.view.addSubview(otherPersonButton)
+            
+            
+            
+            // the current location of meButton //
+            var otherPersonButtonLocation:CGPoint = CGPoint(x: otherPersonButton.frame.origin.x, y: otherPersonButton.frame.origin.y)
+            
+            // label for other person //
+            var labelForOtherPerson:UILabel = UILabel(frame: CGRectMake(otherPersonButtonLocation.x, otherPersonButtonLocation.y + 60, 100.0, 100.0))
+            labelForOtherPerson.text = "Kevin"
+            labelForOtherPerson.textColor = UIColor.whiteColor()
+            labelForOtherPerson.textAlignment = .Center
+            
+            self.view.addSubview(labelForOtherPerson)
+        }
         
-        self.view.addSubview(otherPersonButton)
+        
+        
     }
     
     
-    
+
     
     
     
