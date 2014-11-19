@@ -19,8 +19,11 @@ class AgeSelectionViewController: UIViewController,UIPickerViewDataSource, UIPic
         ageSelection.delegate = self
         
         self.setColors()
+        
+        
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
