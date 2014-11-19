@@ -134,6 +134,11 @@ class AboutThePersonViewController: UIViewController {
     func connect(){
         println("connect")
         
+        // takes you the user to your personal settings //
+        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+        self.navigationController?.pushViewController(aboutViewController, animated: true)
+        
     
     }
     

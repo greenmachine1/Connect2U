@@ -11,10 +11,13 @@ import UIKit
 class ChatLeftCell: UITableViewCell {
 
     @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var dataLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -24,3 +27,4 @@ class ChatLeftCell: UITableViewCell {
     }
 
 }
+

@@ -28,13 +28,9 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         // setting the colors for the view //
         self.setColors()
-        
-
 
         
-        
-        
-        
+        // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         // making the image of me in the very center of the screen //
@@ -88,21 +84,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         // setting which user got selected //
         personSelected = sender.tag
         
-        
-        // You are number 0 , this should take you to your //
-        // personal settings //
-        if(sender.tag == 0){
-            
-            self.showAlert()
-        
-        }
-            
-        else{
-            
-            self.showAlert()
-        
-            
-        }
+        self.showAlert()
     }
     
     

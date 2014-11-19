@@ -11,9 +11,14 @@ import UIKit
 class RightChatCell: UITableViewCell {
 
     @IBOutlet weak var rightLabel: UILabel!
+    @IBOutlet weak var dataLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
