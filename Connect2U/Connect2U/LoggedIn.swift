@@ -18,6 +18,8 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     
+    var personSelected:Int?
+    
     var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
     
     
@@ -83,29 +85,59 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     // for when the person clicks on a picture
     func personClicked(sender:UIButton){
         
-        println("\(sender.tag)")
+        // setting which user got selected //
+        personSelected = sender.tag
         
         
         // You are number 0 , this should take you to your //
         // personal settings //
         if(sender.tag == 0){
             
-            println("tapped")
+            // takes you the user to your personal settings //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+            
+            // setting the index number in the next view //
+            aboutViewController.personIndex = personSelected
+            aboutViewController.listOfPeoplesNames = listOfNamesArray
+            aboutViewController.personsPic = "face_100x100.png"
+            
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
             
         
         }
             
         else{
             
-            // ask if they want to accept, decline, or see the persons profile first //
+            // the personal stuff from that person //
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
+            // setting the index number in the next view //
+            aboutViewController.personIndex = personSelected
+            aboutViewController.listOfPeoplesNames = listOfNamesArray
+            aboutViewController.personsPic = "face\(sender.tag - 1).png"
+            
+            
             self.navigationController?.pushViewController(aboutViewController, animated: true)
-
+            
         
             
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
     
     
     
@@ -142,7 +174,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             
             // label for other person //
             var labelForOtherPerson:UILabel = UILabel(frame: CGRectMake(otherPersonButtonLocation.x, otherPersonButtonLocation.y + 60, 100.0, 100.0))
-            labelForOtherPerson.text = listOfNamesArray[i]
+            labelForOtherPerson.text = listOfNamesArray[i + 1]
             labelForOtherPerson.textColor = UIColor.whiteColor()
             labelForOtherPerson.textAlignment = .Center
             

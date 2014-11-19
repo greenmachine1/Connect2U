@@ -15,12 +15,14 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var genderSwitch: UISwitch!
     @IBOutlet weak var interestSwitch: UISwitch!
     @IBOutlet weak var logOutButton: UIButton!
+    @IBOutlet weak var pictureSwitch: UISwitch!
     
     @IBOutlet weak var nameView: UIView!
     @IBOutlet weak var ageView: UIView!
     @IBOutlet weak var genderView: UIView!
     @IBOutlet weak var interestsView: UIView!
     @IBOutlet weak var logoutView: UIView!
+    @IBOutlet weak var pictureView: UIView!
     
     
     @IBOutlet var settingsTableView: UITableView!
@@ -68,6 +70,7 @@ class SettingsTableViewController: UITableViewController {
         ageView.backgroundColor = lightBlueColor
         genderView.backgroundColor = lightBlueColor
         interestsView.backgroundColor = lightBlueColor
+        pictureView.backgroundColor = lightBlueColor
         
         
         logOutButton.backgroundColor = greenColor
