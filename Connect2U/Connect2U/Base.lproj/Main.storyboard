@@ -17,13 +17,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07T-cF-Lzq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07T-cF-Lzq">
                                 <rect key="frame" x="16" y="290" width="368" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Maj-uG-lYv">
-                                <rect key="frame" x="16" y="516" width="368" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Maj-uG-lYv">
+                                <rect key="frame" x="16" y="506" width="368" height="40"/>
                                 <color key="backgroundColor" red="0.70195709709999998" green="0.97875039360000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Log In">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -32,19 +32,19 @@
                                     <segue destination="DFv-cq-0J2" kind="push" id="uRS-G0-748"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u77-u5-Ctk">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u77-u5-Ctk">
                                 <rect key="frame" x="118" y="571" width="164" height="30"/>
                                 <state key="normal" title="Sign In Using Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-x9-Y3S">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-x9-Y3S">
                                 <rect key="frame" x="16" y="366" width="368" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CH-yP-IQk">
-                                <rect key="frame" x="16" y="686" width="368" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CH-yP-IQk">
+                                <rect key="frame" x="16" y="676" width="368" height="40"/>
                                 <color key="backgroundColor" red="0.70195709709999998" green="0.97875039360000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Create a new account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,22 +54,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="Maj-uG-lYv" firstAttribute="leading" secondItem="8CH-yP-IQk" secondAttribute="leading" id="1Hx-ob-EwN"/>
-                            <constraint firstItem="u77-u5-Ctk" firstAttribute="top" secondItem="Maj-uG-lYv" secondAttribute="bottom" constant="25" id="DcA-10-OnT"/>
-                            <constraint firstItem="07T-cF-Lzq" firstAttribute="top" secondItem="Njg-u0-qTN" secondAttribute="bottom" constant="226" id="Hau-gC-Hr8"/>
-                            <constraint firstItem="8CH-yP-IQk" firstAttribute="top" secondItem="u77-u5-Ctk" secondAttribute="bottom" constant="85" id="SKS-DO-wjO"/>
-                            <constraint firstItem="Maj-uG-lYv" firstAttribute="leading" secondItem="z5i-x9-Y3S" secondAttribute="leading" id="Sy6-A0-gfy"/>
-                            <constraint firstItem="z5i-x9-Y3S" firstAttribute="trailing" secondItem="07T-cF-Lzq" secondAttribute="trailing" id="WnF-UB-fSV"/>
-                            <constraint firstItem="07T-cF-Lzq" firstAttribute="leading" secondItem="z5i-x9-Y3S" secondAttribute="leading" id="Xx3-tR-SWT"/>
-                            <constraint firstItem="z5i-x9-Y3S" firstAttribute="top" secondItem="07T-cF-Lzq" secondAttribute="bottom" constant="46" id="YOa-cZ-cjc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="07T-cF-Lzq" secondAttribute="trailing" constant="14" id="bo4-Ae-Y8D"/>
-                            <constraint firstItem="u77-u5-Ctk" firstAttribute="centerX" secondItem="Maj-uG-lYv" secondAttribute="centerX" id="ftq-WV-EuY"/>
-                            <constraint firstItem="8CH-yP-IQk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="hCd-YY-Q4A"/>
-                            <constraint firstItem="z5i-x9-Y3S" firstAttribute="trailing" secondItem="Maj-uG-lYv" secondAttribute="trailing" id="jZw-Zw-hes"/>
-                            <constraint firstAttribute="bottom" secondItem="8CH-yP-IQk" secondAttribute="bottom" constant="20" symbolic="YES" id="qRa-eE-oIT"/>
-                            <constraint firstItem="Maj-uG-lYv" firstAttribute="trailing" secondItem="8CH-yP-IQk" secondAttribute="trailing" id="vs8-2h-nOe"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Connected2U" id="PIq-gv-4MJ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -83,7 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="676" y="397.60000000000002"/>
+            <point key="canvasLocation" x="676" y="397"/>
         </scene>
         <!--About The Person View Controller-->
         <scene sceneID="fNI-X1-gn3">
@@ -382,9 +366,31 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9q-7e-cb4">
+                                <rect key="frame" x="16" y="246" width="382" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FtM-Hb-f71">
+                                <rect key="frame" x="16" y="337" width="382" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-AX-5Pu">
+                                <rect key="frame" x="16" y="414" width="382" height="51"/>
+                                <state key="normal" title="Signup!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpOnClick:" destination="DP9-Mk-5EK" eventType="touchUpInside" id="HF7-MY-waV"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="New Account" id="cbv-lr-ZSd"/>
+                    <connections>
+                        <outlet property="signUpButton" destination="NBf-AX-5Pu" id="KCF-0P-1gw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rOg-k5-l5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
