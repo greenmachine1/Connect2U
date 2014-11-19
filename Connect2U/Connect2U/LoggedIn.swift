@@ -65,24 +65,56 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     // static creation of people
     func roundImageConvert(){
         
-        var meButton:UIButton = UIButton(frame: CGRectMake(50.0, 200.0, 100.0, 100.0))
+        var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+        
+        
+        // making the image of me in the very center of the screen //
+        var meButton:UIButton = UIButton(frame: CGRectMake(screenCenter.x /* - 50 */, screenCenter.y - 50, 100.0, 100.0))
         meButton.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
         meButton.layer.cornerRadius = 50
+        meButton.layer.borderWidth = 3.0
+        meButton.layer.borderColor = UIColor.blackColor().CGColor
         meButton.clipsToBounds = true
-        meButton.tag = 0
+        
         meButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
-
+        
         self.view.addSubview(meButton)
         
+        
+        // the current location of meButton //
+        var meButtonLocation:CGPoint = CGPoint(x: meButton.frame.origin.x, y: meButton.frame.origin.y)
+        
+        // start of the label //
+        var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation.x, meButtonLocation.y + 100, meButton.frame.size.width, 30.0))
+        nameLabelForMe.text = "Cory Green"
+        nameLabelForMe.textColor = UIColor.whiteColor()
+        nameLabelForMe.textAlignment = .Center
+        self.view.addSubview(nameLabelForMe)
+        
+        
+        
+        
+        
+        
+
+        // the other person button //
         var otherPersonButton:UIButton = UIButton(frame: CGRectMake(250.0, 200.0, 100.0, 100.0))
         otherPersonButton.setImage(UIImage(named: "Kevin.png"), forState: UIControlState.Normal)
         otherPersonButton.layer.cornerRadius = 50
+        otherPersonButton.layer.borderWidth = 3.0
+        otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
         otherPersonButton.clipsToBounds = true
         otherPersonButton.tag = 1
         otherPersonButton.addTarget(self, action: Selector("doSomething:"), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(otherPersonButton)
     }
+    
+    
+    
+    
+    
+    
     
     
     // setting colors for the view //
