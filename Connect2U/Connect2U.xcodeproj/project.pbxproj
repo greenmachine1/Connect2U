@@ -18,6 +18,7 @@
 		E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88511A1C71A300D3D0A5 /* face3.png */; };
 		E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */; };
 		E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */; };
+		E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */; };
 		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
@@ -59,6 +60,7 @@
 		E5BC88511A1C71A300D3D0A5 /* face3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face3.png; sourceTree = "<group>"; };
 		E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutThePersonViewController.swift; sourceTree = "<group>"; };
 		E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpMoreInfoTableViewController.swift; sourceTree = "<group>"; };
 		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */,
 				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
 				E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */,
+				E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */,
 				E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */,
 				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
+				E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
 				E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */,
 			);
