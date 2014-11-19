@@ -13,7 +13,10 @@
 		E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5238D4A1A18B38900971A24 /* Color_strip.jpg */; };
 		E54986BC1A1AFB070008E36F /* face_100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = E54986BB1A1AFB070008E36F /* face_100x100.png */; };
 		E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */; };
-		E5BC8FEC1A1AFFC40059BF75 /* Kevin.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* Kevin.png */; };
+		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
+		E5BC88501A1C711900D3D0A5 /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884F1A1C711900D3D0A5 /* face2.png */; };
+		E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88511A1C71A300D3D0A5 /* face3.png */; };
+		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8E1A12E86000972580 /* Images.xcassets */; };
@@ -50,7 +53,10 @@
 		E5238D4A1A18B38900971A24 /* Color_strip.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Color_strip.jpg; sourceTree = "<group>"; };
 		E54986BB1A1AFB070008E36F /* face_100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_100x100.png; sourceTree = "<group>"; };
 		E5AC1CEF1A1C09AE00517A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E5BC8FEB1A1AFFC40059BF75 /* Kevin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Kevin.png; sourceTree = "<group>"; };
+		E5BC884D1A1C705400D3D0A5 /* face0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face0.png; sourceTree = "<group>"; };
+		E5BC884F1A1C711900D3D0A5 /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
+		E5BC88511A1C71A300D3D0A5 /* face3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face3.png; sourceTree = "<group>"; };
+		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -153,7 +159,10 @@
 		E5E6BC851A12E86000972580 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E5BC8FEB1A1AFFC40059BF75 /* Kevin.png */,
+				E5BC88511A1C71A300D3D0A5 /* face3.png */,
+				E5BC884D1A1C705400D3D0A5 /* face0.png */,
+				E5BC8FEB1A1AFFC40059BF75 /* face1.png */,
+				E5BC884F1A1C711900D3D0A5 /* face2.png */,
 				E54986BB1A1AFB070008E36F /* face_100x100.png */,
 				E5238D4A1A18B38900971A24 /* Color_strip.jpg */,
 				E5E6BC861A12E86000972580 /* Info.plist */,
@@ -259,9 +268,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5E6BC921A12E86000972580 /* LaunchScreen.xib in Resources */,
-				E5BC8FEC1A1AFFC40059BF75 /* Kevin.png in Resources */,
+				E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */,
+				E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */,
+				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
 				E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */,
 				E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */,
+				E5BC88501A1C711900D3D0A5 /* face2.png in Resources */,
 				E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */,
 				E54986BC1A1AFB070008E36F /* face_100x100.png in Resources */,
 			);

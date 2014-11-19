@@ -18,6 +18,8 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     
+    var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,19 +53,12 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         // start of the label //
         var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe.text = "Cory Green"
+        nameLabelForMe.text = "Cory"
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
         self.view.addSubview(nameLabelForMe)
-        
-        
-        
-        
-        
-    
-        
-        
+
     }
     
 
@@ -78,9 +73,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     @IBAction func friendsOnClick(sender: AnyObject) {
         
 
-        
-        
-        
+
     }
     
     
@@ -92,9 +85,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         println("\(sender.tag)")
         
+        
+        // You are number 0 //
         if(sender.tag == 0){
             
             println("tapped")
+            
+        // everyone else is a different tag //
         }else if(sender.tag == 1){
             
             println("other")
@@ -110,14 +107,16 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         
         // the other person button //
         // this simulates finding people around you //
-        for(var i = 0; i < 3; i++){
+        // in its final iteration, there will be an array of objects that hold //
+        // the persons data and will iterate through it all //
+        for(var i = 0; i < 4; i++){
             
-            var tempIncrement:Double = Double(i) * 120.0
+            var tempIncrement:Double = Double(i) * 105.0
             var numberFloat:CGFloat = CGFloat(tempIncrement)
             
             // creation and positioning of the other persons button //
             var otherPersonButton:UIButton = UIButton(frame: CGRectMake(numberFloat, meButtonLocation!.y - 140, 100.0, 100.0))
-            otherPersonButton.setImage(UIImage(named: "Kevin.png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
@@ -134,7 +133,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
             
             // label for other person //
             var labelForOtherPerson:UILabel = UILabel(frame: CGRectMake(otherPersonButtonLocation.x, otherPersonButtonLocation.y + 60, 100.0, 100.0))
-            labelForOtherPerson.text = "Kevin"
+            labelForOtherPerson.text = listOfNamesArray[i]
             labelForOtherPerson.textColor = UIColor.whiteColor()
             labelForOtherPerson.textAlignment = .Center
             

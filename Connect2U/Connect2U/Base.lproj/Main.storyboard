@@ -97,16 +97,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Logged In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIM-Ci-37G">
-                                <rect key="frame" x="161" y="78" width="78" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="78" id="5wV-Kk-jD2"/>
-                                    <constraint firstAttribute="height" constant="21" id="kld-s6-Urq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HFq-HW-OOT">
                                 <rect key="frame" x="0.0" y="751" width="400" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -131,8 +121,6 @@
                             <constraint firstItem="5VF-KP-1L3" firstAttribute="leading" secondItem="uSN-Sq-7j8" secondAttribute="leadingMargin" id="4DK-Qq-gDJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HFq-HW-OOT" secondAttribute="trailing" constant="-2" id="6wc-At-fLs"/>
                             <constraint firstItem="HFq-HW-OOT" firstAttribute="top" secondItem="R0S-ps-kuH" secondAttribute="bottom" constant="15" id="JkO-d0-aDR"/>
-                            <constraint firstItem="wIM-Ci-37G" firstAttribute="centerX" secondItem="HFq-HW-OOT" secondAttribute="centerX" id="Qg1-PE-Axq"/>
-                            <constraint firstItem="wIM-Ci-37G" firstAttribute="top" secondItem="cG7-Md-vja" secondAttribute="bottom" constant="14" id="W6F-hI-h3g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Connect2U" id="lIv-Eb-4zA">
@@ -169,7 +157,7 @@
                         <sections>
                             <tableViewSection headerTitle="Select information you wish to make public" id="zqy-4L-t6V">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EgA-RB-zCT">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="EgA-RB-zCT">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EgA-RB-zCT" id="Fhv-ES-WqW">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -187,7 +175,7 @@
                                             <color key="backgroundColor" red="0.48835440899999999" green="0.80374187249999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oTK-me-5u0">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="oTK-me-5u0">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="center" tableViewCell="oTK-me-5u0" id="ppH-ZI-nnG">
@@ -206,7 +194,7 @@
                                             <color key="backgroundColor" red="0.48835440899999999" green="0.80374187249999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="i80-Z0-HVm">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="i80-Z0-HVm">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="center" tableViewCell="i80-Z0-HVm" id="PHh-Bb-4hD">
@@ -225,7 +213,7 @@
                                             <color key="backgroundColor" red="0.48835440899999999" green="0.80374187249999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="f0c-QM-zsa">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="f0c-QM-zsa">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="center" tableViewCell="f0c-QM-zsa" id="mpl-Wa-xda">
