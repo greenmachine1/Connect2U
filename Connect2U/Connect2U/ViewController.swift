@@ -12,7 +12,7 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -26,10 +26,8 @@ class ViewController: UIViewController {
         
         self.setColors()
         
-        
-        
-        
-        
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
 
     }
 
@@ -37,6 +35,17 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
+    
     
     
     

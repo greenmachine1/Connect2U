@@ -119,12 +119,18 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     // good place to disable elements when the friends list is out //
     func sideBarWillOpen() {
         
+        
+        // lets the system know the frame list is out //
+        tempBoolToggle = false
     }
     
     
     // good place to enable elements when the friends list is out //
     func sideBarWillClose() {
         
+        
+        // lets the system know the frame list is in //
+        tempBoolToggle = true
     }
     
     

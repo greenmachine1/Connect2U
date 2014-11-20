@@ -8,15 +8,21 @@
 
 import UIKit
 
-class AccountCreationViewController: UIViewController {
+class AccountCreationViewController: UIViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var userName:UITextField!
+    @IBOutlet weak var passWord:UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setColors()
+        
+        userName.delegate = self
+        passWord.delegate = self
 
     }
 
@@ -33,6 +39,16 @@ class AccountCreationViewController: UIViewController {
         // should take the user to set up their age, picture, gender, and interests //
         
         
+        
+    }
+    
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        
+        textField.resignFirstResponder()
+        
+        return true
         
     }
     

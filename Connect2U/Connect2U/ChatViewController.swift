@@ -10,15 +10,53 @@ import UIKit
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
-    @IBOutlet weak var mainInputField: UITextField!
     @IBOutlet weak var mainTableView: UITableView!
+    
+    var mainInputField:UITextField?
+    var mainReturnButton:UIButton?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setColors()
+
         
-        self.mainInputField.delegate = self
+        // static value for whos chatting with you //
+        self.navigationItem.title = "Chatting with Kevin"
+        
+        
+        // group chat button //
+        var editButton:UIBarButtonItem = UIBarButtonItem(title: "Group Chat", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("group"))
+        self.navigationItem.rightBarButtonItem = editButton
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var widthOfScreen:CGFloat = CGFloat(self.view.frame.width / 2)
+        
+        // this is all static data that will be updated at a later time //
+        mainInputField = UITextField(frame: CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: 300.0 , height: 30.0))
+        mainInputField?.borderStyle = UITextBorderStyle.RoundedRect
+        mainInputField?.text = "Enter Text"
+        mainInputField?.backgroundColor = UIColor.whiteColor()
+        
+        mainInputField?.delegate = self
+        
+        self.view.addSubview(mainInputField!)
+        
+        mainReturnButton = UIButton(frame: CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0))
+        mainReturnButton?.setTitle("Send", forState: UIControlState.Normal)
+        mainReturnButton?.addTarget(self, action: Selector("mainReturn"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(mainReturnButton!)
+        
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
@@ -26,30 +64,53 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    func group(){
+        
+        println("in here")
+        
+    }
+    
+
+    
+    
+    // moving the textfield up for the keyboard //
     func keyboardShow(){
         
-        var getMainInputFieldLocation:CGPoint = CGPoint(x: mainInputField.layer.frame.origin.x, y: mainInputField.layer.frame.origin.y)
+        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 320.0), width: 300.0, height: 30.0)
         
-        mainInputField.frame.origin.x = 300
+        mainReturnButton?.frame = CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 320.0), width: 100.0, height: 30.0)
+        
+     
+    }
+    
+    
+    // send off the text //
+    func mainReturn(){
         
         
-        println("\(getMainInputFieldLocation)")
+        println("send")
+        
     }
     
     
     // the return key //
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         
-        mainInputField.resignFirstResponder()
+        
+        println("in here")
+        
+        mainInputField?.resignFirstResponder()
+        
+        // moving the keyboard back down.... statically //
+        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: 300.0 , height: 30.0)
+        
+        mainReturnButton?.frame = CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0)
         
         return true
         
     }
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     // what will be in each row //
@@ -83,6 +144,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         
             return cell
+            
         }else{
             
             //let cell = tableView.dequeueReusableCellWithIdentifier("cellRight") as RightChatCell
@@ -112,15 +174,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    
+    
+    
+    
     // number of rows //
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
+    // height of the rows //
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100.0
     }
 
+    
+    
+    
+    
+    
     
     
     // setting colors for the view //
