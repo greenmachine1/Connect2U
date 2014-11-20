@@ -17,10 +17,14 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
-    
     var personSelected:Int?
     
     var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
+    
+    
+    
+    
+    
     
     
     override func viewDidLoad() {
