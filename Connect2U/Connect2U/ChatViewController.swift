@@ -20,9 +20,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.mainInputField.delegate = self
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
         
+    }
+    
+    
+    func keyboardShow(){
         
+        var getMainInputFieldLocation:CGPoint = CGPoint(x: mainInputField.layer.frame.origin.x, y: mainInputField.layer.frame.origin.y)
+        
+        mainInputField.frame.origin.x = 300
+        
+        
+        println("\(getMainInputFieldLocation)")
     }
     
     
@@ -55,14 +66,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             cell.backgroundColor = greenColor
             cell.layer.cornerRadius = 3.0
-            cell.layer.borderWidth = 1.0
-            cell.layer.borderColor = UIColor.blackColor().CGColor
-            cell.leftLabel.text = "Cory"
-            cell.leftLabel.textColor = whiteColor
+            //scell.layer.borderWidth = 1.0
+            //cell.layer.borderColor = UIColor.blackColor().CGColor
+            cell.leftLabel.text = "Cory @ 18:10pm"
+            cell.leftLabel.textColor = darkGreenColor
             cell.leftLabel.backgroundColor = greenColor
             cell.leftLabel.layer.cornerRadius = 3.0
             cell.leftLabel.clipsToBounds = true
-            cell.dataLabel.textColor = whiteColor
+            cell.dataLabel.textColor = darkGreenColor
             cell.dataLabel.backgroundColor = greenColor
             cell.dataLabel.text = "Hey, hows it going?"
             cell.dataLabel.layer.cornerRadius = 3.0
@@ -80,9 +91,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             cell.backgroundColor = darkGreenColor
             cell.layer.cornerRadius = 3.0
-            cell.layer.borderWidth = 1.0
-            cell.layer.borderColor = UIColor.blackColor().CGColor
-            cell.rightLabel.text = "Kevin"
+            //cell.layer.borderWidth = 1.0
+            //cell.layer.borderColor = UIColor.blackColor().CGColor
+            cell.rightLabel.text = "Kevin @ 18:11pm"
             cell.rightLabel.textColor = whiteColor
             cell.rightLabel.backgroundColor = darkGreenColor
             cell.rightLabel.layer.cornerRadius = 3.0
@@ -109,6 +120,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100.0
     }
+
+    
     
     // setting colors for the view //
     func setColors(){
