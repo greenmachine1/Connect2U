@@ -26,6 +26,8 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     
     var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
     
+    var listOfNamesArrayAndRequests:[String] = ["Grant", "Mark", "Joe", "Brittany", "Requests:" , "Daniel", "Bill"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,7 +74,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         
         self.view.addSubview(nameLabelForMe)
         
-        sideBar = SideBar(callingView: self.view, items: listOfNamesArray, openOrClose: false)
+        sideBar = SideBar(callingView: self.view, items: listOfNamesArrayAndRequests, openOrClose: false)
         sideBar.delegate = self
 
     }
@@ -87,13 +89,40 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     // this is from the side bar delegate //
     func sideBarDidSelectAtIndex(index: Int) {
         
-        println("selected\(listOfNamesArray[index])")
+        // takes you the user to your personal settings //
+        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+        
+        // setting the index number in the next view //
+        //aboutViewController.personIndex = index
+        //aboutViewController.listOfPeoplesNames = self.listOfNamesArrayAndRequests
+        
+        aboutViewController.personIndex = 1
+        aboutViewController.listOfPeoplesNames = self.listOfNamesArrayAndRequests
+        
+        aboutViewController.personsPic = "face_100x100.png"
+        
+        self.navigationController?.pushViewController(aboutViewController, animated: true)
+        
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // good place to disable elements when the friends list is out //
     func sideBarWillOpen() {
         
     }
     
+    
+    // good place to enable elements when the friends list is out //
     func sideBarWillClose() {
         
     }
@@ -237,8 +266,8 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
             otherPersonButton.tag = i + 1
             otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
             
-            self.view.addSubview(otherPersonButton)
-            
+            // inserting the view just under the side bar //
+            self.view.insertSubview(otherPersonButton, atIndex: 2)
             
             
             // the current location of meButton //
@@ -249,8 +278,14 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
             labelForOtherPerson.text = listOfNamesArray[i + 1]
             labelForOtherPerson.textColor = UIColor.whiteColor()
             labelForOtherPerson.textAlignment = .Center
+        
             
-            self.view.addSubview(labelForOtherPerson)
+            // inserting the view just under the side bar //
+            self.view.insertSubview(labelForOtherPerson, atIndex: 2)
+            
+            
+            
+            
         }
         
         

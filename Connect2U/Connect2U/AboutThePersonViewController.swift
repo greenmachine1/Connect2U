@@ -51,6 +51,11 @@ class AboutThePersonViewController: UIViewController {
         nameLabel.text = listOfPeoplesNames[personIndex]
         
         
+        // for demonstration purposes, this is so we dont get an error //
+        if(personIndex >= 4){
+            personIndex = 4
+        }
+        
         
         
         // this is clunky dummy data for now //
@@ -63,6 +68,7 @@ class AboutThePersonViewController: UIViewController {
             interestsLabel.text = "Interests :\(coryData[3]), \(coryData[4]), \(coryData[5]), \(coryData[6])"
             
             
+
             // also, within the users profile, they can set it to where they can edit the data //
             var editButton:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("doSomething"))
             self.navigationItem.rightBarButtonItem = editButton
@@ -123,6 +129,12 @@ class AboutThePersonViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = editButton
     }
     
+    
+    
+    
+    
+    
+    // this is for editing functionality //
     func doSomething(){
         
         println("do something")
