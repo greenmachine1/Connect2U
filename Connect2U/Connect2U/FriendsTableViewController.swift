@@ -32,6 +32,10 @@ class FriendsTableViewController: UITableViewController {
     }
 
     
+    
+    
+    
+    // creation of the cells themselves //
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell
 
@@ -60,6 +64,9 @@ class FriendsTableViewController: UITableViewController {
 
         return cell!
     }
+    
+    
+    
     
     // the height of the cell //
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

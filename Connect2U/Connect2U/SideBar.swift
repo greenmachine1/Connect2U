@@ -22,7 +22,7 @@ import UIKit
 class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     // creating info for the sidebar
-    let widthOfBar:CGFloat = 150.0
+    let widthOfBar:CGFloat = 200.0
     let sideBarTopInset:CGFloat = 64.0
     let sideBarContainerView:UIView = UIView()
     let sideBarTableViewController:FriendsTableViewController = FriendsTableViewController()
@@ -30,12 +30,14 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     var delegate:SideBarDelegate?
     var sideBarOpen:Bool = false
     
+    var sideBarToggleFriend:Bool = false
+    
     
     override init(){
         super.init()
     }
     
-    init(callingView:UIView, items:Array<String>) {
+    init(callingView:UIView, items:Array<String>, openOrClose:Bool) {
         super.init()
         
         // setting the calling view //
@@ -60,6 +62,20 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         hideGesture.direction = UISwipeGestureRecognizerDirection.Left
         origin.addGestureRecognizer(hideGesture)
         
+    
+    
+        
+        
+        
+        // need to be able to manually open and close the view //
+        if(openOrClose == false){
+            
+            showSideBar(false)
+            
+        }else{
+            
+            showSideBar(true)
+        }
         
     }
     
@@ -85,6 +101,9 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         sideBarTableViewController.tableView.frame = sideBarContainerView.bounds
         sideBarTableViewController.tableView.clipsToBounds = false
         sideBarTableViewController.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        
+        
         sideBarTableViewController.tableView.backgroundColor = UIColor.clearColor()
         sideBarTableViewController.tableView.scrollsToTop = false
         sideBarTableViewController.tableView.contentInset = UIEdgeInsetsMake(sideBarTopInset, 0.0, 0.0, 0.0)
@@ -100,13 +119,74 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // swipe gestures //
+    func handleSwipe(gesture:UISwipeGestureRecognizer){
+        
+        // checking for left direction //
+        if(gesture.direction == UISwipeGestureRecognizerDirection.Left){
+            
+            showSideBar(false)
+            delegate?.sideBarWillClose!()
+            
+            // for right gesture //
+        }else{
+            
+            showSideBar(true)
+            delegate?.sideBarWillOpen!()
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // used to pull out or push in the view //
+    func fromFriendsButton(pushed:Bool){
+        
+        showSideBar(pushed)
+        
+    }
+    
+    
+    func showSideBar(shouldOpen:Bool){
+    
+        sideBarOpen = shouldOpen
+        
+        
+        if(sideBarOpen){
+            
+            sideBarContainerView.frame = CGRectMake(0.0, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+        }else{
+            sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+        }
+        
+        
+        
+        
+        
+    }
+    
 
     
     // this is a required delegate method that goes along with //
     // FriendsTableViewControllerDelegate //
     func friendsBarControlDidSelectRow(indexPath: NSIndexPath) {
-        
+        delegate?.sideBarDidSelectAtIndex(indexPath.row)
     }
 }
 

@@ -11,7 +11,7 @@ import CoreLocation
 import Parse
 
 
-class LoggedIn: UIViewController, CLLocationManagerDelegate {
+class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
@@ -19,16 +19,27 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
     var meButtonLocation:CGPoint?
     var personSelected:Int?
     
+    var tempBoolToggle:Bool = true
+    
+    // the sidebar //
+    var sideBar:SideBar  = SideBar()
+    
     var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
-    
-    
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // setting up the side bar //
+        // passing in this view plus some names //
+        //sideBar = SideBar(callingView: self.view, items: listOfNamesArray)
+        
+        
+        
+        
+        
+        println("\(self.view.subviews.count)")
+        
+        
         
         // setting the colors for the view //
         self.setColors()
@@ -60,21 +71,53 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate {
         nameLabelForMe.textAlignment = .Center
         
         self.view.addSubview(nameLabelForMe)
+        
+        sideBar = SideBar(callingView: self.view, items: listOfNamesArray, openOrClose: false)
+        sideBar.delegate = self
 
     }
     
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    
+    
+    
+    
+    
+    // this is from the side bar delegate //
+    func sideBarDidSelectAtIndex(index: Int) {
+        
+        println("selected\(listOfNamesArray[index])")
     }
+    
+    func sideBarWillOpen() {
+        
+    }
+    
+    func sideBarWillClose() {
+        
+    }
+    
+    
+    
     
     
     
     // the friends list view exapand //
     @IBAction func friendsOnClick(sender: AnyObject) {
         
-
+        if(tempBoolToggle == false){
+        
+            sideBar.fromFriendsButton(false)
+            
+            self.tempBoolToggle = true
+            
+        }else if(tempBoolToggle == true){
+            
+            sideBar.fromFriendsButton(true)
+            
+            self.tempBoolToggle = false
+        }
 
     }
     
