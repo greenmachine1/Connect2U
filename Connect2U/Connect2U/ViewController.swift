@@ -32,6 +32,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         
         
+        ColorPalettes.Colors.darkGreen
+        
+        
 
     }
 
@@ -48,36 +51,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    
-    
-    
-    
-    
-    
+
     // sets all the colors for the view
     func setColors(){
         
-        var whiteColor:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var lightBlueColor:UIColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
-        var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
-        var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
+        var newColorPalette = ColorPalettes()
         
         // background color //
-        self.view.backgroundColor = lightBlueColor
+        self.view.backgroundColor = newColorPalette.lightBlueColor
         
         // color of the navigation controller bar //
-        self.navigationController?.navigationBar.barTintColor = greenColor
-        self.navigationController?.navigationBar.tintColor = whiteColor
+        //self.navigationController?.navigationBar.barTintColor = greenColor
+        self.navigationController?.navigationBar.barTintColor = newColorPalette.greenColor
+        self.navigationController?.navigationBar.tintColor = newColorPalette.whiteColor
         
         // color for the buttons //
-        logInButton.backgroundColor = greenColor
-        logInButton.tintColor = whiteColor
+        logInButton.backgroundColor = newColorPalette.greenColor
+        logInButton.tintColor = newColorPalette.whiteColor
         
-        facebookButton.tintColor = whiteColor
+        facebookButton.tintColor = newColorPalette.whiteColor
         
-        newAccountButton.backgroundColor = greenColor
-        newAccountButton.tintColor = whiteColor
+        newAccountButton.backgroundColor = newColorPalette.greenColor
+        newAccountButton.tintColor = newColorPalette.whiteColor
         
     }
     

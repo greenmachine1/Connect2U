@@ -37,14 +37,21 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         super.init()
     }
     
-    init(callingView:UIView, items:Array<String>, openOrClose:Bool) {
+    
+    // custom init method that takes in the view, friends array, requests array //
+    init(callingView:UIView, friends:Array<String>, requests:Array<String>) {
         super.init()
         
         // setting the calling view //
         origin = callingView
         
         // sending the data from the origin to the FriendsTableViewController //
-        sideBarTableViewController.friendsData = items
+        sideBarTableViewController.friendsData = friends
+        sideBarTableViewController.requestsData = requests
+        
+        
+        
+        
         
         
         // making the actual sidebar //
@@ -61,21 +68,6 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         let hideGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
         hideGesture.direction = UISwipeGestureRecognizerDirection.Left
         origin.addGestureRecognizer(hideGesture)
-        
-    
-    
-        
-        
-        
-        // need to be able to manually open and close the view //
-        if(openOrClose == false){
-            
-            showSideBar(false)
-            
-        }else{
-            
-            showSideBar(true)
-        }
         
     }
     

@@ -20,7 +20,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.setColors()
 
-        
         // static value for whos chatting with you //
         self.navigationItem.title = "Chatting with Kevin"
         

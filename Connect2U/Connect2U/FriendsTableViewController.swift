@@ -15,20 +15,33 @@ protocol FriendsTableViewControllerDelegate{
 class FriendsTableViewController: UITableViewController {
 
     var delegate:FriendsTableViewControllerDelegate?
-    var friendsData:Array<String> = ["Cory", "Gary", "Katy", "Matt", "Judy"]
+
+    // friends and requests data //
+    var friendsData:Array<String> = []
+    var requestsData:Array<String> = []
 
     
     // number of sections currently in place //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 
-        return 1
+        return 2
     }
 
     
     // number of friends! //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return friendsData.count
+        if(section == 0){
+            
+            return self.friendsData.count
+        }
+            
+        else if(section == 1){
+            
+            return self.requestsData.count
+        }
+        
+        return 0
     }
 
     
@@ -37,17 +50,15 @@ class FriendsTableViewController: UITableViewController {
     
     // creation of the cells themselves //
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell
-
+        
         if(cell == nil){
-            
+        
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
             cell!.backgroundColor = UIColor.clearColor()
             cell!.textLabel.textColor = UIColor.blackColor()
-            
-            cell!.textLabel.text = friendsData[indexPath.row]
-            
-            
+        
             // making the selected frame //
             let selected:UIView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: cell!.frame.size.height, height: cell!.frame.size.width))
             
@@ -60,9 +71,29 @@ class FriendsTableViewController: UITableViewController {
         }
         
         // filling in the text //
-        cell!.textLabel.text = friendsData[indexPath.row]
-
+        if(indexPath.section == 0){
+            cell!.textLabel.text = friendsData[indexPath.row]
+        }
+        if(indexPath.section == 1){
+            cell!.textLabel.text = requestsData[indexPath.row]
+        }
+        
         return cell!
+
+    }
+    
+    
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if(section == 0){
+            
+            return "Friends"
+        }else if(section == 1){
+            
+            return "Requests"
+        }
+        return ""
     }
     
     

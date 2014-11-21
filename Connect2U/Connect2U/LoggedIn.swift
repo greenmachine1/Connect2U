@@ -25,24 +25,12 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     var sideBar:SideBar  = SideBar()
     
     var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
-    
-    var listOfNamesArrayAndRequests:[String] = ["Grant", "Mark", "Joe", "Brittany", "Requests:" , "Daniel", "Bill"]
+    var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
+    var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // setting up the side bar //
-        // passing in this view plus some names //
-        //sideBar = SideBar(callingView: self.view, items: listOfNamesArray)
-        
-        
-        
-        
-        
-        println("\(self.view.subviews.count)")
-        
-        
-        
+    
         // setting the colors for the view //
         self.setColors()
 
@@ -74,7 +62,9 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         
         self.view.addSubview(nameLabelForMe)
         
-        sideBar = SideBar(callingView: self.view, items: listOfNamesArrayAndRequests, openOrClose: false)
+        
+        // sending the view, friends, request //
+        sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests)
         sideBar.delegate = self
 
     }
@@ -97,7 +87,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         //aboutViewController.listOfPeoplesNames = self.listOfNamesArrayAndRequests
         
         aboutViewController.personIndex = 1
-        aboutViewController.listOfPeoplesNames = self.listOfNamesArrayAndRequests
+        aboutViewController.listOfPeoplesNames = self.listOfFriends
         
         aboutViewController.personsPic = "face_100x100.png"
         
@@ -194,7 +184,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
             
         }else{
         
-            var alert:UIAlertController = UIAlertController(title: "What do you wnat to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
+            var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
         
         
             // the profile alert button //

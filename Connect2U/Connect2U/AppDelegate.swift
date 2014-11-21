@@ -12,6 +12,8 @@ import Parse
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var newColorPalette = ColorPalettes()
+    
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -19,12 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setting up the application ID for parse //
         Parse.setApplicationId("JSfr6Q2SbXv3oipCnuGFYOyJBlmB4bix5OFQHciz",
                     clientKey: "4U9EqhEhNDpydFnrzXWIEM998Lmx3Z1zXyBOA1ya")
-        
-
-        
-        
-        
-        
         
         return true
     }
