@@ -30,11 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
-        
-        
-        ColorPalettes.Colors.darkGreen
-        
-        
 
     }
 
@@ -61,7 +56,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.view.backgroundColor = newColorPalette.lightBlueColor
         
         // color of the navigation controller bar //
-        //self.navigationController?.navigationBar.barTintColor = greenColor
         self.navigationController?.navigationBar.barTintColor = newColorPalette.greenColor
         self.navigationController?.navigationBar.tintColor = newColorPalette.whiteColor
         
