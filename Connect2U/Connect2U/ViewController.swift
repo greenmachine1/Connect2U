@@ -14,6 +14,8 @@ import Parse
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var titleText: UINavigationItem!
+
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -28,6 +30,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        
 
     }
 
