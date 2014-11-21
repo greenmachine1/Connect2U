@@ -70,7 +70,7 @@ class FriendsTableViewController: UITableViewController {
             cell!.selectedBackgroundView = selected
         }
         
-        // filling in the text //
+        // filling in the text with either friends or request data //
         if(indexPath.section == 0){
             cell!.textLabel.text = friendsData[indexPath.row]
         }
@@ -83,16 +83,18 @@ class FriendsTableViewController: UITableViewController {
     }
     
     
-    
+    // setting the headers to the table view //
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if(section == 0){
             
             return "Friends"
+            
         }else if(section == 1){
             
             return "Requests"
         }
+        
         return ""
     }
     

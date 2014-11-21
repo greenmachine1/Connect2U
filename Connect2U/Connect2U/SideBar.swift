@@ -45,6 +45,11 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         // setting the calling view //
         origin = callingView
         
+        
+        
+        
+        
+        
         // sending the data from the origin to the FriendsTableViewController //
         sideBarTableViewController.friendsData = friends
         sideBarTableViewController.requestsData = requests
@@ -85,10 +90,12 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         
         // creating a blurred background //
+        
         let blurView:UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
         blurView.frame = sideBarContainerView.bounds
         sideBarContainerView.addSubview(blurView)
         
+
         sideBarTableViewController.delegate = self
         sideBarTableViewController.tableView.frame = sideBarContainerView.bounds
         sideBarTableViewController.tableView.clipsToBounds = false
@@ -159,18 +166,17 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
         sideBarOpen = shouldOpen
         
-        
+        // sliding the side bar open //
         if(sideBarOpen){
             
             sideBarContainerView.frame = CGRectMake(0.0, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            
+            
+         // sliding it closed //
         }else{
             sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
         }
-        
-        
-        
-        
-        
+ 
     }
     
 

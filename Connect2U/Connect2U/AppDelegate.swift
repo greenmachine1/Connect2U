@@ -11,8 +11,6 @@ import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var newColorPalette = ColorPalettes()
     
     var window: UIWindow?
 

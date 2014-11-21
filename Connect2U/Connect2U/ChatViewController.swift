@@ -126,8 +126,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             cell.backgroundColor = greenColor
             cell.layer.cornerRadius = 3.0
-            //scell.layer.borderWidth = 1.0
-            //cell.layer.borderColor = UIColor.blackColor().CGColor
             cell.leftLabel.text = "Cory @ 18:10pm"
             cell.leftLabel.textColor = darkGreenColor
             cell.leftLabel.backgroundColor = greenColor
@@ -138,8 +136,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.dataLabel.text = "Hey, hows it going?"
             cell.dataLabel.layer.cornerRadius = 3.0
             cell.dataLabel.clipsToBounds = true
-            //cell.dataLabel.layer.borderWidth = 1.0
-            //cell.dataLabel.layer.borderColor = UIColor.blackColor().CGColor
+
             
         
             return cell
@@ -152,8 +149,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             cell.backgroundColor = darkGreenColor
             cell.layer.cornerRadius = 3.0
-            //cell.layer.borderWidth = 1.0
-            //cell.layer.borderColor = UIColor.blackColor().CGColor
             cell.rightLabel.text = "Kevin @ 18:11pm"
             cell.rightLabel.textColor = whiteColor
             cell.rightLabel.backgroundColor = darkGreenColor
@@ -164,8 +159,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.dataLabel.text = "Im pretty good, how are you?"
             cell.dataLabel.layer.cornerRadius = 3.0
             cell.dataLabel.clipsToBounds = true
-            //cell.dataLabel.layer.borderWidth = 1.0
-            //cell.dataLabel.layer.borderColor = UIColor.blackColor().CGColor
+
             
             
             return cell
@@ -197,13 +191,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // setting colors for the view //
     func setColors(){
         
-        var whiteColor:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var lightBlueColor:UIColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
-        var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
-        var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
+        var colorPalette = ColorPalettes()
         
-        self.view.backgroundColor = lightBlueColor
-        mainTableView.backgroundColor = lightBlueColor
+        self.view.backgroundColor = colorPalette.lightBlueColor
+        mainTableView.backgroundColor = colorPalette.lightBlueColor
         
     }
 

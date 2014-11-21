@@ -492,7 +492,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="signUpOnClick:" destination="DP9-Mk-5EK" eventType="touchUpInside" id="HF7-MY-waV"/>
                                     <segue destination="qIh-1R-409" kind="push" id="jH4-Rr-mOF"/>
                                 </connections>
                             </button>

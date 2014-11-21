@@ -51,6 +51,21 @@ class AboutThePersonViewController: UIViewController {
         nameLabel.text = listOfPeoplesNames[personIndex]
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // for demonstration purposes, this is so we dont get an error //
         if(personIndex >= 4){
             personIndex = 4
@@ -122,6 +137,12 @@ class AboutThePersonViewController: UIViewController {
     
     
     
+    
+    
+    
+    
+    
+    
     func connectButton(){
         
         // also, within the users profile, they can set it to where they can edit the data //
@@ -134,11 +155,22 @@ class AboutThePersonViewController: UIViewController {
     
     
     
+    
+    
+    
+    
+    
+    
+    
     // this is for editing functionality //
     func doSomething(){
         
         println("do something")
     }
+    
+    
+    
+    
     
     
     
@@ -155,33 +187,24 @@ class AboutThePersonViewController: UIViewController {
     }
     
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
     // setting colors for the view //
     func setColors(){
         
-        var whiteColor:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var lightBlueColor:UIColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
-        var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
-        var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
+        var colorPalette = ColorPalettes()
         
-        self.view.backgroundColor = lightBlueColor
-        self.nameLabel.textColor = whiteColor
+        self.view.backgroundColor = colorPalette.lightBlueColor
+        self.nameLabel.textColor = colorPalette.whiteColor
         
-        ageLabel.textColor = whiteColor
-        ageLabel.backgroundColor = greenColor
+        ageLabel.textColor = colorPalette.whiteColor
+        ageLabel.backgroundColor = colorPalette.greenColor
         ageLabel.textAlignment = .Center
         
-        genderLabel.textColor = whiteColor
-        genderLabel.backgroundColor = greenColor
+        genderLabel.textColor = colorPalette.whiteColor
+        genderLabel.backgroundColor = colorPalette.greenColor
         genderLabel.textAlignment = .Center
         
-        interestsLabel.textColor = whiteColor
-        interestsLabel.backgroundColor = greenColor
+        interestsLabel.textColor = colorPalette.whiteColor
+        interestsLabel.backgroundColor = colorPalette.greenColor
         interestsLabel.textAlignment = .Center
     }
     

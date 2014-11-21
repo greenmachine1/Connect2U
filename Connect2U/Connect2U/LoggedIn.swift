@@ -34,7 +34,6 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         // setting the colors for the view //
         self.setColors()
 
-        
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
@@ -62,11 +61,16 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         
         self.view.addSubview(nameLabelForMe)
         
+    
+    }
+    
+    
+    // making sure the view has loaded before setting the side bar... //
+    // before it was showing up as you transitioned from the sign in screen to this one //
+    override func viewDidAppear(animated: Bool) {
         
-        // sending the view, friends, request //
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests)
         sideBar.delegate = self
-
     }
     
     
@@ -84,9 +88,11 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         
         // setting the index number in the next view //
         //aboutViewController.personIndex = index
-        //aboutViewController.listOfPeoplesNames = self.listOfNamesArrayAndRequests
+        //aboutViewController.listOfPeoplesNames = listOfFriends[index]
         
-        aboutViewController.personIndex = 1
+        
+        // sending over the list of names along with the index
+        aboutViewController.personIndex = index
         aboutViewController.listOfPeoplesNames = self.listOfFriends
         
         aboutViewController.personsPic = "face_100x100.png"
@@ -298,16 +304,13 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     // setting colors for the view //
     func setColors(){
         
-        var whiteColor:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var lightBlueColor:UIColor = UIColor(red: 0.431, green: 0.808, blue: 0.933, alpha: 1.0)
-        var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
-        var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
+        var colorPalette = ColorPalettes()
         
-        self.view.backgroundColor = lightBlueColor
+        self.view.backgroundColor = colorPalette.lightBlueColor
         
         // colors for the buttons //
-        broadCast.backgroundColor = greenColor
-        broadCast.tintColor = whiteColor
+        broadCast.backgroundColor = colorPalette.greenColor
+        broadCast.tintColor = colorPalette.whiteColor
         
     }
     
