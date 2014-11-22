@@ -19,6 +19,8 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     var meButtonLocation:CGPoint?
     var personSelected:Int?
     
+    var colorPalette = ColorPalettes()
+    
     var tempBoolToggle:Bool = true
     
     // the sidebar //
@@ -30,12 +32,41 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // setting up the main profile image //
+        var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
         // setting the colors for the view //
         self.setColors()
 
-        // setting up the main profile image //
-        var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
@@ -59,9 +90,33 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
+        
+        
+        
+        
+        
+        
+        // adding this to the subview //
         self.view.addSubview(nameLabelForMe)
         
     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     
@@ -304,7 +359,7 @@ class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
     // setting colors for the view //
     func setColors(){
         
-        var colorPalette = ColorPalettes()
+        
         
         self.view.backgroundColor = colorPalette.lightBlueColor
         

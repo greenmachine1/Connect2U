@@ -55,11 +55,11 @@
                                 </state>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Connected_2_U_Log.png" translatesAutoresizingMaskIntoConstraints="NO" id="WI7-Cs-yti">
-                                <rect key="frame" x="30" y="90" width="354" height="229"/>
+                                <rect key="frame" x="30" y="109" width="354" height="229"/>
                             </imageView>
                         </subviews>
                     </view>
-                    <navigationItem key="navigationItem" title="Connected2U" id="PIq-gv-4MJ"/>
+                    <navigationItem key="navigationItem" id="PIq-gv-4MJ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="facebookButton" destination="u77-u5-Ctk" id="C8r-vy-DKl"/>
