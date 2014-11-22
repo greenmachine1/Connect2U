@@ -54,6 +54,9 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Connected_2_U_Log.png" translatesAutoresizingMaskIntoConstraints="NO" id="WI7-Cs-yti">
+                                <rect key="frame" x="30" y="90" width="354" height="229"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="Connected2U" id="PIq-gv-4MJ"/>
@@ -882,6 +885,9 @@
             <point key="canvasLocation" x="186.40000000000001" y="397.60000000000002"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Connected_2_U_Log.png" width="619" height="432"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
