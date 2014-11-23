@@ -10,7 +10,6 @@
 // this is the log in screen that allows the users to log in or create a new account //
 
 import UIKit
-import Parse
 
 class ViewController: UIViewController, UITextFieldDelegate {
 

@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import CoreLocation
-import Parse
 
 
-class LoggedIn: UIViewController, CLLocationManagerDelegate,SideBarDelegate {
+class LoggedIn: UIViewController,SideBarDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
