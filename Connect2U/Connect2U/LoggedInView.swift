@@ -37,6 +37,8 @@ class LoggedInView: NSObject {
         peopleArray = otherPeople
         
         self.createCircle()
+        
+        self.createOtherPeoplePictures()
     }
 
 
@@ -46,9 +48,25 @@ class LoggedInView: NSObject {
         
         circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 50, locationOfCircle!.y - 50, CGFloat(2.0 * circleRadius!), CGFloat(2.0 * circleRadius!)), cornerRadius: CGFloat(circleRadius!)).CGPath
         
+        
+        // the fill color //
         circle.fillColor = colorPalette.darkGreenColor.CGColor
      
         self.mainView.layer.addSublayer(circle)
+        
+    }
+    
+    
+    func createOtherPeoplePictures(){
+        
+        
+        
+        
+        var nameLabel:UILabel = UILabel(frame: CGRect(x: 100.0, y: 100.0, width: 100.0, height: 30.0))
+        nameLabel.backgroundColor = colorPalette.darkGreenColor
+        nameLabel.text = "Name"
+        
+        self.mainView.addSubview(nameLabel)
         
     }
     

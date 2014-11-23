@@ -72,8 +72,8 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         
         
-        // creation of the larger circle //
-        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+        // creation of the larger circle with names around it //
+        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: listOfNamesArray)
 
         
         
