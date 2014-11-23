@@ -33,8 +33,6 @@
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8E1A12E86000972580 /* Images.xcassets */; };
 		E5E6BC9E1A12E86000972580 /* Connect2UTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC9D1A12E86000972580 /* Connect2UTests.swift */; };
-		E5E6BCA91A12E9C800972580 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA71A12E9C800972580 /* Bolts.framework */; };
-		E5E6BCAA1A12E9C800972580 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA81A12E9C800972580 /* Parse.framework */; };
 		E5E6BCB51A12EA1800972580 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCAB1A12EA1800972580 /* AudioToolbox.framework */; };
 		E5E6BCB61A12EA1800972580 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCAC1A12EA1800972580 /* CFNetwork.framework */; };
 		E5E6BCB71A12EA1800972580 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCAD1A12EA1800972580 /* CoreGraphics.framework */; };
@@ -117,8 +115,6 @@
 				E5E6BCBC1A12EA1800972580 /* Security.framework in Frameworks */,
 				E5E6BCBD1A12EA1800972580 /* StoreKit.framework in Frameworks */,
 				E5E6BCBE1A12EA1800972580 /* SystemConfiguration.framework in Frameworks */,
-				E5E6BCA91A12E9C800972580 /* Bolts.framework in Frameworks */,
-				E5E6BCAA1A12E9C800972580 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
