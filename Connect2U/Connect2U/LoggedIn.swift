@@ -34,12 +34,7 @@ class LoggedIn: UIViewController,SideBarDelegate {
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
-        
-        
-        
-        
-        
-        
+
         
         
         
