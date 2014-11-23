@@ -24,6 +24,7 @@
 		E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */; };
 		E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */; };
 		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
+		E5BDC3E81A21FBEF002DB3D3 /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BDC3E71A21FBEF002DB3D3 /* LoggedInView.swift */; };
 		E5BE00A81A1D220500543FE8 /* AgeSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */; };
 		E5BE00AE1A1D32AE00543FE8 /* InterestsMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */; };
 		E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */; };
@@ -73,6 +74,7 @@
 		E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpMoreInfoTableViewController.swift; sourceTree = "<group>"; };
 		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
+		E5BDC3E71A21FBEF002DB3D3 /* LoggedInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeSelectionViewController.swift; sourceTree = "<group>"; };
 		E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestsMainTableViewController.swift; sourceTree = "<group>"; };
 		E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */,
 				E56F71251A1DBB4A00E75A47 /* SideBar.swift */,
 				E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */,
+				E5BDC3E71A21FBEF002DB3D3 /* LoggedInView.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
+				E5BDC3E81A21FBEF002DB3D3 /* LoggedInView.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
 				E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */,
 				E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */,

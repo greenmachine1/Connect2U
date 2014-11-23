@@ -16,11 +16,14 @@ class LoggedIn: UIViewController,SideBarDelegate {
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     var personSelected:Int?
-    
     var colorPalette = ColorPalettes()
-    
     var tempBoolToggle:Bool = true
     
+    // the outter circle //
+    //var circle:CAShapeLayer = CAShapeLayer()
+    var loggedInView:LoggedInView = LoggedInView()
+    
+
     // the sidebar //
     var sideBar:SideBar  = SideBar()
     
@@ -33,28 +36,6 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
     
         // setting the colors for the view //
@@ -71,7 +52,7 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.view.addSubview(meButton!)
+
         
         
         // the current location of meButton //
@@ -83,33 +64,25 @@ class LoggedIn: UIViewController,SideBarDelegate {
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
+
+
+
         
         
+        
+        
+        
+        // creation of the larger circle //
+        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+
         
         
         
         
         // adding this to the subview //
         self.view.addSubview(nameLabelForMe)
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        self.view.addSubview(meButton!)
+ 
     }
     
     
