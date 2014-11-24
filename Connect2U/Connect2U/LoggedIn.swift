@@ -99,9 +99,16 @@ class LoggedIn: UIViewController,SideBarDelegate {
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests)
         sideBar.delegate = self
         
+    }
+    
+    
+    
+    
+    
+    override func viewDidDisappear(animated: Bool) {
+        sideBar.fromFriendsButton(false)
         
-        
-        
+        tempBoolToggle = true
     }
     
     
@@ -116,10 +123,6 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         // takes you the user to your personal settings //
         let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-        
-        // setting the index number in the next view //
-        //aboutViewController.personIndex = index
-        //aboutViewController.listOfPeoplesNames = listOfFriends[index]
         
         
         // sending over the list of names along with the index
