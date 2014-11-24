@@ -69,11 +69,19 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
-        for(var i = 1; i < 7; i++){
+        for(var i = 1; i < 4; i++){
             
-        
+            
+            
+            
+            
+            
             // this is the angle //
+            // dividing the circle by the amount of pictures present //
             var division:Double = 360.0 / 4.0
+            
+            
+            
             
         
             // x and y values //
@@ -86,7 +94,7 @@ class LoggedInView: NSObject {
         
             var otherPersonButton:UIButton = UIButton(frame: CGRect(x:locationOfCircle!.x + CGFloat(x), y:locationOfCircle!.y + CGFloat(y), width:100.0, height:100.0))
             
-            otherPersonButton.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor

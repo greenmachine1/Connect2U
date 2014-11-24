@@ -104,7 +104,9 @@ class LoggedIn: UIViewController,SideBarDelegate {
     
     
     
+
     
+    // dismisses the sidebar //
     override func viewDidDisappear(animated: Bool) {
         sideBar.fromFriendsButton(false)
         
