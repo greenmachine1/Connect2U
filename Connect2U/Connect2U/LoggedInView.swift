@@ -69,11 +69,12 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
-        for(var i = 1; i < 4; i++){
+        for(var i = 1; i < peopleArray?.count; i++){
             
+            // count into a Double //
+            var count:Int = Int(peopleArray!.count)
             
-            
-            
+            var doubleCount:Double = Double(count)
             
             
             // this is the angle //
@@ -81,9 +82,6 @@ class LoggedInView: NSObject {
             var division:Double = 360.0 / 4.0
             
             
-            
-            
-        
             // x and y values //
             var x = Double(circleRadius! * 1.5) * cos(division * Double(i))
             var y = Double(circleRadius! * 1.5) * sin(division * Double(i))
