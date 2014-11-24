@@ -17,6 +17,8 @@ class LoggedIn: UIViewController,SideBarDelegate {
     var meButtonLocation:CGPoint?
     var personSelected:Int?
     var colorPalette = ColorPalettes()
+    
+    
     var tempBoolToggle:Bool = true
     
     // the outter circle //
@@ -96,6 +98,10 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests)
         sideBar.delegate = self
+        
+        
+        
+        
     }
     
     
@@ -125,6 +131,8 @@ class LoggedIn: UIViewController,SideBarDelegate {
         self.navigationController?.pushViewController(aboutViewController, animated: true)
         
     }
+    
+
     
     
     
