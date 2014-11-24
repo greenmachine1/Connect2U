@@ -79,6 +79,10 @@ class LoggedIn: UIViewController,SideBarDelegate {
         
         
         
+        
+        
+        
+        
         // adding this to the subview //
         self.view.addSubview(nameLabelForMe)
         self.view.addSubview(meButton!)

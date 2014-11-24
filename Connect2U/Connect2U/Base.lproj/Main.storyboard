@@ -267,9 +267,6 @@
                                 <state key="normal" title="See Whos Around You">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="broadCastOnClick:" destination="DFv-cq-0J2" eventType="touchUpInside" id="txF-Bt-oyT"/>
-                                </connections>
                             </button>
                         </subviews>
                         <constraints>
