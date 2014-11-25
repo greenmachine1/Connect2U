@@ -29,6 +29,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     }
 
@@ -46,6 +55,34 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // sets all the colors for the view
     func setColors(){
         

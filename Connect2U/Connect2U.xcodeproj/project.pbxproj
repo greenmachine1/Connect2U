@@ -15,8 +15,10 @@
 		E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */; };
 		E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */; };
 		E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71251A1DBB4A00E75A47 /* SideBar.swift */; };
-		E5898E771A25391000706649 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA71A12E9C800972580 /* Bolts.framework */; };
-		E5898E781A25391000706649 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA81A12E9C800972580 /* Parse.framework */; };
+		E5898E7E1A25397700706649 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7A1A25397700706649 /* Bolts.framework */; };
+		E5898E7F1A25397700706649 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7B1A25397700706649 /* Parse.framework */; };
+		E5898E801A25397700706649 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */; };
+		E5898E811A25397800706649 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7D1A25397700706649 /* ParseUI.framework */; };
 		E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */; };
 		E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */; };
 		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
@@ -68,6 +70,10 @@
 		E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalettes.swift; sourceTree = "<group>"; };
 		E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		E56F71251A1DBB4A00E75A47 /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		E5898E7A1A25397700706649 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		E5898E7B1A25397700706649 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
+		E5898E7D1A25397700706649 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		E5AC1CEF1A1C09AE00517A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connected_2_U_Log.png; sourceTree = "<group>"; };
 		E5BC884D1A1C705400D3D0A5 /* face0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face0.png; sourceTree = "<group>"; };
@@ -111,18 +117,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5898E771A25391000706649 /* Bolts.framework in Frameworks */,
-				E5898E781A25391000706649 /* Parse.framework in Frameworks */,
 				E5E6BCB51A12EA1800972580 /* AudioToolbox.framework in Frameworks */,
 				E5E6BCB61A12EA1800972580 /* CFNetwork.framework in Frameworks */,
+				E5898E811A25397800706649 /* ParseUI.framework in Frameworks */,
 				E5E6BCB71A12EA1800972580 /* CoreGraphics.framework in Frameworks */,
 				E5E6BCB81A12EA1800972580 /* CoreLocation.framework in Frameworks */,
 				E5E6BCB91A12EA1800972580 /* libz.dylib in Frameworks */,
 				E5E6BCBA1A12EA1800972580 /* MobileCoreServices.framework in Frameworks */,
 				E5E6BCBB1A12EA1800972580 /* QuartzCore.framework in Frameworks */,
 				E5E6BCBC1A12EA1800972580 /* Security.framework in Frameworks */,
+				E5898E7E1A25397700706649 /* Bolts.framework in Frameworks */,
 				E5E6BCBD1A12EA1800972580 /* StoreKit.framework in Frameworks */,
+				E5898E7F1A25397700706649 /* Parse.framework in Frameworks */,
 				E5E6BCBE1A12EA1800972580 /* SystemConfiguration.framework in Frameworks */,
+				E5898E801A25397700706649 /* ParseFacebookUtils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +144,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E5898E791A25397700706649 /* parse-library-1.5.0 */ = {
+			isa = PBXGroup;
+			children = (
+				E5898E7A1A25397700706649 /* Bolts.framework */,
+				E5898E7B1A25397700706649 /* Parse.framework */,
+				E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */,
+				E5898E7D1A25397700706649 /* ParseUI.framework */,
+			);
+			path = "parse-library-1.5.0";
+			sourceTree = "<group>";
+		};
 		E5BFB5441A246560004C82FA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +187,7 @@
 		E5E6BC791A12E86000972580 = {
 			isa = PBXGroup;
 			children = (
+				E5898E791A25397700706649 /* parse-library-1.5.0 */,
 				E5E6BCAB1A12EA1800972580 /* AudioToolbox.framework */,
 				E5E6BCAC1A12EA1800972580 /* CFNetwork.framework */,
 				E5E6BCAD1A12EA1800972580 /* CoreGraphics.framework */,
@@ -494,6 +514,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
+					"$(PROJECT_DIR)/parse-library-1.5.0",
 				);
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -511,6 +532,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
+					"$(PROJECT_DIR)/parse-library-1.5.0",
 				);
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

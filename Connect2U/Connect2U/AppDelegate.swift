@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 
 @UIApplicationMain
@@ -15,6 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        
+        // setting up for the Parse Connect2U project side //
+        Parse.setApplicationId("JSfr6Q2SbXv3oipCnuGFYOyJBlmB4bix5OFQHciz", clientKey: "4U9EqhEhNDpydFnrzXWIEM998Lmx3Z1zXyBOA1ya")
+        
+        // sending analytics when the app is launched //
+        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions) { (did:Bool, error:NSError!) -> Void in
+            if(error != nil){
+                println("\(error)")
+            }
+        }
+        
     
         return true
     }

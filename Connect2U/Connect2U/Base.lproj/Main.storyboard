@@ -53,7 +53,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DP9-Mk-5EK" kind="push" id="mhk-aF-oGz"/>
+                                    <segue destination="DP9-Mk-5EK" kind="push" id="IJW-VQ-TKt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -478,30 +478,36 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9q-7e-cb4">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9q-7e-cb4">
                                 <rect key="frame" x="16" y="246" width="382" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FtM-Hb-f71">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FtM-Hb-f71">
                                 <rect key="frame" x="16" y="337" width="382" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-AX-5Pu">
-                                <rect key="frame" x="16" y="414" width="382" height="51"/>
+                                <rect key="frame" x="16" y="497" width="382" height="51"/>
                                 <state key="normal" title="Signup!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="qIh-1R-409" kind="push" id="jH4-Rr-mOF"/>
+                                    <action selector="signUpOnClick:" destination="DP9-Mk-5EK" eventType="touchUpInside" id="9Op-2h-4el"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TjE-AI-g36">
+                                <rect key="frame" x="16" y="426" width="382" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="New Account" id="cbv-lr-ZSd"/>
                     <connections>
                         <outlet property="passWord" destination="FtM-Hb-f71" id="Y9O-5Z-YBy"/>
+                        <outlet property="secondPassword" destination="TjE-AI-g36" id="g3G-bk-AJF"/>
                         <outlet property="signUpButton" destination="NBf-AX-5Pu" id="KCF-0P-1gw"/>
                         <outlet property="userName" destination="Z9q-7e-cb4" id="EwK-BF-x5o"/>
                     </connections>
