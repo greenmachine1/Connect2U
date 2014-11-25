@@ -30,6 +30,11 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
     
+    
+    
+    
+    var peopleArray:[String:AnyObject]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +45,25 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         // setting the colors for the view //
         self.setColors()
 
+        
+        
+        
+        
+        var personClass:PersonClass = PersonClass(name: "Cory", picture: "no picture", gender: "Male", interests: listOfFriends)
+        
+        peopleArray = ["Joe": personClass]
+        
+        println("\(peopleArray!.count)")
+        
+        
+        
+        // this is how you get to methods and properties within a class inside of an array //
+        var classThingy: PersonClass? = peopleArray!["Joe"] as? PersonClass
+        
+        println("\(classThingy!.pictureString!)")
+        
+        
+        
         
         
         

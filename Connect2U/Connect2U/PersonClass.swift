@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PersonClass: NSObject {
+class PersonClass:NSObject{
     
     var nameString:String?
     var pictureString:String?
@@ -30,8 +30,5 @@ class PersonClass: NSObject {
         genderString = gender
         interestsArray = interests
     }
-    
-    
-    
     
 }
