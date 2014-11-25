@@ -49,9 +49,14 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         
         
+        // going to be using all of this for this project.... //
         var personClass:PersonClass = PersonClass(name: "Cory", picture: "no picture", gender: "Male", interests: listOfFriends)
         
-        peopleArray = ["Joe": personClass]
+        var newPersonClass:PersonClass = PersonClass(name: "Steven", picture: "not a single one", gender: "Female", interests: listOfFriends)
+        
+        peopleArray = ["Joe": personClass, "Steven" : newPersonClass]
+        peopleArray!["Gary"] = newPersonClass
+        
         
         println("\(peopleArray!.count)")
         
@@ -59,8 +64,15 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         // this is how you get to methods and properties within a class inside of an array //
         var classThingy: PersonClass? = peopleArray!["Joe"] as? PersonClass
+        var newClassThingy: PersonClass? = peopleArray!["Steven"] as? PersonClass
+        var newClassThingyGary: PersonClass? = peopleArray!["Gary"] as? PersonClass
+        
         
         println("\(classThingy!.pictureString!)")
+        println("\(newClassThingy!.pictureString!)")
+        println("\(newClassThingyGary!.pictureString!)")
+        
+        println("\(classThingy!.interestsArray!)")
         
         
         

@@ -132,6 +132,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E5BFB5441A246560004C82FA /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
+				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
+				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		E5BFB5451A246579004C82FA /* Side_bar */ = {
+			isa = PBXGroup;
+			children = (
+				E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */,
+				E56F71251A1DBB4A00E75A47 /* SideBar.swift */,
+			);
+			name = Side_bar;
+			sourceTree = "<group>";
+		};
+		E5BFB5461A246594004C82FA /* Personal_info */ = {
+			isa = PBXGroup;
+			children = (
+				E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */,
+				E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */,
+				E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */,
+			);
+			name = Personal_info;
+			sourceTree = "<group>";
+		};
 		E5E6BC791A12E86000972580 = {
 			isa = PBXGroup;
 			children = (
@@ -175,14 +204,9 @@
 				E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */,
 				E5238D461A18A2A400971A24 /* LoggedIn.swift */,
 				E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */,
-				E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */,
-				E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */,
-				E5BE00AD1A1D32AE00543FE8 /* InterestsMainTableViewController.swift */,
-				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
-				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
-				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
-				E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */,
-				E56F71251A1DBB4A00E75A47 /* SideBar.swift */,
+				E5BFB5461A246594004C82FA /* Personal_info */,
+				E5BFB5441A246560004C82FA /* Chat */,
+				E5BFB5451A246579004C82FA /* Side_bar */,
 				E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */,
 				E5BDC3E71A21FBEF002DB3D3 /* LoggedInView.swift */,
 				E5BFB5421A243ACB004C82FA /* PersonClass.swift */,
