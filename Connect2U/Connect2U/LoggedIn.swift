@@ -20,16 +20,13 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     
     var tempBoolToggle:Bool = true
-    
-    // the outter circle //
-    //var circle:CAShapeLayer = CAShapeLayer()
     var loggedInView:LoggedInView = LoggedInView()
     
 
     // the sidebar //
     var sideBar:SideBar  = SideBar()
     
-    var listOfNamesArray:[String] = ["Cory","Sue", "Kevin", "James", "George"]
+    var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
     
@@ -44,6 +41,11 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         self.setColors()
 
         
+        
+        
+        
+        
+        
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
         meButton!.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
@@ -52,6 +54,10 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
         meButton!.clipsToBounds = true
         
+        
+        
+        
+        // this is going to have to change //
         meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
@@ -62,7 +68,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         // start of the label //
         var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe.text = listOfNamesArray[0]
+        nameLabelForMe.text = "Cory"
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
@@ -103,6 +109,12 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     // part of the LoggedInView, this brings back the index and all the names array //
     func didClickOnUser(index: Int, nameOfPerson: Array<String>) {
         println("name of person array \(nameOfPerson[index])")
+        
+        
+        // setting which user got selected //
+        personSelected = index
+        
+        self.showAlert()
     }
     
     

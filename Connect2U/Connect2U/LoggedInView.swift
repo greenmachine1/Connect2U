@@ -85,7 +85,7 @@ class LoggedInView: NSObject {
             // creation of the picture buttons //
             var otherPersonButton:UIButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
             
-            otherPersonButton.setImage(UIImage(named: "face\(0).png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
