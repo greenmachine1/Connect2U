@@ -15,6 +15,8 @@
 		E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */; };
 		E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */; };
 		E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71251A1DBB4A00E75A47 /* SideBar.swift */; };
+		E5898E771A25391000706649 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA71A12E9C800972580 /* Bolts.framework */; };
+		E5898E781A25391000706649 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCA81A12E9C800972580 /* Parse.framework */; };
 		E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */; };
 		E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */; };
 		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
@@ -109,6 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5898E771A25391000706649 /* Bolts.framework in Frameworks */,
+				E5898E781A25391000706649 /* Parse.framework in Frameworks */,
 				E5E6BCB51A12EA1800972580 /* AudioToolbox.framework in Frameworks */,
 				E5E6BCB61A12EA1800972580 /* CFNetwork.framework in Frameworks */,
 				E5E6BCB71A12EA1800972580 /* CoreGraphics.framework in Frameworks */,
