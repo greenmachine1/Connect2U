@@ -260,7 +260,7 @@
                                 </items>
                             </tabBar>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VF-KP-1L3">
-                                <rect key="frame" x="16" y="573" width="382" height="46"/>
+                                <rect key="frame" x="16" y="670" width="382" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="rAN-Sn-uhM"/>
                                 </constraints>

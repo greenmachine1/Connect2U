@@ -43,11 +43,8 @@ class LoggedInView: NSObject {
         super.init()
         
         circleRadius = CGFloat(circleSize)
-        
         locationOfCircle = location
-        
         mainView = callingView
-        
         peopleArray = otherPeople
         
         self.createCircle()
@@ -59,13 +56,16 @@ class LoggedInView: NSObject {
     // creation of the main circle //
     func createCircle(){
         
-        circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 50, locationOfCircle!.y - 50, CGFloat(2.0 * circleRadius!), CGFloat(2.0 * circleRadius!)), cornerRadius: CGFloat(circleRadius!)).CGPath
+        circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 100,
+            locationOfCircle!.y - 100, CGFloat(3.0 * circleRadius!),
+            CGFloat(3.0 * circleRadius!)),
+            cornerRadius: CGFloat(circleRadius!)).CGPath
+        
         
         // the fill color //
         circle.fillColor = colorPalette.darkGreenColor.CGColor
      
         self.mainView.layer.addSublayer(circle)
-  
     }
     
 
@@ -85,18 +85,61 @@ class LoggedInView: NSObject {
             // creation of the picture buttons //
             var otherPersonButton:UIButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
             
-            otherPersonButton.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(0).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
             otherPersonButton.clipsToBounds = true
             otherPersonButton.tag = i
-        
             otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
             
             
+
+            
+            
+            // creating the name label //
+            var personLabel:UILabel = UILabel()
+            var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+            
+            personLabel.text = "\(peopleArray![i])"
+            personLabel.textColor = UIColor.blackColor()
+            personLabel.sizeToFit()
+            personLabel.layer.cornerRadius = 5.0
+            personLabel.clipsToBounds = true
+            
+            // getting the resized frame //
+            var personLabelFrame:CGRect = personLabel.frame
+            
+            
+            // getting the exact center of the circle and putting a label there... slightly below center //
+            personLabel.frame = CGRect(x: x + Double((otherPersonButton.frame.width / 2) - personLabelFrame.width / 2), y: y + Double((otherPersonButton.frame.size.height / 2) + 15.0), width: Double(personLabel.frame.size.width), height: Double(personLabel.frame.size.height))
+
+            personLabel.backgroundColor = whiteColorWithOpacity
+            personLabel.textAlignment = .Center
+            
+            
+            
+            
+            
+            
+            
+            
+            // creating a layer behind the persons profile pic //
+            var circleAroundPeople:CAShapeLayer = CAShapeLayer()
+            
+            circleAroundPeople.path = UIBezierPath(roundedRect: CGRectMake(CGFloat(x - 5.0) ,
+                CGFloat(y - 5.0), CGFloat(1.1 * circleRadius!),
+                CGFloat(1.1 * circleRadius!)),
+                cornerRadius: CGFloat(circleRadius!)).CGPath
+            
+            circleAroundPeople.fillColor = colorPalette.lightBlueColor.CGColor
+            
+    
+            self.mainView.layer.addSublayer(circleAroundPeople)
             
             self.mainView.addSubview(otherPersonButton)
+            self.mainView.addSubview(personLabel)
+
         }
     }
     
