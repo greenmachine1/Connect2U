@@ -99,7 +99,7 @@ class LoggedInView: NSObject {
             
             // creating the name label //
             var personLabel:UILabel = UILabel()
-            var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+            var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
             
             personLabel.text = "\(peopleArray![i])"
             personLabel.textColor = UIColor.blackColor()
@@ -112,7 +112,7 @@ class LoggedInView: NSObject {
             
             
             // getting the exact center of the circle and putting a label there... slightly below center //
-            personLabel.frame = CGRect(x: x + Double((otherPersonButton.frame.width / 2) - personLabelFrame.width / 2), y: y + Double((otherPersonButton.frame.size.height / 2) + 15.0), width: Double(personLabel.frame.size.width), height: Double(personLabel.frame.size.height))
+            personLabel.frame = CGRect(x: x + Double((otherPersonButton.frame.width / 2) - personLabelFrame.width / 2), y: y + Double((otherPersonButton.frame.size.height / 2) - 40.0), width: Double(personLabel.frame.size.width), height: Double(personLabel.frame.size.height))
 
             personLabel.backgroundColor = whiteColorWithOpacity
             personLabel.textAlignment = .Center

@@ -29,7 +29,6 @@ class PersonClass: NSObject {
         pictureString = picture
         genderString = gender
         interestsArray = interests
-        
     }
     
     
