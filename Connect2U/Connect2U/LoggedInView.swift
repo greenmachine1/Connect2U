@@ -8,6 +8,15 @@
 
 import UIKit
 
+// creating a new sidebar delegate //
+// one required function and 2 optional //
+@objc protocol CircleDelegate{
+    
+    // function required for implementing this delegate //
+    func didClickOnUser(index:Int, nameOfPerson:Array<String>)
+    
+}
+
 
 class LoggedInView: NSObject {
     
@@ -16,10 +25,10 @@ class LoggedInView: NSObject {
     let colorPalette = ColorPalettes()
     let mainView:UIView!
     let circle:CAShapeLayer = CAShapeLayer()
-    
-
-    
     var peopleArray:Array<String>?
+    
+    // delegate variable //
+    var delegate:CircleDelegate?
     
     
     
@@ -43,7 +52,6 @@ class LoggedInView: NSObject {
         
         self.createCircle()
         
-        self.createOtherPeoplePictures()
     }
 
 
@@ -52,9 +60,6 @@ class LoggedInView: NSObject {
     func createCircle(){
         
         circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 50, locationOfCircle!.y - 50, CGFloat(2.0 * circleRadius!), CGFloat(2.0 * circleRadius!)), cornerRadius: CGFloat(circleRadius!)).CGPath
-        
-        println("location of circle : x : \(locationOfCircle!.x) y : \(locationOfCircle!.y)")
-        
         
         // the fill color //
         circle.fillColor = colorPalette.darkGreenColor.CGColor
@@ -69,49 +74,44 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
-        for(var i = 1; i < peopleArray?.count; i++){
+        for(var i = 0; i < peopleArray!.count; i++){
             
-            // count into a Double //
-            var count:Int = Int(peopleArray!.count)
-            
-            var doubleCount:Double = Double(count)
-            
-            
-            // this is the angle //
-            // dividing the circle by the amount of pictures present //
-            var division:Double = 360.0 / 4.0
+    
+            // placement around the main circle //
+            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray!.count))
+            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray!.count))
             
             
-            // x and y values //
-            var x = Double(circleRadius! * 1.5) * cos(division * Double(i))
-            var y = Double(circleRadius! * 1.5) * sin(division * Double(i))
+            // creation of the picture buttons //
+            var otherPersonButton:UIButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
             
-            println("\(x):\(y)")
-            
-            
-        
-            var otherPersonButton:UIButton = UIButton(frame: CGRect(x:locationOfCircle!.x + CGFloat(x), y:locationOfCircle!.y + CGFloat(y), width:100.0, height:100.0))
-            
-            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
             otherPersonButton.clipsToBounds = true
+            otherPersonButton.tag = i
         
+            otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            
+            
             self.mainView.addSubview(otherPersonButton)
-        
         }
+    }
+    
+    
+    
+    // what happens when a person is clicked //
+    func personClicked(sender:UIButton){
         
+        var personClickedOnIndex:Int = Int(sender.tag)
         
-        
-        
-        
-        
+        // sending the info back to the LoggedIn View //
+        delegate?.didClickOnUser(personClickedOnIndex, nameOfPerson: peopleArray!)
     }
     
     
     
     
-
-
 }

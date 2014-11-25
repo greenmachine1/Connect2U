@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LoggedIn: UIViewController,SideBarDelegate {
+class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
@@ -77,7 +77,7 @@ class LoggedIn: UIViewController,SideBarDelegate {
         // creation of the larger circle with names around it //
         loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: listOfNamesArray)
 
-        
+        loggedInView.delegate = self
         
         
         
@@ -90,6 +90,25 @@ class LoggedIn: UIViewController,SideBarDelegate {
         self.view.addSubview(meButton!)
  
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // part of the LoggedInView, this brings back the index and all the names array //
+    func didClickOnUser(index: Int, nameOfPerson: Array<String>) {
+        println("name of person array \(nameOfPerson[index])")
+    }
+    
+    
+    
+    
+    
     
     
     // making sure the view has loaded before setting the side bar... //
@@ -287,49 +306,9 @@ class LoggedIn: UIViewController,SideBarDelegate {
     @IBAction func broadCastOnClick(sender: UIButton) {
         
         
-        // the other person button //
-        // this simulates finding people around you //
-        // in its final iteration, there will be an array of objects that hold //
-        // the persons data and will iterate through it all //
-        for(var i = 0; i < 4; i++){
-            
-            var tempIncrement:Double = Double(i) * 105.0
-            var numberFloat:CGFloat = CGFloat(tempIncrement)
-            
-            // creation and positioning of the other persons button //
-            var otherPersonButton:UIButton = UIButton(frame: CGRectMake(numberFloat, meButtonLocation!.y - 140, 100.0, 100.0))
-            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
-            otherPersonButton.layer.cornerRadius = 50
-            otherPersonButton.layer.borderWidth = 3.0
-            otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
-            otherPersonButton.clipsToBounds = true
-            otherPersonButton.tag = i + 1
-            otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
-            
-            // inserting the view just under the side bar //
-            self.view.insertSubview(otherPersonButton, atIndex: 2)
-            
-            
-            // the current location of meButton //
-            var otherPersonButtonLocation:CGPoint = CGPoint(x: otherPersonButton.frame.origin.x, y: otherPersonButton.frame.origin.y)
-            
-            // label for other person //
-            var labelForOtherPerson:UILabel = UILabel(frame: CGRectMake(otherPersonButtonLocation.x, otherPersonButtonLocation.y + 60, 100.0, 100.0))
-            labelForOtherPerson.text = listOfNamesArray[i + 1]
-            labelForOtherPerson.textColor = UIColor.whiteColor()
-            labelForOtherPerson.textAlignment = .Center
-        
-            
-            // inserting the view just under the side bar //
-            self.view.insertSubview(labelForOtherPerson, atIndex: 2)
-            
-            
-            
-            
-        }
-        
-        
-        
+        // shows the other people //
+        loggedInView.createOtherPeoplePictures()
+
     }
     
     
@@ -341,8 +320,6 @@ class LoggedIn: UIViewController,SideBarDelegate {
     
     // setting colors for the view //
     func setColors(){
-        
-        
         
         self.view.backgroundColor = colorPalette.lightBlueColor
         
