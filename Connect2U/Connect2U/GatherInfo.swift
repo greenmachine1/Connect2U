@@ -12,7 +12,6 @@ import Parse
 
 @objc protocol ReturnInfo{
     
-    
     // returns an array of all the users //
     func returnAllUsers(users:Array<AnyObject>)
     
@@ -29,12 +28,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     // getting the current user //
     var currentUser = PFUser.currentUser()
     var delegate:ReturnInfo?
-    
-    
-    // all the users //
-    //var allUsers:Array<AnyObject>?
-    
-    
+
     override init() {
         super.init()
         
@@ -89,8 +83,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                     if(success == true){
 
                         // see if there are anyone else around you //
-                        //self.queryTheServer()
-                        
                         var query = PFUser.query()
                         query.whereKey("long", containsString: "\(self.longitude)")
                         query.whereKey("lat", containsString: "\(self.latitude)")

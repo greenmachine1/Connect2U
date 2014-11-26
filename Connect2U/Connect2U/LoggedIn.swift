@@ -50,23 +50,15 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
-        // setting the colors for the view //
         self.setColors()
         
         // setting up the current user info //
         self.settingUpTheUserInfo()
         
         locationData.delegate = self
-        
-        
-        
-        // basically all I need from the main user are these two pieces of info //
-        println("\(currentUserName!)")
-        println("\(currentUserPic!)")
 
 
-        
-        
+
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
         meButton!.setImage(UIImage(named: currentUserPic!), forState: UIControlState.Normal)
@@ -134,6 +126,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
     
     // part of the LoggedInView, this brings back the index and all the names array //
     func didClickOnUser(index: Int, nameOfPerson: Array<AnyObject>) {
+        
         println("name of person array \(nameOfPerson[index])")
         
         // setting which user got selected //
@@ -283,6 +276,12 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
     
     
     // this shows the alert giving the person the option to cancel, chat, or view profile //
+    
+    
+    
+    
+    // about the person needs to change //
+    
     func showAlert(){
         
         
@@ -292,8 +291,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
             // setting the index number in the next view //
-            aboutViewController.personIndex = self.personSelected
-            aboutViewController.listOfPeoplesNames = self.listOfNamesArray
+            //aboutViewController.personIndex = self.personSelected
+            //aboutViewController.listOfPeoplesNames = self.listOfNamesArray
             
             aboutViewController.personsPic = "face_100x100.png"
             
@@ -312,8 +311,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
                 let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
                 // setting the index number in the next view //
-                aboutViewController.personIndex = self.personSelected
-                aboutViewController.listOfPeoplesNames = self.listOfNamesArray
+                //aboutViewController.personIndex = self.personSelected
+                //aboutViewController.listOfPeoplesNames = self.listOfNamesArray
                 aboutViewController.personsPic = "face\(self.personSelected! - 1).png"
                 
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
@@ -348,10 +347,6 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         if(tempBoolToggleForBroadCast == false){
         
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
-        
-            // shows the other people //
-            //loggedInView.createOtherPeoplePictures()
-        
         
             // turns on the location updates //
             locationData.turnOnUpdates()

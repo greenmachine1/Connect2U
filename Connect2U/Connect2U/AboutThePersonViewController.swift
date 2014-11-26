@@ -46,9 +46,9 @@ class AboutThePersonViewController: UIViewController {
         picture.layer.borderWidth = 3.0
         
         // setting the picture of the user //
-        picture.image = UIImage(named: personsPic)
+        //picture.image = UIImage(named: personsPic)
         
-        nameLabel.text = listOfPeoplesNames[personIndex]
+        //nameLabel.text = listOfPeoplesNames[0]
         
         
         
@@ -67,6 +67,7 @@ class AboutThePersonViewController: UIViewController {
         
         
         // for demonstration purposes, this is so we dont get an error //
+        /*
         if(personIndex >= 4){
             personIndex = 4
         }
@@ -132,8 +133,9 @@ class AboutThePersonViewController: UIViewController {
         
         
         
-        
+*/
     }
+
     
     
     
