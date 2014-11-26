@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07T-cF-Lzq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07T-cF-Lzq">
                                 <rect key="frame" x="23" y="380" width="368" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -30,10 +30,10 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DFv-cq-0J2" kind="push" id="uRS-G0-748"/>
+                                    <action selector="logInClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7Id-8T-QwG"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-x9-Y3S">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-x9-Y3S">
                                 <rect key="frame" x="23" y="429" width="368" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -243,7 +243,7 @@
         <!--Logged in-->
         <scene sceneID="4V9-m1-oZv">
             <objects>
-                <viewController title="Logged in" id="DFv-cq-0J2" customClass="LoggedIn" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" title="Logged in" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DFv-cq-0J2" customClass="LoggedIn" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cG7-Md-vja"/>
                         <viewControllerLayoutGuide type="bottom" id="R0S-ps-kuH"/>
@@ -528,7 +528,7 @@
         <!--Detail-->
         <scene sceneID="BTC-df-giN">
             <objects>
-                <viewController id="qIh-1R-409" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupInfo" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qIh-1R-409" customClass="MoreInfoViewControllerContainerViewController" customModule="Connect2U" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gge-Br-nn6"/>
                         <viewControllerLayoutGuide type="bottom" id="pOx-B6-gVP"/>
@@ -891,12 +891,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="yZL-2Y-q3f"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Qgf-aI-MlM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zdk-pA-5sZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="186.40000000000001" y="397.60000000000002"/>
+            <point key="canvasLocation" x="626" y="-493"/>
         </scene>
     </scenes>
     <resources>

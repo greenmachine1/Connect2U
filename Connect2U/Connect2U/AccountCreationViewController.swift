@@ -97,27 +97,41 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         var alert:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         
-        // creates the Ok button that essentially does nothing //
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
-            
-        }))
-        
+        // if coming from a good login //
+        // this presents the user with more options //
         if(cameFromGoodLogin == true){
+            // creates the Ok button that essentially does nothing //
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
             
+                // need to go to the personal info page
+                // takes you the user to your personal settings //
+                let setupInfo = self.storyboard?.instantiateViewControllerWithIdentifier("SetupInfo") as MoreInfoViewControllerContainerViewController
+            
+                self.navigationController?.pushViewController(setupInfo, animated: true)
+  
+            }))
+            
+            // the no button essentially takes the user to the main page //
             alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: { action in
                 
-                println("in here")
+                // need to go to the main page with the user logged in //
+                let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+                
+                self.navigationController?.pushViewController(login, animated: true)
                 
             }))
             
         }
-        
-        
-        
+            
+        else{
+            // creates the Ok button that essentially does nothing //
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                
+            }))
+            
+            
+        }
         self.presentViewController(alert, animated: true, completion: nil)
-        
-        
-        
     }
     
     
@@ -134,7 +148,6 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
             
             // making the second textfield blank //
             secondPassword.text = ""
-            
         }
     }
     
@@ -168,10 +181,12 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     // the actual parse sign up //
     func userSignup(userNameString:String, passwordString:String){
         
+        
+        
+        
         var user = PFUser()
         user.username = userNameString
         user.password = passwordString
-        
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
             // successful log in //
@@ -194,30 +209,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                     self.secondPassword.text = ""
                     self.secondPassword.hidden = true
                 }
-                
-                
             }
-            
-            
         }
-        
     }
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     // setting colors for the view //
@@ -231,5 +225,4 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         signUpButton.tintColor = colorPalette.whiteColor
         
     }
-
 }

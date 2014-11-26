@@ -10,6 +10,7 @@
 // this is the log in screen that allows the users to log in or create a new account //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -29,15 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
     }
 
@@ -54,8 +46,69 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    
+    
+    // log in //
+    @IBAction func logInClick(sender: UIButton) {
+        
+        // if there is info in the fields, attempt to verify //
+        if( !(userNameTextField.text.isEmpty) && !(passwordTextField.text.isEmpty)){
+            
+            PFUser.logInWithUsernameInBackground(userNameTextField.text, password: passwordTextField.text, block: { (user:PFUser!, error:NSError!) -> Void in
+                
+                // successful log in //
+                if(user != nil){
+                    
+                    // log that person in! //
+                    // need to go to the main page with the user logged in //
+                    let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+                    
+                    self.navigationController?.pushViewController(login, animated: true)
+                    
+                }else{
+                    
+                    var userInfo:String = error.userInfo!["error"] as NSString
+                    if((userInfo.rangeOfString("invalid login credentials")) != nil){
+                        
+                        self.displayMessage("No user found!", message: "Please enter a different user", cameFromNoUser:true)
+                        
+                    }
+                    
+                }
+                
+            })
+            
+        }else{
+            
+            // they probably left a field blank, this does not clear the fields //
+            self.displayMessage("Log in failed!", message: "Please enter a user name and password", cameFromNoUser:false)
+            
+            
+        }
+    }
 
     
+    
+    // displaying a message //
+    func displayMessage(title:String, message:String, cameFromNoUser:Bool){
+        
+        var alert:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+            if(cameFromNoUser == true){
+            
+                self.userNameTextField.text = ""
+                self.passwordTextField.text = ""
+            }
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
     
     
     

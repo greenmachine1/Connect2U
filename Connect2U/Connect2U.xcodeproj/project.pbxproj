@@ -19,6 +19,7 @@
 		E5898E7F1A25397700706649 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7B1A25397700706649 /* Parse.framework */; };
 		E5898E801A25397700706649 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */; };
 		E5898E811A25397800706649 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7D1A25397700706649 /* ParseUI.framework */; };
+		E5898E831A25623400706649 /* MoreInfoViewControllerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */; };
 		E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */; };
 		E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */; };
 		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
@@ -74,6 +75,7 @@
 		E5898E7B1A25397700706649 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		E5898E7D1A25397700706649 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreInfoViewControllerContainerViewController.swift; sourceTree = "<group>"; };
 		E5AC1CEF1A1C09AE00517A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connected_2_U_Log.png; sourceTree = "<group>"; };
 		E5BC884D1A1C705400D3D0A5 /* face0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face0.png; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */,
 				E5BDC3E71A21FBEF002DB3D3 /* LoggedInView.swift */,
 				E5BFB5421A243ACB004C82FA /* PersonClass.swift */,
+				E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
 				E5BE00AE1A1D32AE00543FE8 /* InterestsMainTableViewController.swift in Sources */,
+				E5898E831A25623400706649 /* MoreInfoViewControllerContainerViewController.swift in Sources */,
 				E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */,
 				E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */,
 				E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */,
