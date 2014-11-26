@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsTableViewController: UITableViewController {
 
@@ -46,7 +47,8 @@ class SettingsTableViewController: UITableViewController {
     // log out button //
     @IBAction func onLogOut(sender: AnyObject) {
         
-        println("pushed!")
+        // logs out the user from Parse //
+        PFUser.logOut()
     }
     
     

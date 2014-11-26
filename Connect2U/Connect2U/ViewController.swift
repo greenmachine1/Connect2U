@@ -30,7 +30,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
-
+        
+        self.userStillLoggedIn()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +46,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
+    
+    
+    
+    func userStillLoggedIn(){
+        
+        var currentUser = PFUser.currentUser()
+        if(currentUser != nil){
+            
+            // need to go to the main page with the user logged in //
+            let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+            
+            self.navigationController?.pushViewController(login, animated: true)
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     
     
@@ -73,20 +94,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         self.displayMessage("No user found!", message: "Please enter a different user", cameFromNoUser:true)
                         
                     }
-                    
                 }
-                
             })
             
         }else{
             
             // they probably left a field blank, this does not clear the fields //
             self.displayMessage("Log in failed!", message: "Please enter a user name and password", cameFromNoUser:false)
-            
-            
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     // displaying a message //
@@ -106,8 +132,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
-        
-        
     }
     
     
