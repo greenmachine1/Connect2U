@@ -181,12 +181,18 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     // the actual parse sign up //
     func userSignup(userNameString:String, passwordString:String){
         
-        
-        
-        
         var user = PFUser()
+        
+        // sets up the name and password but leaves the rest of the fields open //
+        // so they can come back and edit them at a later time //
         user.username = userNameString
         user.password = passwordString
+        user["gender"] = "unknown"
+        user["interests"] = ["biking","swimming","joggin","hair"]
+        user["picture"] = "face3.png"
+        user["age"] = 29
+        user["long"] = 0.0
+        user["lat"] = 0.0
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
             // successful log in //
@@ -218,11 +224,13 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     func setColors(){
         
         var colorPalette = ColorPalettes()
+        var cornerRadiusValue:CGFloat = 8.0
         
         self.view.backgroundColor = colorPalette.lightBlueColor
         
         signUpButton.backgroundColor = colorPalette.greenColor
         signUpButton.tintColor = colorPalette.whiteColor
-        
+        signUpButton.layer.cornerRadius = cornerRadiusValue
+        signUpButton.clipsToBounds = true
     }
 }

@@ -22,6 +22,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
+    @IBOutlet weak var forgotPassword: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,29 +135,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -164,6 +143,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func setColors(){
         
         var newColorPalette = ColorPalettes()
+        
+        var cornerRadiusValue:CGFloat = 8.0
         
         // background color //
         self.view.backgroundColor = newColorPalette.lightBlueColor
@@ -175,11 +156,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // color for the buttons //
         logInButton.backgroundColor = newColorPalette.greenColor
         logInButton.tintColor = newColorPalette.whiteColor
+        logInButton.layer.cornerRadius = cornerRadiusValue
+        logInButton.clipsToBounds = true
+        
+        forgotPassword.tintColor = newColorPalette.whiteColor
         
         facebookButton.tintColor = newColorPalette.whiteColor
         
         newAccountButton.backgroundColor = newColorPalette.greenColor
         newAccountButton.tintColor = newColorPalette.whiteColor
+        newAccountButton.layer.cornerRadius = cornerRadiusValue
+        newAccountButton.clipsToBounds = true
         
     }
     

@@ -14,10 +14,24 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
+    
+    // the current user //
+    var currentUser = PFUser.currentUser()
+    var currentUserName:String?
+    var currentUserAge:Int?
+    var currentUserGender:String?
+    var currentUserPic:String?
+    var currentUserInterests:Array<String>?
+    
+    
+    
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     var personSelected:Int?
     var colorPalette = ColorPalettes()
+    
+    
+    
     
     
     var tempBoolToggle:Bool = true
@@ -42,16 +56,24 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
-    
         // setting the colors for the view //
         self.setColors()
+        
+        // setting up the current user info //
+        self.settingUpTheUserInfo()
+        
+        
+        
+        // basically all I need from the main user are these two pieces of info //
+        println("\(currentUserName!)")
+        println("\(currentUserPic!)")
 
 
         
         
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
-        meButton!.setImage(UIImage(named: "face_100x100.png"), forState: UIControlState.Normal)
+        meButton!.setImage(UIImage(named: currentUserPic!), forState: UIControlState.Normal)
         meButton!.layer.cornerRadius = 50
         meButton!.layer.borderWidth = 3.0
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
@@ -71,18 +93,11 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         // start of the label //
         var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe.text = "Cory"
+        nameLabelForMe.text = currentUserName
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
 
-
-
-        
-        
-        
-        
-        
         // creation of the larger circle with names around it //
         loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: listOfNamesArray)
 
@@ -90,15 +105,27 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         
         
-        
-        
-        
-        
         // adding this to the subview //
         self.view.addSubview(nameLabelForMe)
         self.view.addSubview(meButton!)
- 
     }
+    
+    
+    
+    
+    func settingUpTheUserInfo(){
+        
+        if(currentUser != nil){
+            
+            currentUserName = currentUser.username
+            currentUserAge = currentUser["age"] as? Int
+            currentUserGender = currentUser["gender"] as? String
+            currentUserPic = currentUser["picture"] as? String
+            currentUserInterests = currentUser["interests"] as? Array
+            
+        }
+    }
+    
     
     
     

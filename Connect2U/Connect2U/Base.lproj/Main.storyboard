@@ -23,7 +23,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Maj-uG-lYv">
-                                <rect key="frame" x="23" y="505" width="368" height="40"/>
+                                <rect key="frame" x="23" y="556" width="368" height="40"/>
                                 <color key="backgroundColor" red="0.70195709709999998" green="0.97875039360000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Log In">
@@ -39,7 +39,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u77-u5-Ctk">
-                                <rect key="frame" x="125" y="553" width="164" height="30"/>
+                                <rect key="frame" x="125" y="604" width="164" height="40"/>
                                 <state key="normal" title="Sign In Using Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -47,6 +47,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Connected_2_U_Log.png" translatesAutoresizingMaskIntoConstraints="NO" id="WI7-Cs-yti">
                                 <rect key="frame" x="30" y="109" width="354" height="229"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2d-lG-Ga8">
+                                <rect key="frame" x="23" y="467" width="117" height="30"/>
+                                <state key="normal" title="Forgot Password">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CH-yP-IQk">
                                 <rect key="frame" x="23" y="676" width="368" height="40"/>
                                 <state key="normal" title="Create a new account">
@@ -62,6 +68,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="facebookButton" destination="u77-u5-Ctk" id="C8r-vy-DKl"/>
+                        <outlet property="forgotPassword" destination="N2d-lG-Ga8" id="KAV-LI-1kG"/>
                         <outlet property="logInButton" destination="Maj-uG-lYv" id="FCP-t5-mvq"/>
                         <outlet property="newAccountButton" destination="8CH-yP-IQk" id="rdP-82-1xV"/>
                         <outlet property="passwordTextField" destination="z5i-x9-Y3S" id="OCJ-En-ZBD"/>
@@ -494,21 +501,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBf-AX-5Pu">
-                                <rect key="frame" x="16" y="497" width="382" height="51"/>
+                                <rect key="frame" x="16" y="508" width="382" height="40"/>
                                 <state key="normal" title="Signup!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="signUpOnClick:" destination="DP9-Mk-5EK" eventType="touchUpInside" id="9Op-2h-4el"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SuR-yl-AMn">
-                                <rect key="frame" x="149" y="375" width="117" height="30"/>
-                                <state key="normal" title="Forgot Password">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="forgotPasswordClick:" destination="DP9-Mk-5EK" eventType="touchUpInside" id="RPC-PE-EMo"/>
                                 </connections>
                             </button>
                         </subviews>
