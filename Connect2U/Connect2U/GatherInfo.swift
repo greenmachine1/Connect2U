@@ -67,6 +67,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         
         // setting the precision of the floating values //
+        // need to adjust the precision of the double value //
+        // after testing is done //
         var longTempString = NSString(format: "%.02f", longTempDouble)
         var latTempString = NSString(format: "%.02f", latTempDouble)
         
@@ -79,7 +81,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
             
             longitude = doubleTempLongValue
             latitude = doubleTempLatValue
-            
             
             if(currentUser != nil){
                 

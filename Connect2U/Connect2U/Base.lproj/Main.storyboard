@@ -285,7 +285,7 @@
                             <constraint firstItem="HFq-HW-OOT" firstAttribute="top" secondItem="R0S-ps-kuH" secondAttribute="bottom" constant="15" id="JkO-d0-aDR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Connect2U" id="lIv-Eb-4zA">
+                    <navigationItem key="navigationItem" title="Connected2U" id="lIv-Eb-4zA">
                         <barButtonItem key="leftBarButtonItem" tag="1" title="Friends" id="pVB-ob-XcJ">
                             <connections>
                                 <action selector="friendsOnClick:" destination="DFv-cq-0J2" id="Xx2-PG-qsl"/>
