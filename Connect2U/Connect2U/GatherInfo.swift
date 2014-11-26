@@ -30,6 +30,9 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     var longitude:Double = 0.0
     var latitude:Double = 0.0
     
+    // getting the current user //
+    var currentUser = PFUser.currentUser()
+    
     
     override init() {
         super.init()
@@ -38,9 +41,11 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
     }
     
+    
+    
+
     
     
     
@@ -68,8 +73,37 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
             
             longitude = doubleTempLongValue
             latitude = doubleTempLatValue
+            
+            
+            if(currentUser != nil){
+                
+                // need to override the current users location //
+                currentUser["long"] = longitude
+                currentUser["lat"] = latitude
+                currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    
+                    
+                    // this will update the server of location for the user and upon saving //
+                    // will return all the users within the location //
+                    if(success == true){
+                        
+                        println("yup!")
+                        
+                    }
+                    
+                    
+                    
+                })
+            }
         
         }
+    }
+    
+    // starts updates //
+    func turnOnUpdates(){
+        
+        locationManager.startUpdatingLocation()
+        
     }
 
     

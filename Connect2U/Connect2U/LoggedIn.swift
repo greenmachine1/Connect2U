@@ -36,6 +36,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     var tempBoolToggle:Bool = true
     var loggedInView:LoggedInView = LoggedInView()
+    var locationData:GatherInfo = GatherInfo()
     
 
     // the sidebar //
@@ -350,6 +351,10 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         // shows the other people //
         loggedInView.createOtherPeoplePictures()
+        
+        
+        // turns on the location updates //
+        locationData.turnOnUpdates()
 
     }
     
