@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 
-class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
+class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
     
     @IBOutlet weak var broadCast: UIButton!
     
@@ -42,7 +42,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     
     
-    var peopleArray:[String:AnyObject]?
+    var peopleArray:Array<AnyObject> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +55,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         // setting up the current user info //
         self.settingUpTheUserInfo()
+        
+        locationData.delegate = self
         
         
         
@@ -93,7 +95,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
 
         // creation of the larger circle with names around it //
-        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: listOfNamesArray)
+        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: peopleArray)
 
         loggedInView.delegate = self
         
@@ -131,9 +133,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     
     // part of the LoggedInView, this brings back the index and all the names array //
-    func didClickOnUser(index: Int, nameOfPerson: Array<String>) {
+    func didClickOnUser(index: Int, nameOfPerson: Array<AnyObject>) {
         println("name of person array \(nameOfPerson[index])")
-        
         
         // setting which user got selected //
         personSelected = index
@@ -193,6 +194,23 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     }
     
 
+    
+    
+    
+    
+    
+    // this gets called everytime there is an update from the GPS //
+    // this brings back all the users in the area //
+    func returnAllUsers(users: Array<AnyObject>) {
+        
+        println("In here : \(users.count)")
+        
+        // passes the users to the circle creator! //
+        loggedInView.updatePeople(users)
+    }
+    
+    
+    
     
     
     
@@ -332,7 +350,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
         
             // shows the other people //
-            loggedInView.createOtherPeoplePictures()
+            //loggedInView.createOtherPeoplePictures()
         
         
             // turns on the location updates //

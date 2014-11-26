@@ -96,7 +96,7 @@
 		E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLeftCell.swift; sourceTree = "<group>"; };
 		E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightChatCell.swift; sourceTree = "<group>"; };
 		E5BFB5421A243ACB004C82FA /* PersonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonClass.swift; sourceTree = "<group>"; };
-		E5E6BC821A12E86000972580 /* Connected2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connected2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5E6BC891A12E86000972580 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 		E5E6BC831A12E86000972580 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E5E6BC821A12E86000972580 /* Connected2U.app */,
+				E5E6BC821A12E86000972580 /* Connect2U.app */,
 				E5E6BC971A12E86000972580 /* Connect2UTests.xctest */,
 			);
 			name = Products;
@@ -296,7 +296,7 @@
 			);
 			name = Connect2U;
 			productName = Connect2U;
-			productReference = E5E6BC821A12E86000972580 /* Connected2U.app */;
+			productReference = E5E6BC821A12E86000972580 /* Connect2U.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E5E6BC961A12E86000972580 /* Connect2UTests */ = {
@@ -530,7 +530,7 @@
 				);
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Connected2U;
+				PRODUCT_NAME = Connect2U;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -548,7 +548,7 @@
 				);
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Connected2U;
+				PRODUCT_NAME = Connect2U;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

@@ -14,18 +14,12 @@ import Parse
     
     
     // returns an array of all the users //
-    func returnAllUsers(users:Array<PFUser>)
+    func returnAllUsers(users:Array<AnyObject>)
     
 }
 
 class GatherInfo: NSObject, CLLocationManagerDelegate {
     
-    // delegate variable //
-    var returnAllUsers:ReturnInfo?
-    
-    var updateCount:Int = 0
-    
-    // allocating the location manager //
     var locationManager:CLLocationManager!
     
     // variable used to temporarily store the users location //
@@ -34,10 +28,11 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     
     // getting the current user //
     var currentUser = PFUser.currentUser()
+    var delegate:ReturnInfo?
     
     
     // all the users //
-    var allUsers:Array<PFUser>?
+    //var allUsers:Array<AnyObject>?
     
     
     override init() {
@@ -89,29 +84,65 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 currentUser["lat"] = "\(latitude)"
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     
-                    
                     // this will update the server of location for the user and upon saving //
                     // will return all the users within the location //
                     if(success == true){
+
+                        // see if there are anyone else around you //
+                        //self.queryTheServer()
                         
-                        println("yup!")
-                        
-                        // I am going to have to run this on a seperate thread //
-                        // this will be a query call to the server to check whos in the area //
                         var query = PFUser.query()
                         query.whereKey("long", containsString: "\(self.longitude)")
                         query.whereKey("lat", containsString: "\(self.latitude)")
-                        var returnedObjects = query.findObjects()
+                        query.findObjectsInBackgroundWithBlock({ (object:[AnyObject]!, error:NSError!) -> Void in
+                            
                         
-                        println("\(returnedObjects)")
-                        
-                        
-                        
+                            var objectArrayTemp:Array<AnyObject> = object
+                            
+                            // returns all the users to the delegate method //
+                            self.delegate?.returnAllUsers(objectArrayTemp)
+                            
+                        })
+
                     }
                 })
             }
         }
     }
+    
+    
+    
+    
+    // this must be done on a seperate thread //
+    func queryTheServer(){
+        
+        var returnedObjects:Array<AnyObject> = []
+        var backgroundTask:dispatch_queue_t? = dispatch_queue_create(
+            "Server Que", nil)
+        
+        // initiating the background task //
+        dispatch_async(backgroundTask!, { () -> Void in
+            
+            // this will be a query call to the server to check whos in the area //
+            var query = PFUser.query()
+            query.whereKey("long", containsString: "\(self.longitude)")
+            query.whereKey("lat", containsString: "\(self.latitude)")
+            var returnedObjects = query.findObjects()
+            
+            
+            // returns all the users to the delegate method //
+            self.delegate?.returnAllUsers(returnedObjects!)
+            
+            println("this got called")
+        })
+        
+        
+    }
+    
+    
+    
+    
+    
     
     // starts updates //
     func turnOnUpdates(){

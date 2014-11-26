@@ -13,7 +13,7 @@ import UIKit
 @objc protocol CircleDelegate{
     
     // function required for implementing this delegate //
-    func didClickOnUser(index:Int, nameOfPerson:Array<String>)
+    func didClickOnUser(index:Int, nameOfPerson:Array<AnyObject>)
     
 }
 
@@ -25,7 +25,7 @@ class LoggedInView: NSObject {
     let colorPalette = ColorPalettes()
     let mainView:UIView!
     let circle:CAShapeLayer = CAShapeLayer()
-    var peopleArray:Array<String>?
+    var peopleArray:Array<AnyObject> = []
     
     // delegate variable //
     var delegate:CircleDelegate?
@@ -39,14 +39,16 @@ class LoggedInView: NSObject {
     
     
     // custom init //
-    init(callingView:UIView, circleSize:Int , location:CGPoint, otherPeople:Array<String>){
+    init(callingView:UIView, circleSize:Int , location:CGPoint, otherPeople:Array<AnyObject>){
         super.init()
         
         circleRadius = CGFloat(circleSize)
         locationOfCircle = location
         mainView = callingView
-        peopleArray = otherPeople
         
+        if(otherPeople.count != 0){
+            peopleArray = otherPeople
+        }
         self.createCircle()
         
     }
@@ -74,12 +76,11 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
-        for(var i = 0; i < peopleArray!.count + 3; i++){
+        for(var i = 0; i < peopleArray.count; i++){
             
-    
             // placement around the main circle //
-            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray!.count + 3))
-            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray!.count + 3))
+            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray.count))
+            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray.count))
             
             
             // creation of the picture buttons //
@@ -101,7 +102,8 @@ class LoggedInView: NSObject {
             var personLabel:UILabel = UILabel()
             var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
             
-            personLabel.text = "\(peopleArray![1])"
+            
+            personLabel.text = peopleArray[i].username?
             personLabel.textColor = UIColor.blackColor()
             personLabel.sizeToFit()
             personLabel.layer.cornerRadius = 5.0
@@ -150,7 +152,21 @@ class LoggedInView: NSObject {
         var personClickedOnIndex:Int = Int(sender.tag)
         
         // sending the info back to the LoggedIn View //
-        delegate?.didClickOnUser(personClickedOnIndex, nameOfPerson: peopleArray!)
+        delegate?.didClickOnUser(personClickedOnIndex, nameOfPerson: peopleArray)
+    }
+    
+    
+    
+    
+    
+    // called after the circle has been created and anytime after the fact //
+    func updatePeople(otherPeople:Array<AnyObject>){
+    
+        self.peopleArray = otherPeople
+        
+        // refresh the circle //
+        self.createOtherPeoplePictures()
+        println("just after wards")
     }
     
     
