@@ -54,41 +54,21 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         // checking to make sure that both the username and password fields are not blank //
         if((userName.text == "") || (passWord.text == "")){
             
-            self.setUpMessage("Please enter your Email address and Password", message: "It is a requirement to sign up.")
-            
-         // send the sign up through! //
+            self.setUpMessage("Please enter your User name and Password", message: "It is a requirement to sign up.", cameFromGoodLogin: false)
+         
         }else{
             
-            
+            // send the sign up through! //
             if(passWord.text == secondPassword.text){
                 
                 
-                // send everything through ! //
-                // this is where everything gets sent through to parse //
-                // checking for the '@' symbol to be present
-                var atCharacter:String = "@"
-                var dotCharacter:String = "."
-                
-                
-                // checking to see whether the username string contains '@' and a '.' //
-                if((userName.text.rangeOfString(atCharacter) != nil) && (userName.text.rangeOfString(dotCharacter) != nil)){
-                    
-                    
-                    
-                    
-                    // really.... pass them through //
-                    
-                    
-                    
-                }else{
-                    
-                    self.setUpMessage("Please enter a correct email Address", message: "It is a requirement to sign up.")
+                // set up the user sign in //
+                self.userSignup(userName.text, passwordString: secondPassword.text)
             
-                }
-                
+        
             }else{
                 
-                self.setUpMessage("Password Incorrect", message: "Please enter the same password again")
+                self.setUpMessage("Password Incorrect", message: "Please enter the same password again", cameFromGoodLogin: false)
                 
             }
         }
@@ -112,7 +92,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     
     
     // show popup message //
-    func setUpMessage(title:String, message:String){
+    func setUpMessage(title:String, message:String, cameFromGoodLogin:Bool){
         
         var alert:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -121,6 +101,18 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
             
         }))
+        
+        if(cameFromGoodLogin == true){
+            
+            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: { action in
+                
+                println("in here")
+                
+            }))
+            
+        }
+        
+        
         
         self.presentViewController(alert, animated: true, completion: nil)
         
@@ -166,6 +158,48 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         
         textField.resignFirstResponder()
         return true
+        
+    }
+    
+    
+    
+    
+    
+    // the actual parse sign up //
+    func userSignup(userNameString:String, passwordString:String){
+        
+        var user = PFUser()
+        user.username = userNameString
+        user.password = passwordString
+        
+        user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
+            
+            // successful log in //
+            if(error == nil){
+                
+                self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
+                
+            }else{
+                
+                // something happened //
+                var errorString:String = error.userInfo!["error"] as NSString
+
+                if(errorString.rangeOfString(errorString) != nil){
+                    
+                    self.setUpMessage("User Name is already taken", message: "Please use a different User Name", cameFromGoodLogin: false)
+                    
+                    // resetting the username and password fields //
+                    self.passWord.text = ""
+                    self.userName.text = ""
+                    self.secondPassword.text = ""
+                    self.secondPassword.hidden = true
+                }
+                
+                
+            }
+            
+            
+        }
         
     }
     
