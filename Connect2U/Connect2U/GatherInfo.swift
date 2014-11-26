@@ -96,14 +96,12 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         query.whereKey("lat", containsString: "\(self.latitude)")
                         query.findObjectsInBackgroundWithBlock({ (object:[AnyObject]!, error:NSError!) -> Void in
                             
-                        
                             var objectArrayTemp:Array<AnyObject> = object
                             
                             // returns all the users to the delegate method //
                             self.delegate?.returnAllUsers(objectArrayTemp)
                             
                         })
-
                     }
                 })
             }
@@ -112,37 +110,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     
     
     
-    
-    // this must be done on a seperate thread //
-    func queryTheServer(){
-        
-        var returnedObjects:Array<AnyObject> = []
-        var backgroundTask:dispatch_queue_t? = dispatch_queue_create(
-            "Server Que", nil)
-        
-        // initiating the background task //
-        dispatch_async(backgroundTask!, { () -> Void in
-            
-            // this will be a query call to the server to check whos in the area //
-            var query = PFUser.query()
-            query.whereKey("long", containsString: "\(self.longitude)")
-            query.whereKey("lat", containsString: "\(self.latitude)")
-            var returnedObjects = query.findObjects()
-            
-            
-            // returns all the users to the delegate method //
-            self.delegate?.returnAllUsers(returnedObjects!)
-            
-            println("this got called")
-        })
-        
-        
-    }
-    
-    
-    
-    
-    
+
     
     // starts updates //
     func turnOnUpdates(){
