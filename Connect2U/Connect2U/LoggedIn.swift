@@ -15,8 +15,6 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     @IBOutlet weak var broadCast: UIButton!
     
     
-    // the current user //
-    var currentUser = PFUser.currentUser()
     var currentUserName:String?
     var currentUserAge:Int?
     var currentUserGender:String?
@@ -24,23 +22,21 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     var currentUserInterests:Array<String>?
     
     
-    
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     var personSelected:Int?
-    var colorPalette = ColorPalettes()
-    
-    
-    
     
     
     var tempBoolToggle:Bool = true
+    var tempBoolToggleForBroadCast:Bool = false
+    
     var loggedInView:LoggedInView = LoggedInView()
     var locationData:GatherInfo = GatherInfo()
-    
-
-    // the sidebar //
+    var colorPalette = ColorPalettes()
+    var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
+    
+    
     
     var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
@@ -330,31 +326,31 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     
     
-    
-    
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     // the broadcast button //
     @IBAction func broadCastOnClick(sender: UIButton) {
         
+        if(tempBoolToggleForBroadCast == false){
         
-        // shows the other people //
-        loggedInView.createOtherPeoplePictures()
+            broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
+        
+            // shows the other people //
+            loggedInView.createOtherPeoplePictures()
         
         
-        // turns on the location updates //
-        locationData.turnOnUpdates()
+            // turns on the location updates //
+            //locationData.turnOnUpdates()
+            
+            tempBoolToggleForBroadCast = true
+            
+        }else if(tempBoolToggleForBroadCast == true){
+            
+            broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
+            
+            locationData.stopLocationServices()
+            
+            tempBoolToggleForBroadCast = false
+        }
 
     }
     
