@@ -12,7 +12,9 @@ import Parse
 
 @objc protocol ReturnInfo{
     
-    func returnAllUsers(users:PFUser)
+    
+    // returns an array of all the users //
+    func returnAllUsers(users:Array<PFUser>)
     
 }
 
@@ -89,13 +91,16 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         
                         println("yup!")
                         
+                        
+                        // this will be a query call to the server to check whos in the area //
+                        var query = PFUser.query()
+                        
+                        
+                        
+                        
                     }
-                    
-                    
-                    
                 })
             }
-        
         }
     }
     

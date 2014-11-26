@@ -14,18 +14,15 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     
     @IBOutlet weak var broadCast: UIButton!
     
-    
     var currentUserName:String?
     var currentUserAge:Int?
     var currentUserGender:String?
     var currentUserPic:String?
     var currentUserInterests:Array<String>?
     
-    
     var meButton:UIButton?
     var meButtonLocation:CGPoint?
     var personSelected:Int?
-    
     
     var tempBoolToggle:Bool = true
     var tempBoolToggleForBroadCast:Bool = false
@@ -37,7 +34,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
     var sideBar:SideBar  = SideBar()
     
     
-    
+    // temporary data //
     var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
