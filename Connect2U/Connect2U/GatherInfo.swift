@@ -36,6 +36,10 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     var currentUser = PFUser.currentUser()
     
     
+    // all the users //
+    var allUsers:Array<PFUser>?
+    
+    
     override init() {
         super.init()
         
@@ -63,8 +67,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         
         // setting the precision of the floating values //
-        var longTempString = NSString(format: "%.05f", longTempDouble)
-        var latTempString = NSString(format: "%.05f", latTempDouble)
+        var longTempString = NSString(format: "%.02f", longTempDouble)
+        var latTempString = NSString(format: "%.02f", latTempDouble)
         
         var doubleTempLongValue = longTempString.doubleValue
         var doubleTempLatValue = latTempString.doubleValue
@@ -80,8 +84,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
             if(currentUser != nil){
                 
                 // need to override the current users location //
-                currentUser["long"] = longitude
-                currentUser["lat"] = latitude
+                currentUser["long"] = "\(longitude)"
+                currentUser["lat"] = "\(latitude)"
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     
                     
@@ -91,10 +95,14 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         
                         println("yup!")
                         
-                        
+                        // I am going to have to run this on a seperate thread //
                         // this will be a query call to the server to check whos in the area //
                         var query = PFUser.query()
+                        query.whereKey("long", containsString: "\(self.longitude)")
+                        query.whereKey("lat", containsString: "\(self.latitude)")
+                        var returnedObjects = query.findObjects()
                         
+                        println("\(returnedObjects)")
                         
                         
                         

@@ -336,9 +336,11 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
         
         
             // turns on the location updates //
-            //locationData.turnOnUpdates()
+            locationData.turnOnUpdates()
             
             tempBoolToggleForBroadCast = true
+            
+            
             
         }else if(tempBoolToggleForBroadCast == true){
             
@@ -347,6 +349,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate {
             locationData.stopLocationServices()
             
             tempBoolToggleForBroadCast = false
+            
+            
         }
 
     }
