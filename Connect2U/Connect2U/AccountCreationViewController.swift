@@ -51,21 +51,13 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     // user clicks the sign up feature //
     @IBAction func signUpOnClick(sender: UIButton) {
         
+        // checking to make sure that both the username and password fields are not blank //
         if((userName.text == "") || (passWord.text == "")){
             
-            var alert:UIAlertController = UIAlertController(title: "Please enter your Email address and Password", message: "It is a requirement to sign up.", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            
-            // creates the Ok button that essentially does nothing //
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
-                
-            }))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.setUpMessage("Please enter your Email address and Password", message: "It is a requirement to sign up.")
             
          // send the sign up through! //
         }else{
-            
             
             
             if(passWord.text == secondPassword.text){
@@ -73,30 +65,71 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                 
                 // send everything through ! //
                 // this is where everything gets sent through to parse //
+                // checking for the '@' symbol to be present
+                var atCharacter:String = "@"
+                var dotCharacter:String = "."
                 
                 
-                
-                
-                
-                
-                
-                
+                // checking to see whether the username string contains '@' and a '.' //
+                if((userName.text.rangeOfString(atCharacter) != nil) && (userName.text.rangeOfString(dotCharacter) != nil)){
+                    
+                    
+                    
+                    
+                    // really.... pass them through //
+                    
+                    
+                    
+                }else{
+                    
+                    self.setUpMessage("Please enter a correct email Address", message: "It is a requirement to sign up.")
+            
+                }
                 
             }else{
                 
-                var alert:UIAlertController = UIAlertController(title: "Password Incorrect", message: "Please enter the same password again.", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                
-                // creates the Ok button that essentially does nothing //
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
-                    
-                }))
-                
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.setUpMessage("Password Incorrect", message: "Please enter the same password again")
                 
             }
         }
     }
+    
+    
+    
+    
+    
+    // forgot password click //
+    @IBAction func forgotPasswordClick(sender: UIButton) {
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    // show popup message //
+    func setUpMessage(title:String, message:String){
+        
+        var alert:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+        
+    }
+    
+    
+    
     
     
     
@@ -106,6 +139,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         if((textField.tag == 1) && (textField.text == "")){
             
             secondPassword.hidden = true
+            
+            // making the second textfield blank //
+            secondPassword.text = ""
             
         }
     }
