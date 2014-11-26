@@ -74,18 +74,18 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
-        for(var i = 0; i < peopleArray!.count; i++){
+        for(var i = 0; i < peopleArray!.count + 3; i++){
             
     
             // placement around the main circle //
-            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray!.count))
-            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray!.count))
+            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray!.count + 3))
+            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray!.count + 3))
             
             
             // creation of the picture buttons //
             var otherPersonButton:UIButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
             
-            otherPersonButton.setImage(UIImage(named: "face\(i).png"), forState: UIControlState.Normal)
+            otherPersonButton.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
             otherPersonButton.layer.cornerRadius = 50
             otherPersonButton.layer.borderWidth = 3.0
             otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
@@ -101,7 +101,7 @@ class LoggedInView: NSObject {
             var personLabel:UILabel = UILabel()
             var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
             
-            personLabel.text = "\(peopleArray![i])"
+            personLabel.text = "\(peopleArray![1])"
             personLabel.textColor = UIColor.blackColor()
             personLabel.sizeToFit()
             personLabel.layer.cornerRadius = 5.0
@@ -134,7 +134,6 @@ class LoggedInView: NSObject {
             
             circleAroundPeople.fillColor = colorPalette.lightBlueColor.CGColor
             
-    
             self.mainView.layer.addSublayer(circleAroundPeople)
             
             self.mainView.addSubview(otherPersonButton)
