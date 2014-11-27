@@ -6,6 +6,17 @@
 //  Copyright (c) 2014 com.Cory. All rights reserved.
 //
 
+
+
+
+
+
+// I need to also be notified when someone else starts moving.... So I need to get updates //
+// from the other devices as well //
+
+// so when someone starts moving, I need that user to tell the server it has moved and to //
+// send out a signal to those that are in range that they need to poll the server as well //
+
 import UIKit
 import Parse
 
@@ -76,8 +87,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 // need to override the current users location //
                 currentUser["long"] = "\(longitude)"
                 currentUser["lat"] = "\(latitude)"
+                
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                    
                     // this will update the server of location for the user and upon saving //
                     // will return all the users within the location //
                     if(success == true){

@@ -198,6 +198,8 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         
         println("In here : \(users.count)")
         
+        println("people within the array :\(peopleArray)")
+        
         // passes the users to the circle creator! //
         loggedInView.updatePeople(users)
     }

@@ -27,6 +27,10 @@ class LoggedInView: NSObject {
     let circle:CAShapeLayer = CAShapeLayer()
     var peopleArray:Array<AnyObject> = []
     
+    var otherPersonButton:UIButton?
+    var personLabel:UILabel?
+    var circleAroundPeople:CAShapeLayer?
+    
     // delegate variable //
     var delegate:CircleDelegate?
     
@@ -43,8 +47,6 @@ class LoggedInView: NSObject {
     // custom init //
     init(callingView:UIView, circleSize:Int , location:CGPoint, otherPeople:Array<AnyObject>){
         super.init()
-        
-        
         
         circleRadius = CGFloat(circleSize)
         locationOfCircle = location
@@ -79,6 +81,11 @@ class LoggedInView: NSObject {
     
     func createOtherPeoplePictures(){
         
+        
+        otherPersonButton?.removeFromSuperview()
+        personLabel?.removeFromSuperview()
+        circleAroundPeople?.removeFromSuperlayer()
+        
         for(var i = 0; i < peopleArray.count; i++){
             
             // placement around the main circle //
@@ -87,62 +94,57 @@ class LoggedInView: NSObject {
             
             
             // creation of the picture buttons //
-            var otherPersonButton:UIButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
+            otherPersonButton = UIButton(frame: CGRect(x: x, y: y, width: 100.0, height: 100.0))
             
-            otherPersonButton.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
-            otherPersonButton.layer.cornerRadius = 50
-            otherPersonButton.layer.borderWidth = 3.0
-            otherPersonButton.layer.borderColor = UIColor.blackColor().CGColor
-            otherPersonButton.clipsToBounds = true
-            otherPersonButton.tag = i
-            otherPersonButton.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+            otherPersonButton!.setImage(UIImage(named: "face\(1).png"), forState: UIControlState.Normal)
+            otherPersonButton!.layer.cornerRadius = 50
+            otherPersonButton!.layer.borderWidth = 3.0
+            otherPersonButton!.layer.borderColor = UIColor.blackColor().CGColor
+            otherPersonButton!.clipsToBounds = true
+            otherPersonButton!.tag = i
+            otherPersonButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
             
-            
+        
 
             
             
             // creating the name label //
-            var personLabel:UILabel = UILabel()
+            personLabel = UILabel()
             var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
             
             
-            personLabel.text = peopleArray[i].username?
-            personLabel.textColor = UIColor.blackColor()
-            personLabel.sizeToFit()
-            personLabel.layer.cornerRadius = 5.0
-            personLabel.clipsToBounds = true
+            personLabel!.text = peopleArray[i].username?
+            personLabel!.textColor = UIColor.blackColor()
+            personLabel!.sizeToFit()
+            personLabel!.layer.cornerRadius = 5.0
+            personLabel!.clipsToBounds = true
             
             // getting the resized frame //
-            var personLabelFrame:CGRect = personLabel.frame
+            var personLabelFrame:CGRect = personLabel!.frame
             
             
             // getting the exact center of the circle and putting a label there... slightly below center //
-            personLabel.frame = CGRect(x: x + Double((otherPersonButton.frame.width / 2) - personLabelFrame.width / 2), y: y + Double((otherPersonButton.frame.size.height / 2) - 40.0), width: Double(personLabel.frame.size.width), height: Double(personLabel.frame.size.height))
+            personLabel!.frame = CGRect(x: x + Double((otherPersonButton!.frame.width / 2) - personLabelFrame.width / 2), y: y + Double((otherPersonButton!.frame.size.height / 2) - 40.0), width: Double(personLabel!.frame.size.width), height: Double(personLabel!.frame.size.height))
 
-            personLabel.backgroundColor = whiteColorWithOpacity
-            personLabel.textAlignment = .Center
+            personLabel!.backgroundColor = whiteColorWithOpacity
+            personLabel!.textAlignment = .Center
             
-            
-            
-            
-            
-            
-            
-            
+
             // creating a layer behind the persons profile pic //
-            var circleAroundPeople:CAShapeLayer = CAShapeLayer()
+            circleAroundPeople = CAShapeLayer()
             
-            circleAroundPeople.path = UIBezierPath(roundedRect: CGRectMake(CGFloat(x - 5.0) ,
+            circleAroundPeople!.path = UIBezierPath(roundedRect: CGRectMake(CGFloat(x - 5.0) ,
                 CGFloat(y - 5.0), CGFloat(1.1 * circleRadius!),
                 CGFloat(1.1 * circleRadius!)),
                 cornerRadius: CGFloat(circleRadius!)).CGPath
             
-            circleAroundPeople.fillColor = colorPalette.lightBlueColor.CGColor
+            circleAroundPeople!.fillColor = colorPalette.lightBlueColor.CGColor
+
             
-            self.mainView.layer.addSublayer(circleAroundPeople)
+            self.mainView.layer.addSublayer(circleAroundPeople!)
             
-            self.mainView.addSubview(otherPersonButton)
-            self.mainView.addSubview(personLabel)
+            self.mainView.addSubview(otherPersonButton!)
+            self.mainView.addSubview(personLabel!)
 
         }
     }
@@ -162,16 +164,20 @@ class LoggedInView: NSObject {
     
     
     
+    
+    
+    
     // called after the circle has been created and anytime after the fact //
     func updatePeople(otherPeople:Array<AnyObject>){
-    
+        
         self.peopleArray.removeAll(keepCapacity: false)
         
-        self.peopleArray = otherPeople
         
+        
+        self.peopleArray = otherPeople
         // refresh the circle //
         self.createOtherPeoplePictures()
-        println("just after wards")
+        
     }
     
     
