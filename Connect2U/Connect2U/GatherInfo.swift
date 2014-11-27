@@ -58,8 +58,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         // setting the precision of the floating values //
         // need to adjust the precision of the double value //
         // after testing is done //
-        var longTempString = NSString(format: "%.02f", longTempDouble)
-        var latTempString = NSString(format: "%.02f", latTempDouble)
+        var longTempString = NSString(format: "%.04f", longTempDouble)
+        var latTempString = NSString(format: "%.04f", latTempDouble)
         
         var doubleTempLongValue = longTempString.doubleValue
         var doubleTempLatValue = latTempString.doubleValue
@@ -107,8 +107,14 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     // starts updates //
     func turnOnUpdates(){
         
+        println("locationData started")
         locationManager.startUpdatingLocation()
         
+        
+        // resetting the values so the first time the location data gets sent back to the //
+        // server and compared each time the user presses the main button //
+        longitude = 0.0
+        latitude = 0.0
     }
 
     
@@ -117,6 +123,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     // stops the location services //
     func stopLocationServices(){
         
+        println("locationData stopped")
         locationManager.stopUpdatingLocation()
     }
     

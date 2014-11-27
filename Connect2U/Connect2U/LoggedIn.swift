@@ -351,6 +351,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
             // turns on the location updates //
             locationData.turnOnUpdates()
             
+            
             tempBoolToggleForBroadCast = true
             
             

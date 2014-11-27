@@ -34,6 +34,8 @@ class LoggedInView: NSObject {
     
     override init(){
         super.init()
+        
+        self.peopleArray.removeAll(keepCapacity: false)
     }
     
     
@@ -41,6 +43,8 @@ class LoggedInView: NSObject {
     // custom init //
     init(callingView:UIView, circleSize:Int , location:CGPoint, otherPeople:Array<AnyObject>){
         super.init()
+        
+        
         
         circleRadius = CGFloat(circleSize)
         locationOfCircle = location
@@ -50,7 +54,6 @@ class LoggedInView: NSObject {
             peopleArray = otherPeople
         }
         self.createCircle()
-        
     }
 
 
@@ -162,6 +165,8 @@ class LoggedInView: NSObject {
     // called after the circle has been created and anytime after the fact //
     func updatePeople(otherPeople:Array<AnyObject>){
     
+        self.peopleArray.removeAll(keepCapacity: false)
+        
         self.peopleArray = otherPeople
         
         // refresh the circle //
