@@ -52,9 +52,12 @@ class LoggedInView: NSObject {
         locationOfCircle = location
         mainView = callingView
         
+        /*
         if(otherPeople.count != 0){
             peopleArray = otherPeople
-        }
+        }*/
+        peopleArray = otherPeople
+        
         self.createCircle()
     }
 
@@ -79,18 +82,14 @@ class LoggedInView: NSObject {
     
     
     
-    func createOtherPeoplePictures(){
+    func createOtherPeoplePictures(peopleWithinView:Array<AnyObject>){
         
-        
-        otherPersonButton?.removeFromSuperview()
-        personLabel?.removeFromSuperview()
-        circleAroundPeople?.removeFromSuperlayer()
-        
-        for(var i = 0; i < peopleArray.count; i++){
+        for(var i = 0; i < peopleWithinView.count; i++){
             
+
             // placement around the main circle //
-            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleArray.count))
-            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleArray.count))
+            var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleWithinView.count))
+            var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleWithinView.count))
             
             
             // creation of the picture buttons //
@@ -113,7 +112,7 @@ class LoggedInView: NSObject {
             var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
             
             
-            personLabel!.text = peopleArray[i].username?
+            personLabel!.text = peopleWithinView[i].username?
             personLabel!.textColor = UIColor.blackColor()
             personLabel!.sizeToFit()
             personLabel!.layer.cornerRadius = 5.0
@@ -130,6 +129,8 @@ class LoggedInView: NSObject {
             personLabel!.textAlignment = .Center
             
 
+            
+            
             // creating a layer behind the persons profile pic //
             circleAroundPeople = CAShapeLayer()
             
@@ -170,13 +171,21 @@ class LoggedInView: NSObject {
     // called after the circle has been created and anytime after the fact //
     func updatePeople(otherPeople:Array<AnyObject>){
         
+        
+        
+        self.otherPersonButton?.removeFromSuperview()
+        self.circleAroundPeople?.removeFromSuperlayer()
+        self.personLabel?.removeFromSuperview()
+        
         self.peopleArray.removeAll(keepCapacity: false)
         
-        
-        
         self.peopleArray = otherPeople
+        
+        
+        println("\(peopleArray)")
+        
         // refresh the circle //
-        self.createOtherPeoplePictures()
+        self.createOtherPeoplePictures(otherPeople)
         
     }
     

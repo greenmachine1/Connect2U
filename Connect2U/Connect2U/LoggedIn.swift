@@ -86,8 +86,14 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         nameLabelForMe.textAlignment = .Center
         
 
+        
+        
+        
         // creation of the larger circle with names around it //
         loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: peopleArray)
+        
+        
+        
 
         loggedInView.delegate = self
         
@@ -198,7 +204,7 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         
         println("In here : \(users.count)")
         
-        println("people within the array :\(peopleArray)")
+        println("people within the array :\(users)")
         
         // passes the users to the circle creator! //
         loggedInView.updatePeople(users)
