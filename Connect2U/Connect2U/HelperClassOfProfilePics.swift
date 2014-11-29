@@ -7,6 +7,15 @@
 //
 
 import UIKit
+import Parse
+
+@objc protocol ReturnWithPersonClicked{
+    
+    // returns to the main view with the person clicked //
+    func returnPersonClicked(person:AnyObject)
+    
+}
+
 
 class HelperClassOfProfilePics: NSObject {
    
@@ -15,6 +24,8 @@ class HelperClassOfProfilePics: NSObject {
     var circleRadius:Double?
     var callingViewMain:UIView?
     var palette:ColorPalettes?
+    
+    var delegate:ReturnWithPersonClicked?
     
 
     override init() {
@@ -57,10 +68,7 @@ class HelperClassOfProfilePics: NSObject {
             
             var tempName:String = newProfilePics[i].objectForKey("username") as NSString
             var tempPic:String = newProfilePics[i].objectForKey("picture") as NSString
-            
-            //var tempName = "Jeorge"
-            //var tempPic = "face3.png"
-        
+
             self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i + 1, userNameString:tempName)
             
             
@@ -164,10 +172,12 @@ class HelperClassOfProfilePics: NSObject {
             println(arrayPassedInFromMainClass![sender.tag - 1].objectForKey("username")!)
         }
         
-
+        
+        // sending the person clicked back to the main view to view their profile or chat //
+        delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag - 1])
+        
+        
+        
         
     }
-    
-    
-
 }

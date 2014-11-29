@@ -37,7 +37,6 @@
 		E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */; };
 		E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */; };
 		E5BE00BC1A1D48E100543FE8 /* RightChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */; };
-		E5BFB5431A243ACB004C82FA /* PersonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BFB5421A243ACB004C82FA /* PersonClass.swift */; };
 		E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC871A12E86000972580 /* AppDelegate.swift */; };
 		E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6BC891A12E86000972580 /* ViewController.swift */; };
 		E5E6BC8F1A12E86000972580 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5E6BC8E1A12E86000972580 /* Images.xcassets */; };
@@ -95,7 +94,6 @@
 		E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLeftCell.swift; sourceTree = "<group>"; };
 		E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightChatCell.swift; sourceTree = "<group>"; };
-		E5BFB5421A243ACB004C82FA /* PersonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonClass.swift; sourceTree = "<group>"; };
 		E5E6BC821A12E86000972580 /* Connect2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC861A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC871A12E86000972580 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				E5BFB5441A246560004C82FA /* Chat */,
 				E5BFB5451A246579004C82FA /* Side_bar */,
 				E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */,
-				E5BFB5421A243ACB004C82FA /* PersonClass.swift */,
 				E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */,
 				E55453261A25B889006EA3ED /* GatherInfo.swift */,
 				E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */,
@@ -390,7 +387,6 @@
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
 				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
 				E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */,
-				E5BFB5431A243ACB004C82FA /* PersonClass.swift in Sources */,
 				E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */,
 				E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */,
 				E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */,

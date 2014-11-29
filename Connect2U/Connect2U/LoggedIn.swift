@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 
-class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
+class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked{
     
     @IBOutlet weak var broadCast: UIButton!
     
@@ -39,7 +39,7 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
     
     
     // temporary data //
-    var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
+    //var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
     
@@ -63,8 +63,6 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
         
         locationData.delegate = self
 
-
-
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
         meButton!.setImage(UIImage(named: currentUserPic!), forState: UIControlState.Normal)
@@ -72,11 +70,6 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
         meButton!.layer.borderWidth = 3.0
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
         meButton!.clipsToBounds = true
-        
-        
-        
-        
-        // this is going to have to change //
         meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
@@ -91,20 +84,15 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
         
-
-        
-        
-        
-        // creation of the larger circle with names around it //
-        //loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
-        
-        //loggedInView.delegate = self
-        
-        
-        
         
         // creating the big circle in the center //
         mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+        
+        
+        // adding this to the subview //
+        self.view.addSubview(nameLabelForMe)
+        self.view.addSubview(meButton!)
+        
         
         
         
@@ -115,17 +103,8 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
         // creating the helper class for creating the profile pics //
         helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        // adding this to the subview //
-        self.view.addSubview(nameLabelForMe)
-        self.view.addSubview(meButton!)
+        helperClass.delegate = self
+
     }
     
     
@@ -146,26 +125,12 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // part of the LoggedInView, this brings back the index and all the names array //
-    /*
-    func didClickOnUser(index: Int, nameOfPerson: Array<AnyObject>) {
+    // gets called when you click on a persons profile //
+    func returnPersonClicked(person: AnyObject) {
         
-        println("name of person array \(nameOfPerson[index])")
+        println("person clicked on \(person)")
         
-        // setting which user got selected //
-        personSelected = index
-        
-        self.showAlert()
     }
-    */
     
     
     
@@ -423,60 +388,3 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
     
     
 }
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-// going to be using all of this for this project.... //
-var personClass:PersonClass = PersonClass(name: "Cory", picture: "no picture", gender: "Male", interests: listOfFriends)
-
-var newPersonClass:PersonClass = PersonClass(name: "Steven", picture: "not a single one", gender: "Female", interests: listOfFriends)
-
-peopleArray = ["Joe": personClass, "Steven" : newPersonClass]
-peopleArray!["Gary"] = newPersonClass
-
-
-println("\(peopleArray!.count)")
-
-
-
-// this is how you get to methods and properties within a class inside of an array //
-var classThingy: PersonClass? = peopleArray!["Joe"] as? PersonClass
-var newClassThingy: PersonClass? = peopleArray!["Steven"] as? PersonClass
-var newClassThingyGary: PersonClass? = peopleArray!["Gary"] as? PersonClass
-
-
-println("\(classThingy!.pictureString!)")
-println("\(newClassThingy!.pictureString!)")
-println("\(newClassThingyGary!.pictureString!)")
-
-println("\(classThingy!.interestsArray!)")
-    */
-
-
-
-
-
-
-
-

@@ -42,9 +42,10 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     init(callingView:UIView, friends:Array<String>, requests:Array<String>) {
         super.init()
         
+        
+        
         // setting the calling view //
         origin = callingView
-        
         
         
         
