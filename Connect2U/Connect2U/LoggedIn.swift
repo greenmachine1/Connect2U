@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 
-class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
+class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
     
     @IBOutlet weak var broadCast: UIButton!
     
@@ -27,17 +27,23 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
     var tempBoolToggle:Bool = true
     var tempBoolToggleForBroadCast:Bool = false
     
-    var loggedInView:LoggedInView = LoggedInView()
+    var helperClass:HelperClassOfProfilePics = HelperClassOfProfilePics()
     var locationData:GatherInfo = GatherInfo()
     var colorPalette = ColorPalettes()
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
     
     
+    var mainBigCircle:MainBigCircle = MainBigCircle()
+    
+    
+    
     // temporary data //
     var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
+    
+    var emptyInitialArray:Array<AnyObject> = []
     
     
     
@@ -90,12 +96,30 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         
         
         // creation of the larger circle with names around it //
-        loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), otherPeople: peopleArray)
+        //loggedInView = LoggedInView(callingView: self.view, circleSize: 100, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+        
+        //loggedInView.delegate = self
         
         
         
-
-        loggedInView.delegate = self
+        
+        // creating the big circle in the center //
+        mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+        
+        
+        
+        
+        
+        
+        
+        // creating the helper class for creating the profile pics //
+        helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
+        
+        
+        
+        
+        
+        
         
         
         
@@ -206,8 +230,9 @@ class LoggedIn: UIViewController,SideBarDelegate, CircleDelegate, ReturnInfo {
         
         println("people within the array :\(users)")
         
+
         // passes the users to the circle creator! //
-        loggedInView.updatePeople(users)
+        helperClass.updateProfilePics(users)
     }
     
     

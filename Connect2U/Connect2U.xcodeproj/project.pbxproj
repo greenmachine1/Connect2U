@@ -15,6 +15,8 @@
 		E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */; };
 		E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55453261A25B889006EA3ED /* GatherInfo.swift */; };
 		E55453291A25C0F0006EA3ED /* DrillDownPeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */; };
+		E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */; };
+		E56F597E1A286A7400CFAEC1 /* MainProfilePics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */; };
 		E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */; };
 		E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71251A1DBB4A00E75A47 /* SideBar.swift */; };
 		E5898E7E1A25397700706649 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7A1A25397700706649 /* Bolts.framework */; };
@@ -22,6 +24,7 @@
 		E5898E801A25397700706649 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */; };
 		E5898E811A25397800706649 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7D1A25397700706649 /* ParseUI.framework */; };
 		E5898E831A25623400706649 /* MoreInfoViewControllerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */; };
+		E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */; };
 		E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */; };
 		E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */; };
 		E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884D1A1C705400D3D0A5 /* face0.png */; };
@@ -73,6 +76,8 @@
 		E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalettes.swift; sourceTree = "<group>"; };
 		E55453261A25B889006EA3ED /* GatherInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatherInfo.swift; sourceTree = "<group>"; };
 		E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrillDownPeople.swift; sourceTree = "<group>"; };
+		E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainBigCircle.swift; sourceTree = "<group>"; };
+		E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProfilePics.swift; sourceTree = "<group>"; };
 		E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		E56F71251A1DBB4A00E75A47 /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		E5898E7A1A25397700706649 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -80,6 +85,7 @@
 		E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		E5898E7D1A25397700706649 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreInfoViewControllerContainerViewController.swift; sourceTree = "<group>"; };
+		E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperClassOfProfilePics.swift; sourceTree = "<group>"; };
 		E5AC1CEF1A1C09AE00517A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connected_2_U_Log.png; sourceTree = "<group>"; };
 		E5BC884D1A1C705400D3D0A5 /* face0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face0.png; sourceTree = "<group>"; };
@@ -243,6 +249,9 @@
 				E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */,
 				E55453261A25B889006EA3ED /* GatherInfo.swift */,
 				E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */,
+				E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */,
+				E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */,
+				E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -390,6 +399,9 @@
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5BDC3E81A21FBEF002DB3D3 /* LoggedInView.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
+				E56F597E1A286A7400CFAEC1 /* MainProfilePics.swift in Sources */,
+				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
+				E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */,
 				E5BFB5431A243ACB004C82FA /* PersonClass.swift in Sources */,
 				E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */,
 				E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */,

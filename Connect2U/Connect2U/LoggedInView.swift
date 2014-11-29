@@ -10,6 +10,7 @@ import UIKit
 
 // creating a new sidebar delegate //
 // one required function and 2 optional //
+/*
 @objc protocol CircleDelegate{
     
     // function required for implementing this delegate //
@@ -31,6 +32,7 @@ class LoggedInView: NSObject {
     var personLabel:UILabel?
     var circleAroundPeople:CAShapeLayer?
     
+    
     // delegate variable //
     var delegate:CircleDelegate?
     
@@ -45,25 +47,21 @@ class LoggedInView: NSObject {
     
     
     // custom init //
-    init(callingView:UIView, circleSize:Int , location:CGPoint, otherPeople:Array<AnyObject>){
+    init(callingView:UIView, circleSize:Int , location:CGPoint){
         super.init()
         
         circleRadius = CGFloat(circleSize)
         locationOfCircle = location
         mainView = callingView
         
-        /*
-        if(otherPeople.count != 0){
-            peopleArray = otherPeople
-        }*/
-        peopleArray = otherPeople
-        
-        self.createCircle()
+    
+        //self.createCircle()
     }
 
 
 
     // creation of the main circle //
+    /*
     func createCircle(){
         
         circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 100,
@@ -77,19 +75,32 @@ class LoggedInView: NSObject {
      
         self.mainView.layer.addSublayer(circle)
     }
-    
+
 
     
     
     
     func createOtherPeoplePictures(peopleWithinView:Array<AnyObject>){
         
+        
+        println("People here : \(peopleWithinView)")
+        
+    
         for(var i = 0; i < peopleWithinView.count; i++){
             
 
             // placement around the main circle //
             var x = Double(locationOfCircle!.x) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(peopleWithinView.count))
             var y = Double(locationOfCircle!.y) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(peopleWithinView.count))
+            
+            
+            // this will go inside the for loop in logged in view //
+            var mainProfilePics:MainProfilePics = MainProfilePics(viewMain: self.mainView, userName: "Cory", userPicture: "face3.png", xLocation: Double(x - 20.0), yLocation: Double(y - 20.0), size: 100.0, tag: 3)
+            
+            
+            
+            
+            
             
             
             // creation of the picture buttons //
@@ -141,15 +152,16 @@ class LoggedInView: NSObject {
             
             circleAroundPeople!.fillColor = colorPalette.lightBlueColor.CGColor
 
-            
-            self.mainView.layer.addSublayer(circleAroundPeople!)
-            
-            self.mainView.addSubview(otherPersonButton!)
-            self.mainView.addSubview(personLabel!)
+            mainView.addSubview(otherPersonButton!)
+            mainView.addSubview(personLabel!)
+
 
         }
+        
+        
+
     }
-    
+
     
     
     // what happens when a person is clicked //
@@ -163,7 +175,7 @@ class LoggedInView: NSObject {
     
     
     
-    
+
     
     
     
@@ -171,18 +183,15 @@ class LoggedInView: NSObject {
     // called after the circle has been created and anytime after the fact //
     func updatePeople(otherPeople:Array<AnyObject>){
         
+        //self.otherPersonButton?.removeFromSuperview()
+        //self.circleAroundPeople?.removeFromSuperlayer()
+        //self.personLabel?.removeFromSuperview()
         
         
-        self.otherPersonButton?.removeFromSuperview()
-        self.circleAroundPeople?.removeFromSuperlayer()
-        self.personLabel?.removeFromSuperview()
         
-        self.peopleArray.removeAll(keepCapacity: false)
-        
+
         self.peopleArray = otherPeople
         
-        
-        println("\(peopleArray)")
         
         // refresh the circle //
         self.createOtherPeoplePictures(otherPeople)
@@ -193,3 +202,4 @@ class LoggedInView: NSObject {
     
     
 }
+*/*/
