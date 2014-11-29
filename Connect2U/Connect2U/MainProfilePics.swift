@@ -47,7 +47,7 @@ class MainProfilePics: NSObject {
         mainView = viewMain
         
         //self.createCircleAroundPeople()
-        //self.createPersonLabel()
+        self.createPersonLabel()
         self.createProfilePics()
         
         
@@ -108,11 +108,17 @@ class MainProfilePics: NSObject {
         mainLabel!.tag = selfTag!
         
         // getting the resized frame //
-        var personLabelFrame:CGRect = mainLabel!.frame
+        var personLabelFrame:CGRect?
+       personLabelFrame = mainLabel!.frame
         
         
         // getting the exact center of the circle and putting a label there... slightly below center //
-        mainLabel!.frame = CGRect(x: xValue! + Double((mainButton!.frame.width / 2) - personLabelFrame.width / 2), y: yValue! + Double((mainButton!.frame.size.height / 2) - 40.0), width: Double(mainLabel!.frame.size.width), height: Double(mainLabel!.frame.size.height))
+        //mainLabel!.frame = CGRect(x: xValue! + Double((mainButton!.frame.width / 2) - personLabelFrame!.width / 2), y: yValue! + Double((mainButton!.frame.size.height / 2) - 40.0), width: Double(mainLabel!.frame.size.width), height: Double(mainLabel!.frame.size.height))
+        
+        
+        mainLabel!.frame = CGRect(x: xValue!, y: yValue!, width: 100.0, height: 100.0)
+        
+    
         
         mainLabel!.backgroundColor = whiteColorWithOpacity
         mainLabel!.textAlignment = .Center
