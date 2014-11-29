@@ -11,10 +11,10 @@ import UIKit
 class HelperClassOfProfilePics: NSObject {
    
     let locationPointOfCircle:CGPoint?
-    let arrayPassedInFromMainClass:Array<AnyObject>?
+    var arrayPassedInFromMainClass:Array<AnyObject>?
     var circleRadius:Double?
     var callingViewMain:UIView?
-    
+    var palette:ColorPalettes?
     
 
     override init() {
@@ -38,6 +38,11 @@ class HelperClassOfProfilePics: NSObject {
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
+        arrayPassedInFromMainClass!.removeAll(keepCapacity: false)
+        arrayPassedInFromMainClass = newProfilePics
+        
+        println("\(arrayPassedInFromMainClass!.count)")
+        
         
         var cgpointToDoubleConversionForX:Double = Double(locationPointOfCircle!.x)
         var cgpointToDoubleConversionForY:Double = Double(locationPointOfCircle!.y)
@@ -50,14 +55,15 @@ class HelperClassOfProfilePics: NSObject {
         
             
             
-            //var tempName:String = newProfilePics[i].username
-            //var tempPic:String = newProfilePics[i].picture
+            var tempName:String = newProfilePics[i].objectForKey("username") as NSString
+            var tempPic:String = newProfilePics[i].objectForKey("picture") as NSString
             
-            var tempName = "Jeorge"
-            var tempPic = "face3.png"
-    
-            var mainProfilePics:MainProfilePics = MainProfilePics(viewMain: callingViewMain!, userName: tempName, userPicture: tempPic, xLocation: x, yLocation: y, size: circleRadius!, tag: i + 1)
-    
+            //var tempName = "Jeorge"
+            //var tempPic = "face3.png"
+        
+            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i + 1, userNameString:tempName)
+            
+            
         }
 
     }
@@ -65,26 +71,103 @@ class HelperClassOfProfilePics: NSObject {
     
     
     
+    
+    // removing the button and label from the scene //
     func updateProfilePics(newProfilePics:Array<AnyObject>){
         
         var subViews = callingViewMain!.subviews as Array<UIView>
         
         for someView in subViews{
-        
             if(someView.isKindOfClass(UIButton)){
-                
                 for(var k = 0; k < subViews.count; k++){
-                
                     if(someView.tag == k + 1){
                 
                         someView.removeFromSuperview()
                     }
                 }
             }
+            if(someView.isKindOfClass(UILabel)){
+                for(var l = 0; l < subViews.count; l++){
+                    if(someView.tag == l + 1){
+                        
+                        someView.removeFromSuperview()
+                    }
+                }
+            }
         }
-    
         self.drawProfilePics(newProfilePics)
+    }
+    
+    
+    
+    
+    
+    
+    // creation of the profile pics //
+    func createProfilePics(xValue:Double, yValue:Double, sizeValue:Double, userPictureString:String, selfTag:Int, userNameString:String){
+        
+        var mainButton:UIButton = UIButton()
+        
+        mainButton = UIButton(frame: CGRect(x: xValue, y: yValue, width: sizeValue, height: sizeValue))
+        mainButton.setImage(UIImage(named: userPictureString), forState: UIControlState.Normal)
+        mainButton.layer.cornerRadius = 50
+        mainButton.layer.borderWidth = 3.0
+        mainButton.layer.borderColor = UIColor.blackColor().CGColor
+        mainButton.tag = selfTag
+        mainButton.clipsToBounds = true
+        
+        mainButton.addTarget(self, action: Selector("profileClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        callingViewMain!.addSubview(mainButton)
+        
+        
+        
+        
+        
+        // creating the name label //
+        var mainLabel:UILabel = UILabel()
+        var whiteColorWithOpacity:UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
+        
+        
+        mainLabel.text = userNameString
+        mainLabel.textColor = UIColor.blackColor()
+        mainLabel.sizeToFit()
+        mainLabel.layer.cornerRadius = 5.0
+        mainLabel.clipsToBounds = true
+        mainLabel.tag = selfTag
+        
+        // getting the resized frame //
+        var personLabelFrame:CGRect?
+        personLabelFrame = mainLabel.frame
+        
+        
+        // getting the exact center of the circle and putting a label there... slightly below center //
+        mainLabel.frame = CGRect(x: xValue + Double((mainButton.frame.width / 2) - personLabelFrame!.width / 2), y: yValue + Double((mainButton.frame.size.height / 2) + 30.0), width: Double(mainLabel.frame.size.width), height: Double(mainLabel.frame.size.height))
+        
+        
+        
+        
+        mainLabel.backgroundColor = whiteColorWithOpacity
+        mainLabel.textAlignment = .Center
+        
+        callingViewMain!.addSubview(mainLabel)
         
     }
     
+    
+    
+    
+    func profileClicked(sender:UIButton){
+        
+        if(arrayPassedInFromMainClass != nil){
+            
+            println(arrayPassedInFromMainClass![sender.tag - 1].objectForKey("username")!)
+        }
+        
+
+        
+    }
+    
+    
+
 }

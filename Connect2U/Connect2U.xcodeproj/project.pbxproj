@@ -16,7 +16,6 @@
 		E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55453261A25B889006EA3ED /* GatherInfo.swift */; };
 		E55453291A25C0F0006EA3ED /* DrillDownPeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */; };
 		E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */; };
-		E56F597E1A286A7400CFAEC1 /* MainProfilePics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */; };
 		E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */; };
 		E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F71251A1DBB4A00E75A47 /* SideBar.swift */; };
 		E5898E7E1A25397700706649 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5898E7A1A25397700706649 /* Bolts.framework */; };
@@ -31,7 +30,6 @@
 		E5BC88501A1C711900D3D0A5 /* face2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC884F1A1C711900D3D0A5 /* face2.png */; };
 		E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88511A1C71A300D3D0A5 /* face3.png */; };
 		E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */; };
-		E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */; };
 		E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */; };
 		E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BC8FEB1A1AFFC40059BF75 /* face1.png */; };
 		E5BE00A81A1D220500543FE8 /* AgeSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */; };
@@ -76,7 +74,6 @@
 		E55453261A25B889006EA3ED /* GatherInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatherInfo.swift; sourceTree = "<group>"; };
 		E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrillDownPeople.swift; sourceTree = "<group>"; };
 		E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainBigCircle.swift; sourceTree = "<group>"; };
-		E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProfilePics.swift; sourceTree = "<group>"; };
 		E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		E56F71251A1DBB4A00E75A47 /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		E5898E7A1A25397700706649 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -91,7 +88,6 @@
 		E5BC884F1A1C711900D3D0A5 /* face2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face2.png; sourceTree = "<group>"; };
 		E5BC88511A1C71A300D3D0A5 /* face3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face3.png; sourceTree = "<group>"; };
 		E5BC88531A1C775700D3D0A5 /* AboutThePersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutThePersonViewController.swift; sourceTree = "<group>"; };
-		E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5BC88571A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpMoreInfoTableViewController.swift; sourceTree = "<group>"; };
 		E5BC8FEB1A1AFFC40059BF75 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		E5BE00A71A1D220500543FE8 /* AgeSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeSelectionViewController.swift; sourceTree = "<group>"; };
@@ -232,7 +228,6 @@
 				E5E6BC891A12E86000972580 /* ViewController.swift */,
 				E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */,
 				E5E6BC8E1A12E86000972580 /* Images.xcassets */,
-				E5BC88551A1C77F000D3D0A5 /* LaunchScreen.storyboard */,
 				E5E6BC851A12E86000972580 /* Supporting Files */,
 				E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */,
 				E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */,
@@ -247,7 +242,6 @@
 				E55453261A25B889006EA3ED /* GatherInfo.swift */,
 				E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */,
 				E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */,
-				E56F597D1A286A7400CFAEC1 /* MainProfilePics.swift */,
 				E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */,
 			);
 			path = Connect2U;
@@ -368,7 +362,6 @@
 			files = (
 				E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */,
 				E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */,
-				E5BC88561A1C77F000D3D0A5 /* LaunchScreen.storyboard in Resources */,
 				E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
 				E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */,
@@ -395,7 +388,6 @@
 			files = (
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
-				E56F597E1A286A7400CFAEC1 /* MainProfilePics.swift in Sources */,
 				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
 				E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */,
 				E5BFB5431A243ACB004C82FA /* PersonClass.swift in Sources */,

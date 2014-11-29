@@ -155,6 +155,7 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
     
     
     // part of the LoggedInView, this brings back the index and all the names array //
+    /*
     func didClickOnUser(index: Int, nameOfPerson: Array<AnyObject>) {
         
         println("name of person array \(nameOfPerson[index])")
@@ -164,7 +165,7 @@ class LoggedIn: UIViewController,SideBarDelegate, ReturnInfo {
         
         self.showAlert()
     }
-    
+    */
     
     
     
