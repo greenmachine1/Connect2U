@@ -181,7 +181,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     // the actual parse sign up //
     func userSignup(userNameString:String, passwordString:String){
         
-        var user = PFUser()
+        var user:PFUser = PFUser()
         
         // sets up the name and password but leaves the rest of the fields open //
         // so they can come back and edit them at a later time //
@@ -198,23 +198,24 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
             // successful log in //
             if(error == nil){
                 
-                self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
+                var currentUser = PFUser.currentUser()
                 
                 var installation:PFInstallation = PFInstallation.currentInstallation()
-                installation["User"] = PFUser.currentUser()
+                installation["user"] = currentUser
                 installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                    
-                    if(error == nil){
+                    if(success){
                         
-                        println("success in creating the user as the installation")
+                        println("successfully added the user to the installation")
+                        println(PFInstallation.currentInstallation())
                         
                     }else{
                         
-                        println("nope")
+                        
                         
                     }
-                    
                 })
+                
+                self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
                 
             }else{
                 

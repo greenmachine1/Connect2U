@@ -47,8 +47,10 @@ class SettingsTableViewController: UITableViewController {
     // log out button //
     @IBAction func onLogOut(sender: AnyObject) {
         
+        var currentUser = PFUser.currentUser()
+        
         // logs out the user from Parse //
-        PFUser.logOut()
+        PFUser.logOut()        
     }
     
     

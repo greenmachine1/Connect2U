@@ -17,11 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        
-        
-        
         // setting up for the Parse Connect2U project side //
         Parse.setApplicationId("JSfr6Q2SbXv3oipCnuGFYOyJBlmB4bix5OFQHciz", clientKey: "4U9EqhEhNDpydFnrzXWIEM998Lmx3Z1zXyBOA1ya")
+        
         
         
         
@@ -29,8 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var userNotificationTypes:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
         
         var settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes:userNotificationTypes , categories: nil)
-        
-    
+            
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
@@ -60,6 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+    
+    
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         
         println("in here as well!")
@@ -68,20 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentInstallation.setDeviceTokenFromData(deviceToken)
         currentInstallation.channels = ["global"]
         currentInstallation.saveInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
-            
             if(success){
                 
-                println("success in registering device")
+                println(currentInstallation["user"])
                 
             }else{
                 
                 println("\(error.description)")
                 
             }
-            
         }
-        
     }
+
+    
+    
+    
     
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

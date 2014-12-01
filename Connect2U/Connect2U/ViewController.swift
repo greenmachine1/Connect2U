@@ -23,6 +23,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var forgotPassword: UIButton!
+
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,25 +56,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func userStillLoggedIn(){
         
         var currentUser = PFUser.currentUser()
+        
         if(currentUser != nil){
-            
-            // making the user the installation variable //
+        
             var installation:PFInstallation = PFInstallation.currentInstallation()
-            installation["User"] = PFUser.currentUser()
+            installation["user"] = currentUser
             installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                
-                if(error == nil){
+                if(success){
                     
-                    println("success in creating the user as the installation")
+                    println("successfully added the user to the installation")
+                    println(PFInstallation.currentInstallation())
                     
                 }else{
                     
-                    println("nope")
+                    
                     
                 }
-                
             })
-            
+
             // need to go to the main page with the user logged in //
             let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
             
@@ -90,31 +92,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // log in //
     @IBAction func logInClick(sender: UIButton) {
         
+        var currentUser = PFUser.currentUser()
+        
         // if there is info in the fields, attempt to verify //
         if( !(userNameTextField.text.isEmpty) && !(passwordTextField.text.isEmpty)){
             
             PFUser.logInWithUsernameInBackground(userNameTextField.text, password: passwordTextField.text, block: { (user:PFUser!, error:NSError!) -> Void in
-                
+            
                 // successful log in //
                 if(user != nil){
+                
+                    currentUser = user
                     
                     
-                    // making the user the installation variable //
                     var installation:PFInstallation = PFInstallation.currentInstallation()
-                    installation["User"] = PFUser.currentUser()
+                    installation["user"] = currentUser
                     installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        
-                        if(error == nil){
+                        if(success){
                             
-                            println("success in creating the user as the installation")
+                            println("successfully added the user to the installation")
+                            println(PFInstallation.currentInstallation())
                             
                         }else{
                             
-                            println("nope")
+                            
                             
                         }
-                        
                     })
+                    
+                    
+                    
+                    
                     
                     // log that person in! //
                     // need to go to the main page with the user logged in //

@@ -104,6 +104,10 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                             // returns all the users to the delegate method //
                             self.delegate?.returnAllUsers(objectArrayTemp)
                             
+                            
+                            // send notification to those devices that they need to poll the server //
+                            self.updateOtherPeoplesDevices(objectArrayTemp)
+                            
                         })
                     }
                 })
@@ -112,6 +116,36 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     }
     
     
+    
+    func updateOtherPeoplesDevices(otherDevicesObject:Array<AnyObject>){
+        
+        for(var i = 0; i < otherDevicesObject.count; i++){
+    
+            var userId:String! = otherDevicesObject[i].objectId as String!
+            
+            println("user id \(userId)")
+            
+            var userQuery = PFUser.query()
+            userQuery.whereKey("username", equalTo: otherDevicesObject[i].objectForKey("username")!)
+        
+            
+            var push:PFPush = PFPush()
+            push.setQuery(userQuery)
+            push.setMessage("Yep!")
+            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                        
+                if(success){
+                            
+                    println("success!!!! yay!!!")
+                            
+                }else{
+                            
+                    println("nope!")
+                }
+                        
+            })
+        }
+    }
     
 
     
