@@ -97,6 +97,14 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         var query = PFUser.query()
                         query.whereKey("long", containsString: "\(self.longitude)")
                         query.whereKey("lat", containsString: "\(self.latitude)")
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    
                         query.findObjectsInBackgroundWithBlock({ (object:[AnyObject]!, error:NSError!) -> Void in
                             
                             var objectArrayTemp:Array<AnyObject> = object
@@ -117,34 +125,58 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     
     
     
+    
+    // sends out updates to the devices prompting them to pole the server //
     func updateOtherPeoplesDevices(otherDevicesObject:Array<AnyObject>){
         
-        for(var i = 0; i < otherDevicesObject.count; i++){
+        var currentUser = PFUser.currentUser()
+        var tempArray:Array<AnyObject> = otherDevicesObject
     
-            var userId:String! = otherDevicesObject[i].objectId as String!
+        // removing the main user from the main array //
+        for(var i = 0; i < otherDevicesObject.count; i++){
             
-            println("user id \(userId)")
+            if((otherDevicesObject[i].objectId == currentUser.objectId)){
+                
+                // remove it from the temp array //
+                tempArray.removeAtIndex(i)
+            }
+        }
+        
+        println("new array \(tempArray)")
+        
+        
+        // problem that I am having, is that I need another login to be present with the installation //
+        for(var i = 0; i < tempArray.count; i++){
+    
+            var userString:String = tempArray[i].objectForKey("username") as String
+            
+            println(userString)
             
             var userQuery = PFUser.query()
-            userQuery.whereKey("username", equalTo: otherDevicesObject[i].objectForKey("username")!)
-        
+            userQuery.whereKey("username", equalTo: userString)
             
-            var push:PFPush = PFPush()
-            push.setQuery(userQuery)
-            push.setMessage("Yep!")
+            var pushQuery:PFQuery = PFInstallation.query()
+            pushQuery.whereKey("user", equalTo: userQuery)
+            
+            
+            var push = PFPush()
+            push.setQuery(pushQuery)
+            push.setMessage("word!")
             push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        
+                
                 if(success){
-                            
-                    println("success!!!! yay!!!")
-                            
+                    
+                    println("success in sending push!")
+                    
                 }else{
-                            
-                    println("nope!")
+                    
+                    println("error!")
+                    
                 }
-                        
             })
+            
         }
+        
     }
     
 
