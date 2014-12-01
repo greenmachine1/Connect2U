@@ -55,6 +55,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
         var currentUser = PFUser.currentUser()
         if(currentUser != nil){
             
+            // making the user the installation variable //
+            var installation:PFInstallation = PFInstallation.currentInstallation()
+            installation["User"] = PFUser.currentUser()
+            installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                
+                if(error == nil){
+                    
+                    println("success in creating the user as the installation")
+                    
+                }else{
+                    
+                    println("nope")
+                    
+                }
+                
+            })
+            
             // need to go to the main page with the user logged in //
             let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
             
@@ -80,6 +97,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 // successful log in //
                 if(user != nil){
+                    
+                    
+                    // making the user the installation variable //
+                    var installation:PFInstallation = PFInstallation.currentInstallation()
+                    installation["User"] = PFUser.currentUser()
+                    installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                        
+                        if(error == nil){
+                            
+                            println("success in creating the user as the installation")
+                            
+                        }else{
+                            
+                            println("nope")
+                            
+                        }
+                        
+                    })
                     
                     // log that person in! //
                     // need to go to the main page with the user logged in //

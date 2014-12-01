@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("JSfr6Q2SbXv3oipCnuGFYOyJBlmB4bix5OFQHciz", clientKey: "4U9EqhEhNDpydFnrzXWIEM998Lmx3Z1zXyBOA1ya")
         
         
+        
+        // push notification setup //
         var userNotificationTypes:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
         
         var settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes:userNotificationTypes , categories: nil)

@@ -200,6 +200,22 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                 
                 self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
                 
+                var installation:PFInstallation = PFInstallation.currentInstallation()
+                installation["User"] = PFUser.currentUser()
+                installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    
+                    if(error == nil){
+                        
+                        println("success in creating the user as the installation")
+                        
+                    }else{
+                        
+                        println("nope")
+                        
+                    }
+                    
+                })
+                
             }else{
                 
                 // something happened //
