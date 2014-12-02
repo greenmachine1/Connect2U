@@ -33,6 +33,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
     
+    var userClickedOn:PFUser = PFUser()
+    
     
     var mainBigCircle:MainBigCircle = MainBigCircle()
     
@@ -125,7 +127,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     func returnPersonClicked(person: AnyObject) {
         
         println("person clicked on \(person)")
-        
+
+        self.showAlert()
+        userClickedOn = person as PFUser
     }
     
     
@@ -169,8 +173,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         
         // sending over the list of names along with the index
-        aboutViewController.personIndex = index
-        aboutViewController.listOfPeoplesNames = self.listOfFriends
+        //aboutViewController.personIndex = index
+        //aboutViewController.listOfPeoplesNames = self.listOfFriends
         
         aboutViewController.personsPic = "face_100x100.png"
         
@@ -195,6 +199,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
 
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(users)
+        
     }
     
     
@@ -262,9 +267,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         personSelected = sender.tag
         
         self.showAlert()
-        
-        
-        
+    
         println("clicked!")
     }
     
@@ -275,29 +278,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     
     // this shows the alert giving the person the option to cancel, chat, or view profile //
-    
-    
-    
-    
     // about the person needs to change //
     
     func showAlert(){
-        
-        
-        if(self.personSelected == 0){
-            
-            // takes you the user to your personal settings //
-            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-            
-            // setting the index number in the next view //
-            //aboutViewController.personIndex = self.personSelected
-            //aboutViewController.listOfPeoplesNames = self.listOfNamesArray
-            
-            aboutViewController.personsPic = "face_100x100.png"
-            
-            self.navigationController?.pushViewController(aboutViewController, animated: true)
-            
-        }else{
         
             var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -310,9 +293,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                 let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
                 // setting the index number in the next view //
-                //aboutViewController.personIndex = self.personSelected
-                //aboutViewController.listOfPeoplesNames = self.listOfNamesArray
-                aboutViewController.personsPic = "face\(self.personSelected! - 1).png"
+                aboutViewController.personsPic = self.userClickedOn.objectForKey("picture") as? String
+                aboutViewController.personName = self.userClickedOn.objectForKey("username") as? String
+                aboutViewController.personInterests = self.userClickedOn.objectForKey("interests") as? Array<String>
+                aboutViewController.personAge = self.userClickedOn.objectForKey("age") as? Int
+                aboutViewController.personGender = self.userClickedOn.objectForKey("gender") as? String
                 
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
 
@@ -333,7 +318,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
-        }
+        
     }
     
     
@@ -343,15 +328,27 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // the broadcast button //
     @IBAction func broadCastOnClick(sender: UIButton) {
         
+        var currentUser = PFUser.currentUser()
+        
         println("clicked here too")
         
         if(tempBoolToggleForBroadCast == false){
         
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
+            
+            currentUser["signedIn"] = true
+            currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                if(success){
+                    
+                    println("success in saving")
+                }else{
+                    
+                    println("error in saving")
+                }
+            })
         
             // turns on the location updates //
             locationData.turnOnUpdates()
-            
             
             tempBoolToggleForBroadCast = true
             
@@ -361,13 +358,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
             
+            currentUser["signedIn"] = false
+            currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                if(success){
+                    
+                    println("success in saving")
+                }else{
+                    
+                    println("error in saving")
+                }
+            })
+            
             locationData.stopLocationServices()
             
             tempBoolToggleForBroadCast = false
-            
-            
         }
-
     }
     
     

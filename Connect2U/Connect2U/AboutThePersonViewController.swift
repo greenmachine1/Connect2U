@@ -11,10 +11,12 @@ import UIKit
 class AboutThePersonViewController: UIViewController {
     
     
-    var personIndex:Int!
-    var listOfPeoplesNames:[String]!
-    var personsPic:String!
-    var image:UIImage!
+    var personName:String?
+    var personsPic:String?
+    var image:UIImage?
+    var personAge:Int?
+    var personInterests:Array<String>?
+    var personGender:String?
     
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -32,7 +34,12 @@ class AboutThePersonViewController: UIViewController {
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
         
-
+        nameLabel.text = personName!
+        ageLabel.text = "\(personAge!)"
+        interestsLabel.text = "\(personInterests!)"
+        genderLabel.text = personGender!
+        
+        picture.image = UIImage(named: personsPic!)
     }
 
     

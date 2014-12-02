@@ -59,6 +59,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         if(currentUser != nil){
         
+            
             var installation:PFInstallation = PFInstallation.currentInstallation()
             installation["user"] = currentUser
             installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
@@ -70,9 +71,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }else{
                     
                     
-                    
                 }
             })
+
 
             // need to go to the main page with the user logged in //
             let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn

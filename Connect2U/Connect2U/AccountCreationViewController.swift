@@ -193,6 +193,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         user["age"] = 29
         user["long"] = 0.0
         user["lat"] = 0.0
+        user["signedIn"] = false
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
             // successful log in //

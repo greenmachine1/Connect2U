@@ -45,7 +45,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestAlwaysAuthorization()
     }
     
@@ -103,6 +103,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         
                         query.whereKey("lat", greaterThanOrEqualTo: self.latitude - 0.0005)
                         query.whereKey("lat", lessThanOrEqualTo: self.latitude + 0.0005)
+                        query.whereKey("signedIn", equalTo:true)
                         
                         
                         
@@ -160,6 +161,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                     // so the 'user' needs to be the object ID //
                     var pushQuery:PFQuery = PFInstallation.query()
                     pushQuery.whereKey("user", equalTo: object)
+                    pushQuery.whereKey("signedIn", equalTo:true)
                 
                     var push = PFPush()
                     push.setQuery(pushQuery)
