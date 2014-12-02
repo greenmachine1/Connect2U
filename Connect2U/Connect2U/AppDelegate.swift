@@ -14,6 +14,8 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -60,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     
+    
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         
         println("in here as well!")
@@ -85,13 +89,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     
+    // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
         PFPush.handlePush(userInfo)
         
+        var currentUser = PFUser.currentUser()
+        
         println(" in here \(userInfo.description)")
         
+        
+        if(currentUser != nil){
+            
+            var gatherInfo = GatherInfo()
+            gatherInfo.turnOnUpdates()
+        }
     }
+    
+    
+    
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         

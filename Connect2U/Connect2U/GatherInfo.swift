@@ -85,8 +85,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
             if(currentUser != nil){
                 
                 // need to override the current users location //
-                currentUser["long"] = "\(longitude)"
-                currentUser["lat"] = "\(latitude)"
+                currentUser["long"] = longitude
+                currentUser["lat"] = latitude
                 
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     // this will update the server of location for the user and upon saving //
@@ -95,16 +95,17 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
 
                         // see if there are anyone else around you //
                         var query = PFUser.query()
-                        query.whereKey("long", containsString: "\(self.longitude)")
-                        query.whereKey("lat", containsString: "\(self.latitude)")
+                        
+
+                        // long = -120.2635, lat = 38.0285
+                        query.whereKey("long", lessThanOrEqualTo: self.longitude + 0.0005)
+                        query.whereKey("long", greaterThanOrEqualTo: self.longitude - 0.0005)
+                        
+                        query.whereKey("lat", greaterThanOrEqualTo: self.latitude - 0.0005)
+                        query.whereKey("lat", lessThanOrEqualTo: self.latitude + 0.0005)
                         
                         
                         
-                        
-                        
-                        
-                        
-                    
                         query.findObjectsInBackgroundWithBlock({ (object:[AnyObject]!, error:NSError!) -> Void in
                             
                             var objectArrayTemp:Array<AnyObject> = object
@@ -141,42 +142,43 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 tempArray.removeAtIndex(i)
             }
         }
+
         
-        println("new array \(tempArray)")
         
-        
-        // problem that I am having, is that I need another login to be present with the installation //
         for(var i = 0; i < tempArray.count; i++){
     
-            var userString:String = tempArray[i].objectForKey("username") as String
-            
-            println(userString)
+            var userObject:PFObject = tempArray[i] as PFObject
             
             var userQuery = PFUser.query()
-            userQuery.whereKey("username", equalTo: userString)
-            
-            var pushQuery:PFQuery = PFInstallation.query()
-            pushQuery.whereKey("user", equalTo: userQuery)
-            
-            
-            var push = PFPush()
-            push.setQuery(pushQuery)
-            push.setMessage("word!")
-            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            userQuery.whereKey("objectId", equalTo: userObject.objectId)
+            userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
                 
-                if(success){
+                if(error == nil){
+                
+                    println("In here and stuff \(object.description)")
                     
-                    println("success in sending push!")
-                    
-                }else{
-                    
-                    println("error!")
-                    
+                    // so the 'user' needs to be the object ID //
+                    var pushQuery:PFQuery = PFInstallation.query()
+                    pushQuery.whereKey("user", equalTo: object)
+                
+                    var push = PFPush()
+                    push.setQuery(pushQuery)
+                    push.setMessage("word!")
+                    push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                        
+                        if(success){
+                            
+                            println("success in sending push!")
+                            
+                        }else{
+                            
+                            println("error!")
+                            
+                        }
+                    })
                 }
             })
-            
         }
-        
     }
     
 
@@ -186,7 +188,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         println("locationData started")
         locationManager.startUpdatingLocation()
-        
         
         // resetting the values so the first time the location data gets sent back to the //
         // server and compared each time the user presses the main button //

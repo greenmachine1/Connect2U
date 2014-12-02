@@ -94,11 +94,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         self.view.addSubview(meButton!)
         
         
-        
-        
-        
-        
-        
+
         
         // creating the helper class for creating the profile pics //
         helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
@@ -266,6 +262,10 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         personSelected = sender.tag
         
         self.showAlert()
+        
+        
+        
+        println("clicked!")
     }
     
     
@@ -342,6 +342,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
 
     // the broadcast button //
     @IBAction func broadCastOnClick(sender: UIButton) {
+        
+        println("clicked here too")
         
         if(tempBoolToggleForBroadCast == false){
         
