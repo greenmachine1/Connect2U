@@ -299,6 +299,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                 aboutViewController.personAge = self.userClickedOn.objectForKey("age") as? Int
                 aboutViewController.personGender = self.userClickedOn.objectForKey("gender") as? String
                 
+                // passing in the user PFUser //
+                aboutViewController.userPassedIn = self.userClickedOn
+                
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
 
             
@@ -309,6 +312,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
             
                 let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+                
+                    chatViewController.personPassedIn = self.userClickedOn
                 
                 self.navigationController?.pushViewController(chatViewController, animated: true)
             

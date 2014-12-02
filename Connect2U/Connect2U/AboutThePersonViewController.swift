@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class AboutThePersonViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class AboutThePersonViewController: UIViewController {
     var personAge:Int?
     var personInterests:Array<String>?
     var personGender:String?
+    
+    var userPassedIn:PFUser?
     
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -87,9 +90,10 @@ class AboutThePersonViewController: UIViewController {
         println("connect")
         
         // takes you the user to your personal settings //
-        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+        let chatController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+        chatController.personPassedIn = userPassedIn
             
-        self.navigationController?.pushViewController(aboutViewController, animated: true)
+        self.navigationController?.pushViewController(chatController, animated: true)
         
     }
     
@@ -114,9 +118,4 @@ class AboutThePersonViewController: UIViewController {
         interestsLabel.backgroundColor = colorPalette.greenColor
         interestsLabel.textAlignment = .Center
     }
-    
-    
-    
-    
-
 }

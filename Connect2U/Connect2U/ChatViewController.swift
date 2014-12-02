@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
@@ -14,14 +15,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var mainInputField:UITextField?
     var mainReturnButton:UIButton?
+    
+    var personPassedIn:PFUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setColors()
+        
+        // passing in the person info
+        var personNameChattingWith:PFUser = personPassedIn!
 
         // static value for whos chatting with you //
-        self.navigationItem.title = "Chatting with Kevin"
+        self.navigationItem.title = "Chatting with \(personNameChattingWith.username)"
         
         
         // group chat button //
