@@ -57,7 +57,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         
         textField.resignFirstResponder()
-        
         return true
     }
     
@@ -125,35 +124,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             println(PFInstallation.currentInstallation())
                             
                         }else{
-                            
-                            
-                            
+
                         }
                     })
-                    
-                    
-                    
-                    
-                    
+
                     // log that person in! //
                     // need to go to the main page with the user logged in //
                     let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
                     
                     self.navigationController?.pushViewController(login, animated: true)
-                    
                 }else{
-                    
                     var userInfo:String = error.userInfo!["error"] as NSString
                     if((userInfo.rangeOfString("invalid login credentials")) != nil){
                         
                         self.displayMessage("No user found!", message: "Please enter a different user", cameFromNoUser:true)
-                        
                     }
                 }
             })
-            
         }else{
-            
             // they probably left a field blank, this does not clear the fields //
             self.displayMessage("Log in failed!", message: "Please enter a user name and password", cameFromNoUser:false)
         }

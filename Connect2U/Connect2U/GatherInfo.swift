@@ -1,11 +1,3 @@
-//
-//  GatherInfo.swift
-//  Connect2U
-//
-//  Created by Cory Green on 11/25/14.
-//  Copyright (c) 2014 com.Cory. All rights reserved.
-//
-
 
 
 
@@ -64,8 +56,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         var longTempDouble = Double(longTemp!)
         var latTempDouble = Double(latTemp!)
-        
-        
+    
         // setting the precision of the floating values //
         // need to adjust the precision of the double value //
         // after testing is done //
@@ -74,7 +65,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         
         var doubleTempLongValue = longTempString.doubleValue
         var doubleTempLatValue = latTempString.doubleValue
-        
         
         // checking to see if the numbers are the same //
         if((doubleTempLongValue != longitude) || (doubleTempLatValue != latitude)){
@@ -89,21 +79,20 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 currentUser["lat"] = latitude
                 
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    
+                    println("user location has changed")
 
                     if(success == true){
 
                         // Cloud method that passes in the longitude and latitude and then //
                         // decides who is clos to that position and returns the users //
                         // returning all the users with corresponding longitude and latitude //
-                        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude]) { (object:AnyObject!, error:NSError!) -> Void in
+                        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
                             
                             if(error == nil){
 
                                 // returns all the users to the delegate method //
                                 self.delegate?.returnAllUsers(object as Array)
-                                
-                                // send notification to those devices that they need to poll the server //
-                                self.updateOtherPeoplesDevices(object as Array)
                             }
                         }
                     }
@@ -113,67 +102,22 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     }
     
     
-    
-    
-    // sends out updates to the devices prompting them to pole the server //
-    func updateOtherPeoplesDevices(otherDevicesObject:Array<AnyObject>){
+    func forcedUpdate(){
         
-        var currentUser = PFUser.currentUser()
-        var tempArray:Array<AnyObject> = otherDevicesObject
-    
+        locationManager.stopUpdatingLocation()
+        locationManager.startUpdatingLocation()
         
-        // removing the main user from the main array //
-        for(var i = 0; i < otherDevicesObject.count; i++){
-            
-            if((otherDevicesObject[i].objectId == currentUser.objectId)){
-                
-                // remove it from the temp array //
-                tempArray.removeAtIndex(i)
-            }
-        }
-        
-        
-        
-        for(var i = 0; i < tempArray.count; i++){
-    
-            var userObject:PFObject = tempArray[i] as PFObject
-            
-            var userQuery = PFUser.query()
-            userQuery.whereKey("objectId", equalTo: userObject.objectId)
-            userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
-                
-                if(error == nil){
-                
-                    println("In here and stuff \(object.description)")
-                    
-                    
-                    
-                    // so the 'user' needs to be the object ID //
-                    var pushQuery:PFQuery = PFInstallation.query()
-                    pushQuery.whereKey("user", equalTo: object)
-                    pushQuery.whereKey("signedIn", equalTo:true)
-                
-                    var push = PFPush()
-                    push.setQuery(pushQuery)
-                    push.setMessage("word!")
-                    push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        
-                        if(success){
-                            
-                            println("success in sending push!")
-                            
-                        }else{
-                            
-                            println("error!")
-                            
-                        }
-                    })
-                }
-            })
-        }
     }
     
-
+    
+    func forcedTurnOff(){
+        
+        locationManager.stopUpdatingLocation()
+        locationManager.startUpdatingLocation()
+        locationManager.stopUpdatingLocation()
+    }
+    
+    
     
     // starts updates //
     func turnOnUpdates(){

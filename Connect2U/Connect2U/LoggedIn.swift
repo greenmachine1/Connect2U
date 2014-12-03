@@ -10,6 +10,7 @@ import UIKit
 import Parse
 
 
+
 class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked{
     
     @IBOutlet weak var broadCast: UIButton!
@@ -62,7 +63,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         self.setColors()
         
-        
         currentUser["signedIn"] = false
         currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
             if(success){
@@ -92,8 +92,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
-        
-        
         // the current location of meButton //
         meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
         
@@ -113,8 +111,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         self.view.addSubview(meButton!)
         
         
-
-        
         // creating the helper class for creating the profile pics //
         helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
         
@@ -128,13 +124,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     func settingUpTheUserInfo(){
         
         if(currentUser != nil){
-            
             currentUserName = currentUser.username
             currentUserAge = currentUser["age"] as? Int
             currentUserGender = currentUser["gender"] as? String
             currentUserPic = currentUser["picture"] as? String
             currentUserInterests = currentUser["interests"] as? Array
-            
         }
     }
     
@@ -187,12 +181,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         // takes you the user to your personal settings //
         let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-        
-        
-        // sending over the list of names along with the index
-        //aboutViewController.personIndex = index
-        //aboutViewController.listOfPeoplesNames = self.listOfFriends
-        
+
         aboutViewController.personsPic = "face_100x100.png"
         
         self.navigationController?.pushViewController(aboutViewController, animated: true)
@@ -214,58 +203,22 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         tempArrayPassedIn = users
         
         // passes the users to the circle creator! //
-        helperClass.updateProfilePics(users)
+        helperClass.updateProfilePics(tempArrayPassedIn!)
     
         
     }
+
     
-    
-    
-    
-    
-    
-    func notifyPeopleYouveGoneOffline(peoplePassedIn:Array<AnyObject>){
+    // overridding the array //
+    func updateFromDelegate(){
         
-        for(var i = 0; i < peoplePassedIn.count; i++){
-            
-            var userObject:PFObject = peoplePassedIn[i] as PFObject
-            
-            var userQuery = PFUser.query()
-            userQuery.whereKey("objectId", equalTo: userObject.objectId)
-            userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
-                
-                if(error == nil){
-                    
-                    println("In here and stuff \(object.description)")
-                    
-                    // so the 'user' needs to be the object ID //
-                    var pushQuery:PFQuery = PFInstallation.query()
-                    pushQuery.whereKey("user", equalTo: object)
-                    pushQuery.whereKey("signedIn", equalTo:true)
-                    
-                    var push = PFPush()
-                    push.setQuery(pushQuery)
-                    push.setMessage("word!")
-                    push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        
-                        if(success){
-                            
-                            println("success in sending push!")
-                            
-                        }else{
-                            
-                            println("error!")
-                            
-                        }
-                    })
-                }
-            })
-        }
+        println("update damnit!!!")
+        
+        locationData.forcedUpdate()
+        
     }
     
-    
-    
-    
+
     
     
     
@@ -395,8 +348,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         var currentUser = PFUser.currentUser()
         
-        println("clicked here too")
-        
         if(tempBoolToggleForBroadCast == false){
         
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
@@ -405,24 +356,18 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
+
+                    
                     println("success in saving")
                     
-                    if(self.tempArrayPassedIn != nil){
-                        
-                        println("temp array passed inself. : \(self.tempArrayPassedIn)")
-                        
-                        self.notifyPeopleYouveGoneOffline(self.tempArrayPassedIn!)
-                    }
                 }else{
                     
                     println("error in saving")
                 }
             })
         
-        
             // turns on the location updates //
             locationData.turnOnUpdates()
-            
             tempBoolToggleForBroadCast = true
             
             
@@ -435,14 +380,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
+
+                    
+                    
                     println("success in saving")
                     
-                    if(self.tempArrayPassedIn != nil){
-                        
-                        println("temp array passed in. : \(self.tempArrayPassedIn)")
-                        
-                        self.notifyPeopleYouveGoneOffline(self.tempArrayPassedIn!)
-                    }
                 }else{
                     
                     println("error in saving")
@@ -450,7 +392,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             })
 
             locationData.stopLocationServices()
-            
             tempBoolToggleForBroadCast = false
         }
     }

@@ -98,16 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFPush.handlePush(userInfo)
         
         var currentUser = PFUser.currentUser()
-        
-        println("\(userInfo.description)")
-        
-        
-        
-        if(currentUser != nil){
-            
-            var gatherInfo = GatherInfo()
-            gatherInfo.turnOnUpdates()
-        }
+
+        println("recieved update!")
+        var loggedIn:LoggedIn = LoggedIn()
+        loggedIn.updateFromDelegate()
 
     }
     
