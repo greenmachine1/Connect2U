@@ -89,6 +89,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         meButton!.layer.borderWidth = 3.0
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
         meButton!.clipsToBounds = true
+        meButton!.tag = 1001
         meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
@@ -97,6 +98,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         // start of the label //
         var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
+        nameLabelForMe.tag = 1001
         nameLabelForMe.text = currentUserName
         nameLabelForMe.textColor = UIColor.whiteColor()
         nameLabelForMe.textAlignment = .Center
@@ -198,14 +200,15 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // this brings back all the users in the area //
     func returnAllUsers(users: Array<AnyObject>) {
         
-        tempArrayPassedIn = []
+        tempArrayPassedIn?.removeAll(keepCapacity: false)
         
         tempArrayPassedIn = users
+        
+        println("update in here \(tempArrayPassedIn)")
         
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(tempArrayPassedIn!)
     
-        
     }
 
     

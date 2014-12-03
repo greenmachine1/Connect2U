@@ -90,7 +90,14 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                         PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
                             
                             if(error == nil){
-
+                                
+                                
+                                var tempObject:Array = Array(arrayLiteral: object)
+                                
+                                println("temp arrayness\(tempObject)")
+                                
+                                
+                                
                                 // returns all the users to the delegate method //
                                 self.delegate?.returnAllUsers(object as Array)
                             }

@@ -58,7 +58,7 @@ class HelperClassOfProfilePics: NSObject {
         var cgpointToDoubleConversionForX:Double = Double(locationPointOfCircle!.x)
         var cgpointToDoubleConversionForY:Double = Double(locationPointOfCircle!.y)
         
-        for(var i = 0; i < newProfilePics.count; i++){
+        for(var i = 0; i < arrayPassedInFromMainClass!.count; i++){
             
             // placement around the main circle //
             var x = Double(cgpointToDoubleConversionForX) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(newProfilePics.count))
@@ -69,11 +69,8 @@ class HelperClassOfProfilePics: NSObject {
             var tempName:String = newProfilePics[i].objectForKey("username") as NSString
             var tempPic:String = newProfilePics[i].objectForKey("picture") as NSString
 
-            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i + 1, userNameString:tempName)
-            
-            
-            
-            
+            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i, userNameString:tempName)
+
         }
 
     }
@@ -85,15 +82,35 @@ class HelperClassOfProfilePics: NSObject {
     // removing the button and label from the scene //
     func updateProfilePics(newProfilePics:Array<AnyObject>){
         
+        var newArray:Array<AnyObject> = newProfilePics
+        
+        var subViews = callingViewMain!.subviews as Array<UIView>
+        
+        if(newProfilePics.count == 0){
+            for someView in subViews{
+                if(someView.isKindOfClass(UIButton)){
+                    if(someView.tag == 0){
+                        someView.removeFromSuperview()
+                    }
+                }
+                if(someView.isKindOfClass(UILabel)){
+                    if(someView.tag == 0){
+                        someView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
         if(newProfilePics.count != 0){
         
             var subViews = callingViewMain!.subviews as Array<UIView>
         
-            
             for someView in subViews{
                 if(someView.isKindOfClass(UIButton)){
                     for(var k = 0; k < subViews.count; k++){
-                        if(someView.tag == k + 1){
+                        
+                        println("tag for button \(someView.tag)")
+                        if(someView.tag == k){
                             
                             someView.removeFromSuperview()
                         }
@@ -101,15 +118,17 @@ class HelperClassOfProfilePics: NSObject {
                 }
                 if(someView.isKindOfClass(UILabel)){
                     for(var l = 0; l < subViews.count; l++){
-                        if(someView.tag == l + 1){
+                        
+                        println("tag for label  \(someView.tag)")
+                        if(someView.tag == l){
                             
                             someView.removeFromSuperview()
                         }
                     }
                 }
             }
-            
-            self.drawProfilePics(newProfilePics)
+            self.drawProfilePics(newArray)
+            println("Theres something here still \(newProfilePics)")
         }
     }
     
@@ -177,12 +196,12 @@ class HelperClassOfProfilePics: NSObject {
         if(arrayPassedInFromMainClass != nil){
             
             //println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
-            println(arrayPassedInFromMainClass![sender.tag - 1].objectForKey("username")!)
+            println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
         }
         
         
         // sending the person clicked back to the main view to view their profile or chat //
-        delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag - 1])
+        delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
         //delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
          
         
