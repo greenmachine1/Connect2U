@@ -111,17 +111,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                             
                             var objectArrayTemp:Array<AnyObject> = object
                             
-                            // removing the main user from the main array //
-                            /*
-                            for(var i = 0; i < objectArrayTemp.count; i++){
-                                
-                                if((objectArrayTemp[i].objectId == PFUser.currentUser().objectId)){
-                                    
-                                    // remove it from the temp array //
-                                    objectArrayTemp.removeAtIndex(i)
-                                }
-                            }
-                            */
                                 
                             // returns all the users to the delegate method //
                             self.delegate?.returnAllUsers(objectArrayTemp)
