@@ -36,13 +36,21 @@ class AboutThePersonViewController: UIViewController {
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
-        
-        nameLabel.text = personName!
-        ageLabel.text = "\(personAge!)"
-        interestsLabel.text = "\(personInterests!)"
-        genderLabel.text = personGender!
-        
-        picture.image = UIImage(named: personsPic!)
+        if(personName != nil){
+            nameLabel.text = personName!
+        }
+        if(personAge != nil){
+            ageLabel.text = "\(personAge!)"
+        }
+        if(personInterests != nil){
+            interestsLabel.text = "\(personInterests!)"
+        }
+        if(personGender != nil){
+            genderLabel.text = personGender!
+        }
+        if(personsPic != nil){
+            picture.image = UIImage(named: personsPic!)
+        }
     }
 
     

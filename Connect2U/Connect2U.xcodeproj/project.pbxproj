@@ -51,6 +51,7 @@
 		E5E6BCBB1A12EA1800972580 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCB11A12EA1800972580 /* QuartzCore.framework */; };
 		E5E6BCBC1A12EA1800972580 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCB21A12EA1800972580 /* Security.framework */; };
 		E5E6BCBE1A12EA1800972580 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E6BCB41A12EA1800972580 /* SystemConfiguration.framework */; };
+		E5F581181A2F388C0057A9ED /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F581171A2F388C0057A9ED /* Connectivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		E5E6BCB11A12EA1800972580 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E5E6BCB21A12EA1800972580 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E5E6BCB41A12EA1800972580 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E5F581171A2F388C0057A9ED /* Connectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,7 @@
 				E55453281A25C0F0006EA3ED /* DrillDownPeople.swift */,
 				E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */,
 				E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */,
+				E5F581171A2F388C0057A9ED /* Connectivity.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				E5BE00B41A1D43B600543FE8 /* ChatViewController.swift in Sources */,
 				E5E6BC881A12E86000972580 /* AppDelegate.swift in Sources */,
 				E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */,
+				E5F581181A2F388C0057A9ED /* Connectivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,6 +31,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     // getting the current user //
     var currentUser = PFUser.currentUser()
     var delegate:ReturnInfo?
+    
+    var updateCount:Int = 0
 
     override init() {
         super.init()
@@ -78,37 +80,38 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 currentUser["long"] = longitude
                 currentUser["lat"] = latitude
                 
-                currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                updateCount++
+                
+                
+                if((updateCount % 3) == 0){
+                
+                    println("update count \(updateCount) with Long : \(longitude) and lat : \(latitude)")
+                    currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     
-                    println("user location has changed")
+                        println("user location has changed")
 
-                    if(success == true){
+                        if(success == true){
 
-                        // Cloud method that passes in the longitude and latitude and then //
-                        // decides who is clos to that position and returns the users //
-                        // returning all the users with corresponding longitude and latitude //
-                        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+                            // Cloud method that passes in the longitude and latitude and then //
+                            // decides who is clos to that position and returns the users //
+                            // returning all the users with corresponding longitude and latitude //
+                            PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
                             
-                            if(error == nil){
-                                
-                                
-                                var tempObject:Array = Array(arrayLiteral: object)
-                                
-                                println("temp arrayness\(tempObject)")
-                                
-                                
-                                
-                                // returns all the users to the delegate method //
-                                self.delegate?.returnAllUsers(object as Array)
+                                if(error == nil){
+                    
+                                    // returns all the users to the delegate method //
+                                    self.delegate?.returnAllUsers(object as Array)
+                                }
+                            
                             }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
     }
-    
-    
+
+        
     func forcedUpdate(){
         
         locationManager.stopUpdatingLocation()

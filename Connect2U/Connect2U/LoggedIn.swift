@@ -359,8 +359,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-
-                    
                     println("success in saving")
                     
                 }else{
@@ -382,10 +380,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser["signedIn"] = false
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
-                    
 
-                    
-                    
                     println("success in saving")
                     
                 }else{

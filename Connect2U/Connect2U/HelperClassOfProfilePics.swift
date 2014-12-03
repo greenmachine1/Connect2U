@@ -80,6 +80,7 @@ class HelperClassOfProfilePics: NSObject {
     
     
     // removing the button and label from the scene //
+    // this is kinda redundant but will have to do for now //
     func updateProfilePics(newProfilePics:Array<AnyObject>){
         
         var newArray:Array<AnyObject> = newProfilePics
@@ -128,7 +129,6 @@ class HelperClassOfProfilePics: NSObject {
                 }
             }
             self.drawProfilePics(newArray)
-            println("Theres something here still \(newProfilePics)")
         }
     }
     

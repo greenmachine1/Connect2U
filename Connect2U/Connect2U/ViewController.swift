@@ -25,8 +25,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var forgotPassword: UIButton!
 
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +34,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         
         self.userStillLoggedIn()
+        
+        
         
     }
     
@@ -66,30 +66,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         var currentUser = PFUser.currentUser()
         
-        if(currentUser != nil){
+        if(Reachability.isConnectedToNetwork() != false){
+            
+            println("is connected ")
         
+            if(currentUser != nil){
+        
+                var installation:PFInstallation = PFInstallation.currentInstallation()
+                installation["user"] = currentUser
+                installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    if(success){
+                        println(PFInstallation.currentInstallation())
+                    }
+                })
             
-            var installation:PFInstallation = PFInstallation.currentInstallation()
-            installation["user"] = currentUser
-            installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                if(success){
-                    
-                    println("successfully added the user to the installation")
-                    println(PFInstallation.currentInstallation())
-                    
-                }else{
-                    
-                    
-                }
-            })
-
-
-            // need to go to the main page with the user logged in //
-            let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+                // need to go to the main page with the user logged in //
+                let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
             
-            self.navigationController?.pushViewController(login, animated: true)
+                self.navigationController?.pushViewController(login, animated: true)
+            }
         }
-        
     }
     
     
