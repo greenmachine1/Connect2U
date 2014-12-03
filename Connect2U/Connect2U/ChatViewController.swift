@@ -17,17 +17,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var mainReturnButton:UIButton?
     
     var personPassedIn:PFUser?
+    var personNameChattingWith:PFUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setColors()
         
-        // passing in the person info
-        var personNameChattingWith:PFUser = personPassedIn!
-
         // static value for whos chatting with you //
-        self.navigationItem.title = "Chatting with \(personNameChattingWith.username)"
+        self.navigationItem.title = "Chatting with \(personPassedIn!.username)"
+        
+        
+        
         
         
         // group chat button //
@@ -59,6 +60,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainReturnButton = UIButton(frame: CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0))
         mainReturnButton?.setTitle("Send", forState: UIControlState.Normal)
         mainReturnButton?.addTarget(self, action: Selector("mainReturn"), forControlEvents: UIControlEvents.TouchUpInside)
+        
         self.view.addSubview(mainReturnButton!)
         
         
@@ -84,18 +86,65 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 320.0), width: 300.0, height: 30.0)
         
         mainReturnButton?.frame = CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 320.0), width: 100.0, height: 30.0)
-        
-     
+    
     }
+    
+    
+    
+    
+    
+    
+    
     
     
     // send off the text //
     func mainReturn(){
         
-        
-        println("send")
+        println("\(personPassedIn!.objectId)")
+    
+        var userObject:PFObject = personPassedIn! as PFObject
+
+        var userQuery = PFUser.query()
+        userQuery.whereKey("objectId", equalTo: userObject.objectId)
+        userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
+                    
+        if(error == nil){
+                        
+            println("In here and stuff with the other object  \(object.description)")
+                    
+            // so the 'user' needs to be the object ID //
+            var pushQuery:PFQuery = PFInstallation.query()
+            pushQuery.whereKey("user", equalTo: object)
+            pushQuery.whereKey("signedIn", equalTo:true)
+                        
+            var push = PFPush()
+            push.setQuery(pushQuery)
+            push.setMessage("Notify!")
+            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                            
+                if(success){
+                                
+                    println("success in sending push Message !")
+                                
+                }else{
+                                
+                    println("error!")
+                                
+                }
+            })
+        }
+    })
+
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     // the return key //

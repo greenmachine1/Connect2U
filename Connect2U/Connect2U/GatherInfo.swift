@@ -111,12 +111,25 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                             
                             var objectArrayTemp:Array<AnyObject> = object
                             
+                            // removing the main user from the main array //
+                            /*
+                            for(var i = 0; i < objectArrayTemp.count; i++){
+                                
+                                if((objectArrayTemp[i].objectId == PFUser.currentUser().objectId)){
+                                    
+                                    // remove it from the temp array //
+                                    objectArrayTemp.removeAtIndex(i)
+                                }
+                            }
+                            */
+                                
                             // returns all the users to the delegate method //
                             self.delegate?.returnAllUsers(objectArrayTemp)
                             
                             
                             // send notification to those devices that they need to poll the server //
                             self.updateOtherPeoplesDevices(objectArrayTemp)
+                            
                             
                         })
                     }
@@ -134,6 +147,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         var currentUser = PFUser.currentUser()
         var tempArray:Array<AnyObject> = otherDevicesObject
     
+        
         // removing the main user from the main array //
         for(var i = 0; i < otherDevicesObject.count; i++){
             
@@ -143,7 +157,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 tempArray.removeAtIndex(i)
             }
         }
-
+        
         
         
         for(var i = 0; i < tempArray.count; i++){
@@ -157,6 +171,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 if(error == nil){
                 
                     println("In here and stuff \(object.description)")
+                    
+                    
                     
                     // so the 'user' needs to be the object ID //
                     var pushQuery:PFQuery = PFInstallation.query()

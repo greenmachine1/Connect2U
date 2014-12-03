@@ -72,6 +72,8 @@ class HelperClassOfProfilePics: NSObject {
             self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i + 1, userNameString:tempName)
             
             
+            
+            
         }
 
     }
@@ -83,27 +85,32 @@ class HelperClassOfProfilePics: NSObject {
     // removing the button and label from the scene //
     func updateProfilePics(newProfilePics:Array<AnyObject>){
         
-        var subViews = callingViewMain!.subviews as Array<UIView>
+        if(newProfilePics.count != 0){
         
-        for someView in subViews{
-            if(someView.isKindOfClass(UIButton)){
-                for(var k = 0; k < subViews.count; k++){
-                    if(someView.tag == k + 1){
-                
-                        someView.removeFromSuperview()
+            var subViews = callingViewMain!.subviews as Array<UIView>
+        
+            
+            for someView in subViews{
+                if(someView.isKindOfClass(UIButton)){
+                    for(var k = 0; k < subViews.count; k++){
+                        if(someView.tag == k + 1){
+                            
+                            someView.removeFromSuperview()
+                        }
+                    }
+                }
+                if(someView.isKindOfClass(UILabel)){
+                    for(var l = 0; l < subViews.count; l++){
+                        if(someView.tag == l + 1){
+                            
+                            someView.removeFromSuperview()
+                        }
                     }
                 }
             }
-            if(someView.isKindOfClass(UILabel)){
-                for(var l = 0; l < subViews.count; l++){
-                    if(someView.tag == l + 1){
-                        
-                        someView.removeFromSuperview()
-                    }
-                }
-            }
+            
+            self.drawProfilePics(newProfilePics)
         }
-        self.drawProfilePics(newProfilePics)
     }
     
     
@@ -169,14 +176,15 @@ class HelperClassOfProfilePics: NSObject {
         
         if(arrayPassedInFromMainClass != nil){
             
+            //println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
             println(arrayPassedInFromMainClass![sender.tag - 1].objectForKey("username")!)
         }
         
         
         // sending the person clicked back to the main view to view their profile or chat //
         delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag - 1])
-        
-        
+        //delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
+         
         
         
     }

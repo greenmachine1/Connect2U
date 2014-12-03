@@ -38,6 +38,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     var mainBigCircle:MainBigCircle = MainBigCircle()
     
+    var tempArrayPassedIn:Array<AnyObject>?
+    
     
     
     // temporary data //
@@ -59,6 +61,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         self.setColors()
+        
+        
+        currentUser["signedIn"] = false
+        currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            if(success){
+                
+                println("success in saving")
+            }else{
+                
+                println("error in saving")
+            }
+        })
+        
+        
+        
         
         // setting up the current user info //
         self.settingUpTheUserInfo()
@@ -192,16 +209,59 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // this brings back all the users in the area //
     func returnAllUsers(users: Array<AnyObject>) {
         
-        println("In here : \(users.count)")
+        tempArrayPassedIn = []
         
-        println("people within the array :\(users)")
+        tempArrayPassedIn = users
         
-
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(users)
+    
         
     }
     
+    
+    
+    
+    
+    
+    func notifyPeopleYouveGoneOffline(peoplePassedIn:Array<AnyObject>){
+        
+        for(var i = 0; i < peoplePassedIn.count; i++){
+            
+            var userObject:PFObject = peoplePassedIn[i] as PFObject
+            
+            var userQuery = PFUser.query()
+            userQuery.whereKey("objectId", equalTo: userObject.objectId)
+            userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
+                
+                if(error == nil){
+                    
+                    println("In here and stuff \(object.description)")
+                    
+                    // so the 'user' needs to be the object ID //
+                    var pushQuery:PFQuery = PFInstallation.query()
+                    pushQuery.whereKey("user", equalTo: object)
+                    pushQuery.whereKey("signedIn", equalTo:true)
+                    
+                    var push = PFPush()
+                    push.setQuery(pushQuery)
+                    push.setMessage("word!")
+                    push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                        
+                        if(success){
+                            
+                            println("success in sending push!")
+                            
+                        }else{
+                            
+                            println("error!")
+                            
+                        }
+                    })
+                }
+            })
+        }
+    }
     
     
     
@@ -346,11 +406,19 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                 if(success){
                     
                     println("success in saving")
+                    
+                    if(self.tempArrayPassedIn != nil){
+                        
+                        println("temp array passed inself. : \(self.tempArrayPassedIn)")
+                        
+                        self.notifyPeopleYouveGoneOffline(self.tempArrayPassedIn!)
+                    }
                 }else{
                     
                     println("error in saving")
                 }
             })
+        
         
             // turns on the location updates //
             locationData.turnOnUpdates()
@@ -368,12 +436,19 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                 if(success){
                     
                     println("success in saving")
+                    
+                    if(self.tempArrayPassedIn != nil){
+                        
+                        println("temp array passed in. : \(self.tempArrayPassedIn)")
+                        
+                        self.notifyPeopleYouveGoneOffline(self.tempArrayPassedIn!)
+                    }
                 }else{
                     
                     println("error in saving")
                 }
             })
-            
+
             locationData.stopLocationServices()
             
             tempBoolToggleForBroadCast = false
