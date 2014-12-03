@@ -36,7 +36,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         
         self.userStillLoggedIn()
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -89,38 +89,23 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 currentUser["lat"] = latitude
                 
                 currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                    // this will update the server of location for the user and upon saving //
-                    // will return all the users within the location //
+
                     if(success == true){
 
-                        // see if there are anyone else around you //
-                        var query = PFUser.query()
-                        
+                        // Cloud method that passes in the longitude and latitude and then //
+                        // decides who is clos to that position and returns the users //
+                        // returning all the users with corresponding longitude and latitude //
+                        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude]) { (object:AnyObject!, error:NSError!) -> Void in
+                            
+                            if(error == nil){
 
-                        // long = -120.2635, lat = 38.0285
-                        query.whereKey("long", lessThanOrEqualTo: self.longitude + 0.0005)
-                        query.whereKey("long", greaterThanOrEqualTo: self.longitude - 0.0005)
-                        
-                        query.whereKey("lat", greaterThanOrEqualTo: self.latitude - 0.0005)
-                        query.whereKey("lat", lessThanOrEqualTo: self.latitude + 0.0005)
-                        query.whereKey("signedIn", equalTo:true)
-                        
-                        
-                        
-                        query.findObjectsInBackgroundWithBlock({ (object:[AnyObject]!, error:NSError!) -> Void in
-                            
-                            var objectArrayTemp:Array<AnyObject> = object
-                            
+                                // returns all the users to the delegate method //
+                                self.delegate?.returnAllUsers(object as Array)
                                 
-                            // returns all the users to the delegate method //
-                            self.delegate?.returnAllUsers(objectArrayTemp)
-                            
-                            
-                            // send notification to those devices that they need to poll the server //
-                            self.updateOtherPeoplesDevices(objectArrayTemp)
-                            
-                            
-                        })
+                                // send notification to those devices that they need to poll the server //
+                                self.updateOtherPeoplesDevices(object as Array)
+                            }
+                        }
                     }
                 })
             }

@@ -11,6 +11,7 @@
 		E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */; };
 		E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D461A18A2A400971A24 /* LoggedIn.swift */; };
 		E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5238D4A1A18B38900971A24 /* Color_strip.jpg */; };
+		E545ADDE1A2E9631001D3D91 /* Connect_2_U_Log.png in Resources */ = {isa = PBXBuildFile; fileRef = E545ADDD1A2E9631001D3D91 /* Connect_2_U_Log.png */; };
 		E54986BC1A1AFB070008E36F /* face_100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = E54986BB1A1AFB070008E36F /* face_100x100.png */; };
 		E54B0B681A1F2C4E008AD286 /* ColorPalettes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */; };
 		E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55453261A25B889006EA3ED /* GatherInfo.swift */; };
@@ -67,6 +68,7 @@
 		E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCreationViewController.swift; sourceTree = "<group>"; };
 		E5238D461A18A2A400971A24 /* LoggedIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedIn.swift; sourceTree = "<group>"; };
 		E5238D4A1A18B38900971A24 /* Color_strip.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Color_strip.jpg; sourceTree = "<group>"; };
+		E545ADDD1A2E9631001D3D91 /* Connect_2_U_Log.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connect_2_U_Log.png; sourceTree = "<group>"; };
 		E54986BB1A1AFB070008E36F /* face_100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face_100x100.png; sourceTree = "<group>"; };
 		E54B0B671A1F2C4E008AD286 /* ColorPalettes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalettes.swift; sourceTree = "<group>"; };
 		E55453261A25B889006EA3ED /* GatherInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatherInfo.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 		E5E6BC851A12E86000972580 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E545ADDD1A2E9631001D3D91 /* Connect_2_U_Log.png */,
 				E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */,
 				E5BC88511A1C71A300D3D0A5 /* face3.png */,
 				E5BC884D1A1C705400D3D0A5 /* face0.png */,
@@ -361,6 +364,7 @@
 			files = (
 				E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */,
 				E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */,
+				E545ADDE1A2E9631001D3D91 /* Connect_2_U_Log.png in Resources */,
 				E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
 				E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */,
