@@ -116,6 +116,25 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
 
     
     
+
+    func updateLocations(emptyArray:Bool){
+                
+        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+            if(error == nil){
+                
+                if(emptyArray == false){
+                    self.delegate?.returnAllUsers(object as Array, latitude: self.latitude, longitude: self.longitude)
+                }else{
+                    self.delegate?.returnAllUsers(Array<AnyObject>(), latitude: self.latitude, longitude: self.longitude)
+                }
+            }
+        }
+        
+        
+    }
+    
+    
+    
     
     
     

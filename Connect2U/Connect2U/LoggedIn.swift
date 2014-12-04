@@ -226,7 +226,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     func updateFromDelegate(){
         
         
-        if(self.longitudePassedBack == nil){
+        if(longitudePassedBack != nil){
             println("passed in super object ")
         }
         
@@ -401,8 +401,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    println("this is here as well \(self.longitudePassedBack), \(self.latitudePassedBack)")
+                    //println("this is here as well \(self.longitudePassedBack), \(self.latitudePassedBack)")
                     
+                    /*
                     PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitudePassedBack!, "longi": self.longitudePassedBack!, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
                         
                         if(error == nil){
@@ -411,8 +412,12 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                             // also returns the users location to the main screen //
                             self.returnAllUsers(object as Array, latitude: self.latitudePassedBack!, longitude: self.longitudePassedBack!)
                         }
-                        
                     }
+                    s*/
+                    
+                    self.locationData.turnOnUpdates()
+                    self.locationData.updateLocations(false)
+
                     
                 println("success in saving")
                     
@@ -423,7 +428,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             })
         
             // turns on the location updates //
-            locationData.turnOnUpdates()
+            //locationData.turnOnUpdates()
             tempBoolToggleForBroadCast = true
             
         }else if(tempBoolToggleForBroadCast == true){
@@ -439,6 +444,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
+                    /*
                     PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" :self.latitudePassedBack!, "longi": self.longitudePassedBack!, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
                         
                         
@@ -451,6 +457,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                         }
                         
                     }
+                    */
+                    
+                    self.locationData.updateLocations(true)
                     
                     
                     println("success in saving")
