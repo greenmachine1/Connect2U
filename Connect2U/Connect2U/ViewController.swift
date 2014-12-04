@@ -24,9 +24,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var forgotPassword: UIButton!
     
-    var loggedInVariable:Bool?
+    var loggedInVariable:Bool = false
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,13 +35,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         
         if(loggedInVariable == false){
+            
             self.userStillLoggedIn()
-        }else if (loggedInVariable == true){
+            
+        }else{
+            
             PFUser.logOut()
         }
+        
     }
     
-    
+
     
     
     
@@ -79,7 +82,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 installation["user"] = currentUser
                 installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     if(success){
-                        println(PFInstallation.currentInstallation())
+                        
+                        
                     }
                 })
             
@@ -101,48 +105,51 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // log in //
     @IBAction func logInClick(sender: UIButton) {
         
-        var currentUser = PFUser.currentUser()
+        if(PFUser.currentUser() == nil){
         
-        // if there is info in the fields, attempt to verify //
-        if( !(userNameTextField.text.isEmpty) && !(passwordTextField.text.isEmpty)){
+            var currentUser = PFUser.currentUser()
+        
+            // if there is info in the fields, attempt to verify //
+            if( !(userNameTextField.text.isEmpty) && !(passwordTextField.text.isEmpty)){
             
-            PFUser.logInWithUsernameInBackground(userNameTextField.text, password: passwordTextField.text, block: { (user:PFUser!, error:NSError!) -> Void in
-            
-                // successful log in //
-                if(user != nil){
+                PFUser.logInWithUsernameInBackground(userNameTextField.text, password: passwordTextField.text, block: { (user:PFUser!, error:NSError!) -> Void in
+                    
+                    // successful log in //
+                    if(user != nil){
                 
-                    currentUser = user
+                        currentUser = user
                     
                     
-                    var installation:PFInstallation = PFInstallation.currentInstallation()
-                    installation["user"] = currentUser
-                    installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        if(success){
+                        var installation:PFInstallation = PFInstallation.currentInstallation()
+                        installation["user"] = currentUser
+                        installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                            if(success){
                             
-                            println("successfully added the user to the installation")
-                            println(PFInstallation.currentInstallation())
+                                println("successfully added the user to the installation")
+                                println(PFInstallation.currentInstallation())
                             
-                        }else{
+                            }else{
 
-                        }
-                    })
+                            }
+                        })
 
-                    // log that person in! //
-                    // need to go to the main page with the user logged in //
-                    let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+                        // log that person in! //
+                        // need to go to the main page with the user logged in //
+                        let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
                     
-                    self.navigationController?.pushViewController(login, animated: true)
-                }else{
-                    var userInfo:String = error.userInfo!["error"] as NSString
-                    if((userInfo.rangeOfString("invalid login credentials")) != nil){
+                        self.navigationController?.pushViewController(login, animated: true)
+                    }else{
+                        var userInfo:String = error.userInfo!["error"] as NSString
+                        if((userInfo.rangeOfString("invalid login credentials")) != nil){
                         
-                        self.displayMessage("No user found!", message: "Please enter a different user", cameFromNoUser:true)
+                            self.displayMessage("No user found!", message: "Please enter a different user", cameFromNoUser:true)
+                        }
                     }
-                }
-            })
-        }else{
-            // they probably left a field blank, this does not clear the fields //
-            self.displayMessage("Log in failed!", message: "Please enter a user name and password", cameFromNoUser:false)
+                })
+            }else{
+                // they probably left a field blank, this does not clear the fields //
+                self.displayMessage("Log in failed!", message: "Please enter a user name and password", cameFromNoUser:false)
+            }
         }
     }
 

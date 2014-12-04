@@ -49,12 +49,32 @@ class HelperClassOfProfilePics: NSObject {
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
+        var subViews = callingViewMain!.subviews as Array<UIView>
+        
+        println("count of : \(subViews.count)")
+        
+        
+        for someViews in subViews{
+            
+            if(someViews.isKindOfClass(UIButton)){
+                if(someViews.tag < subViews.count){
+                    someViews.removeFromSuperview()
+                }
+            }
+            if(someViews.isKindOfClass(UILabel)){
+                if(someViews.tag < subViews.count){
+                    someViews.removeFromSuperview()
+                }
+            }
+        }
+        
+        
         arrayPassedInFromMainClass!.removeAll(keepCapacity: false)
         arrayPassedInFromMainClass = newProfilePics
         
         println("\(arrayPassedInFromMainClass!.count)")
         
-        
+
         var cgpointToDoubleConversionForX:Double = Double(locationPointOfCircle!.x)
         var cgpointToDoubleConversionForY:Double = Double(locationPointOfCircle!.y)
         
@@ -84,52 +104,8 @@ class HelperClassOfProfilePics: NSObject {
     func updateProfilePics(newProfilePics:Array<AnyObject>){
         
         var newArray:Array<AnyObject> = newProfilePics
-        
-        var subViews = callingViewMain!.subviews as Array<UIView>
-        
-        if(newProfilePics.count == 0){
-            for someView in subViews{
-                if(someView.isKindOfClass(UIButton)){
-                    if(someView.tag == 0){
-                        someView.removeFromSuperview()
-                    }
-                }
-                if(someView.isKindOfClass(UILabel)){
-                    if(someView.tag == 0){
-                        someView.removeFromSuperview()
-                    }
-                }
-            }
-        }
-        
-        if(newProfilePics.count != 0){
-        
-            var subViews = callingViewMain!.subviews as Array<UIView>
-        
-            for someView in subViews{
-                if(someView.isKindOfClass(UIButton)){
-                    for(var k = 0; k < subViews.count; k++){
-                        
-                        println("tag for button \(someView.tag)")
-                        if(someView.tag == k){
-                            
-                            someView.removeFromSuperview()
-                        }
-                    }
-                }
-                if(someView.isKindOfClass(UILabel)){
-                    for(var l = 0; l < subViews.count; l++){
-                        
-                        println("tag for label  \(someView.tag)")
-                        if(someView.tag == l){
-                            
-                            someView.removeFromSuperview()
-                        }
-                    }
-                }
-            }
-            self.drawProfilePics(newArray)
-        }
+                
+        self.drawProfilePics(newArray)
     }
     
     

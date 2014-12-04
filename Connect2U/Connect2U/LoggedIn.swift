@@ -222,9 +222,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // has been recieved and that the user needs to poll the server again //
     func updateFromDelegate(){
         
-        println("update damnit!!!")
-        
-        println("toggle state : \(tempBoolToggleForBroadCast)")
+        println("state of toggle broadcast \(tempBoolToggleForBroadCast)")
     
         if(tempBoolToggleForBroadCast == true){
             
@@ -234,6 +232,30 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
           }else{
             
             println("forced turned on ")
+            
+            
+            currentUser["signedIn"] = true
+            currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                if(success){
+                    
+                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitudePassedBack, "longi": self.longitudePassedBack, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+                        
+                        if(error == nil){
+                            
+                            // returns all the users to this screen //
+                            // also returns the users location to the main screen //
+                            self.returnAllUsers(object as Array, latitude: self.latitudePassedBack, longitude: self.longitudePassedBack)
+                        }
+                        
+                    }
+                    
+                    println("success in saving")
+                    
+                }else{
+                    
+                    println("error in saving")
+                }
+            })
             
             
          }
@@ -370,7 +392,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         var currentUser = PFUser.currentUser()
         
         if(tempBoolToggleForBroadCast == false){
-        
+            
+            self.navigationItem.rightBarButtonItem?.enabled = false
+            
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
             
             currentUser["signedIn"] = true
@@ -403,6 +427,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             
         }else if(tempBoolToggleForBroadCast == true){
+            
+            
+            //self.navigationItem.rightBarButtonItem = nil
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            
             
             broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
             

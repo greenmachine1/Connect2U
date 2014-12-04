@@ -25,6 +25,8 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var pictureView: UIView!
     
+    var gatherInfo:GatherInfo = GatherInfo()
+    
     var logoutVariable:Bool?
     
     
@@ -49,26 +51,7 @@ class SettingsTableViewController: UITableViewController {
     // log out button //
     @IBAction func onLogOut(sender: AnyObject) {
         
-        var currentUser = PFUser.currentUser()
-        
-        
-        // setting the user signed in to false and logging the person out //
-        currentUser["signedIn"] = false
-        currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-            if(success){
-                
-                PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : 1000.0, "longi": 1000.0, "user" :currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
-                    
-                    if(error == nil){
-                        
-                        println("logged out succesfully")
-                        self.logoutVariable = true
-                    }
-                }
-                println("success in saving")
-                
-            }
-        })
+
         
     }
     
@@ -76,8 +59,21 @@ class SettingsTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        var currentUser = PFUser.currentUser()
+        
+        // setting the user signed in to false and logging the person out //
+        currentUser["signedIn"] = false
+        currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            if(success){
+                
+                self.gatherInfo.stopLocationServices()
+            }
+
+        })
+        
         let destinationController = segue.destinationViewController as ViewController
-        destinationController.loggedInVariable = self.logoutVariable
+        
+        destinationController.loggedInVariable = true
         
     }
     
