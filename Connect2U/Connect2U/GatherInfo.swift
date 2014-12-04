@@ -16,7 +16,7 @@ import Parse
 @objc protocol ReturnInfo{
     
     // returns an array of all the users //
-    func returnAllUsers(users:Array<AnyObject>)
+    func returnAllUsers(users:Array<AnyObject>, latitude:Double, longitude:Double)
     
 }
 
@@ -83,7 +83,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                 updateCount++
                 
                 
-                if((updateCount % 3) == 0){
+                //if((updateCount % 3) == 0){
                 
                     println("update count \(updateCount) with Long : \(longitude) and lat : \(latitude)")
                     currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
@@ -100,18 +100,23 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                                 if(error == nil){
                     
                                     // returns all the users to the delegate method //
-                                    self.delegate?.returnAllUsers(object as Array)
+                                    // also returns the users location to the main screen //
+                                    self.delegate?.returnAllUsers(object as Array, latitude: self.latitude, longitude: self.longitude)
                                 }
                             
                             }
                         }
                     })
-                }
+               //}
             }
         }
     }
 
-        
+    
+    
+    
+    
+    
     func forcedUpdate(){
         
         locationManager.stopUpdatingLocation()

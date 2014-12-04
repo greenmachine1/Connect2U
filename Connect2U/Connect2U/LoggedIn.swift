@@ -40,6 +40,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var mainBigCircle:MainBigCircle = MainBigCircle()
     
     var tempArrayPassedIn:Array<AnyObject>?
+    var longitudePassedBack:Double = 0.0
+    var latitudePassedBack:Double = 0.0
     
     
     
@@ -50,10 +52,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     var emptyInitialArray:Array<AnyObject> = []
     
-    
-    
-    
-    var peopleArray:Array<AnyObject> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -198,11 +196,17 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     // this gets called everytime there is an update from the GPS //
     // this brings back all the users in the area //
-    func returnAllUsers(users: Array<AnyObject>) {
+    func returnAllUsers(users:Array<AnyObject>, latitude:Double, longitude:Double){
+        
+        latitudePassedBack = latitude
+        longitudePassedBack = longitude
+        
+        println("latitude: \(latitude) and longitude: \(longitude)")
         
         tempArrayPassedIn?.removeAll(keepCapacity: false)
         
         tempArrayPassedIn = users
+        
         
         println("update in here \(tempArrayPassedIn)")
         
@@ -212,13 +216,27 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     }
 
     
-    // overridding the array //
+    
+    
+    // this is a method that gets called from the delegate saying that a message //
+    // has been recieved and that the user needs to poll the server again //
     func updateFromDelegate(){
         
         println("update damnit!!!")
         
-        locationData.forcedUpdate()
-        
+        println("toggle state : \(tempBoolToggleForBroadCast)")
+    
+        if(tempBoolToggleForBroadCast == true){
+            
+            
+            println("forced turn off services")
+            locationData.forcedTurnOff()
+            
+        }else{
+            
+            println("forced turned on ")
+            locationData.forcedUpdate()
+        }
     }
     
 
@@ -359,7 +377,18 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    println("success in saving")
+                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitudePassedBack, "longi": self.longitudePassedBack, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+                        
+                        if(error == nil){
+                            
+                            // returns all the users to this screen //
+                            // also returns the users location to the main screen //
+                            self.returnAllUsers(object as Array, latitude: self.latitudePassedBack, longitude: self.longitudePassedBack)
+                        }
+                        
+                    }
+                    
+                println("success in saving")
                     
                 }else{
                     
@@ -380,7 +409,19 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser["signedIn"] = false
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
-
+                    
+                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitudePassedBack, "longi": self.longitudePassedBack, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+                        
+                        if(error == nil){
+                            
+                            // returns all the users to this screen //
+                            // also returns the users location to the main screen //
+                            self.returnAllUsers([Array<AnyObject>](), latitude: self.latitudePassedBack, longitude: self.longitudePassedBack)
+                        }
+                        
+                    }
+                    
+                    
                     println("success in saving")
                     
                 }else{
