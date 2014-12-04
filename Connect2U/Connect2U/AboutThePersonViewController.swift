@@ -105,6 +105,11 @@ class AboutThePersonViewController: UIViewController {
         
     }
     
+    
+    
+    
+    
+    
 
     // setting colors for the view //
     func setColors(){

@@ -562,7 +562,7 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="onLogOut:" destination="HLD-GI-3h9" eventType="touchUpInside" id="VDE-og-6af"/>
-                                                        <segue destination="KNm-3n-rCe" kind="modal" id="tBX-yl-Xl1"/>
+                                                        <segue destination="vXZ-lx-hvc" kind="push" id="PaN-VY-ukF"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1050,4 +1050,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="PaN-VY-ukF"/>
+    </inferredMetricsTieBreakers>
 </document>

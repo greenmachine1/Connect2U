@@ -23,6 +23,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var forgotPassword: UIButton!
+    
+    var loggedInVariable:Bool?
 
     
     override func viewDidLoad() {
@@ -33,10 +35,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userNameTextField.delegate = self
         passwordTextField.delegate = self
         
-        self.userStillLoggedIn()
-        
-        
-        
+        if(loggedInVariable == false){
+            self.userStillLoggedIn()
+        }else if (loggedInVariable == true){
+            PFUser.logOut()
+        }
     }
     
     

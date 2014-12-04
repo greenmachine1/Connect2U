@@ -228,15 +228,15 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
         if(tempBoolToggleForBroadCast == true){
             
-            
             println("forced turn off services")
-            locationData.forcedTurnOff()
             
-        }else{
+            
+          }else{
             
             println("forced turned on ")
-            locationData.forcedUpdate()
-        }
+            
+            
+         }
     }
     
 
@@ -434,12 +434,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             tempBoolToggleForBroadCast = false
         }
     }
-    
-    
 
-    
-    
-    
     
     
     // setting colors for the view //
