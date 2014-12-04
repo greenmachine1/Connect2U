@@ -102,6 +102,8 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                                     // returns all the users to the delegate method //
                                     // also returns the users location to the main screen //
                                     self.delegate?.returnAllUsers(object as Array, latitude: self.latitude, longitude: self.longitude)
+                                    
+                            
                                 }
                             
                             }
