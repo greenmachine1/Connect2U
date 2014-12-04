@@ -41,11 +41,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     var tempArrayPassedIn:Array<AnyObject>?
     
-    var longitudePassedBack:Double?
-    var latitudePassedBack:Double?
-    
-    
-    
+
     // temporary data //
     //var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
@@ -61,18 +57,12 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         self.setColors()
-        
-        latitudePassedBack = 0.0
-        longitudePassedBack = 0.0
-        
+
         currentUser["signedIn"] = false
         currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
             if(success){
                 
                 println("success in saving")
-            }else{
-                
-                println("error in saving")
             }
         })
         
@@ -144,6 +134,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         println("person clicked on \(person)")
 
         self.showAlert()
+        
         userClickedOn = person as PFUser
     }
     
@@ -200,13 +191,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     // this gets called everytime there is an update from the GPS //
     // this brings back all the users in the area //
-    func returnAllUsers(users:Array<AnyObject>, latitude:Double, longitude:Double){
-        
-        latitudePassedBack! = latitude
-        longitudePassedBack! = longitude
-        
-        println(" in return all users latitude: \(latitudePassedBack!) and longitude: \(longitudePassedBack!)")
-        
+    func returnAllUsers(users:Array<AnyObject>){
+
         tempArrayPassedIn?.removeAll(keepCapacity: false)
         
         tempArrayPassedIn = users
@@ -221,46 +207,29 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     
     
+    
+    
+    
+    
     // this is a method that gets called from the delegate saying that a message //
     // has been recieved and that the user needs to poll the server again //
     func updateFromDelegate(){
-        
-        
-        if(longitudePassedBack != nil){
-            println("passed in super object ")
-        }
-        
+
         println("CALLED BECAUSE OF MESSAGE recieved")
         
         if(tempBoolToggleForBroadCast == true){
             
             println("called because the toggle is true")
             
+            self.locationData.updateLocations(true)
+            
         }else if(tempBoolToggleForBroadCast == false){
             
             println("called because the toggle is not true")
             
-                println("game on")
-                //println(latitudePassedBack?)
-                //println(longitudePassedBack?)
-            
-            /*
-                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" :latitudePassedBack!, "longi": longitudePassedBack!, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
-                        
-                        if(error == nil){
-                            
-                            println("objects : \(object)")
-                            println("latitude: \(self.latitudePassedBack!)")
-                            println("longitude: \(self.longitudePassedBack!)")
-                            
-                            // returns all the users to this screen //
-                            // also returns the users location to the main screen //
-                            //self.returnAllUsers(object as Array, latitude: self.latitudePassedBack, longitude:self.longitudePassedBack)
-                        }
-                        
-                    }
+            self.locationData.turnOnUpdates()
+            self.locationData.updateLocations(false)
 
-            */
         }
     }
     
@@ -397,38 +366,22 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
             
+            self.locationData.turnOnUpdates()
+            
             currentUser["signedIn"] = true
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    //println("this is here as well \(self.longitudePassedBack), \(self.latitudePassedBack)")
-                    
-                    /*
-                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitudePassedBack!, "longi": self.longitudePassedBack!, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
-                        
-                        if(error == nil){
-                            
-                            // returns all the users to this screen //
-                            // also returns the users location to the main screen //
-                            self.returnAllUsers(object as Array, latitude: self.latitudePassedBack!, longitude: self.longitudePassedBack!)
-                        }
-                    }
-                    s*/
-                    
-                    self.locationData.turnOnUpdates()
+                
+                    // calls on the updateLocations method which then updates //
+                    // the return all users method //
                     self.locationData.updateLocations(false)
 
-                    
                 println("success in saving")
                     
-                }else{
-                    
-                    println("error in saving")
                 }
             })
-        
-            // turns on the location updates //
-            //locationData.turnOnUpdates()
+
             tempBoolToggleForBroadCast = true
             
         }else if(tempBoolToggleForBroadCast == true){
@@ -440,37 +393,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
             
+            locationData.stopLocationServices()
+            
             currentUser["signedIn"] = false
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    /*
-                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" :self.latitudePassedBack!, "longi": self.longitudePassedBack!, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
-                        
-                        
-                        
-                        if(error == nil){
-                            
-                            // returns all the users to this screen //
-                            // also returns the users location to the main screen //
-                            self.returnAllUsers([Array<AnyObject>](), latitude: self.latitudePassedBack!, longitude: self.longitudePassedBack!)
-                        }
-                        
-                    }
-                    */
-                    
+                
+                    // calls on the updateLocations method //
                     self.locationData.updateLocations(true)
-                    
-                    
+                
                     println("success in saving")
-                    
-                }else{
-                    
-                    println("error in saving")
                 }
             })
 
-            locationData.stopLocationServices()
+            //locationData.stopLocationServices()
             tempBoolToggleForBroadCast = false
         }
     }

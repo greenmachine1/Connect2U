@@ -16,7 +16,7 @@ import Parse
 @objc protocol ReturnInfo{
     
     // returns an array of all the users //
-    func returnAllUsers(users:Array<AnyObject>, latitude:Double, longitude:Double)
+    func returnAllUsers(users:Array<AnyObject>)
     
 }
 
@@ -101,7 +101,7 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
                     
                                     // returns all the users to the delegate method //
                                     // also returns the users location to the main screen //
-                                    self.delegate?.returnAllUsers(object as Array, latitude: self.latitude, longitude: self.longitude)
+                                    self.delegate?.returnAllUsers(object as Array)
                                     
                             
                                 }
@@ -123,9 +123,9 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
             if(error == nil){
                 
                 if(emptyArray == false){
-                    self.delegate?.returnAllUsers(object as Array, latitude: self.latitude, longitude: self.longitude)
+                    self.delegate?.returnAllUsers(object as Array)
                 }else{
-                    self.delegate?.returnAllUsers(Array<AnyObject>(), latitude: self.latitude, longitude: self.longitude)
+                    self.delegate?.returnAllUsers(Array<AnyObject>())
                 }
             }
         }
