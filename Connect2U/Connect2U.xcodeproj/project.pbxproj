@@ -77,8 +77,8 @@
 		E56F597B1A28676600CFAEC1 /* MainBigCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainBigCircle.swift; sourceTree = "<group>"; };
 		E56F71231A1DB5FB00E75A47 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		E56F71251A1DBB4A00E75A47 /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
-		E5898E7A1A25397700706649 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		E5898E7B1A25397700706649 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		E5898E7A1A25397700706649 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "parse-library-1.5.0/Bolts.framework"; sourceTree = "<group>"; };
+		E5898E7B1A25397700706649 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "parse-library-1.5.0/Parse.framework"; sourceTree = "<group>"; };
 		E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		E5898E7D1A25397700706649 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		E5898E821A25623400706649 /* MoreInfoViewControllerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreInfoViewControllerContainerViewController.swift; sourceTree = "<group>"; };
@@ -104,8 +104,6 @@
 		E5E6BC971A12E86000972580 /* Connect2UTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Connect2UTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E6BC9C1A12E86000972580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5E6BC9D1A12E86000972580 /* Connect2UTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connect2UTests.swift; sourceTree = "<group>"; };
-		E5E6BCA71A12E9C800972580 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../parse-library-1.5.0/Bolts.framework"; sourceTree = "<group>"; };
-		E5E6BCA81A12E9C800972580 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../parse-library-1.5.0/Parse.framework"; sourceTree = "<group>"; };
 		E5E6BCAB1A12EA1800972580 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E5E6BCAC1A12EA1800972580 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E5E6BCAD1A12EA1800972580 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -152,8 +150,6 @@
 		E5898E791A25397700706649 /* parse-library-1.5.0 */ = {
 			isa = PBXGroup;
 			children = (
-				E5898E7A1A25397700706649 /* Bolts.framework */,
-				E5898E7B1A25397700706649 /* Parse.framework */,
 				E5898E7C1A25397700706649 /* ParseFacebookUtils.framework */,
 				E5898E7D1A25397700706649 /* ParseUI.framework */,
 			);
@@ -202,8 +198,8 @@
 				E5E6BCB11A12EA1800972580 /* QuartzCore.framework */,
 				E5E6BCB21A12EA1800972580 /* Security.framework */,
 				E5E6BCB41A12EA1800972580 /* SystemConfiguration.framework */,
-				E5E6BCA71A12E9C800972580 /* Bolts.framework */,
-				E5E6BCA81A12E9C800972580 /* Parse.framework */,
+				E5898E7A1A25397700706649 /* Bolts.framework */,
+				E5898E7B1A25397700706649 /* Parse.framework */,
 				E5E6BC841A12E86000972580 /* Connect2U */,
 				E5E6BC9A1A12E86000972580 /* Connect2UTests */,
 				E5E6BC831A12E86000972580 /* Products */,
@@ -529,8 +525,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.Greenmachine.Connect2U";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.Greenmachine.Connect2U";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
@@ -539,7 +535,7 @@
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Connect2U;
-				PROVISIONING_PROFILE = "e9520ed3-40af-4014-9e56-be50034d96a4";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -547,8 +543,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.Greenmachine.Connect2U";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.Greenmachine.Connect2U";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/corygreen/Desktop/parse-library-1.5.0",
@@ -557,7 +553,7 @@
 				INFOPLIST_FILE = Connect2U/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Connect2U;
-				PROVISIONING_PROFILE = "e9520ed3-40af-4014-9e56-be50034d96a4";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -99,6 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         println("recieved update!")
         var loggedIn:LoggedIn = LoggedIn()
+        
         loggedIn.updateFromDelegate()
 
     }

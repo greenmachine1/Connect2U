@@ -221,14 +221,14 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             println("called because the toggle is true")
             
-            self.locationData.updateLocations(true)
+            //self.locationData.updateLocations(true)
             
         }else if(tempBoolToggleForBroadCast == false){
             
             println("called because the toggle is not true")
             
-            self.locationData.turnOnUpdates()
-            self.locationData.updateLocations(false)
+            //self.locationData.turnOnUpdates()
+            //self.locationData.updateLocations(false)
 
         }
     }
@@ -375,7 +375,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                 
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
-                    self.locationData.updateLocations(false)
+                    //self.locationData.updateLocations(false)
 
                 println("success in saving")
                     
@@ -386,10 +386,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
         }else if(tempBoolToggleForBroadCast == true){
             
-            
-            //self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.rightBarButtonItem?.enabled = true
-            
             
             broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
             
@@ -401,7 +398,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                     
                 
                     // calls on the updateLocations method //
-                    self.locationData.updateLocations(true)
+                    //self.locationData.updateLocations(true)
                 
                     println("success in saving")
                 }

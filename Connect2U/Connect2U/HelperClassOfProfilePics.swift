@@ -51,9 +51,6 @@ class HelperClassOfProfilePics: NSObject {
         
         var subViews = callingViewMain!.subviews as Array<UIView>
         
-        println("count of : \(subViews.count)")
-        
-        
         for someViews in subViews{
             
             if(someViews.isKindOfClass(UIButton)){
@@ -72,9 +69,6 @@ class HelperClassOfProfilePics: NSObject {
         arrayPassedInFromMainClass!.removeAll(keepCapacity: false)
         arrayPassedInFromMainClass = newProfilePics
         
-        println("\(arrayPassedInFromMainClass!.count)")
-        
-
         var cgpointToDoubleConversionForX:Double = Double(locationPointOfCircle!.x)
         var cgpointToDoubleConversionForY:Double = Double(locationPointOfCircle!.y)
         
@@ -178,9 +172,6 @@ class HelperClassOfProfilePics: NSObject {
         
         // sending the person clicked back to the main view to view their profile or chat //
         delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
-        //delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
-         
-        
         
     }
 }
