@@ -29,14 +29,35 @@ class MainBigCircle: NSObject {
         radiusOfTheMainCircle = radiusOfCircle
         locationOfCircle = location
         
+        println("location : \(locationOfCircle)")
+        
         self.createCircle()
+        
+    }
+    
+    
+    func scaleDownCircle(){
+        
+        var radiusOfCircle = 50.0
+        
+        circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - CGFloat(radiusOfTheMainCircle!),
+            locationOfCircle!.y - CGFloat(radiusOfTheMainCircle!), CGFloat(3.0 * radiusOfTheMainCircle!),
+            CGFloat(3.0 * radiusOfTheMainCircle!)),
+            cornerRadius: CGFloat(radiusOfTheMainCircle!)).CGPath
+        
+        
+        // the fill color //
+        circle.fillColor = palette.darkGreenColor.CGColor
+        
+        self.theMainView.layer.addSublayer(circle)
+        
         
     }
     
     func createCircle(){
         
-        circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - 100,
-            locationOfCircle!.y - 100, CGFloat(3.0 * radiusOfTheMainCircle!),
+        circle.path = UIBezierPath(roundedRect: CGRectMake(locationOfCircle!.x - CGFloat(radiusOfTheMainCircle!),
+            locationOfCircle!.y - CGFloat(radiusOfTheMainCircle!), CGFloat(3.0 * radiusOfTheMainCircle!),
             CGFloat(3.0 * radiusOfTheMainCircle!)),
             cornerRadius: CGFloat(radiusOfTheMainCircle!)).CGPath
         

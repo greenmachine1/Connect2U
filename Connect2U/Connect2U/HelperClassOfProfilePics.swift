@@ -148,9 +148,7 @@ class HelperClassOfProfilePics: NSObject {
         // getting the exact center of the circle and putting a label there... slightly below center //
         mainLabel.frame = CGRect(x: xValue + Double((mainButton.frame.width / 2) - personLabelFrame!.width / 2), y: yValue + Double((mainButton.frame.size.height / 2) + 30.0), width: Double(mainLabel.frame.size.width), height: Double(mainLabel.frame.size.height))
         
-        
-        
-        
+
         mainLabel.backgroundColor = whiteColorWithOpacity
         mainLabel.textAlignment = .Center
         

@@ -1,11 +1,4 @@
 
-
-
-
-
-// I need to also be notified when someone else starts moving.... So I need to get updates //
-// from the other devices as well //
-
 // so when someone starts moving, I need that user to tell the server it has moved and to //
 // send out a signal to those that are in range that they need to poll the server as well //
 
@@ -24,200 +17,150 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager!
     
-    // variable used to temporarily store the users location //
-    var longitude:Double = 0.0
     var latitude:Double = 0.0
+    var longitude:Double = 0.0
+
+    var currentTime:NSDate?
+    let date = NSDate()
     
     // getting the current user //
     var currentUser = PFUser.currentUser()
     var delegate:ReturnInfo?
-    
+
     override init() {
         super.init()
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.requestAlwaysAuthorization()
-        locationManager.distanceFilter = 10
-    }
-    
-    
-    /*
-    - (void) locationManager:(CLLocationManager*) manager didUpdateToLocation:(CLLocation*)newLocation fromLocation:(CLLocation*)oldLocation
-    {
-        @try
-        {
-        if(newLocation.horizontalAccuracy > 100)
-        {
-            NSLog(@”Ignoring GPS location more than 100 meters inaccurate :%f”, newLocation.horizontalAccuracy);
-            return;
-        }
-    
-        NSDate* eventDate = newLocation.timestamp;
-        NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-        if (abs(howRecent) < 15.0)
-        {
-            NSLog(@”Ignoring GPS location more than 15 seconds old(cached) :%d”, abs(howRecent));
-            return;
-        }
-    
-        [myLM stopUpdatingLocation];
-    }
-    @catch (NSException* ex)
-        {
-        [self debugMessage:ex.reason withTitle:@”Uncaught Error in didUpdateToLocation()”];
-        }
+        //locationManager.distanceFilter = 5
+        
+        
+        // when a push notification comes in this gets called //
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "pushNotification:", name: "pushNotification", object: nil)
+        
     }
 
-    */
     
-    
-    
-
-    
-    
-    
-    /*
-    // update that gets fired when the location data gets updated //
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
-        
-        
-        
-        var longTemp = locations.last?.coordinate.longitude
-        var latTemp = locations.last?.coordinate.latitude
-        
-        var longTempDouble = Double(longTemp!)
-        var latTempDouble = Double(latTemp!)
-    
-        // setting the precision of the floating values //
-        // need to adjust the precision of the double value //
-        // after testing is done //
-        var longTempString = NSString(format: "%.04f", longTempDouble)
-        var latTempString = NSString(format: "%.04f", latTempDouble)
-        
-        var doubleTempLongValue = longTempString.doubleValue
-        var doubleTempLatValue = latTempString.doubleValue
-        
-        // checking to see if the numbers are the same //
-        if((doubleTempLongValue != longitude) || (doubleTempLatValue != latitude)){
-            
-            longitude = doubleTempLongValue
-            latitude = doubleTempLatValue
-            
-            if(currentUser != nil){
-                
-                // need to override the current users location //
-                currentUser["long"] = longitude
-                currentUser["lat"] = latitude
-                
-                currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                    
-                println("user location has changed \(self.latitude) : \(self.longitude)")
-
-                if(success == true){
-
-                    // Cloud method that passes in the longitude and latitude and then //
-                    // decides who is clos to that position and returns the users //
-                    // returning all the users with corresponding longitude and latitude //
-                    PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
-                            
-                        if(error == nil){
-                    
-                            println("sent info to server")
-                            
-                            // returns all the users to the delegate method //
-                            // also returns the users location to the main screen //
-                            self.delegate?.returnAllUsers(object as Array)
-                            
-                            
-                        }
-                            
-                    }
-                }
-                })
-            }
-        }
-    }
-
-    */
-    
-    
-    
+    // updates with location //
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
         
-        // filtering out cache locations //
-        var eventDate:NSDate = newLocation.timestamp
-        var timeInterval = eventDate.timeIntervalSinceNow
+        let difference = 0.0002
         
-        if(abs(timeInterval) < 10){
+        if(oldLocation? != nil){
             
-            var longTemp = newLocation.coordinate.longitude
-            var latTemp = newLocation.coordinate.latitude
+            // getting the difference between the update time and the time since 1970 //
+            var timeDifference = newLocation!.timestamp.timeIntervalSince1970 - oldLocation!.timestamp.timeIntervalSince1970
             
-            var longTempDouble = Double(longTemp)
-            var latTempDouble = Double(latTemp)
+            // making it so that this code cant update more than 3 seconds appart //
+            //if(timeDifference > 1.0){
+        
+                // filtering out cache locations //
+                var eventDate:NSDate = newLocation.timestamp
+                var timeInterval = eventDate.timeIntervalSinceNow
             
-            // setting the precision of the floating values //
-            // need to adjust the precision of the double value //
-            // after testing is done //
-            var longTempString = NSString(format: "%.04f", longTempDouble)
-            var latTempString = NSString(format: "%.04f", latTempDouble)
-            
-            var doubleTempLongValue = longTempString.doubleValue
-            var doubleTempLatValue = latTempString.doubleValue
-            
-            // checking to see if the numbers are the same //
-            if((doubleTempLongValue != longitude) || (doubleTempLatValue != latitude)){
+                if(abs(timeInterval) < 1){
                 
-                longitude = doubleTempLongValue
-                latitude = doubleTempLatValue
-                
-                if(currentUser != nil){
-                    
-                    // need to override the current users location //
-                    currentUser["long"] = longitude
-                    currentUser["lat"] = latitude
-                    
-                    currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                        
-                        println("user location has changed \(self.latitude) : \(self.longitude)")
-                        
-                        if(success == true){
-                            
-                            // Cloud method that passes in the longitude and latitude and then //
-                            // decides who is clos to that position and returns the users //
-                            // returning all the users with corresponding longitude and latitude //
-                            PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+                    // formatting and returning the long and lat //
+                    var oldLat = self.formatLocation(oldLocation.coordinate.latitude)
+                    var oldLong = self.formatLocation(oldLocation.coordinate.longitude)
+                    var newLat = self.formatLocation(newLocation.coordinate.latitude)
+                    var newLong = self.formatLocation(newLocation.coordinate.longitude)
+
+                    if((oldLong != newLong) || (oldLat != newLat)){
+
+                        // basically saying that if either long, or lat is within 0.0002 +- of the old //
+                        // location, to not report it //
+                        if( (newLat >= (oldLat + difference)) || (newLong >= (oldLong + difference)) ||
+                            (newLat <= (oldLat - difference)) || (newLong <= (oldLong - difference))){
                                 
-                                if(error == nil){
+                                /*((longitude == 0.0) || (latitude == 0.0)) */
+                                
+                                if(currentUser != nil){
+                            
+                                    // setting the global variable //
+                                    longitude = newLong
+                                    latitude = newLat
                                     
-                                    println("sent info to server")
-                                    
-                                    // returns all the users to the delegate method //
-                                    // also returns the users location to the main screen //
-                                    self.delegate?.returnAllUsers(object as Array)
-                                }
+                                    // need to override the current users location //
+                                    currentUser["long"] = longitude
+                                    currentUser["lat"] = latitude
+                                    currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                                        
+                                        println("old location : \(oldLat) \(oldLong) and new location : \(newLat) \(newLong)")
+                                        println("")
+                                        
+                                        if(success == true){
+                                            
+                                            // Cloud method that passes in the longitude and latitude and then //
+                                            // decides who is clos to that position and returns the users //
+                                            // returning all the users with corresponding longitude and latitude //
+                                            PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username"),"push": true]) { (object:AnyObject!, error:NSError!) -> Void in
+                                                
+                                                if(error == nil){
+                                                    
+                                                    println("sent info to server")
+                                                    
+                                                    // returns all the users to the delegate method //
+                                                    // also returns the users location to the main screen //
+                                                    self.delegate?.returnAllUsers(object as Array)
+
+                                                }
+                                            }
+                                        }
+                                    })
+                               }
                             }
                         }
-                    })
-                }
+                    }
+                //}
             }
-        }
     }
     
     
+    
 
-    func updateLocations(arrayIsEmpty:Bool){
+    
+    
+    
+    
+    // used to format the string //
+    func formatLocation(doublePassedIn:Double) ->Double{
         
-        println("location : \(self.longitude) : \(self.latitude)")
-                
-        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : self.latitude, "longi": self.longitude, "user" :self.currentUser.objectForKey("username")]) { (object:AnyObject!, error:NSError!) -> Void in
+        var tempString = NSString(format: "%.04f", doublePassedIn)
+        var DoubleStringTemp = tempString.doubleValue
+        
+        return DoubleStringTemp
+    }
+    
+    
+    
+    
+    
+    
+    // seeing whos around and also notifying others that they need to update //
+    func updateLocations(arrayIsEmpty:Bool){
+    
+        var currentUserLong = currentUser["long"].doubleValue
+        var currentUserLat = currentUser["lat"].doubleValue
+        
+        println("this is here \(currentUserLong) \(currentUserLat)")
+        println("the boolean logic value is : \(arrayIsEmpty)")
+        
+        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : currentUserLat, "longi": currentUserLong, "user" :self.currentUser.objectForKey("username"),"push": true]) { (object:AnyObject!, error:NSError!) -> Void in
+            
             if(error == nil){
                 
+                println("sent info to server")
+                
                 if(arrayIsEmpty == false){
+                    // if the array isnt empty, then send it back //
                     self.delegate?.returnAllUsers(object as Array)
+                    
                 }else{
+                    
+                    // if the array is empty, then send over an empty array //
                     self.delegate?.returnAllUsers(Array<AnyObject>())
                 }
             }
@@ -226,22 +169,47 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
     
     
     
+
     
     
     
-    func forcedUpdate(){
+    
+    
+    
+    // called from a push notification //
+    func updateLocationsButNoPush(arrayIsEmpty:Bool){
         
-        locationManager.stopUpdatingLocation()
-        locationManager.startUpdatingLocation()
+        var currentUserLong = currentUser["long"].doubleValue
+        var currentUserLat = currentUser["lat"].doubleValue
         
+        println("this is here \(currentUserLong) \(currentUserLat)")
+        println("the boolean logic value is push notification : \(arrayIsEmpty)")
+        
+        PFCloud.callFunctionInBackground("retrieveUsersNearBy", withParameters: ["lat" : currentUserLat, "longi": currentUserLong, "user" :self.currentUser.objectForKey("username"),"push": false]) { (object:AnyObject!, error:NSError!) -> Void in
+            
+            if(error == nil){
+                
+                println("sent info to server")
+                
+                if(arrayIsEmpty == false){
+                    // if the array isnt empty, then send it back //
+                    self.delegate?.returnAllUsers(object as Array)
+                    
+                }else{
+                    
+                    // if the array is empty, then send over an empty array //
+                    self.delegate?.returnAllUsers(Array<AnyObject>())
+                }
+            }
+        }
     }
     
-    
-    func forcedTurnOff(){
+
+    // push notification comes in //
+    func pushNotification(sender:AnyObject){
         
-        locationManager.stopUpdatingLocation()
-        locationManager.startUpdatingLocation()
-        locationManager.stopUpdatingLocation()
+        self.updateLocationsButNoPush(false)
+        
     }
     
     
@@ -252,10 +220,6 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         println("locationData started")
         locationManager.startUpdatingLocation()
         
-        // resetting the values so the first time the location data gets sent back to the //
-        // server and compared each time the user presses the main button //
-        longitude = 0.0
-        latitude = 0.0
     }
 
     
@@ -267,6 +231,4 @@ class GatherInfo: NSObject, CLLocationManagerDelegate {
         println("locationData stopped")
         locationManager.stopUpdatingLocation()
     }
-    
-
  }

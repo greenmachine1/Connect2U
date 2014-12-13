@@ -93,16 +93,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
-        PFPush.handlePush(userInfo)
+        // trick for the silent updates -- if the content available is set to 1 and you check for it //
+        // as being true, you can not pass it to the handlePush which is where the vibrate is coming from //
+        var contentAvailable:AnyObject = userInfo.values.array[0].objectForKey("content-available")!
         
-        var currentUser = PFUser.currentUser()
-
-        println("recieved update!")
-        var loggedIn:LoggedIn = LoggedIn()
+        if(contentAvailable as NSObject == 1){
+            
+            //var currentUser = PFUser.currentUser()
+            
+            //println("recieved update!")
+            //var loggedIn:LoggedIn = LoggedIn()
+            
+            //loggedIn.updateFromDelegate()
+            
+            println("in the delegate") 
+            
+            //NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
+            
+            let notificationCenter = NSNotificationCenter.defaultCenter()
+            notificationCenter.postNotificationName("pushNotification", object: nil)
+            
+            
+        }else{
         
-        loggedIn.updateFromDelegate()
-
+            PFPush.handlePush(userInfo)
+            
+        }        
     }
+    
+
+    
     
     
     

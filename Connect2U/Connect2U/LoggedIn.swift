@@ -33,7 +33,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var colorPalette = ColorPalettes()
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
-    
     var userClickedOn:PFUser = PFUser()
     
     
@@ -213,6 +212,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     // this is a method that gets called from the delegate saying that a message //
     // has been recieved and that the user needs to poll the server again //
+    // the only time this should be called is when a server update is needed //
+    // this will not be called if the user status is 'false'
     func updateFromDelegate(){
 
         println("CALLED BECAUSE OF MESSAGE recieved")
@@ -222,14 +223,14 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             println("called because the toggle is true")
             
             //self.locationData.updateLocations(true)
+            //self.locationData.updateLocationsButNoPush(true)
             
         }else if(tempBoolToggleForBroadCast == false){
             
             println("called because the toggle is not true")
             
             //self.locationData.turnOnUpdates()
-            //self.locationData.updateLocations(false)
-
+            //self.locationData.updateLocationsButNoPush(false)
         }
     }
     
@@ -304,7 +305,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     // this shows the alert giving the person the option to cancel, chat, or view profile //
     // about the person needs to change //
-    
     func showAlert(){
         
             var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -359,24 +359,24 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     @IBAction func broadCastOnClick(sender: UIButton) {
         
         var currentUser = PFUser.currentUser()
-        
+        // this is the broadcast your location button //
         if(tempBoolToggleForBroadCast == false){
             
             self.navigationItem.rightBarButtonItem?.enabled = false
             
             broadCast.setTitle("Cancel Broadcast", forState: UIControlState.Normal)
             
-            self.locationData.turnOnUpdates()
-            
+        
             currentUser["signedIn"] = true
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                
+                    self.locationData.turnOnUpdates()
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
-                    //self.locationData.updateLocations(false)
-
+                    self.locationData.updateLocations(false)
+                    
+                    
                 println("success in saving")
                     
                 }
@@ -384,21 +384,22 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
 
             tempBoolToggleForBroadCast = true
             
+            
+         // this is the cancel button //
         }else if(tempBoolToggleForBroadCast == true){
             
             self.navigationItem.rightBarButtonItem?.enabled = true
             
             broadCast.setTitle("See Whos Around You", forState: UIControlState.Normal)
             
-            locationData.stopLocationServices()
-            
             currentUser["signedIn"] = false
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                
+                    self.locationData.stopLocationServices()
                     // calls on the updateLocations method //
-                    //self.locationData.updateLocations(true)
+                    self.locationData.updateLocations(true)
+                    
                 
                     println("success in saving")
                 }
@@ -408,12 +409,16 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             tempBoolToggleForBroadCast = false
         }
     }
+    
+    
 
     
     
     // setting colors for the view //
     func setColors(){
         
+        //broadCast.frame = CGRectMake(CGFloat(self.view.frame.width / 2), CGFloat(self.view.frame.height - 200.0), CGFloat(self.view.frame.width - 300.0), 100.0)
+    
         self.view.backgroundColor = colorPalette.lightBlueColor
         
         // colors for the buttons //

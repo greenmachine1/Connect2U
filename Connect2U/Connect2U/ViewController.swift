@@ -23,6 +23,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var forgotPassword: UIButton!
+    @IBOutlet weak var mainLogo: UIImageView!
     
     var loggedInVariable:Bool = false
 
@@ -30,7 +31,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.setColors()
-        
+    
         userNameTextField.delegate = self
         passwordTextField.delegate = self
         
@@ -42,8 +43,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             PFUser.logOut()
         }
-        
     }
+    
+    
+    
+    
     
 
     
@@ -83,7 +87,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 installation.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     if(success){
                         
-                        
                     }
                 })
             
@@ -118,7 +121,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     if(user != nil){
                 
                         currentUser = user
-                    
                     
                         var installation:PFInstallation = PFInstallation.currentInstallation()
                         installation["user"] = currentUser
@@ -177,7 +179,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 self.userNameTextField.text = ""
                 self.passwordTextField.text = ""
             }
-            
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -189,7 +190,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // sets all the colors for the view
     func setColors(){
-        
+
         var newColorPalette = ColorPalettes()
         
         var cornerRadiusValue:CGFloat = 8.0
@@ -217,8 +218,5 @@ class ViewController: UIViewController, UITextFieldDelegate {
         newAccountButton.clipsToBounds = true
         
     }
-    
-
-
 }
 
