@@ -118,9 +118,14 @@ class HelperClassOfProfilePics: NSObject {
         mainButton.layer.borderWidth = 3.0
         mainButton.layer.borderColor = UIColor.blackColor().CGColor
         mainButton.tag = selfTag
+        mainButton.alpha = 0
         mainButton.clipsToBounds = true
         
+        // animating the picture //
         mainButton.addTarget(self, action: Selector("profileClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveLinear & .AllowUserInteraction & .BeginFromCurrentState, animations: { () -> Void in
+            mainButton.alpha = 1
+        }, completion: nil)
         
         callingViewMain!.addSubview(mainButton)
         
@@ -139,6 +144,12 @@ class HelperClassOfProfilePics: NSObject {
         mainLabel.layer.cornerRadius = 5.0
         mainLabel.clipsToBounds = true
         mainLabel.tag = selfTag
+        mainLabel.alpha = 0
+        
+        // animating the label //
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveLinear & .AllowUserInteraction & .BeginFromCurrentState, animations: { () -> Void in
+            mainLabel.alpha = 1
+            }, completion: nil)
         
         // getting the resized frame //
         var personLabelFrame:CGRect?

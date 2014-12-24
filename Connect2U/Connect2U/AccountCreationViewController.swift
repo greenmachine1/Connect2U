@@ -194,6 +194,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         user["long"] = 0.0
         user["lat"] = 0.0
         user["signedIn"] = false
+        user["literalLocation"] = ""
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
             // successful log in //
@@ -245,6 +246,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         var cornerRadiusValue:CGFloat = 8.0
         
         self.view.backgroundColor = colorPalette.lightBlueColor
+        
         
         signUpButton.backgroundColor = colorPalette.greenColor
         signUpButton.tintColor = colorPalette.whiteColor

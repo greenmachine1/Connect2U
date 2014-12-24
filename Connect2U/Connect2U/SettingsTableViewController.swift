@@ -9,28 +9,13 @@
 import UIKit
 import Parse
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UIViewController {
 
-    @IBOutlet weak var nameSwitch: UISwitch!
-    @IBOutlet weak var ageSwitch: UISwitch!
-    @IBOutlet weak var genderSwitch: UISwitch!
-    @IBOutlet weak var interestSwitch: UISwitch!
-    @IBOutlet weak var logOutButton: UIButton!
-    @IBOutlet weak var pictureSwitch: UISwitch!
-    
-    @IBOutlet weak var nameView: UIView!
-    @IBOutlet weak var ageView: UIView!
-    @IBOutlet weak var genderView: UIView!
-    @IBOutlet weak var interestsView: UIView!
-    @IBOutlet weak var logoutView: UIView!
-    @IBOutlet weak var pictureView: UIView!
-    
+
     var gatherInfo:GatherInfo = GatherInfo()
     
     var logoutVariable:Bool?
     
-    
-    @IBOutlet var settingsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +33,26 @@ class SettingsTableViewController: UITableViewController {
     
     
     
+    
+    
+    
+    
     // log out button //
     @IBAction func onLogOut(sender: AnyObject) {
         
+        println("in here")
 
+        let mainViewController = self.storyboard?.instantiateViewControllerWithIdentifier("main") as ViewController
+        
+        mainViewController.loggedInVariable = true
+    
+        self.navigationController?.pushViewController(mainViewController, animated: true)
         
     }
+    
+    
+    
+    
     
     
     
@@ -67,15 +66,18 @@ class SettingsTableViewController: UITableViewController {
             if(success){
                 
                 self.gatherInfo.stopLocationServices()
+                
             }
 
         })
         
-        let destinationController = segue.destinationViewController as ViewController
-        
-        destinationController.loggedInVariable = true
         
     }
+
+    
+    
+    
+    
     
     
     // setting colors for the view //
@@ -85,16 +87,7 @@ class SettingsTableViewController: UITableViewController {
         
         self.view.backgroundColor = colorPalette.lightBlueColor
      
-        // setting background colors for the table view elements //
-        settingsTableView.backgroundColor = colorPalette.lightBlueColor
-        nameView.backgroundColor = colorPalette.lightBlueColor
-        ageView.backgroundColor = colorPalette.lightBlueColor
-        genderView.backgroundColor = colorPalette.lightBlueColor
-        interestsView.backgroundColor = colorPalette.lightBlueColor
-        pictureView.backgroundColor = colorPalette.lightBlueColor
-        
-        
-        logOutButton.backgroundColor = colorPalette.darkGreenColor
+
         
         
     }

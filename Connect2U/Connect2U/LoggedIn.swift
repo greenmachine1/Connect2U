@@ -14,6 +14,7 @@ import Parse
 class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked{
     
     @IBOutlet weak var broadCast: UIButton!
+
     
     var currentUserName:String?
     var currentUserAge:Int?
@@ -52,18 +53,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         self.setColors()
 
-        currentUser["signedIn"] = false
-        currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-            if(success){
+        if(currentUser != nil){
+            currentUser["signedIn"] = false
+            currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                if(success){
                 
-                println("success in saving")
-            }
-        })
+                    println("success in saving")
+                }
+            })
+        }
         
         
         
@@ -72,6 +76,15 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         self.settingUpTheUserInfo()
         
         locationData.delegate = self
+        
+        
+        
+        // ** when a push notification comes in this gets called ** //
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "pushNotification:", name: "pushNotification", object: nil)
+        
+        
+        
+        
 
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
@@ -109,6 +122,32 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         helperClass.delegate = self
 
+    }
+    
+    
+    
+    
+    // just a debugging string //
+    func returnLocationData(locationString: String) {
+        
+        var alert:UIAlertController = UIAlertController(title: "update location", message: locationString, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    // the push notification sector of gather info //
+    func pushNotification(sender:NSNotification){
+        
+        locationData.pushNotification()
+        
     }
     
     
@@ -165,6 +204,12 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     
     
+    // removing the view from NSNotification center called on by a push update //
+    override func viewWillDisappear(animated: Bool) {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    
+    }
     
     
     
@@ -210,29 +255,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     
     
-    // this is a method that gets called from the delegate saying that a message //
-    // has been recieved and that the user needs to poll the server again //
-    // the only time this should be called is when a server update is needed //
-    // this will not be called if the user status is 'false'
-    func updateFromDelegate(){
 
-        println("CALLED BECAUSE OF MESSAGE recieved")
-        
-        if(tempBoolToggleForBroadCast == true){
-            
-            println("called because the toggle is true")
-            
-            //self.locationData.updateLocations(true)
-            //self.locationData.updateLocationsButNoPush(true)
-            
-        }else if(tempBoolToggleForBroadCast == false){
-            
-            println("called because the toggle is not true")
-            
-            //self.locationData.turnOnUpdates()
-            //self.locationData.updateLocationsButNoPush(false)
-        }
-    }
     
 
     
@@ -371,7 +394,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    self.locationData.turnOnUpdates()
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
                     self.locationData.updateLocations(false)
@@ -396,7 +418,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    self.locationData.stopLocationServices()
                     // calls on the updateLocations method //
                     self.locationData.updateLocations(true)
                     
@@ -411,6 +432,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     }
     
     
+    
+    
 
     
     
@@ -418,6 +441,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     func setColors(){
         
         //broadCast.frame = CGRectMake(CGFloat(self.view.frame.width / 2), CGFloat(self.view.frame.height - 200.0), CGFloat(self.view.frame.width - 300.0), 100.0)
+        
+        self.navigationController?.navigationBar.hidden = false
     
         self.view.backgroundColor = colorPalette.lightBlueColor
         

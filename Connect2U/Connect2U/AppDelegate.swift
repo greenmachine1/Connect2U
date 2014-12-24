@@ -20,9 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setting up for the Parse Connect2U project side //
         Parse.setApplicationId("JSfr6Q2SbXv3oipCnuGFYOyJBlmB4bix5OFQHciz", clientKey: "4U9EqhEhNDpydFnrzXWIEM998Lmx3Z1zXyBOA1ya")
         
-        
-        
-        
         // push notification setup //
         var userNotificationTypes:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
         
@@ -98,17 +95,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var contentAvailable:AnyObject = userInfo.values.array[0].objectForKey("content-available")!
         
         if(contentAvailable as NSObject == 1){
-            
-            //var currentUser = PFUser.currentUser()
-            
-            //println("recieved update!")
-            //var loggedIn:LoggedIn = LoggedIn()
-            
-            //loggedIn.updateFromDelegate()
-            
-            println("in the delegate") 
-            
-            //NSNotificationCenter.defaultCenter().postNotificationName("pushNotification", object: nil)
             
             let notificationCenter = NSNotificationCenter.defaultCenter()
             notificationCenter.postNotificationName("pushNotification", object: nil)
