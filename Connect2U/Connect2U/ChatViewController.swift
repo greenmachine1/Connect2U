@@ -16,16 +16,28 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var mainInputField:UITextField?
     var mainReturnButton:UIButton?
     
-    var personPassedIn:PFUser?
+    var personPassedIn:AnyObject?
     var personNameChattingWith:PFUser?
-
+    var sendText = sendTextMessage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setColors()
         
-        // static value for whos chatting with you //
-        self.navigationItem.title = "Chatting with \(personPassedIn!.username)"
+        println("passed in crap! : \(personPassedIn!.description)")
+        
+        /*
+        if(personPassedIn!.objectForKey("username") != nil){
+            
+            //var tempNameString: AnyObject? = personPassedIn!.objectForKey("username")
+            
+            //self.navigationItem.title = "Chatting with \(tempNameString!)"
+            
+        }
+        */
+
+
         
         
         
@@ -100,40 +112,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // send off the text //
     func mainReturn(){
         
-        println("\(personPassedIn!.objectId)")
+        //println("\(personPassedIn!.objectId)")
     
-        var userObject:PFObject = personPassedIn! as PFObject
-
-        var userQuery = PFUser.query()
-        userQuery.whereKey("objectId", equalTo: userObject.objectId)
-        userQuery.getObjectInBackgroundWithId(userObject.objectId, block: { (object:PFObject!, error:NSError!) -> Void in
-                    
-        if(error == nil){
-                        
-            println("In here and stuff with the other object  \(object.description)")
-                    
-            // so the 'user' needs to be the object ID //
-            var pushQuery:PFQuery = PFInstallation.query()
-            pushQuery.whereKey("user", equalTo: object)
-            pushQuery.whereKey("signedIn", equalTo:true)
-                        
-            var push = PFPush()
-            push.setQuery(pushQuery)
-            push.setMessage("Notify!")
-            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                            
-                if(success){
-                                
-                    println("success in sending push Message !")
-                                
-                }else{
-                                
-                    println("error!")
-                                
-                }
-            })
-        }
-    })
+        // sending off to send out the text message to the user //
+        sendText.sendTextMessage(mainInputField!.text, toUser: personPassedIn!.objectForKey("objectId")!)
 
         
     }

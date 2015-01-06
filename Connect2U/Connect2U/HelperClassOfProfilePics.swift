@@ -25,6 +25,8 @@ class HelperClassOfProfilePics: NSObject {
     var callingViewMain:UIView?
     var palette:ColorPalettes?
     
+    var previousPeopleArray:Array<AnyObject>?
+    
     var delegate:ReturnWithPersonClicked?
     
 
@@ -42,13 +44,19 @@ class HelperClassOfProfilePics: NSObject {
         circleRadius = circleOfRadius
         callingViewMain = callingView
         
+        previousPeopleArray = arrayPassedIn
+        
         self.drawProfilePics(arrayPassedIn)
+        
+        
         
     }
     
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
+        println("previous people : \(previousPeopleArray!)")
+    
         var subViews = callingViewMain!.subviews as Array<UIView>
         
         for someViews in subViews{
@@ -58,6 +66,7 @@ class HelperClassOfProfilePics: NSObject {
                     someViews.removeFromSuperview()
                 }
             }
+            
             if(someViews.isKindOfClass(UILabel)){
                 if(someViews.tag < subViews.count){
                     someViews.removeFromSuperview()
@@ -96,7 +105,7 @@ class HelperClassOfProfilePics: NSObject {
     // removing the button and label from the scene //
     // this is kinda redundant but will have to do for now //
     func updateProfilePics(newProfilePics:Array<AnyObject>){
-        
+    
         var newArray:Array<AnyObject> = newProfilePics
                 
         self.drawProfilePics(newArray)

@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked{
+class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked, RequestChatDelegate{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -35,6 +35,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
     var userClickedOn:PFUser = PFUser()
+    var chatRequest = ChatRequest()
     
     
     var mainBigCircle:MainBigCircle = MainBigCircle()
@@ -58,6 +59,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
         self.setColors()
+        
+        
+        
 
         if(currentUser != nil){
             currentUser["signedIn"] = false
@@ -76,6 +80,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         self.settingUpTheUserInfo()
         
         locationData.delegate = self
+        chatRequest.delegate = self
+    
         
         
         
@@ -356,14 +362,20 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             }))
         
         
+        
+        
+        
+        
+        
+            // should send out a notification to the other person asking if they want to chat or not //
             // the chat body //
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
             
-                let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
                 
-                    chatViewController.personPassedIn = self.userClickedOn
+                // basically needs to send over an alert saying that 'You' want to chat with them and //
+                // the can either click ok or view profile //
+                self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
                 
-                self.navigationController?.pushViewController(chatViewController, animated: true)
             
             
             }))
@@ -371,6 +383,40 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    // this is the return function from ChatRequest //
+    // call back from when the user recieves a request to chat //
+    func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
+        
+        println("anyobject : \(personalInfo.description)")
+        
+        // cancel //
+        if(userClickedOnChatRequest == 0){
+            
+            println("logged in cancel")
+            
+        // view profile //
+        }else if(userClickedOnChatRequest == 1){
+            
+            println("logged in view profile")
+            
+        // chat //
+        }else{
+            
+            println("logged in chat")
+            
+            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            chatViewController.personPassedIn = personalInfo
+            
+            self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+        }
+        
+        
         
     }
     
@@ -394,9 +440,23 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
                     self.locationData.updateLocations(false)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     
                     
                 println("success in saving")
@@ -418,11 +478,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
+                    
+                    
+                    
+                    
+                    
+                    
                     // calls on the updateLocations method //
                     self.locationData.updateLocations(true)
-                    
                 
                     println("success in saving")
+                    
+                    
+                    
+                    
+                    
                 }
             })
 

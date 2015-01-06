@@ -28,11 +28,6 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         secondPassword.delegate = self
         
         secondPassword.hidden = true
-        
-        
-        
-        
-        
 
     }
 
@@ -50,6 +45,8 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     
     // user clicks the sign up feature //
     @IBAction func signUpOnClick(sender: UIButton) {
+        
+        println("button clicked! and shit")
         
         // checking to make sure that both the username and password fields are not blank //
         if((userName.text == "") || (passWord.text == "")){
@@ -94,6 +91,8 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     // show popup message //
     func setUpMessage(title:String, message:String, cameFromGoodLogin:Bool){
         
+        println("in here... and stuff")
+        
         var alert:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         
@@ -114,6 +113,8 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
             // the no button essentially takes the user to the main page //
             alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: { action in
                 
+                println("signed in under someone new")
+                
                 // need to go to the main page with the user logged in //
                 let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
                 
@@ -123,7 +124,10 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
             
         }
             
+            
+            
         else{
+            
             // creates the Ok button that essentially does nothing //
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
                 
@@ -210,6 +214,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                         println("successfully added the user to the installation")
                         println(PFInstallation.currentInstallation())
                         
+                        // log in under a new user was a success!! //
+                        self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
+                        
                     }else{
                         
                         
@@ -217,7 +224,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                     }
                 })
                 
-                self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
+                
+                // log in under a new user was a success!! //
+                //self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
                 
             }else{
                 

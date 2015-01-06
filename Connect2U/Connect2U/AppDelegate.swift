@@ -89,25 +89,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        
+    
         // trick for the silent updates -- if the content available is set to 1 and you check for it //
         // as being true, you can not pass it to the handlePush which is where the vibrate is coming from //
-        var contentAvailable:AnyObject = userInfo.values.array[0].objectForKey("content-available")!
-        
-        if(contentAvailable as NSObject == 1){
+        if(userInfo.values.array[0].objectForKey("content-available") != nil){
+            
+            var contentAvailable:AnyObject = userInfo.values.array[0].objectForKey("content-available")!
+            
+            println("this is here now : \(contentAvailable)")
+            if(contentAvailable as NSObject == 1){
+                
+                let notificationCenter = NSNotificationCenter.defaultCenter()
+                notificationCenter.postNotificationName("pushNotification", object: nil)
+                
+                
+            }
+            
+            
+            
+            
+        }
+        /*
+        else if(userInfo.values.array[0].objectForKey("content-available") == nil){
+            
+
+            println(userInfo.description)
             
             let notificationCenter = NSNotificationCenter.defaultCenter()
-            notificationCenter.postNotificationName("pushNotification", object: nil)
+            notificationCenter.postNotificationName("textMessage", object:self, userInfo:userInfo)
             
-            
-        }else{
-        
             PFPush.handlePush(userInfo)
             
-        }        
+        }
+        */
+        
+        else if(userInfo.values.array[0].objectForKey("content-available") == nil){
+            
+            
+            
+            
+            // this is for recieving a friends request //
+            if(!(userInfo.values.array[1].isEqual(nil))){
+                
+                println("The entire thing thats passed in!!!!!!! -- > : \(userInfo.description) \n \n \n \n ")
+            
+                //println("user passed in : \(userPassedIn.description)")
+                
+                println("this is there as well : \(userInfo.values.array[1])")
+            
+                println("user info : \(userInfo.description)")
+            
+                let notificationCenter = NSNotificationCenter.defaultCenter()
+                notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
+            }
+        }
     }
-    
-
     
     
     
