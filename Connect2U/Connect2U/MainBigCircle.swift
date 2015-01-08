@@ -28,9 +28,7 @@ class MainBigCircle: NSObject {
         theMainView = mainView
         radiusOfTheMainCircle = radiusOfCircle
         locationOfCircle = location
-        
-        println("location : \(locationOfCircle)")
-        
+
         self.createCircle()
         
     }

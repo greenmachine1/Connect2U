@@ -24,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var userNotificationTypes:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
         
         var settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes:userNotificationTypes , categories: nil)
-            
+        
+        
+        println("need to register for user notifications")
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
@@ -64,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         
-        println("in here as well!")
+        println("\n \n in here as well! \n \n ")
         
         var currentInstallation:PFInstallation = PFInstallation.currentInstallation()
         currentInstallation.setDeviceTokenFromData(deviceToken)
@@ -76,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
             }else{
                 
-                println("\(error.description)")
+                println("\n \n error in saving the installation \(error.description) \n \n ")
                 
             }
         }
@@ -89,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+        println("recieved push notification!")
     
         // trick for the silent updates -- if the content available is set to 1 and you check for it //
         // as being true, you can not pass it to the handlePush which is where the vibrate is coming from //
@@ -130,15 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // this is for recieving a friends request //
             if(!(userInfo.values.array[1].isEqual(nil))){
-                
-                println("The entire thing thats passed in!!!!!!! -- > : \(userInfo.description) \n \n \n \n ")
-            
-                //println("user passed in : \(userPassedIn.description)")
-                
-                println("this is there as well : \(userInfo.values.array[1])")
-            
-                println("user info : \(userInfo.description)")
-            
+                            
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
             }
