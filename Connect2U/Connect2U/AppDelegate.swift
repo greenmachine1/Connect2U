@@ -127,16 +127,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         */
         
+        // taking care of other push notifications such as updates and texts //
         else if(userInfo.values.array[0].objectForKey("content-available") == nil){
             
+            println(userInfo.description)
             
+            var didRecieveRequestForChat = 0
+            var numberInNotification:Int = userInfo.values.array.count
             
+            for(var i = 0; i < numberInNotification - 1; i++){
+                
+                println(userInfo.values.array[i])
+                println(userInfo.keys.array[i])
+                
+                if(userInfo.keys.array[i].isEqual("requestChat")){
+                    
+                    println("recieved an ok or denial of chat")
+                    didRecieveRequestForChat = 1
+                    break
+                    
+                }else{
+                    
+                    didRecieveRequestForChat = 0
+                }
+            }
             
-            // this is for recieving a friends request //
-            if(!(userInfo.values.array[1].isEqual(nil))){
-                            
+            if(didRecieveRequestForChat == 0){
+                
+                
+                // request for chat //
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
+                
+            }else if(didRecieveRequestForChat == 1){
+                
+                // response to the chat request //  
+                let notification = NSNotificationCenter.defaultCenter()
+                notification.postNotificationName("responseToChat", object:self, userInfo:userInfo)
+                
             }
         }
     }
@@ -149,9 +177,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         println("the description \(notification.description)")
     }
-    
-    
-
-
 }
 

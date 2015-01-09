@@ -91,6 +91,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         
         
+        
 
         // making the image of me in the very center of the screen //
         meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
@@ -155,6 +156,33 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         locationData.pushNotification()
         
     }
+    
+    
+    // the user response to this users request to chat //
+    func returnedUserResponseToChat(wantsToChatYesOrNo: Bool, user:AnyObject) {
+        
+        //println("any user : \(user)")
+        
+        // need to send the user to the chat page if the response is yes //
+        // will need to come up with a pop up saying the other user doesnt //
+        // want to chat at this time if the other chooses cancel //
+        if(wantsToChatYesOrNo == false){
+            
+            // make a popup that tells the user that they didnt want to chat
+            
+        }else if(wantsToChatYesOrNo == true){
+            
+            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            chatViewController.personPassedIn = user
+            
+            self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+        }
+        
+    }
+    
+
     
     
     
@@ -387,6 +415,14 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     }
     
     
+    
+    
+    
+    
+    
+    
+    // ----- chat stuff ----- //
+    
     // this is the return function from ChatRequest //
     // call back from when the user recieves a request to chat //
     func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
@@ -397,6 +433,10 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         if(userClickedOnChatRequest == 0){
             
             println("logged in cancel")
+            
+            
+            // tells the sender that its not ok to chat with this person //
+            chatRequest.sendOutTheOkToChat(false, toUser:personalInfo)
             
         // view profile //
         }else if(userClickedOnChatRequest == 1){
@@ -413,6 +453,12 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             chatViewController.personPassedIn = personalInfo
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+            
+            // need to send out a notification to the other user that they have accepted the request and //
+            // should transition to the chat session //
+            chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
+            
             
         }
         
@@ -440,25 +486,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
                     self.locationData.updateLocations(false)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                 println("success in saving")
                     
                 }
@@ -477,22 +509,12 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser["signedIn"] = false
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                     // calls on the updateLocations method //
                     self.locationData.updateLocations(true)
                 
                     println("success in saving")
-                    
-                    
-                    
-                    
-                    
+  
                 }
             })
 
@@ -509,8 +531,6 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     // setting colors for the view //
     func setColors(){
-        
-        //broadCast.frame = CGRectMake(CGFloat(self.view.frame.width / 2), CGFloat(self.view.frame.height - 200.0), CGFloat(self.view.frame.width - 300.0), 100.0)
         
         self.navigationController?.navigationBar.hidden = false
     
