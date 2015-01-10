@@ -370,16 +370,13 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     func showAlert(){
         
         
-        var modifiedAlertString:String?
+            var modifiedAlertString:String?
         
-        if(!(personSelected == 1001)){
+        
             
             modifiedAlertString = "Do you wish to chat or view profile?"
             
-        }else{
-            
-            modifiedAlertString = "Do you wish to Modify your profile?"
-        }
+        
         
             var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: modifiedAlertString , preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -410,7 +407,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         
         
-        if(!(personSelected == 1001)){
+        
         
             // should send out a notification to the other person asking if they want to chat or not //
             // the chat body //
@@ -426,7 +423,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             
             }))
-        }
+        
         
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
