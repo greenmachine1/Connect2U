@@ -356,6 +356,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         self.showAlert()
     
         println("clicked!")
+        println("clicked button : \(personSelected)")
     }
     
     
@@ -368,7 +369,19 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // about the person needs to change //
     func showAlert(){
         
-            var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: "Do you wish to chat or view profile?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        var modifiedAlertString:String?
+        
+        if(!(personSelected == 1001)){
+            
+            modifiedAlertString = "Do you wish to chat or view profile?"
+            
+        }else{
+            
+            modifiedAlertString = "Do you wish to Modify your profile?"
+        }
+        
+            var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: modifiedAlertString , preferredStyle: UIAlertControllerStyle.Alert)
         
         
             // the profile alert button //
@@ -393,16 +406,18 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             }))
         
+    
         
         
         
-        
-        
+        if(!(personSelected == 1001)){
         
             // should send out a notification to the other person asking if they want to chat or not //
             // the chat body //
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
             
+                
+                
                 
                 // basically needs to send over an alert saying that 'You' want to chat with them and //
                 // the can either click ok or view profile //
@@ -411,7 +426,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             
             }))
-            
+        }
+        
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)

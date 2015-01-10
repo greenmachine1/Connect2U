@@ -44,14 +44,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainTableView.delegate = self
         
         
-        
-        
-        
-        
         // for some reason, I was getting no interaction what so ever from my //
         // UITableView... this fixed it //
         self.mainTableView.userInteractionEnabled = true
-
         
         println("\n \n person passed in \(personPassedIn)")
         
@@ -140,6 +135,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             if(mainArrayFullOfConversation != nil){
                 
                 println(mainArrayFullOfConversation!)
+                
+                mainTableView.reloadData()
+                
+                if mainTableView.contentSize.height > mainTableView.frame.size.height
+                {
+                    let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
+                    mainTableView.setContentOffset(offset, animated: false)
+                }
             }
         }
     }
@@ -198,7 +201,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         sendText.sendTextMessage(mainInputField!.text, toUser: self.personId!)
         if(mainArrayFullOfConversation != nil){
             
-            println(mainArrayFullOfConversation!)
+            mainTableView.reloadData()
+            
+            if mainTableView.contentSize.height > mainTableView.frame.size.height
+            {
+                let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
+                mainTableView.setContentOffset(offset, animated: false)
+            }
+            
+            
         }
         
     }
@@ -243,6 +254,73 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
         var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
         
+        
+        
+        // pin pointing if the text came from this user or someone else
+        if(mainArrayFullOfConversation![indexPath.row].valueForKey(PFUser.currentUser().objectId as String) != nil){
+            
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cellRight", forIndexPath: indexPath) as RightChatCell
+            
+            println(mainArrayFullOfConversation![indexPath.row].objectForKey(PFUser.currentUser().objectId) as? String)
+            
+            
+            cell.backgroundColor = darkGreenColor
+            cell.layer.cornerRadius = 3.0
+            cell.rightLabel.text = "You"
+            cell.rightLabel.textColor = whiteColor
+            cell.rightLabel.backgroundColor = darkGreenColor
+            cell.rightLabel.layer.cornerRadius = 3.0
+            cell.rightLabel.clipsToBounds = true
+            cell.dataLabel.textColor = whiteColor
+            cell.dataLabel.backgroundColor = darkGreenColor
+            cell.dataLabel.text = mainArrayFullOfConversation![indexPath.row].objectForKey(PFUser.currentUser().objectId) as? String
+            cell.dataLabel.layer.cornerRadius = 3.0
+            cell.dataLabel.clipsToBounds = true
+            
+            
+            
+            return cell
+            
+            
+        }else{
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cellLeft", forIndexPath: indexPath) as ChatLeftCell
+            
+            
+            
+            cell.backgroundColor = greenColor
+            cell.layer.cornerRadius = 3.0
+            cell.leftLabel.text = personName
+            cell.leftLabel.textColor = darkGreenColor
+            cell.leftLabel.backgroundColor = greenColor
+            cell.leftLabel.layer.cornerRadius = 3.0
+            cell.leftLabel.clipsToBounds = true
+            cell.dataLabel.textColor = darkGreenColor
+            cell.dataLabel.backgroundColor = greenColor
+            cell.dataLabel.text = mainArrayFullOfConversation![indexPath.row].objectForKey(personId) as? String
+            cell.dataLabel.layer.cornerRadius = 3.0
+            cell.dataLabel.clipsToBounds = true
+            
+            
+            
+            return cell
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
         if((indexPath.row % 2) == 0){
 
             let cell = tableView.dequeueReusableCellWithIdentifier("cellLeft", forIndexPath: indexPath) as ChatLeftCell
@@ -287,13 +365,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             return cell
         }
+        */
     }
 
     
     
     // number of rows //
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return mainArrayFullOfConversation!.count
     }
     
     // height of the rows //
