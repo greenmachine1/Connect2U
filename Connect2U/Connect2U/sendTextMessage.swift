@@ -9,7 +9,16 @@
 import UIKit
 import Parse
 
+@objc protocol RecievedTextDelegate{
+    
+    // delegate method that sends the text info back to the chat view //
+    func sendTextInfoBack(textInfo:AnyObject)
+    
+}
+
 class sendTextMessage: NSObject {
+    
+    var delegate:RecievedTextDelegate?
     
     var textMessage:String?
    
@@ -26,9 +35,20 @@ class sendTextMessage: NSObject {
 
     func textMessageRecieved(object:NSNotification){
         
-        println("recieved text message and im in the sendTextMessage object : \(object.userInfo!)")
+        println("recieved text message and im in the sendTextMessage object : \(object.description)")
+        self.delegate?.sendTextInfoBack(object)
+   
+    }
+    
+    
+    // making sure we remove the observer when leaving //
+    func removeNotificationObserver(){
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "textMessage", object: nil)
         
     }
+    
+    
     
     
     

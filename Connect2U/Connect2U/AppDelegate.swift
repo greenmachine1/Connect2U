@@ -92,20 +92,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
-        println("recieved push notification!")
+        println("recieved push notification! \(userInfo.description)")
     
         // trick for the silent updates -- if the content available is set to 1 and you check for it //
         // as being true, you can not pass it to the handlePush which is where the vibrate is coming from //
         if(userInfo.values.array[0].objectForKey("content-available") != nil){
             
             var contentAvailable:AnyObject = userInfo.values.array[0].objectForKey("content-available")!
+            var booleanValue:Bool = false
             
             println("this is here now : \(contentAvailable)")
             if(contentAvailable as NSObject == 1){
                 
-                let notificationCenter = NSNotificationCenter.defaultCenter()
-                notificationCenter.postNotificationName("pushNotification", object: nil)
+                var numberInNotification:Int = userInfo.values.array.count
                 
+                for(var i = 0; i < numberInNotification; i++){
+                    println("poop! -->\(userInfo.values.array[i])")
+                    
+                    if(userInfo.keys.array[i].isEqual("textFromPerson") == true){
+                        
+                        booleanValue = true
+                        
+                        // letting the text class know that there is a new text coming in //
+                        let notificationCenter = NSNotificationCenter.defaultCenter()
+                        notificationCenter.postNotificationName("textMessage", object: userInfo)
+                    }
+                    
+                }
+                
+            
+                
+                if(booleanValue == false){
+                    
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("pushNotification", object: nil)
+                }
                 
             }
             
@@ -113,32 +134,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
-        /*
-        else if(userInfo.values.array[0].objectForKey("content-available") == nil){
-            
-
-            println(userInfo.description)
-            
-            let notificationCenter = NSNotificationCenter.defaultCenter()
-            notificationCenter.postNotificationName("textMessage", object:self, userInfo:userInfo)
-            
-            PFPush.handlePush(userInfo)
-            
-        }
-        */
         
         // taking care of other push notifications such as updates and texts //
         else if(userInfo.values.array[0].objectForKey("content-available") == nil){
             
             println(userInfo.description)
             
-            var didRecieveRequestForChat = 0
+            var didRecieveRequestForChat = 3
             var numberInNotification:Int = userInfo.values.array.count
             
             for(var i = 0; i < numberInNotification - 1; i++){
                 
                 println(userInfo.values.array[i])
-                println(userInfo.keys.array[i])
+                println("draw the attention here!\(userInfo.keys.array[i])")
+                
+                /*
+                if(userInfo.keys.array[i].isEqual("textFromPerson")){
+                    
+                    
+                    println("recieved a text")
+                    break
+                    
+                    
+                }else{
+
+                    
+                    println("didnt recieve a text")
+
+                }
+                */
                 
                 if(userInfo.keys.array[i].isEqual("requestChat")){
                     
@@ -149,6 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }else{
                     
                     didRecieveRequestForChat = 0
+                    
                 }
             }
             
@@ -166,6 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 notification.postNotificationName("responseToChat", object:self, userInfo:userInfo)
                 
             }
+        
         }
     }
     

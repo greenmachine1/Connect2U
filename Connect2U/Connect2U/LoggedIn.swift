@@ -161,7 +161,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // the user response to this users request to chat //
     func returnedUserResponseToChat(wantsToChatYesOrNo: Bool, user:AnyObject) {
         
-        //println("any user : \(user)")
+        println("\n \n any user : \(user) \n \n ")
         
         // need to send the user to the chat page if the response is yes //
         // will need to come up with a pop up saying the other user doesnt //

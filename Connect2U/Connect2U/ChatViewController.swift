@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, RecievedTextDelegate {
 
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -20,43 +20,58 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var personNameChattingWith:PFUser?
     var sendText = sendTextMessage()
     
+    var otherPersonId:AnyObject?
+    var personId:AnyObject?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setColors()
+
+        sendText.delegate = self
+        mainTableView.delegate = self
         
-        println("passed in crap! : \(personPassedIn!.description)")
         
-        /*
-        if(personPassedIn!.objectForKey("username") != nil){
+        // for some reason, I was getting no interaction what so ever from my //
+        // UITableView... this fixed it //
+        self.mainTableView.userInteractionEnabled = true
+
+        
+        println("\n \n person passed in \(personPassedIn)")
+        
+        
+        if(personPassedIn != nil){
             
-            //var tempNameString: AnyObject? = personPassedIn!.objectForKey("username")
+            var personPassed: AnyObject? = personPassedIn!.valueForKey("userInfo")
             
-            //self.navigationItem.title = "Chatting with \(tempNameString!)"
+            println("this is getting rediculas \(personPassed)")
+            
+            // two sets of different info are being passed in //
+            if(personPassed!.objectForKey("username") != nil){
+                
+                println("there is a user name here")
+                
+                personId = personPassed!.objectForKey("objectId")
+                println("person Id passed in : \(personId!)")
+                
+            }else if(personPassed!.objectForKey("userInfo") != nil){
+                
+                println("there isnt a user name here")
+                personId = personPassed!.objectForKey("userInfo")
+                println("person ID passed in : --> \(personId!)")
+                
+            }
             
         }
-        */
-
-
         
         
-        
-        
-        
+    
         // group chat button //
         var editButton:UIBarButtonItem = UIBarButtonItem(title: "Group Chat", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("group"))
         self.navigationItem.rightBarButtonItem = editButton
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         var widthOfScreen:CGFloat = CGFloat(self.view.frame.width / 2)
         
         // this is all static data that will be updated at a later time //
@@ -80,6 +95,31 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
         
+    }
+    
+    
+    
+    
+    // where texts come back //
+    func sendTextInfoBack(textInfo: AnyObject) {
+        
+        println("this info is in the chat view controller \(textInfo)")
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+
+    // removing the observer for text notificaitons //
+    override func viewWillDisappear(animated: Bool) {
+        println("view will disappear")
+        
+        sendText.removeNotificationObserver()
     }
     
     
@@ -111,11 +151,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // send off the text //
     func mainReturn(){
-        
-        //println("\(personPassedIn!.objectId)")
-    
+
         // sending off to send out the text message to the user //
-        sendText.sendTextMessage(mainInputField!.text, toUser: personPassedIn!.objectForKey("objectId")!)
+        sendText.sendTextMessage(mainInputField!.text, toUser: self.personId!)
 
         
     }
@@ -204,13 +242,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        println("selected row : \(indexPath.row)")
+    }
     
     
     
     
     // number of rows //
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 20
     }
     
     // height of the rows //

@@ -110,18 +110,26 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     func requestChat(notification:NSNotification){
                 
         println("notification mofo! : \(notification.description)")
+        
+        
 
-        var firstLevel:AnyObject! = notification.valueForKey("userInfo")!.objectForKey("userInfo")!
-        var nameString:AnyObject! = firstLevel.objectForKey("username")
+            var firstLevel:AnyObject! = notification.valueForKey("userInfo")!.objectForKey("userInfo")!
+            var nameString:AnyObject! = firstLevel.objectForKey("username")
         
-        // getting the user info into this variable //
-        currentUserInfo = notification.userInfo!
+            // getting the user info into this variable //
+            currentUserInfo = notification.userInfo
         
-        var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat")
+            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat")
             
-        alert.show()
+            alert.show()
+        
 
     }
+    
+    
+    
+    
+    
     
     
     
