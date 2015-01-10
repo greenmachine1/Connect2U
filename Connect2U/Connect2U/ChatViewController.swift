@@ -22,14 +22,30 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var otherPersonId:AnyObject?
     var personId:AnyObject?
+    var personName:String?
+    
+    
+    
+    
+    
+    var mainArrayFullOfConversation:[AnyObject]?
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mainArrayFullOfConversation = []
 
         self.setColors()
 
         sendText.delegate = self
         mainTableView.delegate = self
+        
+        
+        
+        
         
         
         // for some reason, I was getting no interaction what so ever from my //
@@ -39,29 +55,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         println("\n \n person passed in \(personPassedIn)")
         
+
+        
         
         if(personPassedIn != nil){
             
             var personPassed: AnyObject? = personPassedIn!.valueForKey("userInfo")
-            
-            println("this is getting rediculas \(personPassed)")
-            
-            // two sets of different info are being passed in //
-            if(personPassed!.objectForKey("username") != nil){
-                
-                println("there is a user name here")
-                
+            if(personPassed != nil){
+
+                personName = personPassed!.objectForKey("username") as? String
                 personId = personPassed!.objectForKey("objectId")
-                println("person Id passed in : \(personId!)")
+                println(personName)
                 
-            }else if(personPassed!.objectForKey("userInfo") != nil){
                 
-                println("there isnt a user name here")
-                personId = personPassed!.objectForKey("userInfo")
-                println("person ID passed in : --> \(personId!)")
-                
+            }else{
+
+                personName = personPassedIn!.valueForKey("username") as? String
+                println(personName)
+                personId = personPassedIn!.objectId
             }
-            
         }
         
         
@@ -75,7 +87,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var widthOfScreen:CGFloat = CGFloat(self.view.frame.width / 2)
         
         // this is all static data that will be updated at a later time //
-        mainInputField = UITextField(frame: CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: 300.0 , height: 30.0))
+        mainInputField = UITextField(frame: CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: self.view.frame.width - 120 , height: 30.0))
+        
+        
         mainInputField?.borderStyle = UITextBorderStyle.RoundedRect
         mainInputField?.text = "Enter Text"
         mainInputField?.backgroundColor = UIColor.whiteColor()
@@ -84,7 +98,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.view.addSubview(mainInputField!)
         
-        mainReturnButton = UIButton(frame: CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0))
+        
+        // value for x for the return button //
+        var sendButtonXValue:CGFloat = CGFloat(self.mainInputField!.frame.origin.x + self.mainInputField!.frame.width + 10.0)
+        
+        mainReturnButton = UIButton(frame: CGRect(x: sendButtonXValue, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0))
+
         mainReturnButton?.setTitle("Send", forState: UIControlState.Normal)
         mainReturnButton?.addTarget(self, action: Selector("mainReturn"), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -101,10 +120,28 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     // where texts come back //
+    // putting the info into a dictionary, then into an array //
     func sendTextInfoBack(textInfo: AnyObject) {
         
-        println("this info is in the chat view controller \(textInfo)")
+        println("this info is in the chat view controller \(textInfo.description)")
         
+        if(!(textInfo.isEqual(nil))){
+        
+            var incomingPersonId:String = textInfo.valueForKey("object")!.objectForKey("userInfo") as String
+        
+            var incomingPersonText:String = textInfo.valueForKey("object")!.valueForKey("aps")!.objectForKey("alert") as String
+
+            println("this and that \(incomingPersonId) \(incomingPersonText)")
+            
+            var tempDictionary:[String:String] = [incomingPersonId:incomingPersonText]
+            println(tempDictionary)
+            
+            mainArrayFullOfConversation?.append(tempDictionary)
+            if(mainArrayFullOfConversation != nil){
+                
+                println(mainArrayFullOfConversation!)
+            }
+        }
     }
     
     
@@ -117,7 +154,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // removing the observer for text notificaitons //
     override func viewWillDisappear(animated: Bool) {
-        println("view will disappear")
         
         sendText.removeNotificationObserver()
     }
@@ -135,10 +171,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // moving the textfield up for the keyboard //
     func keyboardShow(){
         
-        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 320.0), width: 300.0, height: 30.0)
-        
-        mainReturnButton?.frame = CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 320.0), width: 100.0, height: 30.0)
+        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 320.0), width: self.view.frame.width - 120, height: 30.0)
     
+        // 320
+        var sendButtonXValue:CGFloat = CGFloat(self.mainInputField!.frame.origin.x + self.mainInputField!.frame.width + 10.0)
+        
+        mainReturnButton?.frame = CGRect(x: sendButtonXValue, y: CGFloat(self.mainInputField!.frame.origin.y), width: 100.0, height: 30.0)
     }
     
     
@@ -152,9 +190,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // send off the text //
     func mainReturn(){
 
+        var tempDictionary:[String:String] = [PFUser.currentUser().objectId as String: mainInputField!.text]
+        
+        mainArrayFullOfConversation?.append(tempDictionary)
+        
         // sending off to send out the text message to the user //
         sendText.sendTextMessage(mainInputField!.text, toUser: self.personId!)
-
+        if(mainArrayFullOfConversation != nil){
+            
+            println(mainArrayFullOfConversation!)
+        }
         
     }
     
@@ -176,9 +221,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainInputField?.resignFirstResponder()
         
         // moving the keyboard back down.... statically //
-        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: 300.0 , height: 30.0)
+        mainInputField?.frame = CGRect(x: 20.0, y: CGFloat(self.view.frame.height - 50.0), width: self.view.frame.width - 120 , height: 30.0)
         
-        mainReturnButton?.frame = CGRect(x: 320.0, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0)
+        // 320
+        var sendButtonXValue:CGFloat = CGFloat(self.mainInputField!.frame.origin.x + self.mainInputField!.frame.width + 10.0)
+        
+        mainReturnButton?.frame = CGRect(x: sendButtonXValue, y: CGFloat(self.view.frame.height - 50.0), width: 100.0, height: 30.0)
         
         return true
         
@@ -240,18 +288,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             return cell
         }
     }
-    
-    
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        println("selected row : \(indexPath.row)")
-    }
-    
-    
+
     
     
     // number of rows //
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 10
     }
     
     // height of the rows //

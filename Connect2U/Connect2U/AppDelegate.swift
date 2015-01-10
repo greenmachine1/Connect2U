@@ -148,21 +148,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 println(userInfo.values.array[i])
                 println("draw the attention here!\(userInfo.keys.array[i])")
                 
-                /*
-                if(userInfo.keys.array[i].isEqual("textFromPerson")){
-                    
-                    
-                    println("recieved a text")
-                    break
-                    
-                    
-                }else{
-
-                    
-                    println("didnt recieve a text")
-
-                }
-                */
                 
                 if(userInfo.keys.array[i].isEqual("requestChat")){
                     
@@ -184,11 +169,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
                 
+                println("\n \n app delegate request to chat --> :\(userInfo)\n \n  ")
+                
             }else if(didRecieveRequestForChat == 1){
                 
                 // response to the chat request //  
                 let notification = NSNotificationCenter.defaultCenter()
                 notification.postNotificationName("responseToChat", object:self, userInfo:userInfo)
+                
+                println("\n \n app delegate response to chat --> :\(userInfo)\n \n  ")
                 
             }
         

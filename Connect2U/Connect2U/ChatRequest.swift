@@ -42,6 +42,8 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // method used to send back to LoggedIn, the other users response to chat //
     func responseToTheRequestToChat(sender:NSNotification){
         
+        println("\n \n \n \n \n \(sender)\n \n \n \n \n \n \n \n \n")
+        
         var requestToChatVariable:Int = sender.userInfo!.values.array.count
         if(requestToChatVariable != 0){
             
@@ -68,6 +70,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     
     
     // sends out the request to chat //
+    // upon recieving - the user gets a bunch of info //
     func sendRequestToChat(toUser:PFUser, fromUser:PFUser){
         
         currentUser = fromUser
@@ -105,20 +108,21 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     
     
     // ---------- this is the recieving side of chat requests ------------ //
+    // this recieves a bunch of info //
     
     // gets called when a request comes through //
     func requestChat(notification:NSNotification){
                 
         println("notification mofo! : \(notification.description)")
         
-        
-
             var firstLevel:AnyObject! = notification.valueForKey("userInfo")!.objectForKey("userInfo")!
             var nameString:AnyObject! = firstLevel.objectForKey("username")
         
+    
             // getting the user info into this variable //
+            // this isnt the problem //
             currentUserInfo = notification.userInfo
-        
+
             var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat")
             
             alert.show()
@@ -136,6 +140,10 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // tells the sender that its ok to chat! //
     func sendOutTheOkToChat(isOk:Bool, toUser:AnyObject){
         
+        
+
+        
+        
         if(toUser.objectForKey("userInfo") != nil){
             
             var firstObject:AnyObject? = toUser.objectForKey("userInfo")
@@ -143,22 +151,15 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             if(firstObject?.objectForKey("objectId") != nil){
                 var objectId:AnyObject? = firstObject?.objectForKey("objectId")
         
-                println("object ID and crap --> \(objectId!)")
-                
                 // basically sending out a return ok/not ok to chat response to the person who originally called //
                 PFCloud.callFunctionInBackground("okOrNotToChat", withParameters: ["toUser":objectId as String,"fromUser":PFUser.currentUser().objectId, "requestToChat":isOk]) { (response:AnyObject!, error:NSError!) -> Void in
                     
                     if(error == nil){
                         
-                        println("response from sending out a response.... : \(response.description)")
-                        println("success in sending response")
-                        
                     }else{
                         
                         println("error happened --> \(error.description)")
                     }
-                    
-                    
                 }
             }
         }

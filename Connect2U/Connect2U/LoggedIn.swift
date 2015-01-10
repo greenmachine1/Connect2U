@@ -174,7 +174,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            chatViewController.personPassedIn = user
+            
+            
+            
+            // sending over the userClickedOn originally //
+            chatViewController.personPassedIn = userClickedOn
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
             
@@ -203,7 +207,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // gets called when you click on a persons profile //
     func returnPersonClicked(person: AnyObject) {
         
-        println("person clicked on \(person)")
+        println("\n \n \n \n person clicked on \(person)\n \n \n \n \n ")
 
         self.showAlert()
         
@@ -437,6 +441,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             
             // tells the sender that its not ok to chat with this person //
             chatRequest.sendOutTheOkToChat(false, toUser:personalInfo)
+            
+            
+            
             
         // view profile //
         }else if(userClickedOnChatRequest == 1){
