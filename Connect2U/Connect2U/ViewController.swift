@@ -43,8 +43,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }else{
             
             PFUser.logOut()
-            self.navigationController?.navigationBar.hidden = true
-            
+            //self.navigationController?.navigationBar.
+            self.navigationItem.setHidesBackButton(true, animated: true)
         }
         
     }
@@ -205,7 +205,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func setColors(){
         
         
-        var loginFrame = logInButton.frame.size
+        //var loginFrame = logInButton.frame.size
         var createNewAccountFrame = newAccountButton.frame.size
         var signInWithFacebookFrame = facebookButton.frame.size
         
@@ -223,7 +223,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         var newColorPalette = ColorPalettes()
         
-        var cornerRadiusValue:CGFloat = loginFrame.width / 2
+        //var cornerRadiusValue:CGFloat = loginFrame.width / 2
         
         // background color //
         self.view.backgroundColor = newColorPalette.lightBlueColor
@@ -234,24 +234,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //self.navigationController?.navigationBar.tintColor = newColorPalette.whiteColor
         
         // color for the buttons //
-        logInButton.backgroundColor = newColorPalette.darkGreenColor
-        logInButton.tintColor = newColorPalette.whiteColor
-        logInButton.layer.cornerRadius = cornerRadiusValue
-        logInButton.clipsToBounds = true
+        //logInButton.backgroundColor = newColorPalette.darkGreenColor
+        //logInButton.tintColor = newColorPalette.whiteColor
+        //logInButton.layer.cornerRadius = cornerRadiusValue
+        //logInButton.clipsToBounds = true
+        logInButton.setBackgroundImage(UIImage(contentsOfFile: "LogIn.png"), forState: UIControlState.Normal)
+        
         
         facebookButton.backgroundColor = newColorPalette.greenColor
         facebookButton.tintColor = newColorPalette.whiteColor
-        facebookButton.layer.cornerRadius = cornerRadiusValue
+        //facebookButton.layer.cornerRadius = cornerRadiusValue
         facebookButton.clipsToBounds = true
         
         newAccountButton.backgroundColor = newColorPalette.greenColor
         newAccountButton.tintColor = newColorPalette.whiteColor
-        newAccountButton.layer.cornerRadius = cornerRadiusValue
+        //newAccountButton.layer.cornerRadius = cornerRadiusValue
         newAccountButton.clipsToBounds = true
         
         forgotPassword.backgroundColor = newColorPalette.greenColor
         forgotPassword.tintColor = newColorPalette.whiteColor
-        forgotPassword.layer.cornerRadius = cornerRadiusValue
+        //forgotPassword.layer.cornerRadius = cornerRadiusValue
         forgotPassword.clipsToBounds = true
         
     }

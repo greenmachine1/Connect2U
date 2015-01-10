@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 324696DA1A61C43100FDC9C8 /* LogIn.png */; };
 		325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DEE591A516FFB00CB9782 /* ChatRequest.swift */; };
 		326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */; };
 		329218581A40114B00A57E7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218571A40114B00A57E7D /* StoreKit.framework */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		324696DA1A61C43100FDC9C8 /* LogIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogIn.png; sourceTree = "<group>"; };
 		325DEE591A516FFB00CB9782 /* ChatRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
 		326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sendTextMessage.swift; sourceTree = "<group>"; };
 		329218571A40114B00A57E7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -262,6 +264,7 @@
 		E5E6BC851A12E86000972580 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				324696DA1A61C43100FDC9C8 /* LogIn.png */,
 				E545ADDD1A2E9631001D3D91 /* Connect_2_U_Log.png */,
 				E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */,
 				E5BC88511A1C71A300D3D0A5 /* face3.png */,
@@ -381,6 +384,7 @@
 			files = (
 				E5BC8FEC1A1AFFC40059BF75 /* face1.png in Resources */,
 				E5BC884E1A1C705400D3D0A5 /* face0.png in Resources */,
+				324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */,
 				E545ADDE1A2E9631001D3D91 /* Connect_2_U_Log.png in Resources */,
 				E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
