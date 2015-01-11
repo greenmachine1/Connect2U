@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 324696DA1A61C43100FDC9C8 /* LogIn.png */; };
+		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
 		325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DEE591A516FFB00CB9782 /* ChatRequest.swift */; };
 		326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */; };
 		329218581A40114B00A57E7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218571A40114B00A57E7D /* StoreKit.framework */; };
@@ -72,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		324696DA1A61C43100FDC9C8 /* LogIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogIn.png; sourceTree = "<group>"; };
+		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
 		325DEE591A516FFB00CB9782 /* ChatRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
 		326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sendTextMessage.swift; sourceTree = "<group>"; };
 		329218571A40114B00A57E7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -257,6 +259,7 @@
 				E5A6E8131A293D930017E68B /* HelperClassOfProfilePics.swift */,
 				E5F581171A2F388C0057A9ED /* Connectivity.swift */,
 				325DEE591A516FFB00CB9782 /* ChatRequest.swift */,
+				32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */,
 				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
 				E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */,
+				32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
 				E5BE00AE1A1D32AE00543FE8 /* InterestsMainTableViewController.swift in Sources */,
 				E5898E831A25623400706649 /* MoreInfoViewControllerContainerViewController.swift in Sources */,

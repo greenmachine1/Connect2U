@@ -17,6 +17,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passWord:UITextField!
     @IBOutlet weak var secondPassword: UITextField!
     
+    var majorNumber:Int?
+    var minorNumber:Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +31,26 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         secondPassword.delegate = self
         
         secondPassword.hidden = true
+        
+        // 9469) and Optional(2706
+        majorNumber = self.randomNumberGeneration()
+        minorNumber = self.randomNumberGeneration()
+        
+        println("both numbers \(majorNumber) and \(minorNumber)")
 
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
 
+    // creating random numbers for the iBeacon section //
+    func randomNumberGeneration() ->Int{
+        
+        return 0 + Int(arc4random_uniform(UInt32(10000 - 0 + 1)))
+    }
     
     
     
@@ -60,7 +74,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 // set up the user sign in //
-                self.userSignup(userName.text, passwordString: secondPassword.text)
+                self.userSignup(userName.text, passwordString: secondPassword.text,majorNumber:majorNumber!, minorNumber:minorNumber!)
             
         
             }else{
@@ -183,7 +197,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     
     
     // the actual parse sign up //
-    func userSignup(userNameString:String, passwordString:String){
+    func userSignup(userNameString:String, passwordString:String, majorNumber:Int, minorNumber:Int){
+        
+        
         
         var user:PFUser = PFUser()
         
@@ -191,6 +207,8 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         // so they can come back and edit them at a later time //
         user.username = userNameString
         user.password = passwordString
+        user["major"] = majorNumber
+        user["minor"] = minorNumber
         user["gender"] = "unknown"
         user["interests"] = ["biking","swimming","joggin","hair"]
         user["picture"] = "face3.png"

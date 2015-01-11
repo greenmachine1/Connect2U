@@ -37,6 +37,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var userClickedOn:PFUser = PFUser()
     var chatRequest = ChatRequest()
     
+    var beaconGatherData:IBeaconGatherData = IBeaconGatherData()
+    
     
     var mainBigCircle:MainBigCircle = MainBigCircle()
     
@@ -60,7 +62,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         self.setColors()
         
-        
+        println("currentUser --> \(PFUser.currentUser())")
         
 
         if(currentUser != nil){
@@ -156,6 +158,9 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         locationData.pushNotification()
         
     }
+    
+    
+    
     
     
     // the user response to this users request to chat //
@@ -490,6 +495,16 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     
     
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // the broadcast button //
     @IBAction func broadCastOnClick(sender: UIButton) {
         
@@ -506,12 +521,21 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                     
-
+                    var tempMajor = PFUser.currentUser().objectForKey("major") as Int
+                    var tempMinor = PFUser.currentUser().objectForKey("minor") as Int
+                    
+                    
+                    
+                    
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
-                    self.locationData.updateLocations(false)
+                    //self.locationData.updateLocations(false)
+                    self.beaconGatherData.transmitBeacon(tempMajor, minorNumber: tempMinor)
+                    self.beaconGatherData.initRegion()
+                    
+                    
 
-                println("success in saving")
+                println("turn on broadcast")
                     
                 }
             })
@@ -530,11 +554,24 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
 
+                    
+                    
+                    
+                    
                     // calls on the updateLocations method //
-                    self.locationData.updateLocations(true)
+                    //self.locationData.updateLocations(true)
                 
-                    println("success in saving")
+                    
+                    self.beaconGatherData.stopTransmitting()
+                    
+                    
+                    println("turn off broadcast")
   
+                    
+                    
+                    
+                    
+                    
                 }
             })
 
