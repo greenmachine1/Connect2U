@@ -30,14 +30,15 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     var tempBoolToggleForBroadCast:Bool = false
     
     var helperClass:HelperClassOfProfilePics = HelperClassOfProfilePics()
-    var locationData:GatherInfo = GatherInfo()
+    //var locationData:GatherInfo = GatherInfo()
     var colorPalette = ColorPalettes()
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
     var userClickedOn:PFUser = PFUser()
     var chatRequest = ChatRequest()
     
-    var beaconGatherData:IBeaconGatherData = IBeaconGatherData()
+    var beaconGatherData = IBeaconGatherData()
+    var beaconTransmitData = IBeaconTransmitData()
     
     
     var mainBigCircle:MainBigCircle = MainBigCircle()
@@ -81,7 +82,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         // setting up the current user info //
         self.settingUpTheUserInfo()
         
-        locationData.delegate = self
+        //locationData.delegate = self
         chatRequest.delegate = self
     
         
@@ -155,7 +156,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // the push notification sector of gather info //
     func pushNotification(sender:NSNotification){
         
-        locationData.pushNotification()
+        //locationData.pushNotification()
         
     }
     
@@ -508,6 +509,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
     // the broadcast button //
     @IBAction func broadCastOnClick(sender: UIButton) {
         
+
+        
         var currentUser = PFUser.currentUser()
         // this is the broadcast your location button //
         if(tempBoolToggleForBroadCast == false){
@@ -530,7 +533,7 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
                     //self.locationData.updateLocations(false)
-                    self.beaconGatherData.transmitBeacon(tempMajor, minorNumber: tempMinor)
+                    self.beaconTransmitData.transmitBeacon(tempMajor, minorNumber: tempMinor)
                     self.beaconGatherData.initRegion()
                     
                     
@@ -562,7 +565,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
                     //self.locationData.updateLocations(true)
                 
                     
-                    self.beaconGatherData.stopTransmitting()
+                    self.beaconTransmitData.stopTransmitting()
+                    self.beaconGatherData.stopRecieving()
                     
                     
                     println("turn off broadcast")

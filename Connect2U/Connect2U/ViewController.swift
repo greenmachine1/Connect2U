@@ -43,7 +43,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }else{
             
             PFUser.logOut()
-            //self.navigationController?.navigationBar.
+
             self.navigationItem.setHidesBackButton(true, animated: true)
         }
         

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 324696DA1A61C43100FDC9C8 /* LogIn.png */; };
 		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
+		325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */; };
 		325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DEE591A516FFB00CB9782 /* ChatRequest.swift */; };
 		326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */; };
 		329218581A40114B00A57E7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218571A40114B00A57E7D /* StoreKit.framework */; };
@@ -73,7 +74,8 @@
 
 /* Begin PBXFileReference section */
 		324696DA1A61C43100FDC9C8 /* LogIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogIn.png; sourceTree = "<group>"; };
-		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
+		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
+		325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconTransmitData.swift; sourceTree = "<group>"; };
 		325DEE591A516FFB00CB9782 /* ChatRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
 		326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sendTextMessage.swift; sourceTree = "<group>"; };
 		329218571A40114B00A57E7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -260,6 +262,7 @@
 				E5F581171A2F388C0057A9ED /* Connectivity.swift */,
 				325DEE591A516FFB00CB9782 /* ChatRequest.swift */,
 				32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */,
+				325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
 				326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */,
+				325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */,
 				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
 				E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */,
 				E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */,
