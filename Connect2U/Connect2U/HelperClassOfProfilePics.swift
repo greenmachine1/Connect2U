@@ -55,7 +55,33 @@ class HelperClassOfProfilePics: NSObject {
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
-        println("previous people : \(previousPeopleArray!)")
+        //println("previous people : \(previousPeopleArray!)")
+        
+        println("new profile pics--- > \(newProfilePics)")
+        println("new Profile pics! \(newProfilePics.count)")
+        
+        
+        
+        for(var i = 0; i < newProfilePics.count; i++){
+            
+            //println(newProfilePics[i].valueForKey("username")!)
+            //println(newProfilePics[i].valueForKey("picture")!)
+            
+            //var tempName:String = String(newProfilePics[i].valueForKey("username")! as NSString)
+            //var tempPic:String = String(newProfilePics[i].valueForKey("picture")! as NSString)
+            
+            var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
+            var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
+            
+            
+            println("both values --> \(tempName!.firstObject! as String)")
+            println("both values --> \(tempPic!.firstObject! as String)")
+        }
+        
+        
+        //println("new profile pics name -- >\(newProfilePics[0])")
+        
+        
     
         var subViews = callingViewMain!.subviews as Array<UIView>
         
@@ -88,12 +114,22 @@ class HelperClassOfProfilePics: NSObject {
             var y = Double(cgpointToDoubleConversionForY) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(newProfilePics.count))
         
             
-            
+            /*
             var tempName:String = newProfilePics[i].objectForKey("username") as NSString
             var tempPic:String = newProfilePics[i].objectForKey("picture") as NSString
+            
+            
+            
 
             self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i, userNameString:tempName)
-
+            */
+            //var tempName:String = newProfilePics[i].valueForKey("username")!
+            //var tempPic:String = newProfilePics[i].valueForKey("picture")!
+            
+            var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
+            var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
+            
+            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic!.firstObject! as String, selfTag: i, userNameString:tempName!.firstObject! as String)
         }
 
     }

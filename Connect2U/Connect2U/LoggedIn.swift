@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonClicked, RequestChatDelegate{
+class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -81,6 +81,8 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         // setting up the current user info //
         self.settingUpTheUserInfo()
+        
+        beaconGatherData.delegate = self
         
         //locationData.delegate = self
         chatRequest.delegate = self
@@ -285,7 +287,11 @@ class LoggedIn: UIViewController, SideBarDelegate, ReturnInfo, ReturnWithPersonC
         
         tempArrayPassedIn = users
         
-        println("update in here \(tempArrayPassedIn)")
+
+        
+        println("update in here \(tempArrayPassedIn?)")
+        //println("\n \n super temp array \(superTempArray?)")
+        
         
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(tempArrayPassedIn!)

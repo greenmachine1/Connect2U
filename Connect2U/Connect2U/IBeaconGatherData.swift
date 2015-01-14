@@ -11,6 +11,15 @@ import CoreLocation
 import CoreBluetooth
 import Parse
 
+@objc protocol IBeaconInfo{
+   
+   // ** returns an array of all the users ** //
+   func returnAllUsers(users:Array<AnyObject>)
+   
+   func returnLocationData(locationString:String)
+   
+}
+
 class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     
     var beaconRegion:CLBeaconRegion = CLBeaconRegion()
@@ -21,7 +30,10 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     
    
    var tempBeaconArray:Array<AnyObject> = []
-    
+   var finalArray:Array<AnyObject> = []
+   
+   var delegate:IBeaconInfo?
+   
     override init(){
         super.init()
         
@@ -137,12 +149,11 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     // comparing two arrays
     func comparisonOfArrays(inComingObjects:AnyObject){
       
-      println("whats coming in! == \(inComingObjects)")
-      
       var inComingArrayArray:Array = Array<AnyObject>()
       inComingArrayArray = inComingObjects as Array
       
 
+   
       if(tempBeaconArray.isEmpty){
          
          tempBeaconArray = inComingArrayArray
@@ -154,305 +165,100 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
             
             //send to server
             println("initial array sent to server ")
+            self.lookUpUsersByArray(tempBeaconArray)
          }
       
       }
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /*
-      for (index, elements) in enumerate(inComingArrayArray){
+      // something has changed in the way of how large the array is ...
+   
+      if((tempBeaconArray.count > inComingArrayArray.count) || (tempBeaconArray.count < inComingArrayArray.count)){
          
-         for(_index, _elements) in enumerate(tempBeaconArray){
+         println("somethings changed and therefor the array is different")
+         tempBeaconArray = inComingArrayArray
+         self.lookUpUsersByArray(tempBeaconArray)
+      
+      // if thats not the case, we can assume they are the same size... //
+      }else{
+
+         
+         // this only gets called if there are the same amount of objects that get replaced //
+         // by the same number of objects.... this will hardly ever take place, at least the else //
+         // statement that is.
+         for(index, element) in enumerate(tempBeaconArray){
             
-            if(_elements.valueForKey("major")!.isEqual(elements.valueForKey("major")!)){
+            for(_index, _element) in enumerate(inComingArrayArray){
                
-               println("equal and stuff")
-            }else{
-               
-               println("not equal")
-               tempBeaconArray = inComingArrayArray
+               if((element.objectForKey("major")?.isEqual(_element.objectForKey("major"))) != nil){
+                  
+               }else{
+                  
+                  println("things changed")
+                  tempBeaconArray.insert(inComingArrayArray[_index], atIndex: index)
+                  
+                  self.lookUpUsersByArray(tempBeaconArray)
+               }
             }
-            
-            
          }
-         
       }
-      */
       
       
-      
-      
-      
-      
-      
-      
-      /*
-      for (index, elements) in enumerate(inComingArrayArray){
-         
-         var majorNumber: AnyObject! = elements.objectForKey("major")
-         var minorNumber: AnyObject! = elements.objectForKey("minor")
-         
-         println("major \(majorNumber), minor \(minorNumber)")
-         
-         for (_index, _elements) in enumerate(tempBeaconArray){
-            
-            var _majorNumber: AnyObject! = _elements.objectForKey("major")
-            var _minorNumber: AnyObject! = _elements.objectForKey("minor")
-            
-            if((_majorNumber as Int == majorNumber as Int) && (_minorNumber as Int == _minorNumber as Int)){
-               
-               println("\n they are the same number\n ")
-            }else{
-               
-               println("\n \n\n \n \n \n \n \n They arent the same number\n \n \n \n \n \n \n \n \n ")
-               tempBeaconArray = inComingArrayArray
-               
-               println("temp array : \(tempBeaconArray)")
-               
-            }
-            
-         }
-         
-         
-      }
-      */
-      
-      
-      
-      
-      /*
-      var inComingArrayArray:Array = Array<AnyObject>()
-      inComingArrayArray = inComingArray as Array
-      
+      // seeing if the temp array is empty //
       if(tempBeaconArray.isEmpty){
          
-         tempBeaconArray = inComingArrayArray
+         self.delegate?.returnAllUsers(Array<AnyObject>())
       }
-      
-      for (index, element) in enumerate(inComingArrayArray){
-         
-         println("\n \n \(element)\n \n")
-         
-         if(element.isEqual(tempBeaconArray[0])){
-            
-            println("they are the same")
-         }else{
-            
-            println("they are not the same")
-         }
-         
-      }
-      */
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /*
-      if(tempBeaconArray.count != inComingArrayArray.count){
-         
-         tempBeaconArray = inComingArrayArray
-         
-         println("\n \n not equal and should be sent to the server\n \n \n ")
-         
-         for (index, elements) in enumerate(tempBeaconArray){
-            
-            println("elements --> \(elements.major), \(elements.minor)")
-            
-            var majorNumber:Int = elements.major as Int
-            var minorNumber:Int = elements.minor as Int
-            
-            self.lookUpUserByMajorAndMinor(majorNumber, minorNumber: minorNumber)
-            
-         }
-      }
-      
-      
-      for (index,elements) in enumerate(inComingArrayArray){
-         
-         if((!(tempBeaconArray[index].major == elements.major)) || (inComingArrayArray[index].proximity == CLProximity.Unknown)){
-            
-            tempBeaconArray = inComingArrayArray
-            
-            println("\n \n not equal and should be sent to the server\n \n \n ")
-            
-         }else{
-            
-            println("equal")
-            
-         }
-         
-      }
-      
-      println("tempBeaconArray -- > \(tempBeaconArray)")
-      */
+   }
+
+   
+   
+   
+
+   
+   
+   
+   
+   
+   // making the call to the parse server to look up and bring back user info //
+   func lookUpUsersByArray(arrayOfMajorAndMinorNumbers:Array<AnyObject>){
       
 
+      var tempObject:Array<AnyObject> = []
+      var tempArrayLength = 0
       
-      /*
-      tempBeaconArray.removeAll(keepCapacity: false)
+      
+      for(var i = 0; i < arrayOfMajorAndMinorNumbers.count; i++){
          
-      for (index, element) in enumerate(inComingArrayArray){
-            
-         if(element.proximity != CLProximity.Unknown){
-            
-            tempBeaconArray.insert(element, atIndex: index)
-            
-         }
-            
-      }
-      
-      if(tempBeaconArray.count != 0){
+         var tempMajor:Int = arrayOfMajorAndMinorNumbers[i].valueForKey("major") as Int
+         var tempMinor:Int = arrayOfMajorAndMinorNumbers[i].valueForKey("minor") as Int
          
-         println("temp beacon array -- > \(tempBeaconArray)")
-         println("count in that array --> \(tempBeaconArray.count)")
+         println("major and minor \(tempMajor), \(tempMinor)")
          
-      }else{
+         PFCloud.callFunctionInBackground("findUsersIBeacon", withParameters: ["major":tempMajor, "minor": tempMinor]) { (results:AnyObject!, error:NSError!) -> Void in
          
-         println("the array is empty")
-         
-      }
-      */
-         
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /*
-      for(var i = 0; i < inComingArrayArray.count; i++){
-         
-         if(!(inComingArrayArray[i].proximity == CLProximity.Unknown)){
-            
-            tempBeaconArray.removeAll(keepCapacity: false)
-            
-            tempBeaconArray.insert(inComingArrayArray[i], atIndex: i)
-            
-         }else{
-            
-            tempBeaconArray.removeAtIndex(i)
-            break
-         }
-      }
-      
-      println("array count --> \(tempBeaconArray.count)")
-      */
-      
-      
-      /*
-      for(var j = 0; j < inComingArrayArray.count; j++){
-         
-         if(inComingArrayArray[j].proximity == CLProximity.Unknown){
-            
-            
-            println("lost the beacon --> \(inComingArrayArray[j])")
-            
-            for(var k = 0; k < tempBeaconArray.count; k++){
-               
-               if(tempBeaconArray[k].isEqual(inComingArrayArray[k])){
-                  
-                  println("equal and should be removed")
-                  
-               }
-            }
-         }
-         
-      }
-      */
-      
-      //println("temp beacon array : \(tempBeaconArray)")
-      /*
-      for itemsInInComingArray in inComingArrayArray{
-         
-         // if the proximity has gone to unknown, that beacon has //
-         // gone out of range and therefor should be removed from //
-         // the main array //
-         if(itemsInInComingArray.proximity == CLProximity.Unknown){
-         
-            println("lost the beacon --> out of range with --> \(itemsInInComingArray)")
-            
-            /*
-            for(var i = 0; i < tempBeaconArray.count; i++){
-               
-               if(tempBeaconArray[i].isEqual(itemsInInComingArray)){
-                  
-                  println("same object")
-                  //tempBeaconArray.removeAtIndex(i)
-                  
-               }
-               
-            }
-            */
-            
-            
-         }
-         
-      }
-      
-      //println("temp beacon array \(tempBeaconArray)")
-
-      */
-    }
-
-    
-    
-    
-    
-    // looking up the user by major and minor values //
-    func lookUpUserByMajorAndMinor(majorNumber:Int, minorNumber:Int){
-        
-        println("this is in the function \(majorNumber), \(minorNumber)")
-        
-        
-        PFCloud.callFunctionInBackground("findUsersIBeacon", withParameters: ["major":majorNumber,"minor":minorNumber]) { (results:AnyObject!, error:NSError!) -> Void in
-            
             if(error == nil){
-                
-                println("results are in! : \(results.description)")
-                
-            }
             
-        }
-        
-        
-    }
+               tempObject.append(results)
+               
+
+               //println("temp Object -->\(tempObject)")
+               self.delegate?.returnAllUsers(tempObject)
+            
+            }else{
+            
+               println(error.description)
+            
+            }
+         
+         }
+      }
+      
+      println("array is done loading")
+
+   }
+   
+
 
 }
 
