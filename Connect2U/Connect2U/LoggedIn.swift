@@ -212,6 +212,21 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // gets called when you click on a persons profile //
     func returnPersonClicked(person: AnyObject) {
         
@@ -219,8 +234,16 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
 
         self.showAlert()
         
-        userClickedOn = person as PFUser
+        userClickedOn = person.firstObject as PFUser
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -383,9 +406,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         
             var modifiedAlertString:String?
-        
-        
-            
+    
             modifiedAlertString = "Do you wish to chat or view profile?"
             
         

@@ -55,8 +55,6 @@ class HelperClassOfProfilePics: NSObject {
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
-        //println("previous people : \(previousPeopleArray!)")
-        
         println("new profile pics--- > \(newProfilePics)")
         println("new Profile pics! \(newProfilePics.count)")
         
@@ -113,18 +111,6 @@ class HelperClassOfProfilePics: NSObject {
             var x = Double(cgpointToDoubleConversionForX) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(newProfilePics.count))
             var y = Double(cgpointToDoubleConversionForY) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(newProfilePics.count))
         
-            
-            /*
-            var tempName:String = newProfilePics[i].objectForKey("username") as NSString
-            var tempPic:String = newProfilePics[i].objectForKey("picture") as NSString
-            
-            
-            
-
-            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic, selfTag: i, userNameString:tempName)
-            */
-            //var tempName:String = newProfilePics[i].valueForKey("username")!
-            //var tempPic:String = newProfilePics[i].valueForKey("picture")!
             
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
             var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
@@ -215,12 +201,16 @@ class HelperClassOfProfilePics: NSObject {
     
     
     
+    
+    
+    
+    
     func profileClicked(sender:UIButton){
         
         if(arrayPassedInFromMainClass != nil){
             
             //println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
-            println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
+            println(arrayPassedInFromMainClass![sender.tag].valueForKey("username")!)
         }
         
         

@@ -48,11 +48,13 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     
     func stopRecieving(){
         
-        var tempBeacon:CLBeaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifierString)
+         var tempBeacon:CLBeaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifierString)
         
-        self.locationManagerThing.stopRangingBeaconsInRegion(tempBeacon)
+         self.locationManagerThing.stopRangingBeaconsInRegion(tempBeacon)
         
-        tempBeaconArray.removeAll(keepCapacity: false)
+         tempBeaconArray.removeAll(keepCapacity: false)
+      
+         self.delegate?.returnAllUsers(Array<AnyObject>())
     }
     
     

@@ -88,6 +88,10 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
         
         
         
+        
+        
+        
+        
         PFCloud.callFunctionInBackground("requestToChat", withParameters: ["toUser":self._toUser!.objectId, "fromUser":currentUserDictionary]) { (returnInfo:AnyObject!, error:NSError!) -> Void in
             
             // sent successfully //
@@ -102,6 +106,8 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
         }
         
     }
+    
+    
     
     
     
@@ -139,10 +145,6 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     
     // tells the sender that its ok to chat! //
     func sendOutTheOkToChat(isOk:Bool, toUser:AnyObject){
-        
-        
-
-        
         
         if(toUser.objectForKey("userInfo") != nil){
             

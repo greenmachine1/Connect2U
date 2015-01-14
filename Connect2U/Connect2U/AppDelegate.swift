@@ -24,9 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var userNotificationTypes:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
         
         var settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes:userNotificationTypes , categories: nil)
-        
-        
-        println("need to register for user notifications")
+
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
