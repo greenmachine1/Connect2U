@@ -52,24 +52,55 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
 
         
-        
         if(personPassedIn != nil){
             
-            var personPassed: AnyObject? = personPassedIn!.valueForKey("userInfo")
-            if(personPassed != nil){
-
-                personName = personPassed!.objectForKey("username") as? String
-                personId = personPassed!.objectForKey("objectId")
-                println(personName)
+            if(personPassedIn!.valueForKey("userInfo") != nil){
                 
+                var personPassed: AnyObject? = personPassedIn!.valueForKey("userInfo")
+                
+                var secondLevel: AnyObject? = personPassed?.objectForKey("userInfo")
+                
+                println(secondLevel!)
+                
+                personName = secondLevel!.valueForKey("username") as? String
+                personId = secondLevel!.valueForKey("objectId")
+                
+                println(personName!)
+                
+                println(personId!)
                 
             }else{
+                
+                println("in here --> this is something ")
+                
+                if(personPassedIn!.valueForKey("username") != nil){
+                    
+                    println(personPassedIn!)
+                    personName = personPassedIn!.valueForKey("username") as? String
+                    println(personName!)
+                    personId = personPassedIn!.objectId
+                    println(personId!)
+                }else{
+                    
+                    // there was an error in the information provided //
+                    println("error in the information provided")
+                    
+                    var alert:UIAlertController = UIAlertController(title: "Sorry, there was an error", message: "Internal server error.  Please try again." , preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // if there was an error, we need to exit out and try again //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                
+                    
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
 
-                personName = personPassedIn!.valueForKey("username") as? String
-                println(personName)
-                personId = personPassedIn!.objectId
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
             }
+            
         }
+        
         
         
     
@@ -199,9 +230,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // sending off to send out the text message to the user //
         sendText.sendTextMessage(mainInputField!.text, toUser: self.personId!)
+        
         if(mainArrayFullOfConversation != nil){
             
             mainTableView.reloadData()
+            
             
             if mainTableView.contentSize.height > mainTableView.frame.size.height
             {
@@ -320,52 +353,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
-        /*
-        if((indexPath.row % 2) == 0){
 
-            let cell = tableView.dequeueReusableCellWithIdentifier("cellLeft", forIndexPath: indexPath) as ChatLeftCell
-            
-            cell.backgroundColor = greenColor
-            cell.layer.cornerRadius = 3.0
-            cell.leftLabel.text = "Cory @ 18:10pm"
-            cell.leftLabel.textColor = darkGreenColor
-            cell.leftLabel.backgroundColor = greenColor
-            cell.leftLabel.layer.cornerRadius = 3.0
-            cell.leftLabel.clipsToBounds = true
-            cell.dataLabel.textColor = darkGreenColor
-            cell.dataLabel.backgroundColor = greenColor
-            cell.dataLabel.text = "Hey, hows it going?"
-            cell.dataLabel.layer.cornerRadius = 3.0
-            cell.dataLabel.clipsToBounds = true
-
-            
-        
-            return cell
-            
-        }else{
-            
-            //let cell = tableView.dequeueReusableCellWithIdentifier("cellRight") as RightChatCell
-            let cell = tableView.dequeueReusableCellWithIdentifier("cellRight", forIndexPath: indexPath) as RightChatCell
-            
-            
-            cell.backgroundColor = darkGreenColor
-            cell.layer.cornerRadius = 3.0
-            cell.rightLabel.text = "Kevin @ 18:11pm"
-            cell.rightLabel.textColor = whiteColor
-            cell.rightLabel.backgroundColor = darkGreenColor
-            cell.rightLabel.layer.cornerRadius = 3.0
-            cell.rightLabel.clipsToBounds = true
-            cell.dataLabel.textColor = whiteColor
-            cell.dataLabel.backgroundColor = darkGreenColor
-            cell.dataLabel.text = "Im pretty good, how are you?"
-            cell.dataLabel.layer.cornerRadius = 3.0
-            cell.dataLabel.clipsToBounds = true
-
-            
-            
-            return cell
-        }
-        */
     }
 
     

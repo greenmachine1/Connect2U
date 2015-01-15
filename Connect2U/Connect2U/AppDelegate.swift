@@ -63,6 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        // telling the iBeaconGatherData that it needs to stop recieving data //
+        // when stopping the app //
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.postNotificationName("stopiBeacon", object: nil)
     }
     
     
@@ -100,6 +105,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
         println("recieved push notification! \(userInfo.description)")
+        
+        println("count and stuff!!! \(userInfo.count)")
+        
+        
+        for(var i = 0; i < userInfo.count; i++){
+            
+            if(userInfo.keys.array[i].isEqual("request")){
+                
+                // 1 represents this is a chat request //
+                if(userInfo.values.array[i].isEqual(1)){
+                    
+                    println("request to chat coming in!")
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
+                
+                // 0 is something else //
+                }else{
+                    
+                    
+                    
+                }
+                
+            }else if(userInfo.keys.array[i].isEqual("responseToRequest")){
+                
+                println("response to chat came in")
+                
+                let notificationCenter = NSNotificationCenter.defaultCenter()
+                notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
+                
+                /*
+                if(userInfo.values.array[i].isEqual(1)){
+                    
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
+                    
+                }else{
+                    
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
+                    
+                }
+                */
+            }
+            
+        }
+        
+        /*
+        var userCount = userInfo.values.array.count
+        
+        for(var i = 0; i < userCount; i++){
+            
+            println(userInfo.keys.array[i])
+            if(userInfo.keys.array[i].isEqual("request")){
+                
+                // sent over a chat request //
+                if(userInfo.values.array[i].isEqual(1)){
+                    
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
+                    
+                    println("should display a popup asking what you wnat to do next")
+                    
+                    
+                // this is equal to the user sending over a chat request //
+                }else{
+                    
+                    
+                }
+                
+             // checking for text send over //
+            }else if(userInfo.keys.array[i].isEqual("text")){
+                
+                println("text came in!")
+                
+            }
+            
+        }
+
+        */
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
     
         // trick for the silent updates -- if the content available is set to 1 and you check for it //
         // as being true, you can not pass it to the handlePush which is where the vibrate is coming from //
@@ -126,9 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     
                 }
-                
             
-                
                 if(booleanValue == false){
                     
                     let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -171,7 +270,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if(didRecieveRequestForChat == 0){
                 
-                
                 // request for chat //
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.postNotificationName("requestToChat", object:self, userInfo:userInfo)
@@ -189,7 +287,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         
         }
+
+
+
+        */
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

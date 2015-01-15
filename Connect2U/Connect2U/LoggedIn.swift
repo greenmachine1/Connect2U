@@ -180,6 +180,8 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     // the push notification sector of gather info //
     func pushNotification(sender:NSNotification){
         
+        
+        
         //locationData.pushNotification()
         
     }
@@ -193,6 +195,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         println("\n \n any user : \(user) \n \n ")
         
+        
         // need to send the user to the chat page if the response is yes //
         // will need to come up with a pop up saying the other user doesnt //
         // want to chat at this time if the other chooses cancel //
@@ -200,15 +203,20 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
             // make a popup that tells the user that they didnt want to chat
             
+            var alert:UIAlertController = UIAlertController(title: "Chat Denied", message: "Denied Chat!" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // cancel button simply exits out and does nothing //
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            
         }else if(wantsToChatYesOrNo == true){
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            
-            
-            
+    
             // sending over the userClickedOn originally //
-            chatViewController.personPassedIn = userClickedOn
+            chatViewController.personPassedIn = user
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
             
@@ -422,6 +430,16 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // this shows the alert giving the person the option to cancel, chat, or view profile //
     // about the person needs to change //
     func showAlert(){
@@ -467,16 +485,46 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             // should send out a notification to the other person asking if they want to chat or not //
             // the chat body //
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
-            
+
+                
+                // setting up a dictionary of all the info to send over //
+                var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+                    "age":PFUser.currentUser().objectForKey("age")!,
+                    "gender":PFUser.currentUser().objectForKey("gender")!,
+                    "interests":PFUser.currentUser().objectForKey("interests")!,
+                    "picture":PFUser.currentUser().objectForKey("picture")!,
+                    "username":PFUser.currentUser().objectForKey("username")!]
+                
+                
+
                 
                 
                 
                 // basically needs to send over an alert saying that 'You' want to chat with them and //
                 // the can either click ok or view profile //
-                self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
+                //self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
+                //var dataSend = ["request":true, "person": self.userClickedOn.username]
+                var dataSend = ["userInfo": currentUserDictionary, "request":true]
                 
-            
-            
+                var query:PFQuery = PFInstallation.query()
+                query.whereKey("user", equalTo: self.userClickedOn)
+                
+                var push:PFPush = PFPush()
+                push.setQuery(query)
+                push.setData(dataSend)
+                //push.setMessage("RequestToChat")
+                push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    
+                    if(success == true){
+                        
+                        println("success!")
+                        
+                    }else{
+                        
+                        println("error")
+                    }
+                })
+                
             }))
         
         
@@ -499,7 +547,23 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     // call back from when the user recieves a request to chat //
     func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
         
-        println("anyobject : \(personalInfo.description)")
+        var objectId:AnyObject?
+        
+        if(personalInfo.objectForKey("userInfo") != nil){
+            
+            var firstObject:AnyObject? = personalInfo.objectForKey("userInfo")
+            
+            if(firstObject?.objectForKey("objectId") != nil){
+                
+                objectId = firstObject?.objectForKey("objectId")!
+                
+                println("object id -- > \(objectId!)")
+                
+            }
+        }
+        
+        
+        //println("anyobject : \(personalInfo.description)")
         
         // cancel //
         if(userClickedOnChatRequest == 0){
@@ -508,11 +572,56 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
             
             // tells the sender that its not ok to chat with this person //
-            chatRequest.sendOutTheOkToChat(false, toUser:personalInfo)
+            //chatRequest.sendOutTheOkToChat(false, toUser:personalInfo)
+            
+            
+            // setting up a dictionary of all the info to send over //
+            var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+                "age":PFUser.currentUser().objectForKey("age")!,
+                "gender":PFUser.currentUser().objectForKey("gender")!,
+                "interests":PFUser.currentUser().objectForKey("interests")!,
+                "picture":PFUser.currentUser().objectForKey("picture")!,
+                "username":PFUser.currentUser().objectForKey("username")!]
             
             
             
             
+            
+            
+            // request denied!! //
+            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":false]
+            
+            
+            
+            var query:PFQuery = PFUser.query()
+            query.whereKey("objectId", equalTo: objectId!)
+            query.whereKey("signedIn", equalTo: true)
+            
+            
+            
+            var pushQuery:PFQuery = PFInstallation.query()
+            pushQuery.whereKeyExists("user")
+            pushQuery.whereKey("user", matchesQuery: query)
+            
+            
+            
+            var push:PFPush = PFPush()
+            push.setQuery(pushQuery)
+            push.setData(dataSend)
+            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                
+                if(success == true){
+                    
+                    println("success!")
+                    
+                }else{
+                    
+                    println("error")
+                }
+            })
+            
+
+
         // view profile //
         }else if(userClickedOnChatRequest == 1){
             
@@ -525,14 +634,62 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            chatViewController.personPassedIn = personalInfo
+            chatViewController.personPassedIn = self.userClickedOn
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
             
             
             // need to send out a notification to the other user that they have accepted the request and //
             // should transition to the chat session //
-            chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
+            //chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
+            
+            // setting up a dictionary of all the info to send over //
+            var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+                "age":PFUser.currentUser().objectForKey("age")!,
+                "gender":PFUser.currentUser().objectForKey("gender")!,
+                "interests":PFUser.currentUser().objectForKey("interests")!,
+                "picture":PFUser.currentUser().objectForKey("picture")!,
+                "username":PFUser.currentUser().objectForKey("username")!]
+            
+            
+            
+            
+            
+            
+            // basically needs to send over an alert saying that 'You' want to chat with them and //
+            // the can either click ok or view profile //
+            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":true]
+            
+            var query:PFQuery = PFUser.query()
+            query.whereKey("objectId", equalTo: objectId!)
+            query.whereKey("signedIn", equalTo: true)
+            
+            
+            var pushQuery:PFQuery = PFInstallation.query()
+            pushQuery.whereKeyExists("user")
+            pushQuery.whereKey("user", matchesQuery: query)
+            
+            
+            var push:PFPush = PFPush()
+            push.setQuery(pushQuery)
+            push.setData(dataSend)
+            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                
+                if(success == true){
+                    
+                    println("success!")
+                    
+                }else{
+                    
+                    println("error")
+                }
+            })
+            
+            
+            
+            
+            
+            
             
             
         }

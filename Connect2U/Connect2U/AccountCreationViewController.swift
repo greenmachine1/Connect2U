@@ -213,10 +213,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         user["interests"] = ["biking","swimming","joggin","hair"]
         user["picture"] = "face3.png"
         user["age"] = 29
-        user["long"] = 0.0
-        user["lat"] = 0.0
         user["signedIn"] = false
-        user["literalLocation"] = ""
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
             // successful log in //
@@ -241,11 +238,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                         
                     }
                 })
-                
-                
-                // log in under a new user was a success!! //
-                //self.setUpMessage("Success!", message: "Do you want to set up user info?", cameFromGoodLogin: true)
-                
+            
             }else{
                 
                 // something happened //

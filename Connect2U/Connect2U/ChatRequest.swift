@@ -33,8 +33,13 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestChat:", name: "requestToChat", object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "responseToTheRequestToChat:", name: "responseToChat", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "responseToTheRequestToChat:", name: "responseToRequest", object: nil)
     }
+    
+    
+    
+    
+    
     
     
     
@@ -42,8 +47,34 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // method used to send back to LoggedIn, the other users response to chat //
     func responseToTheRequestToChat(sender:NSNotification){
         
-        println("\n \n \n \n \n \(sender)\n \n \n \n \n \n \n \n \n")
+        println("\n \n \n \n \n \(sender.description)\n \n \n \n \n \n \n \n \n")
         
+        
+        var requestToChatVariable = sender.userInfo!.values.array.count
+        
+        println(requestToChatVariable)
+        
+        for(var i = 0; i < requestToChatVariable; i++){
+            
+            if(sender.userInfo!.keys.array[i].isEqual("responseToRequest")){
+                
+                if(sender.userInfo!.values.array[i].isEqual(1)){
+                    
+                    println("blah blah --> true")
+                    
+                    self.delegate?.returnedUserResponseToChat(true, user: sender)
+                    
+                }else{
+                    
+                    println("blah blah --> false")
+                    
+                    self.delegate?.returnedUserResponseToChat(false, user: sender)
+                }
+            }
+            
+        }
+        
+        /*
         var requestToChatVariable:Int = sender.userInfo!.values.array.count
         if(requestToChatVariable != 0){
             
@@ -62,6 +93,8 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
                 }
             }
         }
+
+        */
     }
     
     
@@ -121,6 +154,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
                 
         println("notification mofo! : \(notification.description)")
         
+            
             var firstLevel:AnyObject! = notification.valueForKey("userInfo")!.objectForKey("userInfo")!
             var nameString:AnyObject! = firstLevel.objectForKey("username")
         

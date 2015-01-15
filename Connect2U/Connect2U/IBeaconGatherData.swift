@@ -37,8 +37,8 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     override init(){
         super.init()
         
-        locationManagerThing.delegate = self
-        locationManagerThing.requestWhenInUseAuthorization()
+      locationManagerThing.delegate = self
+      locationManagerThing.requestWhenInUseAuthorization()
       
       NSNotificationCenter.defaultCenter().addObserver(self, selector: "stopServicesFromAppDelegate:", name: "stopiBeacon", object: nil)
       
@@ -93,9 +93,15 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
         if(!(self._beaconRegion.isEqual(nil))){
             
             self.locationManagerThing.startMonitoringForRegion(self._beaconRegion)
-        }
+         
+            self.locationManager(self.locationManagerThing, didStartMonitoringForRegion: self._beaconRegion)
+        }else{
+         
+         println("object is nil")
+         
+      }
         
-        self.locationManager(self.locationManagerThing, didStartMonitoringForRegion: self._beaconRegion)
+      
     }
     
     

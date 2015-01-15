@@ -59,6 +59,7 @@ class FriendsTableViewController: UITableViewController {
             cell!.backgroundColor = UIColor.clearColor()
             
             //cell!.textLabel.textColor = UIColor.blackColor()
+            cell!.textLabel!.textColor = UIColor.blackColor()
         
             // making the selected frame //
             let selected:UIView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: cell!.frame.size.height, height: cell!.frame.size.width))
@@ -74,11 +75,11 @@ class FriendsTableViewController: UITableViewController {
         // filling in the text with either friends or request data //
         if(indexPath.section == 0){
             
-            //cell!.textLabel.text = friendsData[indexPath.row]
+            cell!.textLabel!.text = friendsData[indexPath.row]
         }
         if(indexPath.section == 1){
             
-            //cell!.textLabel.text = requestsData[indexPath.row]
+            cell!.textLabel!.text = requestsData[indexPath.row]
         }
         
         return cell!
