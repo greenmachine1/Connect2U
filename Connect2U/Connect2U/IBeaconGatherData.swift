@@ -39,9 +39,26 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
         
         locationManagerThing.delegate = self
         locationManagerThing.requestWhenInUseAuthorization()
+      
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: "stopServicesFromAppDelegate:", name: "stopiBeacon", object: nil)
+      
+
+      
+      
         
 
     }
+   
+   func stopServicesFromAppDelegate(notification:NSNotification){
+      
+      println("This got called")
+      
+      // stop recieving notifications //
+      self.stopRecieving()
+      
+   }
+   
+   
 
 
 
@@ -88,8 +105,6 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
         
         if(!(self._beaconRegion.isEqual(nil))){
             
-            
-            
             self.locationManagerThing.startRangingBeaconsInRegion(self._beaconRegion)
         }
         
@@ -100,17 +115,21 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
         
         println(region.description)
-        
+      
+      if(!(self._beaconRegion.isEqual(nil))){
         
         self.locationManagerThing.startRangingBeaconsInRegion(self._beaconRegion)
-        
+      }
     }
     
     
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
+      
+      if(!(self._beaconRegion.isEqual(nil))){
         
         self.locationManagerThing.stopRangingBeaconsInRegion(self._beaconRegion)
+      }
     }
     
     

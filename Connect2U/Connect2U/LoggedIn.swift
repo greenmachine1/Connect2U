@@ -95,6 +95,11 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         
         
+        // coming back into the forground
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "startBackUpServicesFromAppDelegate:", name: "startiBeacon", object: nil)
+        
+        
+        
         
         
 
@@ -134,6 +139,23 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         helperClass.delegate = self
 
+    }
+    
+    func startBackUpServicesFromAppDelegate(notification:NSNotification){
+        
+        println("start up services again")
+        
+        if(tempBoolToggleForBroadCast == true){
+            
+            println("you are still on")
+            
+            beaconGatherData.initRegion()
+            
+        }else{
+            
+            println("you are off")
+            
+        }
     }
     
     
