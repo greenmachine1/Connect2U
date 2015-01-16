@@ -212,6 +212,8 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
         }else if(wantsToChatYesOrNo == true){
             
+            println("in here! ith!!!!!!")
+            
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
     
@@ -487,6 +489,10 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
 
                 
+                println("\n \n current user information.  I have a feeling that the PFUser is getting currupted to some extent --> \(PFUser.currentUser().description)\n \n")
+                
+                
+                
                 // setting up a dictionary of all the info to send over //
                 var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
                     "age":PFUser.currentUser().objectForKey("age")!,
@@ -547,6 +553,9 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     // call back from when the user recieves a request to chat //
     func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
         
+        println("getting to the bottom of this!! --> \(personalInfo.description)")
+        
+        
         var objectId:AnyObject?
         
         if(personalInfo.objectForKey("userInfo") != nil){
@@ -560,6 +569,9 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
                 println("object id -- > \(objectId!)")
                 
             }
+        }else{
+            
+            println("different data set coming in ")
         }
         
         
@@ -634,7 +646,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            chatViewController.personPassedIn = self.userClickedOn
+            chatViewController.personPassedIn = personalInfo
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
             
@@ -739,8 +751,9 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
                     // calls on the updateLocations method which then updates //
                     // the return all users method //
                     //self.locationData.updateLocations(false)
-                    self.beaconTransmitData.transmitBeacon(tempMajor, minorNumber: tempMinor)
                     self.beaconGatherData.initRegion()
+                    self.beaconTransmitData.transmitBeacon(tempMajor, minorNumber: tempMinor)
+                    
                     
                     
 

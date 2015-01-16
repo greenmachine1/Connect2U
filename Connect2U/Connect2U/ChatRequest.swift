@@ -162,6 +162,9 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             // getting the user info into this variable //
             // this isnt the problem //
             currentUserInfo = notification.userInfo
+        
+        
+            println("current user info sent in from chat request ---> \(currentUserInfo?.description)")
 
             var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat")
             
@@ -207,6 +210,8 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // alert view asking the user what they would like to do in response to the //
     // request for chat by the other user //
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        println("user info passed in to alertview --> \(self.currentUserInfo!)")
         
         println("clicked! : \(buttonIndex)")
         

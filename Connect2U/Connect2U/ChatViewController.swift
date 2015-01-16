@@ -18,7 +18,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var personPassedIn:AnyObject?
     var personNameChattingWith:PFUser?
-    var sendText = sendTextMessage()
+    //var sendText = sendTextMessage()
     
     var otherPersonId:AnyObject?
     var personId:AnyObject?
@@ -40,7 +40,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.setColors()
 
-        sendText.delegate = self
+        //endText.delegate = self
         mainTableView.delegate = self
         
         
@@ -48,57 +48,46 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // UITableView... this fixed it //
         self.mainTableView.userInteractionEnabled = true
         
-        println("\n \n person passed in \(personPassedIn)")
+        println("\n \n person passed in \(personPassedIn?.description)")
         
 
         
         if(personPassedIn != nil){
             
+            println("in here --> not sure whats going on!")
+            
             if(personPassedIn!.valueForKey("userInfo") != nil){
                 
                 var personPassed: AnyObject? = personPassedIn!.valueForKey("userInfo")
                 
-                var secondLevel: AnyObject? = personPassed?.objectForKey("userInfo")
-                
-                println(secondLevel!)
-                
-                personName = secondLevel!.valueForKey("username") as? String
-                personId = secondLevel!.valueForKey("objectId")
-                
-                println(personName!)
-                
-                println(personId!)
-                
-            }else{
-                
-                println("in here --> this is something ")
-                
-                if(personPassedIn!.valueForKey("username") != nil){
+                if(personPassedIn != nil){
                     
-                    println(personPassedIn!)
-                    personName = personPassedIn!.valueForKey("username") as? String
-                    println(personName!)
-                    personId = personPassedIn!.objectId
-                    println(personId!)
-                }else{
-                    
-                    // there was an error in the information provided //
-                    println("error in the information provided")
-                    
-                    var alert:UIAlertController = UIAlertController(title: "Sorry, there was an error", message: "Internal server error.  Please try again." , preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // if there was an error, we need to exit out and try again //
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                    println("in here still ")
+                    println("person passed in -------- > \(personPassed?)")
                 
                     
-                        self.navigationController?.popViewControllerAnimated(true)
-                        
+                    var secondLevel: AnyObject? = personPassed?.objectForKey("userInfo")
+                    if(secondLevel != nil){
+                
+                        println("in here again..... ---->\(secondLevel?)")
+                        println(secondLevel!)
+                
+                        personName = secondLevel!.valueForKey("username") as? String
+                        personId = secondLevel!.valueForKey("objectId")
+                
+                        println(personName!)
+                
+                        println(personId!)
+                    
+                    }else{
 
-                    self.presentViewController(alert, animated: true, completion: nil)
+                        personName = personPassed!.valueForKey("username") as? String
+                        personId = personPassed!.valueForKey("objectId")
+                        
+                        
+                    }
                 }
-                
             }
-            
         }
         
         
@@ -139,27 +128,66 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
+        // ** when a push notification comes in this gets called ** //
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textMessageRecieved:", name: "textMessage", object:nil)
+    
+        
+    }
+    
+    func textMessageRecieved(object:NSNotification){
+        
+        println("recieved text message and im in the sendTextMessage object : \(object.description)")
+        self.sendTextInfoBack(object)
         
     }
     
     
     
     
-    // where texts come back //
+    // ----- where texts come back -----  //
     // putting the info into a dictionary, then into an array //
     func sendTextInfoBack(textInfo: AnyObject) {
         
         println("this info is in the chat view controller \(textInfo.description)")
         
+        var incomingPersonText:String? = ""
+        var incomingPersonId:String? = ""
+        
+        
         if(!(textInfo.isEqual(nil))){
         
-            var incomingPersonId:String = textInfo.valueForKey("object")!.objectForKey("userInfo") as String
-        
-            var incomingPersonText:String = textInfo.valueForKey("object")!.valueForKey("aps")!.objectForKey("alert") as String
-
-            println("this and that \(incomingPersonId) \(incomingPersonText)")
+            var firstLevel:AnyObject? = textInfo.valueForKey("userInfo")?
             
-            var tempDictionary:[String:String] = [incomingPersonId:incomingPersonText]
+            if(firstLevel != nil){
+                println("first level \(firstLevel?)")
+                
+                var secondLevel:AnyObject? = firstLevel!.valueForKey("message")
+                if(secondLevel != nil){
+                    
+                    var message:String = secondLevel! as String
+                    
+                    println("message --> \(message)")
+                    incomingPersonText = secondLevel! as? String
+                    
+                    var objectIdLevel:AnyObject? = firstLevel!.valueForKey("userInfo")
+                    if(objectIdLevel != nil){
+                        println("in here!")
+                        
+                        println(objectIdLevel)
+                        var objectId:AnyObject? = objectIdLevel?.valueForKey("objectId")
+                        println(objectId)
+                        
+                        incomingPersonId = objectIdLevel!.valueForKey("objectId") as? String
+                    }
+                    
+                }
+                
+            }
+            
+            println("this and that \(incomingPersonText!)")
+            
+            
+            var tempDictionary:[String:String] = [incomingPersonId! as String:incomingPersonText! as String]
             println(tempDictionary)
             
             mainArrayFullOfConversation?.append(tempDictionary)
@@ -175,7 +203,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     mainTableView.setContentOffset(offset, animated: false)
                 }
             }
+            
+
+            
+            
         }
+        
     }
     
     
@@ -189,7 +222,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // removing the observer for text notificaitons //
     override func viewWillDisappear(animated: Bool) {
         
-        sendText.removeNotificationObserver()
+        //sendText.removeNotificationObserver()
     }
     
     
@@ -228,8 +261,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         mainArrayFullOfConversation?.append(tempDictionary)
         
-        // sending off to send out the text message to the user //
-        sendText.sendTextMessage(mainInputField!.text, toUser: self.personId!)
+
+        // sending out a text message to the other user //
+        self.sendTextMessage(mainInputField!.text, toUser: self.personId!)
+        
+        
         
         if(mainArrayFullOfConversation != nil){
             
@@ -244,6 +280,52 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             
         }
+        
+    }
+    
+    
+    func sendTextMessage(text:String, toUser:AnyObject){
+        
+        // setting up a dictionary of all the info to send over //
+        var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+            "age":PFUser.currentUser().objectForKey("age")!,
+            "gender":PFUser.currentUser().objectForKey("gender")!,
+            "interests":PFUser.currentUser().objectForKey("interests")!,
+            "picture":PFUser.currentUser().objectForKey("picture")!,
+            "username":PFUser.currentUser().objectForKey("username")!]
+        
+        
+        
+        
+        
+        
+        // basically needs to send over an alert saying that 'You' want to chat with them and //
+        // the can either click ok or view profile //
+        var dataSend = ["userInfo": currentUserDictionary, "text":true, "message": text]
+        
+        var query:PFQuery = PFUser.query()
+        query.whereKey("objectId", equalTo: toUser)
+        query.whereKey("signedIn", equalTo: true)
+        
+        var pushQuery:PFQuery = PFInstallation.query()
+        pushQuery.whereKeyExists("user")
+        pushQuery.whereKey("user", matchesQuery: query)
+        
+        var push:PFPush = PFPush()
+        push.setQuery(pushQuery)
+        push.setData(dataSend)
+        push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            
+            if(success == true){
+                
+                println("success!")
+                
+            }else{
+                
+                println("error")
+            }
+        })
+        
         
     }
     

@@ -42,7 +42,7 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       
       NSNotificationCenter.defaultCenter().addObserver(self, selector: "stopServicesFromAppDelegate:", name: "stopiBeacon", object: nil)
       
-
+      
       
       
         
@@ -108,6 +108,10 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     
     
     func locationManager(manager: CLLocationManager!, didStartMonitoringForRegion region: CLRegion!) {
+      
+      println(region.description)
+      
+      self._beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifierString)
         
         if(!(self._beaconRegion.isEqual(nil))){
             
@@ -122,6 +126,8 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
         
         println(region.description)
       
+      self._beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifierString)
+      
       if(!(self._beaconRegion.isEqual(nil))){
         
         self.locationManagerThing.startRangingBeaconsInRegion(self._beaconRegion)
@@ -131,6 +137,8 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
     
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
+      
+      self._beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: identifierString)
       
       if(!(self._beaconRegion.isEqual(nil))){
         

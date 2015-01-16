@@ -45,6 +45,7 @@ class IBeaconTransmitData: NSObject, CLLocationManagerDelegate,CBPeripheralManag
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: nil)
         
         
+        
     }
     
     

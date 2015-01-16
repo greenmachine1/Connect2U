@@ -134,19 +134,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let notificationCenter = NSNotificationCenter.defaultCenter()
                 notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
                 
-                /*
+
+            }else{
+                
+                
+                if(userInfo.keys.array[i].isEqual("text")){
+                
                 if(userInfo.values.array[i].isEqual(1)){
                     
-                    let notificationCenter = NSNotificationCenter.defaultCenter()
-                    notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
-                    
-                }else{
+                    println("recieved Text")
                     
                     let notificationCenter = NSNotificationCenter.defaultCenter()
-                    notificationCenter.postNotificationName("responseToRequest", object:self, userInfo:userInfo)
+                    notificationCenter.postNotificationName("textMessage", object:self, userInfo:userInfo)
                     
+                    }
                 }
-                */
+                
+                
             }
             
         }
