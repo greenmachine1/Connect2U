@@ -20,8 +20,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var logInButton: UIButton!
-    @IBOutlet weak var facebookButton: UIButton!
-    @IBOutlet weak var newAccountButton: UIButton!
+    //@IBOutlet weak var facebookButton: UIButton!
+    //@IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var forgotPassword: UIButton!
     
     
@@ -205,9 +205,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func setColors(){
         
         
-        //var loginFrame = logInButton.frame.size
-        var createNewAccountFrame = newAccountButton.frame.size
-        var signInWithFacebookFrame = facebookButton.frame.size
+        var loginFrame = logInButton.frame.size
+        //var createNewAccountFrame = newAccountButton.frame.size
+        //var signInWithFacebookFrame = facebookButton.frame.size
         
         //var navigationBarFrame = self.navigationController?.navigationBar.frame
     
@@ -223,38 +223,54 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         var newColorPalette = ColorPalettes()
         
-        //var cornerRadiusValue:CGFloat = loginFrame.width / 2
+        var cornerRadiusValue:CGFloat = loginFrame.width / 2
         
         // background color //
         self.view.backgroundColor = newColorPalette.lightBlueColor
         
         // color of the navigation controller bar //
-        //self.navigationController?.navigationBarHidden = false
-        //self.navigationController?.navigationBar.barTintColor = newColorPalette.greenColor
-        //self.navigationController?.navigationBar.tintColor = newColorPalette.whiteColor
+        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBar.barTintColor = newColorPalette.lightBlueColor
+        self.navigationController?.navigationBar.tintColor = newColorPalette.whiteColor
         
         // color for the buttons //
-        //logInButton.backgroundColor = newColorPalette.darkGreenColor
-        //logInButton.tintColor = newColorPalette.whiteColor
+        logInButton.backgroundColor = newColorPalette.darkGreenColor
+        logInButton.tintColor = newColorPalette.whiteColor
+        
+        
+        
+        userNameTextField.backgroundColor = newColorPalette.greenColor
+        userNameTextField.textColor = newColorPalette.whiteColor
+        passwordTextField.backgroundColor = newColorPalette.greenColor
+        passwordTextField.textColor = newColorPalette.whiteColor
+        
+        
+        
         //logInButton.layer.cornerRadius = cornerRadiusValue
         //logInButton.clipsToBounds = true
-        logInButton.setBackgroundImage(UIImage(contentsOfFile: "LogIn.png"), forState: UIControlState.Normal)
+        //logInButton.setBackgroundImage(UIImage(contentsOfFile: "LogIn.png"), forState: UIControlState.Normal)
         
         
+        /*
         facebookButton.backgroundColor = newColorPalette.greenColor
         facebookButton.tintColor = newColorPalette.whiteColor
-        //facebookButton.layer.cornerRadius = cornerRadiusValue
+        facebookButton.layer.cornerRadius = cornerRadiusValue
         facebookButton.clipsToBounds = true
         
         newAccountButton.backgroundColor = newColorPalette.greenColor
         newAccountButton.tintColor = newColorPalette.whiteColor
-        //newAccountButton.layer.cornerRadius = cornerRadiusValue
+        newAccountButton.layer.cornerRadius = cornerRadiusValue
         newAccountButton.clipsToBounds = true
         
-        forgotPassword.backgroundColor = newColorPalette.greenColor
+
+
+        */
+        
+        
+        //forgotPassword.backgroundColor = newColorPalette.greenColor
         forgotPassword.tintColor = newColorPalette.whiteColor
         //forgotPassword.layer.cornerRadius = cornerRadiusValue
-        forgotPassword.clipsToBounds = true
+        //forgotPassword.clipsToBounds = true
         
     }
 }
