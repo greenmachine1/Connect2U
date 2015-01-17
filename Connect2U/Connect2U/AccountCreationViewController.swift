@@ -263,12 +263,12 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
     func setColors(){
         
         var colorPalette = ColorPalettes()
-        var cornerRadiusValue:CGFloat = 8.0
+        var cornerRadiusValue:CGFloat = signUpButton.frame.width / 2
         
         self.view.backgroundColor = colorPalette.lightBlueColor
         
         
-        signUpButton.backgroundColor = colorPalette.greenColor
+        signUpButton.backgroundColor = colorPalette.darkGreenColor
         signUpButton.tintColor = colorPalette.whiteColor
         signUpButton.layer.cornerRadius = cornerRadiusValue
         signUpButton.clipsToBounds = true
