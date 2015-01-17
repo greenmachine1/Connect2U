@@ -32,7 +32,12 @@ class AboutThePersonViewController: UIViewController {
 
         self.setColors()
         
-        picture.layer.cornerRadius = 100
+        var cornerRadiusOfPicture = CGFloat(picture.frame.height / 2)
+        
+        println(picture.frame.height)
+        println(picture.frame.width)
+        
+        picture.layer.cornerRadius = cornerRadiusOfPicture
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
