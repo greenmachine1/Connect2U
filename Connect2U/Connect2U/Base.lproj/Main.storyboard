@@ -196,37 +196,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v1m-5y-i4r"/>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfa-0k-776">
-                                <rect key="frame" x="16" y="60" width="113" height="41.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfa-0k-776">
+                                <rect key="frame" x="16" y="84" width="113" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n4F-xT-Ukw"/>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkO-Op-QAT">
-                                <rect key="frame" x="16" y="270" width="113" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51C-0H-K4W">
-                                <rect key="frame" x="16" y="484" width="382" height="232"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51C-0H-K4W">
+                                <rect key="frame" x="16" y="356" width="382" height="360"/>
                                 <color key="backgroundColor" red="1" green="0.36280588837059446" blue="0.1299501790388734" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kqg-cy-V3T"/>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gAm-eC-oiz"/>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="face0.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vxf-St-rpO">
-                                <rect key="frame" x="137" y="60" width="250" height="250"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face0.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vxf-St-rpO">
+                                <rect key="frame" x="148" y="84" width="250" height="252"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Vxf-St-rpO" secondAttribute="height" multiplier="1:1" id="Vin-Ab-wBf"/>
+                                    <constraint firstAttribute="width" secondItem="Vxf-St-rpO" secondAttribute="height" multiplier="125:126" id="yUj-Om-7Ge"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01p-76-aZ8">
-                                <rect key="frame" x="16" y="165" width="113" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01p-76-aZ8">
+                                <rect key="frame" x="16" y="200" width="113" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkO-Op-QAT">
+                                <rect key="frame" x="16" y="315.5" width="113" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -234,18 +230,31 @@
                         </subviews>
                         <color key="backgroundColor" red="0.27953174809999998" green="0.5395162563" blue="0.39368154840000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Vxf-St-rpO" firstAttribute="leading" secondItem="fkO-Op-QAT" secondAttribute="trailing" constant="8" id="Hld-Tf-mE1"/>
-                            <constraint firstItem="kfa-0k-776" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="Y8S-wy-Psu"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="leading" secondItem="01p-76-aZ8" secondAttribute="trailing" constant="19" id="01s-f3-Mxe"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="leading" secondItem="fkO-Op-QAT" secondAttribute="trailing" constant="19" id="43Q-ig-AHG"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="top" secondItem="HQg-dQ-rz7" secondAttribute="bottom" constant="20" id="4bh-SV-71P"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="width" secondItem="9dm-iB-dCj" secondAttribute="height" multiplier="125:368" id="5QP-CC-Pmj"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="trailing" secondItem="9dm-iB-dCj" secondAttribute="trailingMargin" id="BCf-1x-f94"/>
+                            <constraint firstItem="DMF-oC-s0u" firstAttribute="top" secondItem="51C-0H-K4W" secondAttribute="bottom" constant="20" id="C8z-V5-ueu"/>
+                            <constraint firstItem="fkO-Op-QAT" firstAttribute="bottom" secondItem="Vxf-St-rpO" secondAttribute="bottom" id="COv-yn-c0g"/>
+                            <constraint firstItem="51C-0H-K4W" firstAttribute="top" secondItem="Vxf-St-rpO" secondAttribute="bottom" constant="20" id="DJX-N0-DSN"/>
+                            <constraint firstItem="kfa-0k-776" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="JTe-RF-42x"/>
+                            <constraint firstItem="Vxf-St-rpO" firstAttribute="leading" secondItem="kfa-0k-776" secondAttribute="trailing" constant="19" id="Q6s-tM-AJO"/>
+                            <constraint firstItem="fkO-Op-QAT" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="TZM-Yu-US4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vxf-St-rpO" secondAttribute="trailing" constant="10" id="afS-va-WaH"/>
-                            <constraint firstItem="Vxf-St-rpO" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" constant="121" id="drS-DZ-Yrb"/>
-                            <constraint firstItem="Vxf-St-rpO" firstAttribute="top" secondItem="HQg-dQ-rz7" secondAttribute="bottom" constant="20" id="fO2-JB-mhO"/>
-                            <constraint firstItem="fkO-Op-QAT" firstAttribute="bottom" secondItem="Vxf-St-rpO" secondAttribute="bottom" id="hgp-Rb-UDk"/>
-                            <constraint firstItem="01p-76-aZ8" firstAttribute="centerY" secondItem="Vxf-St-rpO" secondAttribute="centerY" id="iRI-oi-O2v"/>
-                            <constraint firstItem="fkO-Op-QAT" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="mZ5-7A-NlJ"/>
-                            <constraint firstItem="kfa-0k-776" firstAttribute="top" secondItem="Vxf-St-rpO" secondAttribute="top" id="rmy-iS-KG6"/>
-                            <constraint firstItem="01p-76-aZ8" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="viZ-hg-zlP"/>
+                            <constraint firstItem="01p-76-aZ8" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="dcC-QS-Asc"/>
+                            <constraint firstItem="51C-0H-K4W" firstAttribute="trailing" secondItem="9dm-iB-dCj" secondAttribute="trailingMargin" id="g6b-tp-Kjq"/>
+                            <constraint firstItem="51C-0H-K4W" firstAttribute="leading" secondItem="9dm-iB-dCj" secondAttribute="leadingMargin" id="hNu-ol-DJt"/>
+                            <constraint firstItem="kfa-0k-776" firstAttribute="top" secondItem="Vxf-St-rpO" secondAttribute="top" id="nOo-Mh-4iD"/>
+                            <constraint firstItem="01p-76-aZ8" firstAttribute="centerY" secondItem="Vxf-St-rpO" secondAttribute="centerY" id="omF-7h-ENO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="afS-va-WaH"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="ageLabel" destination="01p-76-aZ8" id="cca-nO-6aB"/>
