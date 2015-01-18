@@ -74,27 +74,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             
         }
         
-        /*
-        var requestToChatVariable:Int = sender.userInfo!.values.array.count
-        if(requestToChatVariable != 0){
-            
-            for(var i = 0; i < requestToChatVariable; i++){
-                
-                if(sender.userInfo!.keys.array[i].isEqual("requestChat")){
-                    
-                    if(sender.userInfo!.values.array[i] as NSObject == 0){
-                        
-                        self.delegate?.returnedUserResponseToChat(false, user: sender)
-                        
-                    }else if(sender.userInfo!.values.array[i] as NSObject == 1){
-                        
-                        self.delegate?.returnedUserResponseToChat(true, user: sender)
-                    }
-                }
-            }
-        }
 
-        */
     }
     
     
@@ -166,7 +146,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
         
             println("current user info sent in from chat request ---> \(currentUserInfo?.description)")
 
-            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat")
+            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat", "Respond Later")
             
             alert.show()
         
@@ -219,6 +199,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             
             // cancel //
             println("clicked on \(buttonIndex)")
+            println("cancel")
             
             self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
             
@@ -227,13 +208,26 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             
             // view profile //
             println("clicked on \(buttonIndex)")
+            println("view profile")
             
             self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
             
-        }else{
+        }else if(buttonIndex == 2){
             
             // chat //
             println("clicked on \(buttonIndex)")
+            println("chat")
+            
+            self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
+            
+            
+            
+        }else{
+            
+            // respond later //
+            
+            println("clicked on \(buttonIndex)")
+            println("save for later")
             
             self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
             

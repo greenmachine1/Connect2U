@@ -11,7 +11,6 @@
 		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
 		325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */; };
 		325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DEE591A516FFB00CB9782 /* ChatRequest.swift */; };
-		326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */; };
 		329218581A40114B00A57E7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218571A40114B00A57E7D /* StoreKit.framework */; };
 		3292185A1A40119300A57E7D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218591A40119300A57E7D /* libsqlite3.dylib */; };
 		329218611A4012F100A57E7D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3292185C1A4012F100A57E7D /* Bolts.framework */; };
@@ -77,7 +76,6 @@
 		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
 		325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconTransmitData.swift; sourceTree = "<group>"; };
 		325DEE591A516FFB00CB9782 /* ChatRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
-		326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sendTextMessage.swift; sourceTree = "<group>"; };
 		329218571A40114B00A57E7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		329218591A40119300A57E7D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3292185C1A4012F100A57E7D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 		E5BFB5441A246560004C82FA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				326125BE1A4FF90C0077F6E8 /* sendTextMessage.swift */,
 				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
 				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
 				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
@@ -418,7 +415,6 @@
 			files = (
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
-				326125BF1A4FF90C0077F6E8 /* sendTextMessage.swift in Sources */,
 				325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */,
 				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
 				E56F597C1A28676600CFAEC1 /* MainBigCircle.swift in Sources */,

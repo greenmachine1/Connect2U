@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo{
+class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -48,8 +48,8 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
 
     // temporary data //
     //var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
-    var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
-    var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
+    var listOfFriends:[AnyObject] = []
+    var listOfRequests:[AnyObject] = []
     
     var emptyInitialArray:Array<AnyObject> = []
     
@@ -141,6 +141,9 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
 
     }
     
+    
+    
+    
     func startBackUpServicesFromAppDelegate(notification:NSNotification){
         
         println("start up services again")
@@ -176,16 +179,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     
     
     
-    
-    // the push notification sector of gather info //
-    func pushNotification(sender:NSNotification){
-        
-        
-        
-        //locationData.pushNotification()
-        
-    }
-    
+
     
     
     
@@ -215,6 +209,11 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             println("in here! ith!!!!!!")
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+
+            // need to send this data to the chatview controller to update the list of possible //
+            // people to group with minus you and the person you're chatting with //
+            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
             
     
             // sending over the userClickedOn originally //
@@ -286,7 +285,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     // before it was showing up as you transitioned from the sign in screen to this one //
     override func viewDidAppear(animated: Bool) {
         
-        sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests)
+        sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests, fromLoggedInView:true)
         sideBar.delegate = self
         
     }
@@ -350,7 +349,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(tempArrayPassedIn!)
-    
+
     }
 
     
@@ -443,7 +442,6 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     
     
     // this shows the alert giving the person the option to cancel, chat, or view profile //
-    // about the person needs to change //
     func showAlert(){
         
         
@@ -451,7 +449,6 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
     
             modifiedAlertString = "Do you wish to chat or view profile?"
             
-        
         
             var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: modifiedAlertString , preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -477,6 +474,9 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
 
             
             }))
+            
+        
+        
         
     
         
@@ -557,10 +557,11 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
         
         
         var objectId:AnyObject?
+        var firstObject:AnyObject?
         
         if(personalInfo.objectForKey("userInfo") != nil){
             
-            var firstObject:AnyObject? = personalInfo.objectForKey("userInfo")
+            firstObject = personalInfo.objectForKey("userInfo")
             
             if(firstObject?.objectForKey("objectId") != nil){
                 
@@ -639,12 +640,98 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
             
             println("logged in view profile")
             
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // need to work on this!!!!!! ----------- //
+        // save for later //
+        }else if(userClickedOnChatRequest == 3){
+            
+            
+            println("list of people -->\(listOfRequests)")
+            
+            // save the person in an array and put them in the requests list
+            
+            if(listOfRequests.count == 0){
+                
+                listOfRequests.append(personalInfo)
+            }
+            
+            
+            for(var i = 0; i < listOfRequests.count; i++){
+                
+                if(listOfRequests[i].isEqual(personalInfo)){
+                    
+                    listOfRequests.removeAtIndex(i)
+                    listOfRequests.append(personalInfo)
+                    
+                }
+            }
+            
+            
+            /*
+            if(listOfRequests.count == 0){
+                
+                listOfRequests.append(personalInfo)
+                sideBar.updateTableView(listOfFriends, newDataRequests: listOfRequests)
+                
+            }else{
+                
+
+                for(var i = 0; i < listOfRequests.count; i++){
+                    
+                    if(listOfRequests[i].isEqual(personalInfo)){
+                        
+                        //listOfRequests.insert(personalInfo, atIndex: i)
+                        
+                        listOfRequests.removeAtIndex(i)
+                        listOfRequests.append(personalInfo)
+                        
+                    }
+                    
+                    
+                }
+            
+            
+            }
+            */
+            
+            println(listOfRequests.count)
+            
+            sideBar.updateTableView(listOfFriends, newDataRequests: listOfRequests)
+
+            
+            
+            
+            
+            
+            
+            
         // chat //
         }else{
             
             println("logged in chat")
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            
+            // need to send this data to the chatview controller to update the list of possible //
+            // people to group with minus you and the person you're chatting with //
+            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
             
             chatViewController.personPassedIn = personalInfo
             
@@ -696,14 +783,7 @@ class LoggedIn: UIViewController, SideBarDelegate, /*ReturnInfo, */  ReturnWithP
                     println("error")
                 }
             })
-            
-            
-            
-            
-            
-            
-            
-            
+   
         }
         
         

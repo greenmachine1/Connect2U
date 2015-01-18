@@ -244,10 +244,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
         
-        userNameTextField.backgroundColor = newColorPalette.lightBlueColor
-        userNameTextField.textColor = newColorPalette.whiteColor
-        passwordTextField.backgroundColor = newColorPalette.lightBlueColor
-        passwordTextField.textColor = newColorPalette.whiteColor
+        userNameTextField.backgroundColor = newColorPalette.whiteColor
+        userNameTextField.textColor = newColorPalette.darkGreenColor
+        passwordTextField.backgroundColor = newColorPalette.whiteColor
+        passwordTextField.textColor = newColorPalette.darkGreenColor
         
 
         

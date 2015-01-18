@@ -9,6 +9,7 @@
 import UIKit
 
 protocol FriendsTableViewControllerDelegate{
+    
     func friendsBarControlDidSelectRow(indexPath:NSIndexPath)
 }
 
@@ -19,28 +20,48 @@ class FriendsTableViewController: UITableViewController {
     // friends and requests data //
     var friendsData:Array<String> = []
     var requestsData:Array<String> = []
+    var fromLoggedInView:Bool = true
 
     
     // number of sections currently in place //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-
-        return 2
+        
+        if(fromLoggedInView == true){
+        
+            return 2
+        }else{
+            
+            return 1
+        }
+        
     }
 
     
     // number of friends! //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if(section == 0){
+        if(fromLoggedInView == true){
             
-            return self.friendsData.count
+            if(section == 0){
+                
+                return self.friendsData.count
+            }
+                
+            else if(section == 1){
+                
+                return self.requestsData.count
+            }
+            
+        }else{
+            
+            if(section == 0){
+                
+                return self.friendsData.count
+                
+            }
+            
         }
-            
-        else if(section == 1){
-            
-            return self.requestsData.count
-        }
-        
+    
         return 0
     }
 
@@ -90,16 +111,35 @@ class FriendsTableViewController: UITableViewController {
     // setting the headers to the table view //
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if(section == 0){
+        
+        if(fromLoggedInView == true){
+            if(section == 0){
             
-            return "Friends"
+                return "Friends"
+                
+            }else if(section == 1){
             
-        }else if(section == 1){
+                return "Requests"
+            }
             
-            return "Requests"
+        }else{
+            
+            if(section == 0){
+                
+                return "Group with"
+            }
+            
         }
         
         return ""
+    }
+    
+    
+    func reloadTableView(){
+        
+        println("reload table view")
+        
+        self.tableView.reloadData()
     }
     
     

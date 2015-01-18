@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, RecievedTextDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,SideBarDelegate {
 
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -18,21 +18,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var personPassedIn:AnyObject?
     var personNameChattingWith:PFUser?
-    //var sendText = sendTextMessage()
     
     var otherPersonId:AnyObject?
     var personId:AnyObject?
     var personName:String?
     
-    
-    
-    
-    
+    var tempBoolToggle:Bool = true
+
     var mainArrayFullOfConversation:[AnyObject]?
     
+    var arrayOfOtherPeoplePassedInForGroupingUpWith:AnyObject?
+    var finalArrayOfPeoplePassedInMinusYouMinusPerson:Array<AnyObject> = []
+    
+    var sideBar:SideBar = SideBar()
+    
+    var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
+    var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
     
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,7 +44,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.setColors()
 
-        //endText.delegate = self
         mainTableView.delegate = self
         
         
@@ -49,6 +52,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTableView.userInteractionEnabled = true
         
         println("\n \n person passed in \(personPassedIn?.description)")
+        
+        println("Everyone passed in --> \(arrayOfOtherPeoplePassedInForGroupingUpWith)")
+        
+        
         
 
         
@@ -62,22 +69,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if(personPassedIn != nil){
                     
-                    println("in here still ")
-                    println("person passed in -------- > \(personPassed?)")
-                
-                    
                     var secondLevel: AnyObject? = personPassed?.objectForKey("userInfo")
                     if(secondLevel != nil){
                 
-                        println("in here again..... ---->\(secondLevel?)")
-                        println(secondLevel!)
-                
                         personName = secondLevel!.valueForKey("username") as? String
                         personId = secondLevel!.valueForKey("objectId")
-                
-                        println(personName!)
-                
-                        println(personId!)
                     
                     }else{
 
@@ -89,6 +85,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
         }
+        
+        // making a new array of people to group with minus you and minus the person //
+        // currently chatting with //
+        self.removalOfOtherPersonFromArray(arrayOfOtherPeoplePassedInForGroupingUpWith!)
         
         
         
@@ -126,6 +126,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
+        
+        
+        
+        // notification for showing the keyboard //
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
         // ** when a push notification comes in this gets called ** //
@@ -133,6 +137,53 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
         
     }
+    
+    
+    
+    
+    
+    func removalOfOtherPersonFromArray(arrayPassedIn:AnyObject){
+        
+        finalArrayOfPeoplePassedInMinusYouMinusPerson = arrayPassedIn as Array
+        
+        println("array passed in --> \(arrayPassedIn) and the id of the person you are chatting with -->\(personId)")
+        
+        for(var i = 0; i < arrayPassedIn.count; i++){
+            
+            var objectId:AnyObject? = arrayPassedIn.valueForKey("objectId")
+            if(objectId != nil){
+                
+                if((objectId?.isEqual(personId)) != nil){
+                    
+                    println("they are the same")
+                    
+                    finalArrayOfPeoplePassedInMinusYouMinusPerson.removeAtIndex(i)
+                
+                }
+            }
+            
+        }
+        
+        println("new array --> \(finalArrayOfPeoplePassedInMinusYouMinusPerson)")
+    }
+    
+    
+    
+    
+    
+    
+    func updateTheUsersForGroup(peoplePassedIn:AnyObject){
+        
+        self.removalOfOtherPersonFromArray(peoplePassedIn)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
     
     func textMessageRecieved(object:NSNotification){
         
@@ -211,24 +262,60 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-
-    // removing the observer for text notificaitons //
-    override func viewWillDisappear(animated: Bool) {
+    // dismisses the sidebar //
+    override func viewDidDisappear(animated: Bool) {
+        sideBar.fromFriendsButton(false)
         
-        //sendText.removeNotificationObserver()
+        tempBoolToggle = true
     }
     
     
+    // initializing the side bar //
+    override func viewWillAppear(animated: Bool) {
+        
+        sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:Array<String>(), fromLoggedInView:false)
+        
+        sideBar.delegate = self
+        
+    }
+    
+    func sideBarDidSelectAtIndex(index:Int){
+        
+        println("index number selected \(index)")
+        
+    }
+    
+    
+    // good place to disable elements when the friends list is out //
+    func sideBarWillOpen() {
+        
+        // lets the system know the frame list is out //
+        tempBoolToggle = false
+    }
+    
+    // good place to enable elements when the friends list is out //
+    func sideBarWillClose() {
+        
+        // lets the system know the frame list is in //
+        tempBoolToggle = true
+    }
+    
+    
+
     func group(){
         
-        println("in here")
+        if(tempBoolToggle == false){
+            
+            sideBar.fromFriendsButton(false)
+            
+            self.tempBoolToggle = true
+            
+        }else if(tempBoolToggle == true){
+            
+            sideBar.fromFriendsButton(true)
+            
+            self.tempBoolToggle = false
+        }
         
     }
     
@@ -270,7 +357,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(mainArrayFullOfConversation != nil){
             
             mainTableView.reloadData()
-            
             
             if mainTableView.contentSize.height > mainTableView.frame.size.height
             {

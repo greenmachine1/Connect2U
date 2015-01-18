@@ -30,7 +30,12 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     var delegate:SideBarDelegate?
     var sideBarOpen:Bool = false
     
+    var calledFromLoggedInView:Bool = true
+    
     var sideBarToggleFriend:Bool = false
+    
+    var finalFriendsArray:Array<String> = []
+    var finalRequestsArray:Array<String> = []
     
     
     override init(){
@@ -39,9 +44,26 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     
     // custom init method that takes in the view, friends array, requests array //
-    init(callingView:UIView, friends:Array<String>, requests:Array<String>) {
+    init(callingView:UIView, friends:Array<AnyObject>, requests:Array<AnyObject>, fromLoggedInView:Bool) {
         super.init()
         
+    
+        // requests and friends come in as anyObject which includes all the data about that person.  This is //
+        // so that when the user clicks on that person in the side menu, they can have access to that persons //
+        // data at any time.  
+        
+        println("friends \(friends) and requests \(requests)")
+        
+        
+        
+        
+        // tellin which view called this to change from left side of view to right side of view //
+        if(fromLoggedInView == false){
+            
+            calledFromLoggedInView = false
+            sideBarTableViewController.fromLoggedInView = false
+            
+        }
         
         
         // setting the calling view //
@@ -51,11 +73,13 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         
         
+        
+    
         // sending the data from the origin to the FriendsTableViewController //
-        sideBarTableViewController.friendsData = friends
-        sideBarTableViewController.requestsData = requests
-        
-        
+        //sideBarTableViewController.friendsData = finalFriendsArray
+        //sideBarTableViewController.requestsData = finalRequestsArray
+        sideBarTableViewController.friendsData = Array<String>()
+        sideBarTableViewController.requestsData = Array<String>()
         
         
         
@@ -77,10 +101,97 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // called from LogginView to update the listview //
+    func updateTableView(newDataFriends:Array<AnyObject>, newDataRequests:Array<AnyObject>){
+        
+        println("new data requests! --------> \(newDataRequests)")
+        
+        finalRequestsArray.removeAll(keepCapacity: false)
+        finalFriendsArray.removeAll(keepCapacity: false)
+        
+        // goes through the request info and parses it out //
+        for(var i = 0; i < newDataRequests.count; i++){
+            
+            var tempFirstLevel:AnyObject? = newDataRequests[i].objectForKey("userInfo")
+            if(tempFirstLevel != nil){
+                
+                println(tempFirstLevel)
+                var userName:AnyObject? = tempFirstLevel?.objectForKey("username")
+                if(userName != nil){
+                    
+                    println(userName!)
+                    finalRequestsArray.append(userName! as String)
+                    
+                    // finalFriendsArray is a string value //
+                    sideBarTableViewController.requestsData = finalRequestsArray
+                    sideBarTableViewController.reloadTableView()
+                }
+            }
+        }
+        
+        
+        // goes through the friends info and parses it out //
+        for(var i = 0; i < newDataFriends.count; i++){
+            
+            var tempFirstLevel:AnyObject? = newDataFriends[i].objectForKey("userInfo")
+            if(tempFirstLevel != nil){
+                
+                println(tempFirstLevel)
+                var userName:AnyObject? = tempFirstLevel?.objectForKey("username")
+                if(userName != nil){
+                    
+                    println(userName!)
+                    finalFriendsArray.append(userName! as String)
+                    
+                    // finalFriendsArray is a string value //
+                    sideBarTableViewController.friendsData = finalFriendsArray
+                    sideBarTableViewController.reloadTableView()
+                }
+            }
+        }
+    }
+    
+
+    
     func sideBarSetup(){
         
         // creation of the dimensions of the sidebar //
-        sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+        
+        if(calledFromLoggedInView == true){
+            
+            sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+        }else{
+            
+            sideBarContainerView.frame = CGRectMake(origin.frame.width, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            
+        }
         
         sideBarContainerView.backgroundColor = UIColor.clearColor()
         sideBarContainerView.clipsToBounds = false
@@ -167,15 +278,34 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
         sideBarOpen = shouldOpen
         
-        // sliding the side bar open //
-        if(sideBarOpen){
+        // coming from logged in view and thus will be on the left hand side //
+        if(calledFromLoggedInView == true){
             
-            sideBarContainerView.frame = CGRectMake(0.0, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            // sliding the side bar open //
+            if(sideBarOpen){
             
+                sideBarContainerView.frame = CGRectMake(0.0, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
             
-         // sliding it closed //
+                // sliding it closed //
+            }else{
+            
+                sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            }
+            
         }else{
-            sideBarContainerView.frame = CGRectMake(-widthOfBar - 1, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            
+            if(sideBarOpen){
+                
+                sideBarContainerView.frame = CGRectMake(origin.frame.width - widthOfBar, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+                
+                // sliding it closed //
+            }else{
+                
+                sideBarContainerView.frame = CGRectMake(origin.frame.width, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
+            }
+            
+            
+            
         }
  
     }
