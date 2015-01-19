@@ -326,13 +326,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     // request to delete the user at a specific index //
     func sideBarRequestDidDelete(indexPath: Int) {
         
-        println("index path selected \(indexPath)")
-        
         listOfRequests.removeAtIndex(indexPath)
-        
-        println("list of requests now \(listOfRequests)")
-        
         sideBar.updateRequests(listOfRequests)
+        
+        // need to send back to the original user that a request to chat was denied //
         
     }
     
@@ -635,9 +632,95 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             println("logged in cancel")
             
             
-            // tells the sender that its not ok to chat with this person //
-            //chatRequest.sendOutTheOkToChat(false, toUser:personalInfo)
             
+            // sending out the denial of chat //
+            self.approvalOrDenialOfChat(personalInfo, approval: false)
+            
+            
+
+        // view profile //
+        }else if(userClickedOnChatRequest == 1){
+            
+            println("logged in view profile")
+            
+
+            // need to work on this!!!!!! ----------- //
+        // save for later //
+        }else if(userClickedOnChatRequest == 3){
+            
+            
+            
+            
+            // seeing if the incoming object has already been added //
+            // and if not, then add it //
+            if(!(listOfRequests as NSArray).containsObject(personalInfo)){
+                
+                println("does not contain the object")
+                listOfRequests.append(personalInfo)
+                
+                
+            }
+
+            // refreshing the list view //
+            sideBar.updateRequests(listOfRequests)
+
+        // chat //
+        }else{
+            
+            println("logged in chat")
+            
+            
+            // sending out the approval to chat //
+            self.approvalOrDenialOfChat(personalInfo, approval: true)
+
+        }
+    }
+    
+    
+    func approvalOrDenialOfChat(toUser:AnyObject, approval:Bool){
+        
+        var objectId:AnyObject?
+        var firstObject:AnyObject?
+        
+        if(toUser.objectForKey("userInfo") != nil){
+            
+            firstObject = toUser.objectForKey("userInfo")
+            
+            if(firstObject?.objectForKey("objectId") != nil){
+                
+                objectId = firstObject?.objectForKey("objectId")!
+                
+                println("object id -- > \(objectId!)")
+                
+            }
+        }else{
+            
+            println("different data set coming in ")
+        }
+        
+        
+        
+        // only if its approved do you move to the chat view //
+        if(approval == true){
+            
+            println("logged in chat")
+            
+            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            
+            // need to send this data to the chatview controller to update the list of possible //
+            // people to group with minus you and the person you're chatting with //
+            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
+            
+            chatViewController.personPassedIn = toUser
+            
+            self.navigationController?.pushViewController(chatViewController, animated: true)
+        }
+        
+        
+        
+            // sending out the approval or denial of chat request //
+            //chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
             
             // setting up a dictionary of all the info to send over //
             var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
@@ -647,10 +730,50 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 "picture":PFUser.currentUser().objectForKey("picture")!,
                 "username":PFUser.currentUser().objectForKey("username")!]
             
+
+            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":approval]
+            
+            var query:PFQuery = PFUser.query()
+            query.whereKey("objectId", equalTo: objectId!)
+            query.whereKey("signedIn", equalTo: true)
             
             
+            var pushQuery:PFQuery = PFInstallation.query()
+            pushQuery.whereKeyExists("user")
+            pushQuery.whereKey("user", matchesQuery: query)
             
             
+            var push:PFPush = PFPush()
+            push.setQuery(pushQuery)
+            push.setData(dataSend)
+            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                
+                if(success == true){
+                    
+                    println("success!")
+                    
+                }else{
+                    
+                    println("error")
+                }
+            })
+            
+        
+            
+            
+        
+            /*
+            println("logged in cancel")
+            
+            // tells the sender that its not ok to chat with this person //
+
+            // setting up a dictionary of all the info to send over //
+            var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+                "age":PFUser.currentUser().objectForKey("age")!,
+                "gender":PFUser.currentUser().objectForKey("gender")!,
+                "interests":PFUser.currentUser().objectForKey("interests")!,
+                "picture":PFUser.currentUser().objectForKey("picture")!,
+                "username":PFUser.currentUser().objectForKey("username")!]
             
             // request denied!! //
             var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":false]
@@ -683,120 +806,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     println("error")
                 }
             })
-            
-
-
-        // view profile //
-        }else if(userClickedOnChatRequest == 1){
-            
-            println("logged in view profile")
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            // need to work on this!!!!!! ----------- //
-        // save for later //
-        }else if(userClickedOnChatRequest == 3){
-            
-            
-            
-            
-            // seeing if the incoming object has already been added //
-            // and if not, then add it //
-            if(!(listOfRequests as NSArray).containsObject(personalInfo)){
-                
-                println("does not contain the object")
-                listOfRequests.append(personalInfo)
-                
-                
-            }
-
-            // refreshing the list view //
-            sideBar.updateRequests(listOfRequests)
-
-        // chat //
-        }else{
-            
-            println("logged in chat")
-            
-            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
-            
-            
-            // need to send this data to the chatview controller to update the list of possible //
-            // people to group with minus you and the person you're chatting with //
-            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
-            
-            chatViewController.personPassedIn = personalInfo
-            
-            self.navigationController?.pushViewController(chatViewController, animated: true)
-            
-            
-            // need to send out a notification to the other user that they have accepted the request and //
-            // should transition to the chat session //
-            //chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
-            
-            // setting up a dictionary of all the info to send over //
-            var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
-                "age":PFUser.currentUser().objectForKey("age")!,
-                "gender":PFUser.currentUser().objectForKey("gender")!,
-                "interests":PFUser.currentUser().objectForKey("interests")!,
-                "picture":PFUser.currentUser().objectForKey("picture")!,
-                "username":PFUser.currentUser().objectForKey("username")!]
-            
-            
-            
-            
-            
-            
-            // basically needs to send over an alert saying that 'You' want to chat with them and //
-            // the can either click ok or view profile //
-            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":true]
-            
-            var query:PFQuery = PFUser.query()
-            query.whereKey("objectId", equalTo: objectId!)
-            query.whereKey("signedIn", equalTo: true)
-            
-            
-            var pushQuery:PFQuery = PFInstallation.query()
-            pushQuery.whereKeyExists("user")
-            pushQuery.whereKey("user", matchesQuery: query)
-            
-            
-            var push:PFPush = PFPush()
-            push.setQuery(pushQuery)
-            push.setData(dataSend)
-            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                
-                if(success == true){
-                    
-                    println("success!")
-                    
-                }else{
-                    
-                    println("error")
-                }
-            })
-   
         }
-        
-        
-        
+        */
     }
-    
     
     
     
