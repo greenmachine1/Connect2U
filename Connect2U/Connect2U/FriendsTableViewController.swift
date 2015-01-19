@@ -11,6 +11,9 @@ import UIKit
 protocol FriendsTableViewControllerDelegate{
     
     func friendsBarControlDidSelectRow(indexPath:NSIndexPath, section:Int)
+    
+    func returnRequestDidDeleteIndex(indexPath:Int)
+    func returnFriendsListDidDeleteIndex(indexPath:Int)
 }
 
 class FriendsTableViewController: UITableViewController {
@@ -98,14 +101,46 @@ class FriendsTableViewController: UITableViewController {
         if(indexPath.section == 0){
             
             cell!.textLabel!.text = friendsData[indexPath.row]
+            println("cell frame \(cell?.frame)")
         }
         if(indexPath.section == 1){
             
             cell!.textLabel!.text = requestsData[indexPath.row]
+            println("cell frame \(cell?.frame.width)")
+            println("cell frame \(cell?.frame.height)")
+            
+            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        
+            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+            deleteButton.setImage(deleteImage, forState: .Normal)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: "deleteButtonPressedFromRequests:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            cell!.addSubview(deleteButton)
+            
+            
         }
         
         return cell!
 
+    }
+    
+    func deleteButtonPressedFromRequests(sender:UIButton){
+        
+
+        println("pressed \(sender.tag)")
+        delegate?.returnRequestDidDeleteIndex(sender.tag)
+        
+    }
+    
+    func deleteButtonPressedFromFriends(sender:UIButton){
+        
+        
+        println("Pressed \(sender.tag)")
+        delegate?.returnFriendsListDidDeleteIndex(sender.tag)
+        
+        
     }
     
     

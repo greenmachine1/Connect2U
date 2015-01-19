@@ -14,6 +14,9 @@ import UIKit
     
     func sideBarDidSelectAtIndex(index:Int,sectionOfSelection:Int)
     
+    optional func sideBarRequestDidDelete(indexPath:Int)
+    optional func sideBarFriendsDidDelete(indexPath:Int)
+    
     optional func sideBarWillClose()
     optional func sideBarWillOpen()
     
@@ -87,18 +90,6 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         // making the actual sidebar //
         sideBarSetup()
         
-        // setting up the gestures associated with this bar //
-        // to close //
-        let gestureRecognizer:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        gestureRecognizer.direction = UISwipeGestureRecognizerDirection.Right
-        origin.addGestureRecognizer(gestureRecognizer)
-        
-        
-        // to expose //
-        let hideGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        hideGesture.direction = UISwipeGestureRecognizerDirection.Left
-        origin.addGestureRecognizer(hideGesture)
-        
     }
     
     
@@ -152,6 +143,11 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
                 }
             }
         }
+        if(newDataFriends.count == 0){
+            
+            sideBarTableViewController.friendsData = Array<String>()
+            sideBarTableViewController.reloadTableView()
+        }
     }
     
     
@@ -181,6 +177,12 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
                     sideBarTableViewController.reloadTableView()
                 }
             }
+        }
+        
+        if(newDataRequests.count == 0){
+            
+            sideBarTableViewController.requestsData = Array<String>()
+            sideBarTableViewController.reloadTableView()
         }
     }
     
@@ -249,38 +251,7 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     
     
-    
-    
-    
-    
-    
-    // swipe gestures //
-    func handleSwipe(gesture:UISwipeGestureRecognizer){
-        
-        // checking for left direction //
-        if(gesture.direction == UISwipeGestureRecognizerDirection.Left){
-            
-            showSideBar(false)
-            delegate?.sideBarWillClose!()
-            
-            // for right gesture //
-        }else{
-            
-            showSideBar(true)
-            delegate?.sideBarWillOpen!()
-            
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // used to pull out or push in the view //
     func fromFriendsButton(pushed:Bool){
         
@@ -332,6 +303,21 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     func friendsBarControlDidSelectRow(indexPath: NSIndexPath, section:Int) {
         
         delegate?.sideBarDidSelectAtIndex(indexPath.row, sectionOfSelection:section)
+    }
+    
+    
+    
+    func returnFriendsListDidDeleteIndex(indexPath: Int) {
+        
+        println("index path passed in \(indexPath)")
+        
+        delegate!.sideBarFriendsDidDelete!(indexPath)
+    }
+    
+    func returnRequestDidDeleteIndex(indexPath: Int) {
+        
+        println("index path passed in requests \(indexPath)")
+        delegate!.sideBarRequestDidDelete!(indexPath)
     }
 }
 

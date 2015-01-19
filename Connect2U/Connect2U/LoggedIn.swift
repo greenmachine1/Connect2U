@@ -314,6 +314,27 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     }
     
+    // request to delete the user at a specific index //
+    func sideBarFriendsDidDelete(indexPath: Int) {
+        
+        listOfFriends.removeAtIndex(indexPath)
+        sideBar.updateFriends(listOfFriends)
+    }
+    
+    
+    
+    // request to delete the user at a specific index //
+    func sideBarRequestDidDelete(indexPath: Int) {
+        
+        println("index path selected \(indexPath)")
+        
+        listOfRequests.removeAtIndex(indexPath)
+        
+        println("list of requests now \(listOfRequests)")
+        
+        sideBar.updateRequests(listOfRequests)
+        
+    }
     
     
     
@@ -339,14 +360,23 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         println("index returned \(index)")
         println("selected section \(sectionOfSelection)")
         
+        /*
         // takes you the user to your personal settings //
         let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
 
         aboutViewController.personsPic = "face_100x100.png"
         
         self.navigationController?.pushViewController(aboutViewController, animated: true)
+        */
+    }
+    
+    func alertForSideBarSelect(){
+        
+        
         
     }
+    
+    
     
 
     

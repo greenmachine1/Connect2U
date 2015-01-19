@@ -18,6 +18,7 @@
 		329218631A4012F100A57E7D /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3292185E1A4012F100A57E7D /* ParseCrashReporting.framework */; };
 		329218641A4012F100A57E7D /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3292185F1A4012F100A57E7D /* ParseFacebookUtils.framework */; };
 		329218651A4012F100A57E7D /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218601A4012F100A57E7D /* ParseUI.framework */; };
+		32DDC0BB1A6CE88600EDC11A /* DeleteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DDC0BA1A6CE88600EDC11A /* DeleteButton.png */; };
 		E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */; };
 		E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */; };
 		E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238D461A18A2A400971A24 /* LoggedIn.swift */; };
@@ -83,6 +84,7 @@
 		3292185E1A4012F100A57E7D /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		3292185F1A4012F100A57E7D /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		329218601A4012F100A57E7D /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		32DDC0BA1A6CE88600EDC11A /* DeleteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteButton.png; sourceTree = "<group>"; };
 		E50E78141A1B520100AB6940 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCreationViewController.swift; sourceTree = "<group>"; };
 		E5238D461A18A2A400971A24 /* LoggedIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedIn.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		E5E6BC851A12E86000972580 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				32DDC0BA1A6CE88600EDC11A /* DeleteButton.png */,
 				324696DA1A61C43100FDC9C8 /* LogIn.png */,
 				E545ADDD1A2E9631001D3D91 /* Connect_2_U_Log.png */,
 				E5BC4B181A20913300B39C8E /* Connected_2_U_Log.png */,
@@ -391,6 +394,7 @@
 				E545ADDE1A2E9631001D3D91 /* Connect_2_U_Log.png in Resources */,
 				E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
+				32DDC0BB1A6CE88600EDC11A /* DeleteButton.png in Resources */,
 				E5238D4B1A18B38900971A24 /* Color_strip.jpg in Resources */,
 				E5AC1CF01A1C09AE00517A89 /* Main.storyboard in Resources */,
 				E5BC88501A1C711900D3D0A5 /* face2.png in Resources */,
