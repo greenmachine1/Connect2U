@@ -159,7 +159,7 @@ class HelperClassOfProfilePics: NSObject {
         }, completion: nil)
         
         callingViewMain!.addSubview(mainButton)
-        
+
         
         
         
@@ -195,8 +195,13 @@ class HelperClassOfProfilePics: NSObject {
         mainLabel.textAlignment = .Center
         
         callingViewMain!.addSubview(mainLabel)
+
         
     }
+    
+    
+    
+    
     
     
     

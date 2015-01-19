@@ -147,6 +147,8 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
             
             sideBarTableViewController.friendsData = Array<String>()
             sideBarTableViewController.reloadTableView()
+            
+            
         }
     }
     
@@ -215,6 +217,12 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         // adding the sidebarcontainerview to the view //
         origin.addSubview(sideBarContainerView)
+
+
+        
+        
+        
+        
         
         
         
@@ -243,6 +251,15 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         // adding the table view //
         sideBarContainerView.addSubview(sideBarTableViewController.tableView)
+
+        
+        
+    }
+    
+    // makes sure that this is always the top view
+    func keepingTheTabBarOutFront(){
+        
+        origin.bringSubviewToFront(sideBarContainerView)
         
     }
     
@@ -271,7 +288,9 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
             if(sideBarOpen){
             
                 sideBarContainerView.frame = CGRectMake(0.0, origin.frame.origin.y, widthOfBar, origin.frame.size.height)
-            
+                
+                origin.bringSubviewToFront(sideBarContainerView)
+                
                 // sliding it closed //
             }else{
             

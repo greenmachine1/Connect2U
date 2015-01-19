@@ -197,7 +197,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             // make a popup that tells the user that they didnt want to chat
             
-            var alert:UIAlertController = UIAlertController(title: "Chat Denied", message: "Denied Chat!" , preferredStyle: UIAlertControllerStyle.Alert)
+            var alert:UIAlertController = UIAlertController(title: "User does not want to chat right now", message: "Denied Chat!" , preferredStyle: UIAlertControllerStyle.Alert)
             
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
@@ -325,11 +325,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     // request to delete the user at a specific index //
     func sideBarRequestDidDelete(indexPath: Int) {
+    
+        // need to send back to the original user that a request to chat was denied //
+        self.approvalOrDenialOfChat(listOfRequests[indexPath], approval: false)
         
         listOfRequests.removeAtIndex(indexPath)
         sideBar.updateRequests(listOfRequests)
-        
-        // need to send back to the original user that a request to chat was denied //
         
     }
     
@@ -398,6 +399,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         // passes the users to the circle creator! //
         helperClass.updateProfilePics(tempArrayPassedIn!)
 
+        
+        // making sure that if the side bar is out, that it will alway be on top //
+        sideBar.keepingTheTabBarOutFront()
+        
     }
 
     
@@ -618,13 +623,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 println("object id -- > \(objectId!)")
                 
             }
-        }else{
-            
-            println("different data set coming in ")
         }
-        
-        
-        //println("anyobject : \(personalInfo.description)")
+
         
         // cancel //
         if(userClickedOnChatRequest == 0){
@@ -637,19 +637,14 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             self.approvalOrDenialOfChat(personalInfo, approval: false)
             
             
-
         // view profile //
         }else if(userClickedOnChatRequest == 1){
             
             println("logged in view profile")
             
 
-            // need to work on this!!!!!! ----------- //
         // save for later //
         }else if(userClickedOnChatRequest == 3){
-            
-            
-            
             
             // seeing if the incoming object has already been added //
             // and if not, then add it //
@@ -657,8 +652,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
                 println("does not contain the object")
                 listOfRequests.append(personalInfo)
-                
-                
             }
 
             // refreshing the list view //
@@ -667,16 +660,18 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         // chat //
         }else{
             
-            println("logged in chat")
-            
-            
             // sending out the approval to chat //
             self.approvalOrDenialOfChat(personalInfo, approval: true)
-
         }
     }
     
     
+    
+    
+    
+    
+    
+    // handles the sending out of the actual push notification //
     func approvalOrDenialOfChat(toUser:AnyObject, approval:Bool){
         
         var objectId:AnyObject?
@@ -757,58 +752,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     println("error")
                 }
             })
-            
-        
-            
-            
-        
-            /*
-            println("logged in cancel")
-            
-            // tells the sender that its not ok to chat with this person //
-
-            // setting up a dictionary of all the info to send over //
-            var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
-                "age":PFUser.currentUser().objectForKey("age")!,
-                "gender":PFUser.currentUser().objectForKey("gender")!,
-                "interests":PFUser.currentUser().objectForKey("interests")!,
-                "picture":PFUser.currentUser().objectForKey("picture")!,
-                "username":PFUser.currentUser().objectForKey("username")!]
-            
-            // request denied!! //
-            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":false]
-            
-            
-            
-            var query:PFQuery = PFUser.query()
-            query.whereKey("objectId", equalTo: objectId!)
-            query.whereKey("signedIn", equalTo: true)
-            
-            
-            
-            var pushQuery:PFQuery = PFInstallation.query()
-            pushQuery.whereKeyExists("user")
-            pushQuery.whereKey("user", matchesQuery: query)
-            
-            
-            
-            var push:PFPush = PFPush()
-            push.setQuery(pushQuery)
-            push.setData(dataSend)
-            push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
-                
-                if(success == true){
-                    
-                    println("success!")
-                    
-                }else{
-                    
-                    println("error")
-                }
-            })
-        }
-        */
-    }
+     }
     
     
     
