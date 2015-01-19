@@ -146,6 +146,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         finalArrayOfPeoplePassedInMinusYouMinusPerson = arrayPassedIn as Array
         
+        /*
+        
         println("array passed in --> \(arrayPassedIn) and the id of the person you are chatting with -->\(personId)")
         
         for(var i = 0; i < arrayPassedIn.count; i++){
@@ -163,6 +165,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
         }
+        */
         
         println("new array --> \(finalArrayOfPeoplePassedInMinusYouMinusPerson)")
     }
@@ -279,7 +282,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func sideBarDidSelectAtIndex(index:Int){
+    
+    
+    
+    
+    func sideBarDidSelectAtIndex(index:Int, sectionOfSelection:Int){
         
         println("index number selected \(index)")
         

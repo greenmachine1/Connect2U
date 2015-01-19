@@ -12,7 +12,7 @@ import UIKit
 // one required function and 2 optional //
 @objc protocol SideBarDelegate{
     
-    func sideBarDidSelectAtIndex(index:Int)
+    func sideBarDidSelectAtIndex(index:Int,sectionOfSelection:Int)
     
     optional func sideBarWillClose()
     optional func sideBarWillOpen()
@@ -128,8 +128,35 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     
     
-    // called from LogginView to update the listview //
-    func updateTableView(newDataFriends:Array<AnyObject>, newDataRequests:Array<AnyObject>){
+    
+    
+    
+    func updateFriends(newDataFriends:AnyObject){
+        
+        // goes through the friends info and parses it out //
+        for(var i = 0; i < newDataFriends.count; i++){
+            
+            var tempFirstLevel:AnyObject? = newDataFriends[i].objectForKey("userInfo")
+            if(tempFirstLevel != nil){
+                
+                println(tempFirstLevel)
+                var userName:AnyObject? = tempFirstLevel?.objectForKey("username")
+                if(userName != nil){
+                    
+                    println(userName!)
+                    finalFriendsArray.append(userName! as String)
+                    
+                    // finalFriendsArray is a string value //
+                    sideBarTableViewController.friendsData = finalFriendsArray
+                    sideBarTableViewController.reloadTableView()
+                }
+            }
+        }
+    }
+    
+    
+    
+    func updateRequests(newDataRequests:AnyObject){
         
         println("new data requests! --------> \(newDataRequests)")
         
@@ -155,29 +182,17 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
                 }
             }
         }
-        
-        
-        // goes through the friends info and parses it out //
-        for(var i = 0; i < newDataFriends.count; i++){
-            
-            var tempFirstLevel:AnyObject? = newDataFriends[i].objectForKey("userInfo")
-            if(tempFirstLevel != nil){
-                
-                println(tempFirstLevel)
-                var userName:AnyObject? = tempFirstLevel?.objectForKey("username")
-                if(userName != nil){
-                    
-                    println(userName!)
-                    finalFriendsArray.append(userName! as String)
-                    
-                    // finalFriendsArray is a string value //
-                    sideBarTableViewController.friendsData = finalFriendsArray
-                    sideBarTableViewController.reloadTableView()
-                }
-            }
-        }
     }
     
+    
+    // this will be used to update the list of available people to group with //
+    func updateGroup(newGroupData:AnyObject){
+        
+        
+        
+        
+        
+    }
 
     
     func sideBarSetup(){
@@ -314,8 +329,9 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     // this is a required delegate method that goes along with //
     // FriendsTableViewControllerDelegate //
-    func friendsBarControlDidSelectRow(indexPath: NSIndexPath) {
-        delegate?.sideBarDidSelectAtIndex(indexPath.row)
+    func friendsBarControlDidSelectRow(indexPath: NSIndexPath, section:Int) {
+        
+        delegate?.sideBarDidSelectAtIndex(indexPath.row, sectionOfSelection:section)
     }
 }
 

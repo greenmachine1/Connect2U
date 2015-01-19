@@ -146,7 +146,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
         
             println("current user info sent in from chat request ---> \(currentUserInfo?.description)")
 
-            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "View Profile", "Chat", "Respond Later")
+            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Dont Chat", otherButtonTitles: "View Profile", "Chat", "Respond Later")
             
             alert.show()
         

@@ -10,7 +10,7 @@ import UIKit
 
 protocol FriendsTableViewControllerDelegate{
     
-    func friendsBarControlDidSelectRow(indexPath:NSIndexPath)
+    func friendsBarControlDidSelectRow(indexPath:NSIndexPath, section:Int)
 }
 
 class FriendsTableViewController: UITableViewController {
@@ -29,6 +29,7 @@ class FriendsTableViewController: UITableViewController {
         if(fromLoggedInView == true){
         
             return 2
+            
         }else{
             
             return 1
@@ -156,7 +157,7 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // calling the delegate to pass back the index path //
-        delegate?.friendsBarControlDidSelectRow(indexPath)
+        delegate?.friendsBarControlDidSelectRow(indexPath, section: indexPath.section)
     }
     
 

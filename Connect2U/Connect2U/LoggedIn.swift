@@ -286,6 +286,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     override func viewDidAppear(animated: Bool) {
         
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests, fromLoggedInView:true)
+        
+        sideBar.updateRequests(listOfRequests)
+        sideBar.updateFriends(listOfFriends)
         sideBar.delegate = self
         
     }
@@ -316,7 +319,25 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     // this is from the side bar delegate //
-    func sideBarDidSelectAtIndex(index: Int) {
+    // the person that is clicked on information //
+    func sideBarDidSelectAtIndex(index: Int, sectionOfSelection:Int) {
+        
+        println("in here \(index) , and \(sectionOfSelection)")
+        
+        // pulling from the friends array
+        if(sectionOfSelection == 0){
+            
+            println("friends \(listOfFriends[index])")
+            
+        // pulling from the requests array //
+        }else if(sectionOfSelection == 1){
+            
+            println("request \(listOfRequests[index])")
+            
+        }
+        
+        println("index returned \(index)")
+        println("selected section \(sectionOfSelection)")
         
         // takes you the user to your personal settings //
         let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
@@ -662,65 +683,21 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }else if(userClickedOnChatRequest == 3){
             
             
-            println("list of people -->\(listOfRequests)")
             
-            // save the person in an array and put them in the requests list
             
-            if(listOfRequests.count == 0){
+            // seeing if the incoming object has already been added //
+            // and if not, then add it //
+            if(!(listOfRequests as NSArray).containsObject(personalInfo)){
                 
+                println("does not contain the object")
                 listOfRequests.append(personalInfo)
+                
+                
             }
-            
-            
-            for(var i = 0; i < listOfRequests.count; i++){
-                
-                if(listOfRequests[i].isEqual(personalInfo)){
-                    
-                    listOfRequests.removeAtIndex(i)
-                    listOfRequests.append(personalInfo)
-                    
-                }
-            }
-            
-            
-            /*
-            if(listOfRequests.count == 0){
-                
-                listOfRequests.append(personalInfo)
-                sideBar.updateTableView(listOfFriends, newDataRequests: listOfRequests)
-                
-            }else{
-                
 
-                for(var i = 0; i < listOfRequests.count; i++){
-                    
-                    if(listOfRequests[i].isEqual(personalInfo)){
-                        
-                        //listOfRequests.insert(personalInfo, atIndex: i)
-                        
-                        listOfRequests.removeAtIndex(i)
-                        listOfRequests.append(personalInfo)
-                        
-                    }
-                    
-                    
-                }
-            
-            
-            }
-            */
-            
-            println(listOfRequests.count)
-            
-            sideBar.updateTableView(listOfFriends, newDataRequests: listOfRequests)
+            // refreshing the list view //
+            sideBar.updateRequests(listOfRequests)
 
-            
-            
-            
-            
-            
-            
-            
         // chat //
         }else{
             
