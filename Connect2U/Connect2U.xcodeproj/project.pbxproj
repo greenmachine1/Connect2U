@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3241AB361A6DC73B004F6EC7 /* NewChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3241AB351A6DC73B004F6EC7 /* NewChat.swift */; };
 		324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 324696DA1A61C43100FDC9C8 /* LogIn.png */; };
 		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
 		325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3241AB351A6DC73B004F6EC7 /* NewChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChat.swift; sourceTree = "<group>"; };
 		324696DA1A61C43100FDC9C8 /* LogIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogIn.png; sourceTree = "<group>"; };
 		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
 		325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconTransmitData.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				325DEE591A516FFB00CB9782 /* ChatRequest.swift */,
 				32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */,
 				325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */,
+				3241AB351A6DC73B004F6EC7 /* NewChat.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				E56F71261A1DBB4A00E75A47 /* SideBar.swift in Sources */,
 				E55453271A25B889006EA3ED /* GatherInfo.swift in Sources */,
 				E56F71241A1DB5FB00E75A47 /* FriendsTableViewController.swift in Sources */,
+				3241AB361A6DC73B004F6EC7 /* NewChat.swift in Sources */,
 				E5BC88541A1C775700D3D0A5 /* AboutThePersonViewController.swift in Sources */,
 				E55453291A25C0F0006EA3ED /* DrillDownPeople.swift in Sources */,
 				E5BE00A81A1D220500543FE8 /* AgeSelectionViewController.swift in Sources */,

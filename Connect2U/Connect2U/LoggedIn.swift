@@ -50,6 +50,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     //var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[AnyObject] = []
     var listOfRequests:[AnyObject] = []
+    var listOfChats:[NewChat] = []
+    
+    var tempArrayForHoldingJustUserData:Array<AnyObject> = []
     
     var emptyInitialArray:Array<AnyObject> = []
     
@@ -314,6 +317,13 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     }
     
+    
+    
+    
+    
+    
+    
+    // ------------ work on once the add friends request is all set up --------------- //
     // request to delete the user at a specific index //
     func sideBarFriendsDidDelete(indexPath: Int) {
         
@@ -323,14 +333,47 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     
+    
+    
+    
+    
+    
+    
     // request to delete the user at a specific index //
     func sideBarRequestDidDelete(indexPath: Int) {
     
-        // need to send back to the original user that a request to chat was denied //
-        self.approvalOrDenialOfChat(listOfRequests[indexPath], approval: false)
+        println("need to ask the user if they really want to delete from the list")
+        println("if so, then delete it")
         
-        listOfRequests.removeAtIndex(indexPath)
-        sideBar.updateRequests(listOfRequests)
+        var alert:UIAlertController = UIAlertController(title: "Do you really want to Delete?", message: "" , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        // the profile alert button //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+            // delete the user in here //
+            // need to send back to the original user that a request to chat was denied //
+            self.approvalOrDenialOfChat(self.listOfRequests[indexPath], approval: false)
+            
+            self.listOfRequests.removeAtIndex(indexPath)
+            self.sideBar.updateRequests(self.listOfRequests)
+            
+            
+        }))
+        // cancel button simply exits out and does nothing //
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    func sideBarDidDeleteChat(indexPath: Int) {
+        
+        self.listOfChats.removeAtIndex(indexPath)
+        
+        self.tempArrayForHoldingJustUserData.removeAtIndex(indexPath)
+        self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
         
     }
     
@@ -347,30 +390,128 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         if(sectionOfSelection == 0){
             
             println("friends \(listOfFriends[index])")
+            self.alertForSideBarSelect(listOfFriends[index], index:index, section:sectionOfSelection)
             
         // pulling from the requests array //
         }else if(sectionOfSelection == 1){
             
             println("request \(listOfRequests[index])")
+            self.alertForSideBarSelect(listOfRequests[index], index:index, section:sectionOfSelection)
+            
+        }else if(sectionOfSelection == 2){
+            
+            //self.alertForSideBarSelect(listOfChats, index:index, section:sectionOfSelection)
+            
+            // should send the person straight into chat with this person //
+            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            
+            // need to send this data to the chatview controller to update the list of possible //
+            // people to group with minus you and the person you're chatting with //
+            //chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
+            
+            chatViewController.mainChatObject = listOfChats[index]
+            
+            self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+            
+            
+            
+            
+            
+            
             
         }
         
         println("index returned \(index)")
         println("selected section \(sectionOfSelection)")
         
-        /*
-        // takes you the user to your personal settings //
-        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-
-        aboutViewController.personsPic = "face_100x100.png"
         
-        self.navigationController?.pushViewController(aboutViewController, animated: true)
-        */
     }
     
-    func alertForSideBarSelect(){
+    
+    
+    func alertForSideBarSelect(passedInPerson:AnyObject, index:Int, section:Int){
         
         
+        println("this gets called ")
+        
+        var alert:UIAlertController = UIAlertController(title: "What do you want to do?", message: "" , preferredStyle: UIAlertControllerStyle.Alert)
+    
+        // the profile alert button //
+        alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: { action in
+            
+            
+            
+            
+            // start chatting and send over the ok to chat //
+            self.approvalOrDenialOfChat(passedInPerson, approval: true)
+            
+            
+            
+            
+            if(section == 1){
+
+                // creating a new chat object //
+                var newChat:NewChat = NewChat(personPassedIn: passedInPerson)
+            
+                println("Person passed in !!!!\(passedInPerson)")
+            
+            
+                // adding the newly created object to the list //
+                self.listOfChats.append(newChat)
+                
+                // removing it from the updateRequest array //
+                self.listOfRequests.removeAtIndex(index)
+                self.sideBar.updateRequests(self.listOfRequests)
+                
+
+                // getting just the user data back for the list label //
+                //var tempArrayForHoldingJustUserData:Array<AnyObject> = []
+                
+                for(var i = 0; i < self.listOfChats.count; i++){
+                    
+                    if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
+                        
+                        
+                        // getting the chat info back to make the label for the list view //
+                        self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
+                        
+                    }
+                }
+                
+                if(self.tempArrayForHoldingJustUserData.count != 0){
+
+                    self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+                }
+
+            }
+
+            
+
+            
+            
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { action in
+            
+            // look at their profile //
+            
+            // takes you the user to your personal settings //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+            
+            aboutViewController.personsPic = "face_100x100.png"
+            
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+            
+            
+            
+            
+        }))
+        // cancel button simply exits out and does nothing //
+        alert.addAction(UIAlertAction(title: "Keep in Requests", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
@@ -389,8 +530,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         tempArrayPassedIn?.removeAll(keepCapacity: false)
         
         tempArrayPassedIn = users
-        
-
         
         println("update in here \(tempArrayPassedIn?)")
         //println("\n \n super temp array \(superTempArray?)")
@@ -700,6 +839,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             println("logged in chat")
             
+            
+            
+            
+            
+            // need to do somethign different here //
+            /*
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
             
@@ -710,12 +855,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             chatViewController.personPassedIn = toUser
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
+            */
         }
         
         
         
             // sending out the approval or denial of chat request //
-            //chatRequest.sendOutTheOkToChat(true, toUser: personalInfo)
             
             // setting up a dictionary of all the info to send over //
             var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,

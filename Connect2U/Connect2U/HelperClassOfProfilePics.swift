@@ -59,14 +59,18 @@ class HelperClassOfProfilePics: NSObject {
         println("new Profile pics! \(newProfilePics.count)")
         
         
-        
+        /*
         for(var i = 0; i < newProfilePics.count; i++){
+            
+            println("the error is in here")
             
             //println(newProfilePics[i].valueForKey("username")!)
             //println(newProfilePics[i].valueForKey("picture")!)
             
             //var tempName:String = String(newProfilePics[i].valueForKey("username")! as NSString)
             //var tempPic:String = String(newProfilePics[i].valueForKey("picture")! as NSString)
+            
+            
             
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
             var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
@@ -75,6 +79,7 @@ class HelperClassOfProfilePics: NSObject {
             println("both values --> \(tempName!.firstObject! as String)")
             println("both values --> \(tempPic!.firstObject! as String)")
         }
+        */
         
         
         //println("new profile pics name -- >\(newProfilePics[0])")
@@ -107,6 +112,10 @@ class HelperClassOfProfilePics: NSObject {
         
         for(var i = 0; i < arrayPassedInFromMainClass!.count; i++){
             
+            println("the error is in here well somewhere...")
+            
+            println("arrayPassedInFromMainClass --> \(arrayPassedInFromMainClass!)")
+            
             // placement around the main circle //
             var x = Double(cgpointToDoubleConversionForX) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(newProfilePics.count))
             var y = Double(cgpointToDoubleConversionForY) + Double(circleRadius! * 1.5) * sin(2 * M_PI * Double(i) / Double(newProfilePics.count))
@@ -115,7 +124,13 @@ class HelperClassOfProfilePics: NSObject {
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
             var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
             
-            self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic!.firstObject! as String, selfTag: i, userNameString:tempName!.firstObject! as String)
+            
+            println("temp name!! --> \(tempName?) and temp pic!!!! --> \(tempPic?)")
+            
+            if((tempName != nil) && (tempPic != nil)){
+            
+                self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic!.firstObject! as String, selfTag: i, userNameString:tempName!.firstObject! as String)
+            }
         }
 
     }

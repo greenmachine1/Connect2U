@@ -20,10 +20,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var personNameChattingWith:PFUser?
     
     var otherPersonId:AnyObject?
+    
+    
+    
     var personId:AnyObject?
     var personName:String?
     
     var tempBoolToggle:Bool = true
+    
 
     var mainArrayFullOfConversation:[AnyObject]?
     
@@ -34,6 +38,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
+    
+    
+    
+    // this holds the data being passed in //
+    var mainChatObject:NewChat?
+    
+    var userPassedInObjectId:AnyObject?
+    var userPassedInUserName:AnyObject?
     
     
 
@@ -51,14 +63,27 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // UITableView... this fixed it //
         self.mainTableView.userInteractionEnabled = true
         
-        println("\n \n person passed in \(personPassedIn?.description)")
-        
-        println("Everyone passed in --> \(arrayOfOtherPeoplePassedInForGroupingUpWith)")
+    
+        if(mainChatObject != nil){
+            
+            println("main object ---> \(mainChatObject!.returnLabelForListOfChats())")
+            var mainChatObjectReturn:AnyObject? = mainChatObject?.returnLabelForListOfChats()
+            if(mainChatObjectReturn != nil){
+                
+                var secondLevel:AnyObject? = mainChatObjectReturn?.objectForKey("userInfo")
+                if(secondLevel != nil){
+                    
+                    // used throughout the chat //
+                    userPassedInObjectId = secondLevel!.objectForKey("objectId")
+                    userPassedInUserName = secondLevel!.objectForKey("username")
+                }
+            }
+        }
         
         
         
 
-        
+        /*
         if(personPassedIn != nil){
             
             println("in here --> not sure whats going on!")
@@ -89,7 +114,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // making a new array of people to group with minus you and minus the person //
         // currently chatting with //
         self.removalOfOtherPersonFromArray(arrayOfOtherPeoplePassedInForGroupingUpWith!)
-        
+        */
         
         
     

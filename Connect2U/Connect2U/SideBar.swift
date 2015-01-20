@@ -16,6 +16,7 @@ import UIKit
     
     optional func sideBarRequestDidDelete(indexPath:Int)
     optional func sideBarFriendsDidDelete(indexPath:Int)
+    optional func sideBarDidDeleteChat(indexPath:Int)
     
     optional func sideBarWillClose()
     optional func sideBarWillOpen()
@@ -39,6 +40,7 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     var finalFriendsArray:Array<String> = []
     var finalRequestsArray:Array<String> = []
+    var finalChatArray:Array<String> = []
     
     
     override init(){
@@ -55,7 +57,7 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         // so that when the user clicks on that person in the side menu, they can have access to that persons //
         // data at any time.  
         
-        println("friends \(friends) and requests \(requests)")
+        
         
         
         
@@ -79,10 +81,9 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
     
         // sending the data from the origin to the FriendsTableViewController //
-        //sideBarTableViewController.friendsData = finalFriendsArray
-        //sideBarTableViewController.requestsData = finalRequestsArray
         sideBarTableViewController.friendsData = Array<String>()
         sideBarTableViewController.requestsData = Array<String>()
+        sideBarTableViewController.chatData = Array<String>()
         
         
         
@@ -124,6 +125,8 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     func updateFriends(newDataFriends:AnyObject){
         
+        finalFriendsArray.removeAll(keepCapacity: false)
+        
         // goes through the friends info and parses it out //
         for(var i = 0; i < newDataFriends.count; i++){
             
@@ -159,7 +162,7 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         println("new data requests! --------> \(newDataRequests)")
         
         finalRequestsArray.removeAll(keepCapacity: false)
-        finalFriendsArray.removeAll(keepCapacity: false)
+        //finalFriendsArray.removeAll(keepCapacity: false)
         
         // goes through the request info and parses it out //
         for(var i = 0; i < newDataRequests.count; i++){
@@ -187,6 +190,45 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
             sideBarTableViewController.reloadTableView()
         }
     }
+    
+    
+    
+    
+    func updateChatData(newChatData:AnyObject){
+        
+        finalChatArray.removeAll(keepCapacity: false)
+        
+        // goes through the friends info and parses it out //
+        for(var i = 0; i < newChatData.count; i++){
+            
+            var tempFirstLevel:AnyObject? = newChatData[i].objectForKey("userInfo")
+            if(tempFirstLevel != nil){
+                
+                println(tempFirstLevel)
+                var userName:AnyObject? = tempFirstLevel?.objectForKey("username")
+                if(userName != nil){
+                    
+                    println(userName!)
+                    finalChatArray.append(userName! as String)
+                    
+                    // finalFriendsArray is a string value //
+                    sideBarTableViewController.chatData = finalChatArray
+                    sideBarTableViewController.reloadTableView()
+                }
+            }
+        }
+        if(newChatData.count == 0){
+            
+            sideBarTableViewController.chatData = Array<String>()
+            sideBarTableViewController.reloadTableView()
+            
+            
+        }
+        
+    }
+    
+    
+    
     
     
     // this will be used to update the list of available people to group with //
@@ -326,6 +368,8 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     
     
+    
+    // delete section //
     func returnFriendsListDidDeleteIndex(indexPath: Int) {
         
         println("index path passed in \(indexPath)")
@@ -337,6 +381,13 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         println("index path passed in requests \(indexPath)")
         delegate!.sideBarRequestDidDelete!(indexPath)
+    }
+    
+    func returnChatListDidDeleteIndex(indexPath:Int){
+        
+        println("index path passed in Chat \(indexPath)")
+        delegate!.sideBarDidDeleteChat!(indexPath)
+        
     }
 }
 

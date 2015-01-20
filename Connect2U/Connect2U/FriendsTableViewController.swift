@@ -14,6 +14,8 @@ protocol FriendsTableViewControllerDelegate{
     
     func returnRequestDidDeleteIndex(indexPath:Int)
     func returnFriendsListDidDeleteIndex(indexPath:Int)
+    func returnChatListDidDeleteIndex(indexPath:Int)
+    
 }
 
 class FriendsTableViewController: UITableViewController {
@@ -23,6 +25,7 @@ class FriendsTableViewController: UITableViewController {
     // friends and requests data //
     var friendsData:Array<String> = []
     var requestsData:Array<String> = []
+    var chatData:Array<String> = []
     var fromLoggedInView:Bool = true
 
     
@@ -31,7 +34,7 @@ class FriendsTableViewController: UITableViewController {
         
         if(fromLoggedInView == true){
         
-            return 2
+            return 3
             
         }else{
             
@@ -54,6 +57,12 @@ class FriendsTableViewController: UITableViewController {
             else if(section == 1){
                 
                 return self.requestsData.count
+            }
+            
+            else if(section == 2){
+                
+                return self.chatData.count
+                
             }
             
         }else{
@@ -101,13 +110,22 @@ class FriendsTableViewController: UITableViewController {
         if(indexPath.section == 0){
             
             cell!.textLabel!.text = friendsData[indexPath.row]
-            println("cell frame \(cell?.frame)")
+            
+            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+            
+            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+            deleteButton.setImage(deleteImage, forState: .Normal)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: "deleteButtonPressedFromFriends:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            cell!.addSubview(deleteButton)
+            
+            
         }
         if(indexPath.section == 1){
             
             cell!.textLabel!.text = requestsData[indexPath.row]
-            println("cell frame \(cell?.frame.width)")
-            println("cell frame \(cell?.frame.height)")
             
             var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
             var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -122,10 +140,31 @@ class FriendsTableViewController: UITableViewController {
             
         }
         
+        if(indexPath.section == 2){
+            
+            cell!.textLabel!.text = chatData[indexPath.row]
+            
+            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+            
+            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+            deleteButton.setImage(deleteImage, forState: .Normal)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: "deleteButtonPressedFromChat:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            cell!.addSubview(deleteButton)
+            
+            
+        }
+        
         return cell!
 
     }
     
+    
+    
+    
+    // delete buttons //
     func deleteButtonPressedFromRequests(sender:UIButton){
         
 
@@ -143,6 +182,16 @@ class FriendsTableViewController: UITableViewController {
         
     }
     
+    func deleteButtonPressedFromChat(sender:UIButton){
+        
+        
+        println("Pressed \(sender.tag)")
+        delegate?.returnChatListDidDeleteIndex(sender.tag)
+        
+    }
+    
+    
+    
     
     // setting the headers to the table view //
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -156,6 +205,10 @@ class FriendsTableViewController: UITableViewController {
             }else if(section == 1){
             
                 return "Requests"
+                
+            }else if(section == 2){
+                
+                return "Chats"
             }
             
         }else{
@@ -185,6 +238,10 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 45.0
     }
+    
+    
+    
+    
     
     
     // used to pass back data to the calling class //
