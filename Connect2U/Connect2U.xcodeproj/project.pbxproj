@@ -183,6 +183,7 @@
 		E5BFB5441A246560004C82FA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				3241AB351A6DC73B004F6EC7 /* NewChat.swift */,
 				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
 				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
 				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
@@ -264,7 +265,6 @@
 				325DEE591A516FFB00CB9782 /* ChatRequest.swift */,
 				32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */,
 				325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */,
-				3241AB351A6DC73B004F6EC7 /* NewChat.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";

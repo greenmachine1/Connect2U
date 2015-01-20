@@ -9,6 +9,13 @@
 import UIKit
 import Parse
 
+@objc protocol UpdateObjectDelegate{
+    
+    func updateChatObject(object:AnyObject, atIndex:Int)
+    
+}
+
+
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,SideBarDelegate {
 
     @IBOutlet weak var mainTableView: UITableView!
@@ -20,8 +27,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var personNameChattingWith:PFUser?
     
     var otherPersonId:AnyObject?
-    
-    
     
     var personId:AnyObject?
     var personName:String?
@@ -46,6 +51,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var userPassedInObjectId:AnyObject?
     var userPassedInUserName:AnyObject?
+    var indexNumber:Int?
+    
+    var delegate:UpdateObjectDelegate?
     
     
 
@@ -79,6 +87,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
         }
+        
+        println("whats getting to the chat controller --> \(mainChatObject?.readFullMessage())")
+        
+        
+        
+        
         
         
         
@@ -222,76 +236,102 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    
-    // ----- where texts come back -----  //
-    // putting the info into a dictionary, then into an array //
-    func sendTextInfoBack(textInfo: AnyObject) {
-        
-        println("this info is in the chat view controller \(textInfo.description)")
+    // getting the username and text message sent
+    func sendTextInfoBack(textInfo:AnyObject){
         
         var incomingPersonText:String? = ""
-        var incomingPersonId:String? = ""
-        
+        var incomingPersonName:String? = ""
         
         if(!(textInfo.isEqual(nil))){
-        
-            var firstLevel:AnyObject? = textInfo.valueForKey("userInfo")?
             
+            var firstLevel:AnyObject? = textInfo.valueForKey("userInfo")?
             if(firstLevel != nil){
-                println("first level \(firstLevel?)")
                 
                 var secondLevel:AnyObject? = firstLevel!.valueForKey("message")
                 if(secondLevel != nil){
                     
-                    var message:String = secondLevel! as String
+                    incomingPersonText! = secondLevel! as String
                     
-                    println("message --> \(message)")
-                    incomingPersonText = secondLevel! as? String
-                    
-                    var objectIdLevel:AnyObject? = firstLevel!.valueForKey("userInfo")
-                    if(objectIdLevel != nil){
-                        println("in here!")
+                    var userNameLevel:AnyObject? = firstLevel!.valueForKey("userInfo")
+                    if(userNameLevel != nil){
                         
-                        println(objectIdLevel)
-                        var objectId:AnyObject? = objectIdLevel?.valueForKey("objectId")
-                        println(objectId)
+                        incomingPersonName = userNameLevel!.valueForKey("username") as? String
                         
-                        incomingPersonId = objectIdLevel!.valueForKey("objectId") as? String
+                        if(incomingPersonName != nil){
+                            
+                            // setting this in the main object to be kept safe and eventually returned to //
+                            // the main view //
+                            mainChatObject!.recievedMessage(incomingPersonName!, messageRecieved: incomingPersonText!)
+                            println("entire conversation --> \(mainChatObject!.readFullMessage())")
+                            println("count --> \(mainChatObject!.readFullMessage().count)")
+                            
+                            mainTableView.reloadData()
+                            
+                            
+                            
+                            
+                            // keeping the listview always at the bottom //
+                            if mainTableView.contentSize.height > mainTableView.frame.size.height
+                            {
+                                let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
+                                mainTableView.setContentOffset(offset, animated: false)
+                            }
+                        }
                     }
-                    
-                }
-                
-            }
-            
-            println("this and that \(incomingPersonText!)")
-            
-            
-            var tempDictionary:[String:String] = [incomingPersonId! as String:incomingPersonText! as String]
-            println(tempDictionary)
-            
-            mainArrayFullOfConversation?.append(tempDictionary)
-            if(mainArrayFullOfConversation != nil){
-                
-                println(mainArrayFullOfConversation!)
-                
-                mainTableView.reloadData()
-                
-                if mainTableView.contentSize.height > mainTableView.frame.size.height
-                {
-                    let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
-                    mainTableView.setContentOffset(offset, animated: false)
                 }
             }
-            
-
-            
-            
         }
+    }
+    
+    
+    
+    // send off the text //
+    func mainReturn(){
+        
+        // sending out a text message to the other user //
+        self.sendTextMessage(mainInputField!.text, toUser: self.userPassedInObjectId!)
+        
+        // saving the message to the mainObject //
+        self.mainChatObject!.sendMessage(PFUser.currentUser().username, messageSent: mainInputField!.text)
+        
+        mainTableView.reloadData()
+        
+        // keeping the listview always at the bottom //
+        if mainTableView.contentSize.height > mainTableView.frame.size.height
+        {
+            let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
+            mainTableView.setContentOffset(offset, animated: false)
+        }
+        
+        
+        println("entire conversation --> \(mainChatObject!.readFullMessage())")
+        println("count --> \(mainChatObject!.readFullMessage().count)")
+        
+        for(var i = 0; i < mainChatObject!.readFullMessage().count; i++){
+            
+            var text:AnyObject? = mainChatObject!.readFullMessage()[i].allKeys
+            
+            var userNameToCompare:AnyObject! = mainChatObject!.readFullMessage()[i].allValues.first
+            
+            println("first line = \(userNameToCompare)")
+        }
+        
+
+        
         
     }
     
+    
+    
+    
+
+    
     // dismisses the sidebar //
     override func viewDidDisappear(animated: Bool) {
+        
+        // used to send back the final object when the view is no more //
+        delegate?.updateChatObject(mainChatObject!.returnEntireObject(), atIndex: indexNumber!)
+        
         sideBar.fromFriendsButton(false)
         
         tempBoolToggle = true
@@ -306,6 +346,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         sideBar.delegate = self
         
     }
+    
+    
     
     
     
@@ -365,41 +407,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         mainReturnButton?.frame = CGRect(x: sendButtonXValue, y: CGFloat(self.mainInputField!.frame.origin.y), width: 100.0, height: 30.0)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // send off the text //
-    func mainReturn(){
 
-        var tempDictionary:[String:String] = [PFUser.currentUser().objectId as String: mainInputField!.text]
-        
-        mainArrayFullOfConversation?.append(tempDictionary)
-        
-
-        // sending out a text message to the other user //
-        self.sendTextMessage(mainInputField!.text, toUser: self.personId!)
-        
-        
-        
-        if(mainArrayFullOfConversation != nil){
-            
-            mainTableView.reloadData()
-            
-            if mainTableView.contentSize.height > mainTableView.frame.size.height
-            {
-                let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
-                mainTableView.setContentOffset(offset, animated: false)
-            }
-            
-            
-        }
-        
-    }
     
     
     func sendTextMessage(text:String, toUser:AnyObject){
@@ -487,15 +495,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         var greenColor:UIColor = UIColor(red: 0.192, green: 0.733, blue: 0.855, alpha: 1.0)
         var darkGreenColor:UIColor = UIColor(red: 0.075, green: 0.467, blue: 0.557, alpha: 1.0)
         
-        
-        
+
         // pin pointing if the text came from this user or someone else
-        if(mainArrayFullOfConversation![indexPath.row].valueForKey(PFUser.currentUser().objectId as String) != nil){
+        //if(mainArrayFullOfConversation![indexPath.row].valueForKey(PFUser.currentUser().objectId as String) != nil){
+        if((mainChatObject!.readFullMessage()[indexPath.row].allValues.first?.isEqual(PFUser.currentUser().username)) == true){
             
+            
+            println("in here with cory")
             
             let cell = tableView.dequeueReusableCellWithIdentifier("cellRight", forIndexPath: indexPath) as RightChatCell
             
-            println(mainArrayFullOfConversation![indexPath.row].objectForKey(PFUser.currentUser().objectId) as? String)
+            var tempMessageString:String? = mainChatObject!.readFullMessage()[indexPath.row].allKeys.first as? String
+            
             
             
             cell.backgroundColor = darkGreenColor
@@ -507,7 +518,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.rightLabel.clipsToBounds = true
             cell.dataLabel.textColor = whiteColor
             cell.dataLabel.backgroundColor = darkGreenColor
-            cell.dataLabel.text = mainArrayFullOfConversation![indexPath.row].objectForKey(PFUser.currentUser().objectId) as? String
+            
+            cell.dataLabel.text = tempMessageString!
+            
+            //cell.dataLabel.text = mainArrayFullOfConversation![indexPath.row].objectForKey(PFUser.currentUser().objectId) as? String
+            
             cell.dataLabel.layer.cornerRadius = 3.0
             cell.dataLabel.clipsToBounds = true
             
@@ -520,22 +535,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let cell = tableView.dequeueReusableCellWithIdentifier("cellLeft", forIndexPath: indexPath) as ChatLeftCell
             
-            
+            var tempMessageString:String? = mainChatObject!.readFullMessage()[indexPath.row].allKeys.first as? String
             
             cell.backgroundColor = greenColor
             cell.layer.cornerRadius = 3.0
-            cell.leftLabel.text = personName
+            cell.leftLabel.text = userPassedInUserName as? String
             cell.leftLabel.textColor = darkGreenColor
             cell.leftLabel.backgroundColor = greenColor
             cell.leftLabel.layer.cornerRadius = 3.0
             cell.leftLabel.clipsToBounds = true
             cell.dataLabel.textColor = darkGreenColor
             cell.dataLabel.backgroundColor = greenColor
-            cell.dataLabel.text = mainArrayFullOfConversation![indexPath.row].objectForKey(personId) as? String
+            cell.dataLabel.text = tempMessageString!
+            
             cell.dataLabel.layer.cornerRadius = 3.0
             cell.dataLabel.clipsToBounds = true
-            
-            
             
             return cell
             
@@ -560,7 +574,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // number of rows //
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mainArrayFullOfConversation!.count
+        //return mainArrayFullOfConversation!.count
+        
+        return mainChatObject!.readFullMessage().count
+        
+        //return 0
     }
     
     // height of the rows //

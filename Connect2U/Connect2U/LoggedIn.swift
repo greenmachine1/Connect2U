@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo{
+class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo, UpdateObjectDelegate{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -59,6 +59,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // loading the defaults set by the user (friends, requests, chat)//
+        //self.loadDefaults()
         
         
         // setting up the main profile image //
@@ -145,9 +148,16 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     }
     
     
+
+    
+    
     
     
     func startBackUpServicesFromAppDelegate(notification:NSNotification){
+        
+        println("called each time the view comes back ")
+        
+        //self.loadDefaults()
         
         println("start up services again")
         
@@ -212,6 +222,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             println("in here! ith!!!!!!")
             
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            chatViewController.delegate = self
             
 
             // need to send this data to the chatview controller to update the list of possible //
@@ -288,10 +300,16 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     // before it was showing up as you transitioned from the sign in screen to this one //
     override func viewDidAppear(animated: Bool) {
         
+        println("this is getting called")
+        
+        // loads the default settings for friends, requests and chat items //
+        //self.loadDefaults()
+        
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:listOfRequests, fromLoggedInView:true)
         
         sideBar.updateRequests(listOfRequests)
         sideBar.updateFriends(listOfFriends)
+        sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
         sideBar.delegate = self
         
     }
@@ -306,6 +324,50 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         sideBar.fromFriendsButton(false)
         
         tempBoolToggle = true
+        
+        
+    }
+    
+    
+    func saveListItems(){
+        
+        NSUserDefaults.standardUserDefaults().setObject(listOfFriends, forKey: "friendsList")
+        
+        NSUserDefaults.standardUserDefaults().setObject(listOfRequests, forKey: "requestsList")
+        
+        //NSUserDefaults.standardUserDefaults().setObject(listOfChats as Array<NewChat>, forKey: "chatList")
+    }
+    
+    // used for loading the friends, requests, and chat items in the friends tab //
+    func loadDefaults(){
+        
+        if(NSUserDefaults.standardUserDefaults().objectForKey("friendsList") != nil){
+            
+            println("friendsList exists")
+            println(NSUserDefaults.standardUserDefaults().objectForKey("friendsList"))
+            
+            listOfFriends = NSUserDefaults.standardUserDefaults().objectForKey("friendsList") as Array<AnyObject>
+            sideBar.updateFriends(listOfFriends)
+            
+        }
+        if(NSUserDefaults.standardUserDefaults().objectForKey("requestsList") != nil){
+            
+            println("requests lists exists")
+            println(NSUserDefaults.standardUserDefaults().objectForKey("requestsList"))
+            
+            listOfRequests = NSUserDefaults.standardUserDefaults().objectForKey("requestsList") as Array<AnyObject>
+            sideBar.updateRequests(listOfRequests)
+            
+        }
+        if(NSUserDefaults.standardUserDefaults().objectForKey("chatList") != nil){
+            
+            println("chat list exists")
+            println(NSUserDefaults.standardUserDefaults().objectForKey("chatList"))
+            
+            self.tempArrayForHoldingJustUserData = NSUserDefaults.standardUserDefaults().objectForKey("chatList") as Array
+            
+            sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+        }
     }
     
     
@@ -314,7 +376,24 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     override func viewWillDisappear(animated: Bool) {
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        
+        // saving the items before leaving //
+        //self.saveListItems()
     
+    }
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        println("in here.  Reloading")
+        
+        //sideBar.updateFriends(listOfFriends)
+        //sideBar.updateRequests(listOfRequests)
+        //sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+        
+        //self.loadDefaults()
+        
     }
     
     
@@ -410,22 +489,38 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // people to group with minus you and the person you're chatting with //
             //chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
             
+            chatViewController.delegate = self
+            
+            chatViewController.indexNumber = index
+            
             chatViewController.mainChatObject = listOfChats[index]
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
-            
-            
-            
-            
-            
-            
-            
-            
+
         }
         
         println("index returned \(index)")
         println("selected section \(sectionOfSelection)")
         
+        
+    }
+    
+    
+    
+    // updating the chat object when returning from the chat view controller //
+    func updateChatObject(object: AnyObject, atIndex: Int) {
+        
+        println("returning object \(object.description) at index \(atIndex)")
+        //listOfChats.insert(object as NewChat, atIndex: atIndex)
+        
+        
+        var newObject:NewChat = object as NewChat
+        
+        
+        println("whats staying here --> \(listOfChats[atIndex].readFullMessage())")
+        
+        
+        println("whats being sent back \(newObject.readFullMessage())")
         
     }
     
@@ -468,6 +563,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
 
                 // getting just the user data back for the list label //
                 //var tempArrayForHoldingJustUserData:Array<AnyObject> = []
+                
+                
                 
                 for(var i = 0; i < self.listOfChats.count; i++){
                     

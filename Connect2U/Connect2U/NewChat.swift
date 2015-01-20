@@ -26,9 +26,6 @@ class NewChat: NSObject {
     // the total messages held in an array //
     var totalMessages:Array<AnyObject> = []
     
-    // the individual texts; Person.objectId:Text
-    var individualMessages:[String:String]?
-    
     override init(){
         super.init()
     }
@@ -45,8 +42,7 @@ class NewChat: NSObject {
     
     // updates the list of poeple involved in this chat //
     func updateListOfPeopleInvolved(newPeopleAddedToChat:Array<AnyObject>){
-        
-        
+    
         // adding people to the personsPassedIn Array //
         for(index, element) in enumerate(newPeopleAddedToChat){
             
@@ -55,18 +51,32 @@ class NewChat: NSObject {
         
     }
     
+    
+    
     // sends out the message //
     func sendMessage(personThatSentTheMessage:AnyObject, messageSent:String){
         
+        var messagesThemselves = [messageSent: personThatSentTheMessage as String]
         
-        
+        totalMessages.append(messagesThemselves)
     }
+    
+    
     
     // recieved the message //
     func recievedMessage(personThatSentTheMessage:AnyObject, messageRecieved:String){
         
+        var messagesThemselves = [messageRecieved: personThatSentTheMessage as String]
         
+        totalMessages.append(messagesThemselves)
+    }
+    
+    
+    
+    // unloads the entire message
+    func readFullMessage() ->AnyObject{
         
+        return totalMessages as Array
     }
     
     
@@ -83,5 +93,11 @@ class NewChat: NSObject {
         
         return self
     
+    }
+    
+    func removeEntireConversationAndPutInNew(newArray:AnyObject){
+        
+        totalMessages.removeAll(keepCapacity: false)
+        totalMessages = newArray as Array
     }
 }
