@@ -596,11 +596,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 self.sideBar.updateRequests(self.listOfRequests)
                 
 
-                // getting just the user data back for the list label //
-                //var tempArrayForHoldingJustUserData:Array<AnyObject> = []
-                
-                
-                
                 for(var i = 0; i < self.listOfChats.count; i++){
                     
                     if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
@@ -812,11 +807,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // the chat body //
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
 
-                
-                println("\n \n current user information.  I have a feeling that the PFUser is getting currupted to some extent --> \(PFUser.currentUser().description)\n \n")
-                
-                
-                
+            
+            
                 // setting up a dictionary of all the info to send over //
                 var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
                     "age":PFUser.currentUser().objectForKey("age")!,
@@ -825,11 +817,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     "picture":PFUser.currentUser().objectForKey("picture")!,
                     "username":PFUser.currentUser().objectForKey("username")!]
                 
-                
 
-                
-                
-                
                 // basically needs to send over an alert saying that 'You' want to chat with them and //
                 // the can either click ok or view profile //
                 //self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
@@ -933,6 +921,79 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             // sending out the approval to chat //
             self.approvalOrDenialOfChat(personalInfo, approval: true)
+            
+            println("in here finally....")
+            
+            println("personal info --> \(personalInfo.description)")
+            
+            
+            // creating a new chat object //
+            var newChat:NewChat = NewChat(personPassedIn: personalInfo)
+            
+            
+            
+            // adding the newly created object to the list //
+            self.listOfChats.append(newChat)
+            
+            for(var i = 0; i < self.listOfChats.count; i++){
+                
+                if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
+                    
+                    
+                    // getting the chat info back to make the label for the list view //
+                    self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
+                    
+                }
+            }
+            
+            if(self.tempArrayForHoldingJustUserData.count != 0){
+                
+                self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+            }
+            
+            
+            // should send the person straight into chat with this person //
+            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+            // starting up the chat view controller with new info //
+            chatViewController.delegate = self
+            
+            var tempIndex:Int?
+            
+            // getting the newly added chat object index within the listOfChats //
+            for(var i = 0; i < listOfChats.count; i++){
+                
+                if(listOfChats[i].isEqual(newChat)){
+                    
+                    println("index \(i)")
+                    tempIndex = i
+                }
+                
+            }
+            
+            
+            chatViewController.indexNumber = tempIndex!
+            
+            // sending over the stored conversation //
+            chatViewController.mainChatObject = listOfChats[tempIndex!]
+            
+            chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
+            
+            self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
     }
     

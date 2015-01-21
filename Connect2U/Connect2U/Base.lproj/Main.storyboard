@@ -316,7 +316,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="u6k-oD-ntq">
-                                <rect key="frame" x="16" y="76" width="382" height="314"/>
+                                <rect key="frame" x="16" y="76" width="382" height="360"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellLeft" rowHeight="100" id="TEJ-ca-SwL" customClass="ChatLeftCell" customModule="Connect2U" customModuleProvider="target">
@@ -405,13 +405,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="u6k-oD-ntq" firstAttribute="trailing" secondItem="D5a-8N-L5j" secondAttribute="trailingMargin" id="22o-G5-RMQ"/>
-                            <constraint firstItem="u6k-oD-ntq" firstAttribute="top" secondItem="ScG-pw-6UE" secondAttribute="bottom" constant="56" id="686-gG-N72"/>
-                            <constraint firstItem="u6k-oD-ntq" firstAttribute="leading" secondItem="D5a-8N-L5j" secondAttribute="leadingMargin" id="c1z-N7-L6g"/>
-                            <constraint firstAttribute="centerX" secondItem="u6k-oD-ntq" secondAttribute="centerX" id="cf5-vs-5z4"/>
-                            <constraint firstItem="mP5-vE-pQX" firstAttribute="top" secondItem="u6k-oD-ntq" secondAttribute="bottom" constant="346" id="yGX-3s-qvt"/>
+                            <constraint firstItem="u6k-oD-ntq" firstAttribute="leading" secondItem="D5a-8N-L5j" secondAttribute="leadingMargin" id="Vut-Me-s2I"/>
+                            <constraint firstItem="u6k-oD-ntq" firstAttribute="trailing" secondItem="D5a-8N-L5j" secondAttribute="trailingMargin" id="XfN-8D-lfb"/>
+                            <constraint firstItem="u6k-oD-ntq" firstAttribute="top" secondItem="ScG-pw-6UE" secondAttribute="bottom" constant="12" id="ijZ-j5-q5k"/>
+                            <constraint firstItem="mP5-vE-pQX" firstAttribute="top" secondItem="u6k-oD-ntq" secondAttribute="bottom" constant="300" id="p9d-if-Ssc"/>
                         </constraints>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="mainTableView" destination="u6k-oD-ntq" id="pi4-gW-h1D"/>
