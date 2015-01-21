@@ -225,16 +225,49 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             chatViewController.delegate = self
             
+            
+            println("user returned! \(user.description)")
+            
+            var userInfoObject:AnyObject? = user.valueForKey("userInfo")
+            if(userInfoObject != nil){
+                
+                
+                // I can now make a new chat object and add it to the list of chats //
+                var newChat:NewChat = NewChat(personPassedIn: userInfoObject!)
+                
+                self.listOfChats.append(newChat)
+
+                for(var i = 0; i < self.listOfChats.count; i++){
+                    
+                    if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
+                        
+                        
+                        // getting the chat info back to make the label for the list view //
+                        self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
+                        
+                    }
+                }
+                
+                if(self.tempArrayForHoldingJustUserData.count != 0){
+                    
+                    self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+                }
+            }
+            
 
             // need to send this data to the chatview controller to update the list of possible //
             // people to group with minus you and the person you're chatting with //
-            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
+            //chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
             
     
             // sending over the userClickedOn originally //
-            chatViewController.personPassedIn = user
+            //chatViewController.personPassedIn = user
             
-            self.navigationController?.pushViewController(chatViewController, animated: true)
+            
+            
+            //chatViewController.mainChatObject = user as? NewChat
+            
+            //self.navigationController?.pushViewController(chatViewController, animated: true)
             
         }
         
@@ -449,6 +482,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     func sideBarDidDeleteChat(indexPath: Int) {
         
+        self.listOfChats[indexPath].removeEntireConversation()
+        
         self.listOfChats.removeAtIndex(indexPath)
         
         self.tempArrayForHoldingJustUserData.removeAtIndex(indexPath)
@@ -479,21 +514,18 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
         }else if(sectionOfSelection == 2){
             
-            //self.alertForSideBarSelect(listOfChats, index:index, section:sectionOfSelection)
-            
             // should send the person straight into chat with this person //
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            
-            // need to send this data to the chatview controller to update the list of possible //
-            // people to group with minus you and the person you're chatting with //
-            //chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
-            
+            // starting up the chat view controller with new info //
             chatViewController.delegate = self
             
             chatViewController.indexNumber = index
             
+            // sending over the stored conversation //
             chatViewController.mainChatObject = listOfChats[index]
+            
+            chatViewController.passedInMessages = listOfChats[index].totalMessages
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
 
@@ -507,22 +539,25 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     
-    // updating the chat object when returning from the chat view controller //
-    func updateChatObject(object: AnyObject, atIndex: Int) {
+    // updating the chat object //
+    func updateChatObject(object: AnyObject, atIndex: Int) ->Array<AnyObject>{
         
-        println("returning object \(object.description) at index \(atIndex)")
-        //listOfChats.insert(object as NewChat, atIndex: atIndex)
+
+        // appending the incoming dictionary to the original object
+        listOfChats[atIndex].totalMessages.append(object)
+        
+        println("list of chats --> \(listOfChats[atIndex].totalMessages)")
+        
+        return listOfChats[atIndex].totalMessages
         
         
-        var newObject:NewChat = object as NewChat
-        
-        
-        println("whats staying here --> \(listOfChats[atIndex].readFullMessage())")
-        
-        
-        println("whats being sent back \(newObject.readFullMessage())")
-        
+    
     }
+    
+    
+    
+    
+    
     
     
     
@@ -546,7 +581,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             
             if(section == 1){
-
+            
                 // creating a new chat object //
                 var newChat:NewChat = NewChat(personPassedIn: passedInPerson)
             

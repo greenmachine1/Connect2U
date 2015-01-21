@@ -95,9 +95,8 @@ class NewChat: NSObject {
     
     }
     
-    func removeEntireConversationAndPutInNew(newArray:AnyObject){
+    func removeEntireConversation(){
         
         totalMessages.removeAll(keepCapacity: false)
-        totalMessages = newArray as Array
     }
 }
