@@ -58,6 +58,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tempArrayOfMessages:[AnyObject]?
     var passedInMessages:[AnyObject]?
     
+    var arrayOfUsersInvolved:Array<AnyObject>?
+    
     
 
     override func viewDidLoad() {
@@ -160,7 +162,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         mainInputField?.borderStyle = UITextBorderStyle.RoundedRect
-        mainInputField?.text = "Enter Text"
+        mainInputField?.placeholder = "Enter Text"
         mainInputField?.backgroundColor = UIColor.whiteColor()
         
         mainInputField?.delegate = self
@@ -187,7 +189,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShow"), name: UIKeyboardWillShowNotification, object: nil)
         
         // ** when a push notification comes in this gets called ** //
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textMessageRecieved:", name: "textMessage", object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTheView:", name: "updateTableView", object:nil)
     
         
     }
@@ -195,37 +197,49 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    
-    
-    
-    
-    
-    func removalOfOtherPersonFromArray(arrayPassedIn:AnyObject){
+    // updates the tableview remotely //
+    func updateTheView(object:NSNotification){
         
-        finalArrayOfPeoplePassedInMinusYouMinusPerson = arrayPassedIn as Array
+        println("object passed in -->\(object.description)")
         
-        /*
         
-        println("array passed in --> \(arrayPassedIn) and the id of the person you are chatting with -->\(personId)")
-        
-        for(var i = 0; i < arrayPassedIn.count; i++){
+        var userInfobject:AnyObject? = object.valueForKey("userInfo")
+        if(userInfobject != nil){
             
-            var objectId:AnyObject? = arrayPassedIn.valueForKey("objectId")
-            if(objectId != nil){
+            var userPassedInObject:AnyObject? = userInfobject?.valueForKey("userPassedIn")
+            if(userPassedInObject != nil){
                 
-                if((objectId?.isEqual(personId)) != nil){
+                var userNameValue:AnyObject? = userPassedInObject?.valueForKey("userInfo")
+                if(userNameValue != nil){
                     
-                    println("they are the same")
-                    
-                    finalArrayOfPeoplePassedInMinusYouMinusPerson.removeAtIndex(i)
-                
+                    var username:AnyObject? = userNameValue?.valueForKey("username")
+                    if(username != nil){
+                        
+                        var finalUserName:AnyObject? = username!.firstObject!
+                        println("username \(finalUserName!)")
+                        
+                        var stringConversionOfFinalName:String = finalUserName as String
+                        
+                        if(stringConversionOfFinalName == userPassedInUserName! as String){
+                            
+                            println("final and passed \(stringConversionOfFinalName) and \(userPassedInUserName)")
+                            
+                            println("its the same and you should be here")
+                            
+                            var firstLevel:AnyObject? = object.valueForKey("userInfo")
+                            if(firstLevel != nil){
+                                
+                                var secondLevel:[AnyObject] = firstLevel?.valueForKey("userInfo") as Array<AnyObject>
+                                
+                                tempArrayOfMessages = secondLevel
+                                
+                                self.mainTableView.reloadData()
+                            }
+                        }
+                    }
                 }
             }
-            
         }
-        */
-        
-        //println("new array --> \(finalArrayOfPeoplePassedInMinusYouMinusPerson)")
     }
     
     
@@ -233,14 +247,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    func updateTheUsersForGroup(peoplePassedIn:AnyObject){
-        
-        self.removalOfOtherPersonFromArray(peoplePassedIn)
-        
-    }
+    
+
     
     
     
+    
+    
+    
+
     
     
     
@@ -258,14 +273,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // getting the username and text message sent
     func sendTextInfoBack(textInfo:AnyObject){
         
+        
+        
+        println("text recieved!!! -->\(textInfo.description)")
+        
         var incomingPersonText:String? = ""
         var incomingPersonName:String? = ""
+        
+        var firstLevel:AnyObject?
         
         if(!(textInfo.isEqual(nil))){
             
             println("text info --> \(textInfo.description)\n \n ")
             
-            var firstLevel:AnyObject? = textInfo.valueForKey("userInfo")?
+            firstLevel = textInfo.valueForKey("userInfo")?
             if(firstLevel != nil){
                 
                 println("first level info --> \(firstLevel!)\n \n ")
@@ -274,6 +295,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if(secondLevel != nil){
                     
                     println("second level info -->\(secondLevel!)\n \n ")
+                    
+                    var tempArrayForThoseInvolved:Array<AnyObject> = firstLevel?.valueForKey("usersInvolved") as Array
+                    if(tempArrayForThoseInvolved.count != 0){
+                        
+                        for(var i = 0; i < tempArrayForThoseInvolved.count ; i++){
+                            
+                            println("those involved \(tempArrayForThoseInvolved[i])")
+                            arrayOfUsersInvolved?.append(tempArrayForThoseInvolved[i])
+                            
+                        }
+                        
+                    }
                     
                     incomingPersonText! = secondLevel! as String
                     
@@ -322,8 +355,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tempArrayOfMessages = delegate?.updateChatObject(tempDictionaryToHoldPersonAndMessage, atIndex: indexNumber!)
         
-        
         mainTableView.reloadData()
+        
+        
+        // resetting the text field //
+        mainInputField!.text = ""
         
         // keeping the listview always at the bottom //
         if mainTableView.contentSize.height > mainTableView.frame.size.height
@@ -349,6 +385,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // removing the observer from recieving textMessage once left the view //
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "textMessage", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "updateTableView", object: nil)
     }
     
     
@@ -435,13 +473,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             "username":PFUser.currentUser().objectForKey("username")!]
         
         
+        // creating an array of those involved //
+        var arrayOfUsersInvolved:Array<AnyObject> = [PFUser.currentUser().objectId, toUser]
         
         
         
         
         // basically needs to send over an alert saying that 'You' want to chat with them and //
         // the can either click ok or view profile //
-        var dataSend = ["userInfo": currentUserDictionary, "text":true, "message": text]
+        var dataSend = ["userInfo": currentUserDictionary, "text":true, "message": text, "usersInvolved":arrayOfUsersInvolved]
         
         var query:PFQuery = PFUser.query()
         query.whereKey("objectId", equalTo: toUser)
@@ -465,8 +505,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 println("error")
             }
         })
-        
-        
     }
     
     

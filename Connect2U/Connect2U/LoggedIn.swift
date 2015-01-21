@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo, UpdateObjectDelegate{
+class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo, UpdateObjectDelegate, UpdateTextDelegate{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -46,11 +46,11 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     var tempArrayPassedIn:Array<AnyObject>?
     
 
-    // temporary data //
-    //var listOfNamesArray:[String] = ["Sue", "Kevin", "James", "George"]
     var listOfFriends:[AnyObject] = []
     var listOfRequests:[AnyObject] = []
     var listOfChats:[NewChat] = []
+    
+    var inComingChatHelperClass:InComingText = InComingText()
     
     var tempArrayForHoldingJustUserData:Array<AnyObject> = []
     
@@ -93,7 +93,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         //locationData.delegate = self
         chatRequest.delegate = self
     
-        
+        inComingChatHelperClass.delegate = self
         
         
         // ** when a push notification comes in this gets called ** //
@@ -221,6 +221,11 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             println("in here! ith!!!!!!")
             
+            
+            
+            
+            
+            
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
             chatViewController.delegate = self
@@ -232,11 +237,35 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             if(userInfoObject != nil){
                 
                 
+                
+                
                 // I can now make a new chat object and add it to the list of chats //
                 var newChat:NewChat = NewChat(personPassedIn: userInfoObject!)
                 
                 self.listOfChats.append(newChat)
+                
+                
+                
+                
+                
+                
+                
+                
+                // need to load up the inComingChatHelperClass with all the chat objects //
+                inComingChatHelperClass.updateListOfChats(listOfChats)
+                
+                
 
+                
+                
+                
+                
+                
+                
+                
+                self.convertChatListToStringForListView()
+                
+                /*
                 for(var i = 0; i < self.listOfChats.count; i++){
                     
                     if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
@@ -252,6 +281,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     
                     self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
                 }
+                */
             }
             
 
@@ -270,6 +300,31 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             //self.navigationController?.pushViewController(chatViewController, animated: true)
             
         }
+        
+    }
+    
+    
+    
+    
+    // this converts the list of chats object to a string for the list view //
+    func convertChatListToStringForListView(){
+        
+        for(var i = 0; i < self.listOfChats.count; i++){
+            
+            if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
+                
+                
+                // getting the chat info back to make the label for the list view //
+                self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
+                
+            }
+        }
+        
+        if(self.tempArrayForHoldingJustUserData.count != 0){
+            
+            self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+        }
+        
         
     }
     
@@ -486,6 +541,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         self.listOfChats.removeAtIndex(indexPath)
         
+        inComingChatHelperClass.updateListOfChats(listOfChats)
+        
         self.tempArrayForHoldingJustUserData.removeAtIndex(indexPath)
         self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
         
@@ -525,6 +582,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // sending over the stored conversation //
             chatViewController.mainChatObject = listOfChats[index]
             
+            // the helper class for delegating in coming chats //
+            inComingChatHelperClass.updateListOfChats(listOfChats)
+            
             chatViewController.passedInMessages = listOfChats[index].totalMessages
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
@@ -552,6 +612,27 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         
     
+    }
+    
+    
+    
+    
+    // from the InComingText class //
+    func updateChatObjectFromNewChatHelperClass(object:AnyObject, index:Int){
+        
+        // appending the incoming dictionary to the original object
+        //listOfChats[index].totalMessages.append(object)
+        
+        listOfChats[index].totalMessages.append(object)
+        
+        println("list of chats .... --> \(listOfChats[index].totalMessages)")
+        
+        var tempUserInfoDictionary = ["userInfo":listOfChats[index].totalMessages, "userPassedIn":listOfChats[index].personsPassedIn]
+        
+        // need to send out a message to the list view that it should update //
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.postNotificationName("updateTableView", object:self, userInfo:tempUserInfoDictionary)
+        
     }
     
     
@@ -591,26 +672,16 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 // adding the newly created object to the list //
                 self.listOfChats.append(newChat)
                 
+                // the helper class for delegating in coming chats //
+                self.inComingChatHelperClass.updateListOfChats(self.listOfChats)
+                
                 // removing it from the updateRequest array //
                 self.listOfRequests.removeAtIndex(index)
                 self.sideBar.updateRequests(self.listOfRequests)
                 
-
-                for(var i = 0; i < self.listOfChats.count; i++){
-                    
-                    if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
-                        
-                        
-                        // getting the chat info back to make the label for the list view //
-                        self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
-                        
-                    }
-                }
+                self.convertChatListToStringForListView()
                 
-                if(self.tempArrayForHoldingJustUserData.count != 0){
 
-                    self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
-                }
 
             }
 
@@ -935,6 +1006,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // adding the newly created object to the list //
             self.listOfChats.append(newChat)
             
+            // the helper class for delegating in coming chats //
+            inComingChatHelperClass.updateListOfChats(listOfChats)
+            
+            self.convertChatListToStringForListView()
+            
+            /*
             for(var i = 0; i < self.listOfChats.count; i++){
                 
                 if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
@@ -950,6 +1027,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
                 self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
             }
+
+            */
             
             
             // should send the person straight into chat with this person //
@@ -1033,22 +1112,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             println("logged in chat")
             
             
-            
-            
-            
-            // need to do somethign different here //
-            /*
-            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
-            
-            
-            // need to send this data to the chatview controller to update the list of possible //
-            // people to group with minus you and the person you're chatting with //
-            chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
-            
-            chatViewController.personPassedIn = toUser
-            
-            self.navigationController?.pushViewController(chatViewController, animated: true)
-            */
+
         }
         
         

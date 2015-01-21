@@ -53,6 +53,8 @@ class NewChat: NSObject {
     
     
     
+    
+    
     // sends out the message //
     func sendMessage(personThatSentTheMessage:AnyObject, messageSent:String){
         

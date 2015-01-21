@@ -10,6 +10,7 @@
 		3241AB361A6DC73B004F6EC7 /* NewChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3241AB351A6DC73B004F6EC7 /* NewChat.swift */; };
 		324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 324696DA1A61C43100FDC9C8 /* LogIn.png */; };
 		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
+		3249DDEA1A6F4DF000919B8F /* InComingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3249DDE91A6F4DF000919B8F /* InComingText.swift */; };
 		325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */; };
 		325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DEE591A516FFB00CB9782 /* ChatRequest.swift */; };
 		329218581A40114B00A57E7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329218571A40114B00A57E7D /* StoreKit.framework */; };
@@ -77,6 +78,7 @@
 		3241AB351A6DC73B004F6EC7 /* NewChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChat.swift; sourceTree = "<group>"; };
 		324696DA1A61C43100FDC9C8 /* LogIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogIn.png; sourceTree = "<group>"; };
 		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
+		3249DDE91A6F4DF000919B8F /* InComingText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InComingText.swift; sourceTree = "<group>"; };
 		325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconTransmitData.swift; sourceTree = "<group>"; };
 		325DEE591A516FFB00CB9782 /* ChatRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
 		329218571A40114B00A57E7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -187,6 +189,7 @@
 				E5BE00B31A1D43B600543FE8 /* ChatViewController.swift */,
 				E5BE00B91A1D48C700543FE8 /* ChatLeftCell.swift */,
 				E5BE00BB1A1D48E100543FE8 /* RightChatCell.swift */,
+				3249DDE91A6F4DF000919B8F /* InComingText.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				325DEE5A1A516FFB00CB9782 /* ChatRequest.swift in Sources */,
 				E50E78151A1B520100AB6940 /* SettingsTableViewController.swift in Sources */,
 				E5238D451A18A22C00971A24 /* AccountCreationViewController.swift in Sources */,
+				3249DDEA1A6F4DF000919B8F /* InComingText.swift in Sources */,
 				E5BC88581A1CB2DF00D3D0A5 /* SetUpMoreInfoTableViewController.swift in Sources */,
 				32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */,
 				E5238D471A18A2A400971A24 /* LoggedIn.swift in Sources */,
