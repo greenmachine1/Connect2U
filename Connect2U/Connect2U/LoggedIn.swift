@@ -117,7 +117,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
         meButton!.clipsToBounds = true
         meButton!.tag = 1001
-        meButton!.addTarget(self, action: Selector("personClicked:"), forControlEvents: UIControlEvents.TouchUpInside)
+        meButton!.addTarget(self, action: Selector("meClickedOn:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
         // the current location of meButton //
@@ -146,6 +146,21 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         helperClass.delegate = self
 
     }
+    
+    
+    func meClickedOn(sender:UIButton){
+        
+        // takes you the user to your personal settings //
+        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+        
+        //aboutViewController.personsPic = "face_100x100.png"
+        aboutViewController.userPassedIn = PFUser.currentUser()
+        aboutViewController.cameFromMainUser = true
+                
+        self.navigationController?.pushViewController(aboutViewController, animated: true)
+        
+    }
+    
     
     
 
@@ -220,12 +235,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }else if(wantsToChatYesOrNo == true){
             
             println("in here! ith!!!!!!")
-            
-            
-            
-            
-            
-            
+
             let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
             chatViewController.delegate = self
@@ -244,60 +254,13 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
                 self.listOfChats.append(newChat)
                 
-                
-                
-                
-                
-                
-                
-                
                 // need to load up the inComingChatHelperClass with all the chat objects //
                 inComingChatHelperClass.updateListOfChats(listOfChats)
-                
-                
 
-                
-                
-                
-                
-                
-                
-                
                 self.convertChatListToStringForListView()
                 
-                /*
-                for(var i = 0; i < self.listOfChats.count; i++){
-                    
-                    if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
-                        
-                        
-                        // getting the chat info back to make the label for the list view //
-                        self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
-                        
-                    }
-                }
-                
-                if(self.tempArrayForHoldingJustUserData.count != 0){
-                    
-                    self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
-                }
-                */
-            }
-            
 
-            // need to send this data to the chatview controller to update the list of possible //
-            // people to group with minus you and the person you're chatting with //
-            //chatViewController.arrayOfOtherPeoplePassedInForGroupingUpWith = tempArrayPassedIn
-            
-    
-            // sending over the userClickedOn originally //
-            //chatViewController.personPassedIn = user
-            
-            
-            
-            //chatViewController.mainChatObject = user as? NewChat
-            
-            //self.navigationController?.pushViewController(chatViewController, animated: true)
+            }
             
         }
         
@@ -464,9 +427,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     override func viewWillDisappear(animated: Bool) {
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
-        
-        // saving the items before leaving //
-        //self.saveListItems()
     
     }
     
@@ -476,12 +436,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         println("in here.  Reloading")
         
-        //sideBar.updateFriends(listOfFriends)
-        //sideBar.updateRequests(listOfRequests)
-        //sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
-        
-        //self.loadDefaults()
-        
+
     }
     
     
@@ -644,6 +599,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     func alertForSideBarSelect(passedInPerson:AnyObject, index:Int, section:Int){
         
+        println("person passed into this thing --> \(passedInPerson.description)")
+        
         
         println("this gets called ")
         
@@ -694,12 +651,17 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }))
         alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { action in
             
+            
+            println("under the profile info =--> \(passedInPerson.description)")
+            
             // look at their profile //
             
             // takes you the user to your personal settings //
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
             aboutViewController.personsPic = "face_100x100.png"
+            aboutViewController.userPassedIn = self.userClickedOn
+            aboutViewController.cameFromMainUser = false
             
             self.navigationController?.pushViewController(aboutViewController, animated: true)
             
@@ -849,16 +811,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
                 // takes you the user to your personal settings //
                 let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-            
-                // setting the index number in the next view //
-                aboutViewController.personsPic = self.userClickedOn.objectForKey("picture") as? String
-                aboutViewController.personName = self.userClickedOn.objectForKey("username") as? String
-                aboutViewController.personInterests = self.userClickedOn.objectForKey("interests") as? Array<String>
-                aboutViewController.personAge = self.userClickedOn.objectForKey("age") as? Int
-                aboutViewController.personGender = self.userClickedOn.objectForKey("gender") as? String
                 
                 // passing in the user PFUser //
                 aboutViewController.userPassedIn = self.userClickedOn
+                aboutViewController.cameFromMainUser = false
                 
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
 
@@ -936,9 +892,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     // call back from when the user recieves a request to chat //
     func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
         
-        println("getting to the bottom of this!! --> \(personalInfo.description)")
-        
-        
         var objectId:AnyObject?
         var firstObject:AnyObject?
         
@@ -960,9 +913,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         if(userClickedOnChatRequest == 0){
             
             println("logged in cancel")
-            
-            
-            
+
             // sending out the denial of chat //
             self.approvalOrDenialOfChat(personalInfo, approval: false)
             
@@ -971,6 +922,24 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }else if(userClickedOnChatRequest == 1){
             
             println("logged in view profile")
+            println("in here and stuff!!!!!!!!!!!!! --> \(personalInfo.description)")
+            
+            
+            // should send the user to the profile view //
+            // takes you the user to your personal settings //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+
+            
+            aboutViewController.personPassedInNotPFUser = personalInfo
+            aboutViewController.cameFromMainUser = false
+            
+            println("description of person passed in \(personalInfo.description)")
+            
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+            
+            
+            
+            
             
 
         // save for later //
@@ -1001,8 +970,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // creating a new chat object //
             var newChat:NewChat = NewChat(personPassedIn: personalInfo)
             
-            
-            
+        
             // adding the newly created object to the list //
             self.listOfChats.append(newChat)
             
@@ -1011,24 +979,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             self.convertChatListToStringForListView()
             
-            /*
-            for(var i = 0; i < self.listOfChats.count; i++){
-                
-                if(!(self.tempArrayForHoldingJustUserData as NSArray).containsObject(self.listOfChats[i].returnLabelForListOfChats())){
-                    
-                    
-                    // getting the chat info back to make the label for the list view //
-                    self.tempArrayForHoldingJustUserData.append(self.listOfChats[i].returnLabelForListOfChats())
-                    
-                }
-            }
-            
-            if(self.tempArrayForHoldingJustUserData.count != 0){
-                
-                self.sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
-            }
 
-            */
             
             
             // should send the person straight into chat with this person //
@@ -1059,20 +1010,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
             
             self.navigationController?.pushViewController(chatViewController, animated: true)
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+   
         }
     }
     
@@ -1221,10 +1159,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
 
-                    
-                    
-                    
-                    
                     // calls on the updateLocations method //
                     //self.locationData.updateLocations(true)
                 
@@ -1234,12 +1168,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     
                     
                     println("turn off broadcast")
-  
-                    
-                    
-                    
-                    
-                    
+    
                 }
             })
 

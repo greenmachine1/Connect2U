@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class AboutThePersonViewController: UIViewController {
+class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
     var personName:String?
@@ -20,12 +20,26 @@ class AboutThePersonViewController: UIViewController {
     var personGender:String?
     
     var userPassedIn:PFUser?
+    var personPassedInNotPFUser:AnyObject?
+    var cameFromMainUser:Bool?
+    
+    var toggleBoolean:Bool?
     
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var interestsLabel: UILabel!
+    //@IBOutlet weak var interestsLabel: UILabel!
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var ageEditText: UITextField!
+    @IBOutlet weak var genderEditText: UITextField!
+    
+    @IBOutlet weak var changePictureButton: UIButton!
+    
+    @IBOutlet weak var mainTableView: UITableView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,72 +55,199 @@ class AboutThePersonViewController: UIViewController {
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
-        if(personName != nil){
-            nameLabel.text = personName!
+        
+        nameTextField.hidden = true
+        genderEditText.hidden = true
+        ageEditText.hidden = true
+        
+        toggleBoolean = true
+        changePictureButton.hidden = true
+        
+        mainTableView.delegate = self
+        
+        if(userPassedIn != nil){
+            
+            personName = userPassedIn?.username
+            nameLabel.text = personName
+            
+            personAge = userPassedIn?.objectForKey("age") as? Int
+            
+            var tempAgeString = "\(personAge!)"
+            ageLabel.text = tempAgeString
+            
+            
+            
+            personInterests = userPassedIn?.objectForKey("interests") as? Array
+            
+            
+            
+            //var tempInterestString = "\(personInterests!)"
+            //interestsLabel.text = tempInterestString
+            
+            personGender = userPassedIn?.objectForKey("gender") as? String
+            genderLabel.text = personGender
         }
-        if(personAge != nil){
-            ageLabel.text = "\(personAge!)"
+        
+        if(personPassedInNotPFUser != nil){
+            
+            var userInfoLevel:AnyObject? = personPassedInNotPFUser?.objectForKey("userInfo")
+            if(userInfoLevel != nil){
+                
+                personName = userInfoLevel!.objectForKey("username") as? String
+                nameLabel.text = personName
+                
+                personAge = userInfoLevel!.objectForKey("age") as? Int
+                
+                var tempAgeString = "\(personAge!)"
+                ageLabel.text = tempAgeString
+                
+                
+                
+                
+                personInterests = userInfoLevel!.objectForKey("interests") as? Array
+                
+                
+                
+                //var tempInterestString = "\(personInterests!)"
+                //interestsLabel.text = tempInterestString
+                
+                personGender = userInfoLevel!.objectForKey("gender") as? String
+                genderLabel.text = personGender
+            }
         }
-        if(personInterests != nil){
-            interestsLabel.text = "\(personInterests!)"
+        
+        
+        if(cameFromMainUser == true){
+            
+            //self.navigationItem.rightBarButtonItem?.enabled = false
+            var rightEditButton:UIBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+            self.navigationItem.rightBarButtonItem = rightEditButton
+            
         }
-        if(personGender != nil){
-            genderLabel.text = personGender!
+        
+        
+    }
+    
+    
+    // called when the return key is pressed //
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    
+    
+    
+    // sets the options to be edited //
+    func editButton(){
+        
+        if(toggleBoolean == true){
+            
+            nameTextField.hidden = false
+            genderEditText.hidden = false
+            ageEditText.hidden = false
+            changePictureButton.hidden = false
+            
+            toggleBoolean = false
+
+            // adding the '+' to the end of the list //
+            personInterests?.append("Add New Entry")
+            
+            
+            mainTableView.reloadData()
+            
+            self.navigationItem.rightBarButtonItem?.title = "Done"
+            
         }
-        if(personsPic != nil){
-            picture.image = UIImage(named: personsPic!)
+        
+        else if(toggleBoolean == false){
+            nameTextField.hidden = true
+            genderEditText.hidden = true
+            ageEditText.hidden = true
+            changePictureButton.hidden = true
+            
+            toggleBoolean = true
+            
+            // remove the '+' in the list //
+            personInterests?.removeLast()
+            
+            mainTableView.reloadData()
+            
+            self.navigationItem.rightBarButtonItem?.title = "Edit Profile"
         }
     }
 
     
     
     
-    
-    
-    
-    
-    
-    
-    func connectButton(){
+    @IBAction func changePicOnClick(sender: UIButton) {
         
-        // also, within the users profile, they can set it to where they can edit the data //
-        var editButton:UIBarButtonItem = UIBarButtonItem(title: "Connect", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("connect"))
-        self.navigationItem.rightBarButtonItem = editButton
+        println("change selected")
     }
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // this is for editing functionality //
-    func doSomething(){
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        println("do something")
-    }
-    
-    
-    
-    
-    
-    
-    
-    // within the users profile, we can choose to connect with them //
-    func connect(){
-        println("connect")
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
         
-        // takes you the user to your personal settings //
-        let chatController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
-        chatController.personPassedIn = userPassedIn
+        cell.textLabel?.text = personInterests![indexPath.row] as String
+        var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+        var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        
+        if(cell.textLabel?.text == "Add New Entry"){
             
-        self.navigationController?.pushViewController(chatController, animated: true)
+            cell.textLabel?.textColor = UIColor.blueColor()
+            cell.textLabel?.textAlignment = .Center
+            
+        }
+        
+        
+        // creating the delete button per row //
+        if(toggleBoolean == false && indexPath.row != personInterests!.count - 1){
+            deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+            deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        
+            deleteButton.frame = CGRectMake(cell.frame.width - 60.0, 7.0, 35.0, 35.0)
+            deleteButton.setImage(deleteImage, forState: .Normal)
+            deleteButton.tag = indexPath.row
+            deleteButton.addTarget(self, action: "deleteButtonPressedFromFriends:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+            cell.addSubview(deleteButton)
+            
+        }else{
+            
+            for(index, view) in enumerate(cell.subviews){
+
+                if(view.isKindOfClass(UIButton)){
+                        
+                    view.removeFromSuperview()
+                }
+            }
+        }
+        
+        return cell
+    }
+    
+    
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        println("in here at \(indexPath.row)")
+        
+        if(toggleBoolean == false){
+            
+            if(indexPath.row == personInterests!.count - 1){
+                
+                println("add new entry")
+                
+                // should send the user to add a new entry view //
+            }
+            
+        }
         
     }
     
@@ -114,6 +255,26 @@ class AboutThePersonViewController: UIViewController {
     
     
     
+    // removing item from the list //
+    func deleteButtonPressedFromFriends(sender:UIButton){
+
+        personInterests?.removeAtIndex(sender.tag)
+        mainTableView.reloadData()
+        
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return personInterests!.count
+    }
+
+    
+    
+    
+    
+
     
 
     // setting colors for the view //
@@ -125,15 +286,45 @@ class AboutThePersonViewController: UIViewController {
         self.nameLabel.textColor = colorPalette.whiteColor
         
         ageLabel.textColor = colorPalette.whiteColor
-        ageLabel.backgroundColor = colorPalette.greenColor
-        ageLabel.textAlignment = .Center
+        //ageLabel.backgroundColor = colorPalette.greenColor
+        //ageLabel.textAlignment = .Center
         
         genderLabel.textColor = colorPalette.whiteColor
-        genderLabel.backgroundColor = colorPalette.greenColor
-        genderLabel.textAlignment = .Center
+        //genderLabel.backgroundColor = colorPalette.greenColor
+        //genderLabel.textAlignment = .Center
         
-        interestsLabel.textColor = colorPalette.whiteColor
-        interestsLabel.backgroundColor = colorPalette.greenColor
-        interestsLabel.textAlignment = .Center
+        //interestsLabel.textColor = colorPalette.whiteColor
+        //interestsLabel.backgroundColor = colorPalette.greenColor
+        //interestsLabel.textAlignment = .Center
+        
+        changePictureButton.backgroundColor = colorPalette.whiteColor
+        changePictureButton.layer.cornerRadius = 5.0
+        changePictureButton.clipsToBounds = true
+        changePictureButton.layer.borderWidth = 2.0
+        changePictureButton.layer.borderColor = UIColor.blackColor().CGColor
+        changePictureButton.alpha = 1.0
+        
+        
+        nameTextField.layer.borderWidth = 2.0
+        nameTextField.layer.borderColor = UIColor.blackColor().CGColor
+        nameTextField.clipsToBounds = true
+        nameTextField.layer.borderWidth = 2.0
+        
+        nameTextField.delegate = self
+        
+        genderEditText.layer.borderWidth = 2.0
+        genderEditText.layer.borderColor = UIColor.blackColor().CGColor
+        genderEditText.clipsToBounds = true
+        genderEditText.layer.borderWidth = 2.0
+        
+        genderEditText.delegate = self
+        
+        ageEditText.layer.borderWidth = 2.0
+        ageEditText.layer.borderColor = UIColor.blackColor().CGColor
+        ageEditText.clipsToBounds = true
+        ageEditText.layer.borderWidth = 2.0
+        
+        ageEditText.delegate = self
+        
     }
 }
