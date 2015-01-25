@@ -265,9 +265,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         newAccountButton.layer.cornerRadius = cornerRadiusValue
         newAccountButton.clipsToBounds = true
         
-        //forgotPassword.layer.cornerRadius = cornerRadiusValue
-        //forgotPassword.clipsToBounds = true
-        
     }
 }
 

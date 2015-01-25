@@ -69,8 +69,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         self.setColors()
         
-        println("currentUser --> \(PFUser.currentUser())")
-        
 
         if(currentUser != nil){
             currentUser["signedIn"] = false

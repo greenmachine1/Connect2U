@@ -560,15 +560,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             
             
-            cell.backgroundColor = darkGreenColor
+            cell.backgroundColor = whiteColor
             cell.layer.cornerRadius = 3.0
             cell.rightLabel.text = "You"
-            cell.rightLabel.textColor = whiteColor
-            cell.rightLabel.backgroundColor = darkGreenColor
+            cell.rightLabel.textColor = darkGreenColor
+            cell.rightLabel.backgroundColor = whiteColor
             cell.rightLabel.layer.cornerRadius = 3.0
             cell.rightLabel.clipsToBounds = true
-            cell.dataLabel.textColor = whiteColor
-            cell.dataLabel.backgroundColor = darkGreenColor
+            cell.dataLabel.textColor = darkGreenColor
+            cell.dataLabel.backgroundColor = whiteColor
             
             cell.dataLabel.text = tempMessageString!
             
@@ -592,11 +592,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.backgroundColor = greenColor
             cell.layer.cornerRadius = 3.0
             cell.leftLabel.text = userPassedInUserName as? String
-            cell.leftLabel.textColor = darkGreenColor
+            cell.leftLabel.textColor = whiteColor
             cell.leftLabel.backgroundColor = greenColor
             cell.leftLabel.layer.cornerRadius = 3.0
             cell.leftLabel.clipsToBounds = true
-            cell.dataLabel.textColor = darkGreenColor
+            cell.dataLabel.textColor = whiteColor
             cell.dataLabel.backgroundColor = greenColor
             cell.dataLabel.text = tempMessageString!
             

@@ -118,9 +118,28 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
             
                 // need to go to the personal info page
                 // takes you the user to your personal settings //
-                let setupInfo = self.storyboard?.instantiateViewControllerWithIdentifier("SetupInfo") as MoreInfoViewControllerContainerViewController
+                //let setupInfo = self.storyboard?.instantiateViewControllerWithIdentifier("SetupInfo") as MoreInfoViewControllerContainerViewController
             
-                self.navigationController?.pushViewController(setupInfo, animated: true)
+                //self.navigationController?.pushViewController(setupInfo, animated: true)
+                
+                
+                // takes you the user to your personal settings //
+                let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+                
+                aboutViewController.personsPic = "face_100x100.png"
+                aboutViewController.userPassedIn = PFUser.currentUser()
+                aboutViewController.cameFromMainUser = true
+                
+                self.navigationController?.pushViewController(aboutViewController, animated: true)
+                
+                
+                
+                
+                
+                
+                
+                
+                
   
             }))
             

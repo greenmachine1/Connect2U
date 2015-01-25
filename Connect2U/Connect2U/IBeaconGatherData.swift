@@ -42,7 +42,7 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       
       NSNotificationCenter.defaultCenter().addObserver(self, selector: "stopServicesFromAppDelegate:", name: "stopiBeacon", object: nil)
       
-      
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateInfoFromPersonAdjustingProfile:", name: "updateInfo", object: nil)
       
       
         
@@ -58,6 +58,14 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       
    }
    
+   
+   
+   // this gets called when someone updates their info //
+   func updateInfoFromPersonAdjustingProfile(notify:NSNotification){
+      
+      self.lookUpUsersByArray(tempBeaconArray)
+      
+   }
    
 
 

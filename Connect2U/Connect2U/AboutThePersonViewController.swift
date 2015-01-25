@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AVFoundation
 
 @objc protocol SetCurrentUserInfo{
     
@@ -33,6 +34,16 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     var toggleBoolean:Bool?
     
+    var size:CGSize?
+    
+    
+    // camera stuff //
+    let captureSession = AVCaptureSession()
+    
+    var captureDevice:AVCaptureDevice?
+    
+    var preview:AVCaptureVideoPreviewLayer?
+    
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
@@ -47,19 +58,35 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     @IBOutlet weak var mainTableView: UITableView!
     
+    @IBOutlet weak var takePictureButton: UIButton!
     
+    @IBOutlet weak var cancelTakePictureButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        size = CGSizeMake(self.picture.frame.size.width / 1.0, self.picture.frame.size.height / 1.0)
 
         self.setColors()
         
-        var cornerRadiusOfPicture = CGFloat(picture.frame.height / 2)
+        self.pictureSetUp()
         
-        println(picture.frame.height)
-        println(picture.frame.width)
+        var cornerRadiusOfPicture:CGFloat?
         
-        picture.layer.cornerRadius = cornerRadiusOfPicture
+        if(self.view.frame.width == 414.0){
+            cornerRadiusOfPicture = CGFloat(picture.frame.height - size!.width / 2.0)
+        }else if(self.view.frame.width == 375.0){
+            cornerRadiusOfPicture = CGFloat(picture.frame.height - size!.width / 1.8)
+        }else if(self.view.frame.width == 320.0){
+            cornerRadiusOfPicture = CGFloat(picture.frame.height - size!.width / 1.5)
+        }else{
+            cornerRadiusOfPicture = CGFloat(0.0)
+        }
+        
+        println(self.view.frame.width)
+        println(self.view.frame.height)
+        
+        picture.layer.cornerRadius = cornerRadiusOfPicture!
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
@@ -70,6 +97,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         toggleBoolean = true
         changePictureButton.hidden = true
+        takePictureButton.hidden = true
+        cancelTakePictureButton.hidden = true
         
         mainTableView.delegate = self
         
@@ -188,6 +217,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             
             
             
+            // stops the camera //
+            captureSession.stopRunning()
             
             
             
@@ -214,7 +245,6 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             if( (!(nameTextField.text.isEmpty)) || (!(genderEditText.text.isEmpty)) ||
                 (!(ageEditText.text.isEmpty)) ){
                 
-                    println("in here")
                     
                     //var currentUser:PFUser = PFUser.currentUser()
                     currentUser.username = nameTextField.text
@@ -258,10 +288,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     
     
-    @IBAction func changePicOnClick(sender: UIButton) {
-        
-        println("change selected")
-    }
+    
     
     
     
@@ -362,16 +389,9 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         self.nameLabel.textColor = colorPalette.whiteColor
         
         ageLabel.textColor = colorPalette.whiteColor
-        //ageLabel.backgroundColor = colorPalette.greenColor
-        //ageLabel.textAlignment = .Center
-        
+
         genderLabel.textColor = colorPalette.whiteColor
-        //genderLabel.backgroundColor = colorPalette.greenColor
-        //genderLabel.textAlignment = .Center
-        
-        //interestsLabel.textColor = colorPalette.whiteColor
-        //interestsLabel.backgroundColor = colorPalette.greenColor
-        //interestsLabel.textAlignment = .Center
+
         
         changePictureButton.backgroundColor = colorPalette.whiteColor
         changePictureButton.layer.cornerRadius = 5.0
@@ -379,6 +399,20 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         changePictureButton.layer.borderWidth = 2.0
         changePictureButton.layer.borderColor = UIColor.blackColor().CGColor
         changePictureButton.alpha = 1.0
+        
+        takePictureButton.backgroundColor = colorPalette.whiteColor
+        takePictureButton.layer.cornerRadius = 5.0
+        takePictureButton.clipsToBounds = true
+        takePictureButton.layer.borderWidth = 2.0
+        takePictureButton.layer.borderColor = UIColor.blackColor().CGColor
+        takePictureButton.alpha = 1.0
+        
+        cancelTakePictureButton.backgroundColor = colorPalette.whiteColor
+        cancelTakePictureButton.layer.cornerRadius = 5.0
+        cancelTakePictureButton.clipsToBounds = true
+        cancelTakePictureButton.layer.borderWidth = 2.0
+        cancelTakePictureButton.layer.borderColor = UIColor.blackColor().CGColor
+        cancelTakePictureButton.alpha = 1.0
         
         
         nameTextField.layer.borderWidth = 2.0
@@ -403,4 +437,87 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         ageEditText.delegate = self
         
     }
+    
+    
+    
+    // setting up to take a picture //
+    func pictureSetUp(){
+        
+        captureSession.sessionPreset = AVCaptureSessionPresetMedium
+        let devices = AVCaptureDevice.devices()
+        
+        for device in devices{
+            
+            if(device.hasMediaType(AVMediaTypeVideo)){
+                
+                // getting the front facing camera //
+                if(device.position == AVCaptureDevicePosition.Front){
+                    
+                    captureDevice = device as? AVCaptureDevice
+                }
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    @IBAction func changePicOnClick(sender: UIButton) {
+        
+        if(captureDevice != nil){
+            
+            self.beginSession()
+        }
+    }
+    
+    
+    func beginSession(){
+        
+        var error:NSError? = nil
+        captureSession.addInput(AVCaptureDeviceInput(device: captureDevice, error: &error))
+        
+        preview = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        var frameForCamera = CGRectMake(self.picture.frame.origin.x - size!.width, self.picture.frame.origin.y - size!.height, self.picture.frame.width + size!.width, self.picture.frame.height + size!.height)
+
+        
+        
+        
+        println(picture.frame)
+        println(frameForCamera)
+        
+        //preview?.frame = self.picture.frame
+        preview?.frame = frameForCamera
+        self.picture.layer.addSublayer(preview)
+        
+
+        captureSession.startRunning()
+        
+        changePictureButton.hidden = true
+        takePictureButton.hidden = false
+        cancelTakePictureButton.hidden = false
+    }
+    
+    @IBAction func takePictureButtonOnClick(sender: UIButton) {
+        
+        
+        
+        
+        
+        println("in here!")
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
