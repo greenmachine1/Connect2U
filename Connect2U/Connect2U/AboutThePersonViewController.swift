@@ -44,6 +44,10 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     var preview:AVCaptureVideoPreviewLayer?
     
+    var stillImageOutput:AVCaptureStillImageOutput?
+    
+    var mainImage:UIImage?
+    
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
@@ -67,12 +71,15 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         size = CGSizeMake(self.picture.frame.size.width / 1.0, self.picture.frame.size.height / 1.0)
 
+        
         self.setColors()
         
         self.pictureSetUp()
         
-        var cornerRadiusOfPicture:CGFloat?
+        var cornerRadiusOfPicture:CGFloat = 2.0
         
+        
+        /*
         if(self.view.frame.width == 414.0){
             cornerRadiusOfPicture = CGFloat(picture.frame.height - size!.width / 2.0)
         }else if(self.view.frame.width == 375.0){
@@ -82,11 +89,18 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         }else{
             cornerRadiusOfPicture = CGFloat(0.0)
         }
+        */
         
         println(self.view.frame.width)
         println(self.view.frame.height)
         
-        picture.layer.cornerRadius = cornerRadiusOfPicture!
+        /*
+        if(cornerRadiusOfPicture != nil){
+            picture.layer.cornerRadius = cornerRadiusOfPicture!
+        }else{
+            picture.layer.cornerRadius = 0.0
+        }
+        */
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
@@ -104,15 +118,21 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         if(userPassedIn != nil){
             
-            userObjectId = userPassedIn?.objectId
+            println("im in here")
+            //userObjectId = userPassedIn?.objectId
+            //println("object id \(userObjectId)")
+            
+            
+            println("user passed in \(userPassedIn?.description)")
+            
             
             personName = userPassedIn?.username
             nameLabel.text = personName
+
             
             personAge = userPassedIn?.objectForKey("age") as? String
-            
-            var tempAgeString = "\(personAge!)"
-            ageLabel.text = tempAgeString
+
+            ageLabel.text = personAge!
             
         
             personInterests = userPassedIn?.objectForKey("interests") as? Array
@@ -120,22 +140,29 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
 
             personGender = userPassedIn?.objectForKey("gender") as? String
             genderLabel.text = personGender
+            
+            println("getting to the end no prob")
         }
         
         if(personPassedInNotPFUser != nil){
             
+            println("trying to track down a bug")
+            
             var userInfoLevel:AnyObject? = personPassedInNotPFUser?.objectForKey("userInfo")
             if(userInfoLevel != nil){
                 
-                userObjectId = userInfoLevel!.objectForKey("objectId")
+                //userObjectId = userInfoLevel!.objectForKey("objectId")
                 
                 personName = userInfoLevel!.objectForKey("username") as? String
                 nameLabel.text = personName
                 
+                println("user name! \(personName)")
+                
                 personAge = userInfoLevel!.objectForKey("age") as? String
                 
-                var tempAgeString = "\(personAge!)"
-                ageLabel.text = tempAgeString
+                ageLabel.text = personAge!
+                
+                println("age \(personAge!)")
                 
                 
                 personInterests = userInfoLevel!.objectForKey("interests") as? Array
@@ -143,6 +170,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
 
                 personGender = userInfoLevel!.objectForKey("gender") as? String
                 genderLabel.text = personGender
+                
+                println("not sure why I keep getting bugs!")
             }
         }
         
@@ -152,6 +181,13 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             //self.navigationItem.rightBarButtonItem?.enabled = false
             var rightEditButton:UIBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.rightBarButtonItem = rightEditButton
+            
+            stillImageOutput = AVCaptureStillImageOutput()
+            stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(stillImageOutput) {
+                captureSession.addOutput(stillImageOutput)
+            }
             
         }
         
@@ -391,6 +427,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         ageLabel.textColor = colorPalette.whiteColor
 
         genderLabel.textColor = colorPalette.whiteColor
+        
+        mainTableView.backgroundColor = colorPalette.lightBlueColor
 
         
         changePictureButton.backgroundColor = colorPalette.whiteColor
@@ -454,6 +492,9 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 if(device.position == AVCaptureDevicePosition.Front){
                     
                     captureDevice = device as? AVCaptureDevice
+                    
+                    var error:NSError? = nil
+                    captureSession.addInput(AVCaptureDeviceInput(device: captureDevice, error: &error))
                 }
             }
         }
@@ -476,18 +517,15 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     func beginSession(){
         
-        var error:NSError? = nil
-        captureSession.addInput(AVCaptureDeviceInput(device: captureDevice, error: &error))
+        
+        
+        
+        
         
         preview = AVCaptureVideoPreviewLayer(session: captureSession)
         
         var frameForCamera = CGRectMake(self.picture.frame.origin.x - size!.width, self.picture.frame.origin.y - size!.height, self.picture.frame.width + size!.width, self.picture.frame.height + size!.height)
 
-        
-        
-        
-        println(picture.frame)
-        println(frameForCamera)
         
         //preview?.frame = self.picture.frame
         preview?.frame = frameForCamera
@@ -504,12 +542,40 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     @IBAction func takePictureButtonOnClick(sender: UIButton) {
         
         
+        if(sender.tag == 0){
         
+            var sessionQueue: dispatch_queue_t?
+            var mainImage:UIImage?
         
+            sessionQueue = dispatch_queue_create("CameraSessionController Session", DISPATCH_QUEUE_SERIAL)
         
-        println("in here!")
-        
-        
+            dispatch_async(sessionQueue, { () -> Void in
+
+                self.stillImageOutput!.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo), completionHandler: { (buffer:CMSampleBuffer!, error:NSError!) -> Void in
+                
+                    if(buffer == nil){
+                    
+                        mainImage = nil
+                    
+                    }else{
+                    
+                        println("its getting to heres")
+                        var imageData:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer?)
+                        mainImage = UIImage(data: imageData)
+
+                        self.picture.image = UIImage(data: imageData)
+                    
+                    
+                    }
+                })
+            })
+            
+            // cancel //
+        }else if(sender.tag == 1){
+            
+            
+            
+        }
     }
     
     
