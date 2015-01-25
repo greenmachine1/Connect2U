@@ -9,15 +9,23 @@
 import UIKit
 import Parse
 
+@objc protocol SetCurrentUserInfo{
+    
+    func updateCurrentUserInfo()
+    
+}
+
 class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
     var personName:String?
     var personsPic:String?
     var image:UIImage?
-    var personAge:Int?
+    var personAge:String?
     var personInterests:Array<String>?
     var personGender:String?
+    
+    var userObjectId:AnyObject?
     
     var userPassedIn:PFUser?
     var personPassedInNotPFUser:AnyObject?
@@ -67,23 +75,20 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         if(userPassedIn != nil){
             
+            userObjectId = userPassedIn?.objectId
+            
             personName = userPassedIn?.username
             nameLabel.text = personName
             
-            personAge = userPassedIn?.objectForKey("age") as? Int
+            personAge = userPassedIn?.objectForKey("age") as? String
             
             var tempAgeString = "\(personAge!)"
             ageLabel.text = tempAgeString
             
-            
-            
+        
             personInterests = userPassedIn?.objectForKey("interests") as? Array
             
-            
-            
-            //var tempInterestString = "\(personInterests!)"
-            //interestsLabel.text = tempInterestString
-            
+
             personGender = userPassedIn?.objectForKey("gender") as? String
             genderLabel.text = personGender
         }
@@ -93,24 +98,20 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             var userInfoLevel:AnyObject? = personPassedInNotPFUser?.objectForKey("userInfo")
             if(userInfoLevel != nil){
                 
+                userObjectId = userInfoLevel!.objectForKey("objectId")
+                
                 personName = userInfoLevel!.objectForKey("username") as? String
                 nameLabel.text = personName
                 
-                personAge = userInfoLevel!.objectForKey("age") as? Int
+                personAge = userInfoLevel!.objectForKey("age") as? String
                 
                 var tempAgeString = "\(personAge!)"
                 ageLabel.text = tempAgeString
                 
                 
-                
-                
                 personInterests = userInfoLevel!.objectForKey("interests") as? Array
                 
-                
-                
-                //var tempInterestString = "\(personInterests!)"
-                //interestsLabel.text = tempInterestString
-                
+
                 personGender = userInfoLevel!.objectForKey("gender") as? String
                 genderLabel.text = personGender
             }
@@ -156,6 +157,12 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             personInterests?.append("Add New Entry")
             
             
+            nameTextField.text = nameLabel.text
+            genderEditText.text = genderLabel.text
+            ageEditText.text = ageLabel.text
+            
+            
+            
             mainTableView.reloadData()
             
             self.navigationItem.rightBarButtonItem?.title = "Done"
@@ -176,8 +183,77 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             mainTableView.reloadData()
             
             self.navigationItem.rightBarButtonItem?.title = "Edit Profile"
+            
+            println("hit done!!")
+            
+            
+            
+            
+            
+            
+            
+            
+            // saving the users info upon hitting done! //
+            self.saveUsersInfo()
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    // save the users info //
+    func saveUsersInfo(){
+        
+        var currentUser:PFUser = PFUser.currentUser()
+        
+        if((nameTextField.text != personName) || (genderEditText.text != personGender) || (ageEditText.text != personAge)){
+            
+            if( (!(nameTextField.text.isEmpty)) || (!(genderEditText.text.isEmpty)) ||
+                (!(ageEditText.text.isEmpty)) ){
+                
+                    println("in here")
+                    
+                    //var currentUser:PFUser = PFUser.currentUser()
+                    currentUser.username = nameTextField.text
+                    currentUser.setValue(genderEditText.text, forKey: "gender")
+                    currentUser.setValue(ageEditText.text, forKey: "age")
+                    currentUser.setValue(personInterests, forKey: "interests")
+                    currentUser.saveInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
+                        
+                        if(success == true){
+                            
+                            println("save succeeded!")
+                            
+                            self.nameLabel.text = currentUser.username
+                            self.genderLabel.text = currentUser.objectForKey("gender") as? String
+                            self.ageLabel.text = currentUser.objectForKey("age") as? String
+                            self.personInterests = currentUser.objectForKey("interests") as? Array
+                            
+                        }else{
+                            
+                            println("error:\(error.description)")
+                        }
+                    }
+            }
+            
+        
+        }else{
+            
+            
+            println("stuff hasnt changed")
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 
     
     

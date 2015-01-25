@@ -210,9 +210,9 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         user["major"] = majorNumber
         user["minor"] = minorNumber
         user["gender"] = "unknown"
-        user["interests"] = ["biking","swimming","joggin","hair"]
+        user["interests"] = []
         user["picture"] = "face3.png"
-        user["age"] = 29
+        user["age"] = "0"
         user["signedIn"] = false
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
             
