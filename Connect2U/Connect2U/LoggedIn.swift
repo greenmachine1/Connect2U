@@ -11,7 +11,7 @@ import Parse
 
 
 
-class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo, UpdateObjectDelegate, UpdateTextDelegate{
+class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, RequestChatDelegate, IBeaconInfo, UpdateObjectDelegate, UpdateTextDelegate, SetCurrentUserInfo{
     
     @IBOutlet weak var broadCast: UIButton!
 
@@ -22,7 +22,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     var currentUserPic:String?
     var currentUserInterests:Array<String>?
     
+
+    
     var meButton:UIButton?
+    var nameLabelForMe:UILabel?
     var meButtonLocation:CGPoint?
     var personSelected:Int?
     
@@ -104,12 +107,49 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         
         
+        var imageData:PFFile? = PFUser.currentUser().objectForKey("picture") as? PFFile
+        if(imageData != nil){
+            
+            meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
+            
+            var fileName = imageData?.name
+            if((fileName?.rangeOfString("face.png", options: nil, range: nil, locale: nil)) != nil){
+                
+                self.meButton!.setTitle("Start Here!", forState: UIControlState.Normal)
+                self.meButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+                self.meButton!.backgroundColor = UIColor.whiteColor()
+                
+                
+            }else{
+                
+                
+                imageData!.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                    
+                    if(data != nil){
+                        
+                        println("in here debug ")
+                        var imageOfMe:UIImage = UIImage(data: data)!
+                        
+                        var flippedImage = UIImage(CGImage: imageOfMe.CGImage, scale: 1.5, orientation:.LeftMirrored)
+                        
+                        self.meButton!.setImage(flippedImage, forState: UIControlState.Normal)
+                        self.meButton!.setImage(flippedImage, forState: UIControlState.Highlighted)
+                    }
+                })
+            }
+        }
+        
+        
+        
         
         
 
         // making the image of me in the very center of the screen //
-        meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
-        meButton!.setImage(UIImage(named: currentUserPic!), forState: UIControlState.Normal)
+        
+        //meButton!.setImage(UIImage(named: "face3.png"), forState: UIControlState.Normal)
+        
+        //meButton!.setImage(meImage, forState: UIControlState.Normal)
+        
         meButton!.layer.cornerRadius = 50
         meButton!.layer.borderWidth = 3.0
         meButton!.layer.borderColor = UIColor.blackColor().CGColor
@@ -122,19 +162,18 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
         
         // start of the label //
-        var nameLabelForMe:UILabel = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe.tag = 1001
-        nameLabelForMe.text = currentUserName
-        nameLabelForMe.textColor = UIColor.whiteColor()
-        nameLabelForMe.textAlignment = .Center
-        
+        nameLabelForMe = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
+        nameLabelForMe!.tag = 1001
+        nameLabelForMe!.textColor = UIColor.whiteColor()
+        nameLabelForMe!.textAlignment = .Center
+        nameLabelForMe!.text = PFUser.currentUser().username
         
         // creating the big circle in the center //
         mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
         
         
         // adding this to the subview //
-        self.view.addSubview(nameLabelForMe)
+        self.view.addSubview(nameLabelForMe!)
         self.view.addSubview(meButton!)
         
         
@@ -154,10 +193,27 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         //aboutViewController.personsPic = "face_100x100.png"
         aboutViewController.userPassedIn = PFUser.currentUser()
         aboutViewController.cameFromMainUser = true
+        aboutViewController.delegate = self
                 
         self.navigationController?.pushViewController(aboutViewController, animated: true)
         
     }
+    
+    
+    
+    
+    func updateCurrentUserInfo(userName: String, userPicture: UIImage) {
+        
+        println("called in here")
+        
+        //meButton!.setImage(UIImage(named: userPicture), forState: UIControlState.Normal)
+        meButton!.setImage(userPicture, forState: UIControlState.Normal)
+        meButton!.setImage(userPicture, forState: UIControlState.Highlighted)
+        
+        
+    }
+    
+    
     
     
     

@@ -12,7 +12,8 @@ import AVFoundation
 
 @objc protocol SetCurrentUserInfo{
     
-    func updateCurrentUserInfo()
+    // sends back the user name and picture to the logged in screen //
+    func updateCurrentUserInfo(userName:String, userPicture:UIImage)
     
 }
 
@@ -36,34 +37,34 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     var size:CGSize?
     
+    var delegate:SetCurrentUserInfo?
+    
     
     // camera stuff //
     let captureSession = AVCaptureSession()
-    
     var captureDevice:AVCaptureDevice?
-    
     var preview:AVCaptureVideoPreviewLayer?
-    
     var stillImageOutput:AVCaptureStillImageOutput?
-    
     var mainImage:UIImage?
+    var pngVersionOfImage:AnyObject?
+    var cancelToggle:Bool = false
+    var arrayOfPictures:[UIImage] = []
+    var flippedMainImage:UIImage?
+    
+    
     
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
-    //@IBOutlet weak var interestsLabel: UILabel!
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var ageEditText: UITextField!
     @IBOutlet weak var genderEditText: UITextField!
     
     @IBOutlet weak var changePictureButton: UIButton!
-    
     @IBOutlet weak var mainTableView: UITableView!
-    
     @IBOutlet weak var takePictureButton: UIButton!
-    
     @IBOutlet weak var cancelTakePictureButton: UIButton!
     
     override func viewDidLoad() {
@@ -71,15 +72,14 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         size = CGSizeMake(self.picture.frame.size.width / 1.0, self.picture.frame.size.height / 1.0)
 
-        
         self.setColors()
         
         self.pictureSetUp()
         
-        var cornerRadiusOfPicture:CGFloat = 2.0
+        var cornerRadiusOfPicture:CGFloat?
         
         
-        /*
+        
         if(self.view.frame.width == 414.0){
             cornerRadiusOfPicture = CGFloat(picture.frame.height - size!.width / 2.0)
         }else if(self.view.frame.width == 375.0){
@@ -89,18 +89,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         }else{
             cornerRadiusOfPicture = CGFloat(0.0)
         }
-        */
-        
-        println(self.view.frame.width)
-        println(self.view.frame.height)
-        
-        /*
-        if(cornerRadiusOfPicture != nil){
-            picture.layer.cornerRadius = cornerRadiusOfPicture!
-        }else{
-            picture.layer.cornerRadius = 0.0
-        }
-        */
+
+        picture.layer.cornerRadius = cornerRadiusOfPicture!
         picture.clipsToBounds = true
         picture.layer.borderColor = UIColor.blackColor().CGColor
         picture.layer.borderWidth = 3.0
@@ -116,62 +106,43 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         mainTableView.delegate = self
         
+        
+        
         if(userPassedIn != nil){
-            
-            println("im in here")
-            //userObjectId = userPassedIn?.objectId
-            //println("object id \(userObjectId)")
-            
-            
-            println("user passed in \(userPassedIn?.description)")
-            
-            
+
+            userObjectId = userPassedIn?.objectId
+
             personName = userPassedIn?.username
             nameLabel.text = personName
 
             
             personAge = userPassedIn?.objectForKey("age") as? String
-
             ageLabel.text = personAge!
             
-        
             personInterests = userPassedIn?.objectForKey("interests") as? Array
             
-
             personGender = userPassedIn?.objectForKey("gender") as? String
             genderLabel.text = personGender
-            
-            println("getting to the end no prob")
+
         }
         
         if(personPassedInNotPFUser != nil){
             
-            println("trying to track down a bug")
-            
             var userInfoLevel:AnyObject? = personPassedInNotPFUser?.objectForKey("userInfo")
             if(userInfoLevel != nil){
                 
-                //userObjectId = userInfoLevel!.objectForKey("objectId")
+                userObjectId = userInfoLevel!.objectForKey("objectId")
                 
                 personName = userInfoLevel!.objectForKey("username") as? String
                 nameLabel.text = personName
-                
-                println("user name! \(personName)")
-                
-                personAge = userInfoLevel!.objectForKey("age") as? String
-                
-                ageLabel.text = personAge!
-                
-                println("age \(personAge!)")
-                
-                
-                personInterests = userInfoLevel!.objectForKey("interests") as? Array
-                
 
+                personAge = userInfoLevel!.objectForKey("age") as? String
+                ageLabel.text = personAge!
+
+                personInterests = userInfoLevel!.objectForKey("interests") as? Array
                 personGender = userInfoLevel!.objectForKey("gender") as? String
                 genderLabel.text = personGender
-                
-                println("not sure why I keep getting bugs!")
+
             }
         }
         
@@ -209,6 +180,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     // sets the options to be edited //
     func editButton(){
         
+        
+        // edit enabled button //
         if(toggleBoolean == true){
             
             nameTextField.hidden = false
@@ -219,14 +192,11 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             toggleBoolean = false
 
             // adding the '+' to the end of the list //
-            personInterests?.append("Add New Entry")
-            
+            personInterests?.append("Add New Interest")
             
             nameTextField.text = nameLabel.text
             genderEditText.text = genderLabel.text
             ageEditText.text = ageLabel.text
-            
-            
             
             mainTableView.reloadData()
             
@@ -234,6 +204,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             
         }
         
+            // done button for editing //
         else if(toggleBoolean == false){
             nameTextField.hidden = true
             genderEditText.hidden = true
@@ -255,11 +226,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             
             // stops the camera //
             captureSession.stopRunning()
-            
-            
-            
-            
-            
+
             // saving the users info upon hitting done! //
             self.saveUsersInfo()
         }
@@ -276,36 +243,52 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         var currentUser:PFUser = PFUser.currentUser()
         
-        if((nameTextField.text != personName) || (genderEditText.text != personGender) || (ageEditText.text != personAge)){
+        if((nameTextField.text != personName) || (genderEditText.text != personGender) || (ageEditText.text != personAge) || self.arrayOfPictures.count > 0){
             
             if( (!(nameTextField.text.isEmpty)) || (!(genderEditText.text.isEmpty)) ||
-                (!(ageEditText.text.isEmpty)) ){
+                (!(ageEditText.text.isEmpty)) || self.arrayOfPictures.count > 0){
                 
-                    
                     //var currentUser:PFUser = PFUser.currentUser()
                     currentUser.username = nameTextField.text
                     currentUser.setValue(genderEditText.text, forKey: "gender")
                     currentUser.setValue(ageEditText.text, forKey: "age")
                     currentUser.setValue(personInterests, forKey: "interests")
+                    
+                    if(self.arrayOfPictures.count > 0){
+                        
+                        
+                        
+                        
+                        println("sending stuff back to the main screen")
+                        self.delegate?.updateCurrentUserInfo(PFUser.currentUser().username, userPicture:self.arrayOfPictures.last! as UIImage)
+                        
+                        
+                        
+                        var imageData = UIImagePNGRepresentation(self.arrayOfPictures.last! as UIImage)
+                        var imageFile:PFFile = PFFile(name: "profilePic.png", data: imageData)
+                        
+                        
+                        
+                        currentUser.setValue(imageFile, forKey: "picture")
+                        
+                    }
+                    
                     currentUser.saveInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
                         
                         if(success == true){
-                            
-                            println("save succeeded!")
                             
                             self.nameLabel.text = currentUser.username
                             self.genderLabel.text = currentUser.objectForKey("gender") as? String
                             self.ageLabel.text = currentUser.objectForKey("age") as? String
                             self.personInterests = currentUser.objectForKey("interests") as? Array
                             
+
                         }else{
-                            
                             println("error:\(error.description)")
                         }
                     }
             }
             
-        
         }else{
             
             
@@ -498,10 +481,6 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 }
             }
         }
-        
-        
-        
-        
     }
     
     
@@ -511,15 +490,13 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         if(captureDevice != nil){
             
             self.beginSession()
+            
+            cancelToggle = false
         }
     }
     
     
     func beginSession(){
-        
-        
-        
-        
         
         
         preview = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -531,7 +508,6 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         preview?.frame = frameForCamera
         self.picture.layer.addSublayer(preview)
         
-
         captureSession.startRunning()
         
         changePictureButton.hidden = true
@@ -540,50 +516,111 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     }
     
     @IBAction func takePictureButtonOnClick(sender: UIButton) {
-        
-        
+
+        // take picture button and use? button
         if(sender.tag == 0){
-        
-            var sessionQueue: dispatch_queue_t?
-            var mainImage:UIImage?
-        
-            sessionQueue = dispatch_queue_create("CameraSessionController Session", DISPATCH_QUEUE_SERIAL)
-        
-            dispatch_async(sessionQueue, { () -> Void in
-
-                self.stillImageOutput!.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo), completionHandler: { (buffer:CMSampleBuffer!, error:NSError!) -> Void in
-                
-                    if(buffer == nil){
-                    
-                        mainImage = nil
-                    
-                    }else{
-                    
-                        println("its getting to heres")
-                        var imageData:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer?)
-                        mainImage = UIImage(data: imageData)
-
-                        self.picture.image = UIImage(data: imageData)
-                    
-                    
-                    }
-                })
-            })
             
+            if(sender.titleLabel?.text == "Take Pic"){
+                
+                println("take picture")
+        
+                var sessionQueue: dispatch_queue_t?
+                var mainImage:UIImage?
+        
+                sessionQueue = dispatch_queue_create("CameraSessionController Session", DISPATCH_QUEUE_SERIAL)
+        
+                dispatch_async(sessionQueue, { () -> Void in
+
+                    self.stillImageOutput!.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo), completionHandler: { (buffer:CMSampleBuffer!, error:NSError!) -> Void in
+                
+                        if(buffer == nil){
+
+                            mainImage = nil
+                    
+                        }else{
+                    
+                            var imageData:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer?)
+                
+                            self.mainImage = UIImage(data: imageData)
+
+                            //self.flippedMainImage = UIImage(CGImage: self.mainImage!.CGImage, scale: 1.0, orientation:.DownMirrored)
+
+                            self.takePictureButton.titleLabel!.text = "Use?"
+                            self.cancelToggle = true
+                            
+                            self.captureSession.stopRunning()
+
+                        }
+                    })
+                })
+            
+            
+            }else{
+                
+                println("use? button pressed")
+                
+                // setting the label back //
+                //self.takePictureButton.titleLabel?.text = "Take Pic"
+                //sender.setTitle("Take Pic", forState: UIControlState.Normal)
+                self.takePictureButton.titleLabel!.text = "Take Pic"
+                
+
+                // adding to the array of images //
+                
+                //if(flippedMainImage != nil){
+                if(mainImage != nil){
+                    //self.arrayOfPictures.append(flippedMainImage!)
+                    self.arrayOfPictures.append(mainImage!)
+
+                    //self.picture.image = flippedMainImage
+                    self.picture.image = self.arrayOfPictures.last
+                }
+                
+                
+                self.takePictureButton.hidden = true
+                self.cancelTakePictureButton.hidden = true
+                self.changePictureButton.hidden = false
+
+            }
+        
+        
             // cancel //
         }else if(sender.tag == 1){
             
-            
-            
+            // decides to not take a picture after all //
+            if(self.cancelToggle == false){
+                
+                println("cencelled from first cancel")
+                
+                // setting the default picture back //
+                self.picture.image = UIImage(named: "face3.png")
+                
+                println("cancelled photo")
+                
+                // stops the camera //
+                captureSession.stopRunning()
+                
+                //
+                self.preview?.removeFromSuperlayer()
+                
+                takePictureButton.hidden = true
+                cancelTakePictureButton.hidden = true
+                changePictureButton.hidden = false
+
+                
+                
+                // cancel -- if the user decides to not keep the photo they just took //
+            }else if (self.cancelToggle == true){
+                
+                println("cancel from second cancel")
+
+                self.captureSession.startRunning()
+                
+                self.takePictureButton.titleLabel?.text = "Take Pic"
+                
+                self.cancelToggle = false
+                
+            }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

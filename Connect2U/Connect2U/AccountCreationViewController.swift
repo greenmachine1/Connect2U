@@ -224,13 +224,25 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         
         // sets up the name and password but leaves the rest of the fields open //
         // so they can come back and edit them at a later time //
+        
+        var mainImage:UIImage = UIImage(named: "default_center.png")!
+        var flippedImage = UIImage(CGImage: mainImage.CGImage, scale: 1.5, orientation:.RightMirrored)
+        
+        var imageData = UIImagePNGRepresentation(flippedImage)
+        
+        
+        // setting up the default user picture //
+        //var imageData = UIImagePNGRepresentation(UIImage(named: "default_center.png"))
+        var imageFile:PFFile = PFFile(name: "face.png", data: imageData)
+        
+        
         user.username = userNameString
         user.password = passwordString
         user["major"] = majorNumber
         user["minor"] = minorNumber
         user["gender"] = "unknown"
         user["interests"] = []
-        user["picture"] = "face3.png"
+        user["picture"] = imageFile
         user["age"] = "0"
         user["signedIn"] = false
         user.signUpInBackgroundWithBlock { (success:Bool, error:NSError!) -> Void in
