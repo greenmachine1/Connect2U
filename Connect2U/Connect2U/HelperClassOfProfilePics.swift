@@ -58,31 +58,7 @@ class HelperClassOfProfilePics: NSObject {
         println("new profile pics--- > \(newProfilePics)")
         println("new Profile pics! \(newProfilePics.count)")
         
-        
-        /*
-        for(var i = 0; i < newProfilePics.count; i++){
-            
-            println("the error is in here")
-            
-            //println(newProfilePics[i].valueForKey("username")!)
-            //println(newProfilePics[i].valueForKey("picture")!)
-            
-            //var tempName:String = String(newProfilePics[i].valueForKey("username")! as NSString)
-            //var tempPic:String = String(newProfilePics[i].valueForKey("picture")! as NSString)
-            
-            
-            
-            var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
-            var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
-            
-            
-            println("both values --> \(tempName!.firstObject! as String)")
-            println("both values --> \(tempPic!.firstObject! as String)")
-        }
-        */
-        
-        
-        //println("new profile pics name -- >\(newProfilePics[0])")
+
         
         
     
@@ -112,9 +88,7 @@ class HelperClassOfProfilePics: NSObject {
         
         for(var i = 0; i < arrayPassedInFromMainClass!.count; i++){
             
-            println("the error is in here well somewhere...")
-            
-            println("arrayPassedInFromMainClass --> \(arrayPassedInFromMainClass!)")
+
             
             // placement around the main circle //
             var x = Double(cgpointToDoubleConversionForX) + Double(circleRadius! * 1.5) * cos(2 * M_PI * Double(i) / Double(newProfilePics.count))
@@ -122,17 +96,53 @@ class HelperClassOfProfilePics: NSObject {
         
             
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
-            var tempPic:AnyObject? = newProfilePics[i].valueForKey("picture")
+            //var tempPic:AnyObject? = newProfilePicsi].valueForKey("picture")
             
             
-            println("temp name!! --> \(tempName?) and temp pic!!!! --> \(tempPic?)")
             
-            if((tempName != nil) && (tempPic != nil)){
             
-                self.createProfilePics(x, yValue: y, sizeValue: circleRadius!, userPictureString: tempPic!.firstObject! as String, selfTag: i, userNameString:tempName!.firstObject! as String)
-            }
-        }
+            
+            
+            // need to come in here and look up each individual picture one at a time //
+            
+            
+            var objectData:[AnyObject] = arrayPassedInFromMainClass! as Array
+            if(objectData.count != 0){
+                
+                var fileObject:AnyObject = objectData[i].valueForKey("picture") as AnyObject!
+                println("file object \(fileObject)")
+                
+                if(!(fileObject.isEqual(nil))){
+                    
+                    var theFinalFile:PFFile = fileObject.firstObject as PFFile
+                    
+                    if(!(theFinalFile.isEqual(nil))){
+                        
+                        
+                        theFinalFile.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                            
+                            if(data != nil){
+                                
+                                println("in here debug ")
+                                var imageOfMe:UIImage = UIImage(data: data)!
+                                
+                                var flippedImage = UIImage(CGImage: imageOfMe.CGImage, scale: 1.5, orientation:.LeftMirrored)
+                                
+                                
+                                if((tempName != nil) && (flippedImage != nil)){
 
+                                    
+                                    self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: flippedImage!, selfTag: i, userNameString: tempName!.firstObject! as String)
+                                }
+                            }
+                        })
+                    }
+                }
+                
+            }
+            
+
+        }
     }
     
     
@@ -154,12 +164,13 @@ class HelperClassOfProfilePics: NSObject {
     
     
     // creation of the profile pics //
-    func createProfilePics(xValue:Double, yValue:Double, sizeValue:Double, userPictureString:String, selfTag:Int, userNameString:String){
+    func createProfilePics(xValue:Double, yValue:Double, sizeValue:Double, userPicture:UIImage, selfTag:Int, userNameString:String){
         
         var mainButton:UIButton = UIButton()
         
         mainButton = UIButton(frame: CGRect(x: xValue, y: yValue, width: sizeValue, height: sizeValue))
-        mainButton.setImage(UIImage(named: userPictureString), forState: UIControlState.Normal)
+        mainButton.setImage(userPicture, forState: UIControlState.Normal)
+        mainButton.setImage(userPicture, forState: UIControlState.Highlighted)
         mainButton.layer.cornerRadius = 50
         mainButton.layer.borderWidth = 3.0
         mainButton.layer.borderColor = UIColor.blackColor().CGColor
@@ -227,15 +238,18 @@ class HelperClassOfProfilePics: NSObject {
     
     func profileClicked(sender:UIButton){
         
+        println("touched in here ")
+        
         if(arrayPassedInFromMainClass != nil){
+
+            println("sender \(sender.tag) and count \(arrayPassedInFromMainClass!.count)")
             
-            //println(arrayPassedInFromMainClass![sender.tag].objectForKey("username")!)
-            println(arrayPassedInFromMainClass![sender.tag].valueForKey("username")!)
+            // sending the person clicked back to the main view to view their profile or chat //
+            delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag - 1])
         }
         
         
-        // sending the person clicked back to the main view to view their profile or chat //
-        delegate?.returnPersonClicked(arrayPassedInFromMainClass![sender.tag])
+
         
     }
 }

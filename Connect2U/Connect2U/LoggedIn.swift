@@ -62,11 +62,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // loading the defaults set by the user (friends, requests, chat)//
-        //self.loadDefaults()
-        
-        
+
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         
@@ -78,6 +74,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             currentUser.saveInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                 if(success){
                 
+                    println("\n \n user info --> \(PFUser.currentUser()) \n \n")
+                    
+                    println(PFUser.currentUser().objectForKey("picture"))
+                    
+                    
+                    
                     println("success in saving")
                 }
             })
@@ -380,6 +382,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     // gets called when you click on a persons profile //
     func returnPersonClicked(person: AnyObject) {
+        
+        println("im now in here!")
         
         println("\n \n \n \n person clicked on \(person)\n \n \n \n \n ")
 
