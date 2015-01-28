@@ -44,6 +44,8 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       
       NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateInfoFromPersonAdjustingProfile:", name: "updateInfo", object: nil)
       
+      NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateInfoFromPersonAdjustingProfile:", name: "requestToUpdate", object: nil)
+      
       
         
 
@@ -195,8 +197,6 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       var inComingArrayArray:Array = Array<AnyObject>()
       inComingArrayArray = inComingObjects as Array
       
-
-   
       if(tempBeaconArray.isEmpty){
          
          tempBeaconArray = inComingArrayArray
@@ -300,9 +300,6 @@ class IBeaconGatherData: NSObject, CLLocationManagerDelegate {
       println("array is done loading")
 
    }
-   
-
-
 }
 
 

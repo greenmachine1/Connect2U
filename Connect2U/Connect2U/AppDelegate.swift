@@ -148,6 +148,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     notificationCenter.postNotificationName("textMessage", object:self, userInfo:userInfo)
                     
                     }
+                }else{
+                    
+                    // letting the rest of the app know that it needs to update the user info //
+                    let notificationCenter = NSNotificationCenter.defaultCenter()
+                    notificationCenter.postNotificationName("requestToUpdate", object:self, userInfo:userInfo)
+                    
+                    
                 }
                 
                 

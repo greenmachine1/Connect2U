@@ -549,7 +549,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
 
         // pin pointing if the text came from this user or someone else
-        //if((mainChatObject!.readFullMessage()[indexPath.row].allValues.first?.isEqual(PFUser.currentUser().username)) == true){
         if((tempArrayOfMessages![indexPath.row].allValues.first?.isEqual(PFUser.currentUser().username)) == true){
             
             println("in here with cory")

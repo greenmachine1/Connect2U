@@ -33,7 +33,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     var tempBoolToggleForBroadCast:Bool = false
     
     var helperClass:HelperClassOfProfilePics = HelperClassOfProfilePics()
-    //var locationData:GatherInfo = GatherInfo()
+
     var colorPalette = ColorPalettes()
     var currentUser = PFUser.currentUser()
     var sideBar:SideBar  = SideBar()
@@ -122,7 +122,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 self.meButton!.backgroundColor = UIColor.whiteColor()
                 
                 
-            }else{
+            }else if(!((fileName?.rangeOfString("face.png", options: nil, range: nil, locale: nil)) != nil)){
                 
                 
                 imageData!.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
@@ -139,50 +139,49 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     }
                 })
             }
+            
+        // if the picture contains no data what so ever //
+        }else{
+            
+            self.meButton!.setTitle("Start Here!", forState: UIControlState.Normal)
+            self.meButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            self.meButton!.backgroundColor = UIColor.whiteColor()
+            
         }
+
         
-        
-        
-        
+            meButton!.layer.cornerRadius = 50
+            meButton!.layer.borderWidth = 3.0
+            meButton!.layer.borderColor = UIColor.blackColor().CGColor
+            meButton!.clipsToBounds = true
+            meButton!.tag = 1001
+            meButton!.addTarget(self, action: Selector("meClickedOn:"), forControlEvents: UIControlEvents.TouchUpInside)
         
 
-        // making the image of me in the very center of the screen //
+            // the current location of meButton //
+            meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
         
-        //meButton!.setImage(UIImage(named: "face3.png"), forState: UIControlState.Normal)
+            // start of the label //
+            nameLabelForMe = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
+            nameLabelForMe!.tag = 1001
+            nameLabelForMe!.textColor = UIColor.whiteColor()
+            nameLabelForMe!.textAlignment = .Center
+            nameLabelForMe!.text = PFUser.currentUser().username
         
-        //meButton!.setImage(meImage, forState: UIControlState.Normal)
+            // creating the big circle in the center //
+            mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
         
-        meButton!.layer.cornerRadius = 50
-        meButton!.layer.borderWidth = 3.0
-        meButton!.layer.borderColor = UIColor.blackColor().CGColor
-        meButton!.clipsToBounds = true
-        meButton!.tag = 1001
-        meButton!.addTarget(self, action: Selector("meClickedOn:"), forControlEvents: UIControlEvents.TouchUpInside)
-        
-
-        // the current location of meButton //
-        meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
-        
-        // start of the label //
-        nameLabelForMe = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
-        nameLabelForMe!.tag = 1001
-        nameLabelForMe!.textColor = UIColor.whiteColor()
-        nameLabelForMe!.textAlignment = .Center
-        nameLabelForMe!.text = PFUser.currentUser().username
-        
-        // creating the big circle in the center //
-        mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
-        
-        
-        // adding this to the subview //
-        self.view.addSubview(nameLabelForMe!)
-        self.view.addSubview(meButton!)
+            
+            // adding this to the subview //
+            self.view.addSubview(nameLabelForMe!)
+            self.view.addSubview(meButton!)
         
         
         // creating the helper class for creating the profile pics //
         helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
         
         helperClass.delegate = self
+        
 
     }
     
@@ -195,6 +194,14 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         //aboutViewController.personsPic = "face_100x100.png"
         aboutViewController.userPassedIn = PFUser.currentUser()
         aboutViewController.cameFromMainUser = true
+        
+        
+        // this is the main user view for the about view controller //
+        // I need to be passing in the entire list of people available so I can send notifications to those //
+        // to update their list of people after this person is done updating their profile //
+        
+        aboutViewController.passedInArrayOfUsers = tempArrayPassedIn
+        
         aboutViewController.delegate = self
                 
         self.navigationController?.pushViewController(aboutViewController, animated: true)
@@ -667,15 +674,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         // the profile alert button //
         alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: { action in
             
-            
-            
-            
+        
             // start chatting and send over the ok to chat //
             self.approvalOrDenialOfChat(passedInPerson, approval: true)
-            
-            
-            
-            
+
             if(section == 1){
             
                 // creating a new chat object //
@@ -695,8 +697,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 self.sideBar.updateRequests(self.listOfRequests)
                 
                 self.convertChatListToStringForListView()
-                
-
 
             }
 
@@ -716,9 +716,10 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             // takes you the user to your personal settings //
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-            
+
             aboutViewController.personsPic = "face_100x100.png"
-            aboutViewController.userPassedIn = self.userClickedOn
+            //aboutViewController.personPassedInNotPFUser = self.userClickedOn
+            aboutViewController.personPassedInNotPFUser = passedInPerson
             aboutViewController.cameFromMainUser = false
             
             self.navigationController?.pushViewController(aboutViewController, animated: true)
@@ -749,8 +750,15 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         tempArrayPassedIn = users
         
-        println("update in here \(tempArrayPassedIn?)")
+        println("\n \n update in here \(tempArrayPassedIn?)\n \n")
         //println("\n \n super temp array \(superTempArray?)")
+        
+        
+        var userInfo = ["userInfo":tempArrayPassedIn!]
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.postNotificationName("updateOfPeople", object:self, userInfo:userInfo)
+        
         
         
         // passes the users to the circle creator! //
@@ -986,7 +994,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // should send the user to the profile view //
             // takes you the user to your personal settings //
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-
             
             aboutViewController.personPassedInNotPFUser = personalInfo
             aboutViewController.cameFromMainUser = false
@@ -1059,7 +1066,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
             }
             
-            
             chatViewController.indexNumber = tempIndex!
             
             // sending over the stored conversation //
@@ -1074,10 +1080,19 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     
+
     
     
     
     
+    
+
+
+
+
+
+
+
     // handles the sending out of the actual push notification //
     func approvalOrDenialOfChat(toUser:AnyObject, approval:Bool){
         

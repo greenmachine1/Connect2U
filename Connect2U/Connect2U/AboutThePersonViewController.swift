@@ -39,6 +39,9 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     
     var delegate:SetCurrentUserInfo?
     
+    var passedInArrayOfUsers:Array<AnyObject>?
+    var finalArrayOfUsersAsPFUsersId:Array<AnyObject> = []
+    
     
     // camera stuff //
     let captureSession = AVCaptureSession()
@@ -50,6 +53,10 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     var cancelToggle:Bool = false
     var arrayOfPictures:[UIImage] = []
     var flippedMainImage:UIImage?
+    
+    
+    
+    var pictureFromOtherView:UIImage?
     
     
     
@@ -106,16 +113,45 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         mainTableView.delegate = self
         
+        if(passedInArrayOfUsers != nil){
+            
+            println("passed in array of users....... --> \(passedInArrayOfUsers!)")
+            
+            finalArrayOfUsersAsPFUsersId.removeAll(keepCapacity: false)
+            
+            for(index, element) in enumerate(passedInArrayOfUsers!){
+                
+                if var elementAsPFUser:PFUser? = element.firstObject! as? PFUser{
+                    
+                    println("element as pf user --> \(elementAsPFUser!)")
+                    
+                    if var objectId:AnyObject? = elementAsPFUser!.objectId{
+                        
+                        println("object id --> \(objectId!)")
+                        
+                        finalArrayOfUsersAsPFUsersId.append(objectId!)
+                        
+                    }
+                }
+            }
+        }
+        
+        
+        
+        // observer for when new people come in //
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "update:", name: "updateOfPeople", object: nil)
+        
         
         
         if(userPassedIn != nil){
+            
+            println("person passed in -->\(userPassedIn!.description)")
 
             userObjectId = userPassedIn?.objectId
 
             personName = userPassedIn?.username
             nameLabel.text = personName
 
-            
             personAge = userPassedIn?.objectForKey("age") as? String
             ageLabel.text = personAge!
             
@@ -123,13 +159,34 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             
             personGender = userPassedIn?.objectForKey("gender") as? String
             genderLabel.text = personGender
+            
+            var personPicture:PFFile? = userPassedIn?.objectForKey("picture") as PFFile?
+            if(personPicture != nil){
+                println("person picture \(personPicture!)")
+                
+                
+                personPicture!.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                    
+                    if(data != nil){
 
+                        self.picture.image = UIImage(CGImage: UIImage(data: data)!.CGImage, scale: 1.0, orientation: .LeftMirrored)
+                        
+                    }else{
+                        
+                        println("nothing here")
+                    }
+                })
+            }
         }
         
         if(personPassedInNotPFUser != nil){
             
+            println("personPassedIn not PFUser -->\(personPassedInNotPFUser!.description)")
+            
             var userInfoLevel:AnyObject? = personPassedInNotPFUser?.objectForKey("userInfo")
             if(userInfoLevel != nil){
+                
+                println("here.... yo!")
                 
                 userObjectId = userInfoLevel!.objectForKey("objectId")
                 
@@ -142,9 +199,56 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 personInterests = userInfoLevel!.objectForKey("interests") as? Array
                 personGender = userInfoLevel!.objectForKey("gender") as? String
                 genderLabel.text = personGender
+                
 
+                if var personPicture:AnyObject = userInfoLevel!.objectForKey("picture"){
+                    
+                    println("person picture \(personPicture)")
+                    
+                    if var urlForPicture:NSURL? = NSURL(string: personPicture.objectForKey("url") as String){
+                    
+                        println("this is legit \(urlForPicture!)")
+                        
+                        
+                        if var imageData:NSData? = NSData(contentsOfURL: urlForPicture!){
+                        
+                            if var fileForImage:PFFile? = PFFile(data: imageData){
+                            
+                            
+                                fileForImage?.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                                
+                                    if(data != nil){
+
+                                        self.picture.image = UIImage(CGImage: UIImage(data: data)!.CGImage, scale: 1.0, orientation: .LeftMirrored)
+                                    
+                                    }else{
+                                    
+                                        println("nope")
+                                    }
+                                
+                                })
+                            }
+                        
+                        }
+
+                    }else{
+                        
+                        println("nope")
+                    }
+                    
+                    
+                }else{
+                    
+                    println("is nil")
+                }
+                
             }
+
         }
+
+        
+        
+        
         
         
         if(cameFromMainUser == true){
@@ -164,6 +268,106 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         
     }
+    
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        // removing the observer //
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
+    }
+    
+    
+    
+    
+    
+    // passed in from the logged in View , came over as a notification//
+    func update(peopleObject:NSNotification){
+        
+        finalArrayOfUsersAsPFUsersId.removeAll(keepCapacity: false)
+        
+        if(cameFromMainUser == true){
+        
+            println("notification \(peopleObject)")
+        
+            if var firstLevel:AnyObject? = peopleObject.userInfo{
+            
+                println("first level \(firstLevel!)")
+                
+                if var secondLevelArray:Array<AnyObject> = firstLevel?.valueForKey("userInfo") as? Array{
+                    
+                    println("\n second level array \(secondLevelArray)\n ")
+                    
+                    for (index, element) in enumerate(secondLevelArray){
+                        
+                        if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
+                            
+                            println("user!!! --> \(userInfoAsPFUser!)")
+                            
+                            if var personPassedInObjectId:AnyObject? = userInfoAsPFUser?.objectId{
+                                
+                                
+                                finalArrayOfUsersAsPFUsersId.append(personPassedInObjectId!)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    // sends out the final notification that they need to update //
+    func sendOutNotificationToSelectUsersThatTheyNeedToPollTheServer(){
+        
+        for(index, element) in enumerate(finalArrayOfUsersAsPFUsersId){
+            
+            println("elements id \(element)")
+            
+            self.sendUpdate(element)
+        }
+    }
+    
+    func sendUpdate(toUser:AnyObject){
+        
+        var currentUserDictionary = ["update": true]
+        
+        // basically needs to send over an alert saying that 'You' want to chat with them and //
+        // the can either click ok or view profile //
+        var dataSend = ["userInfo": currentUserDictionary, "text":false]
+        
+        var query:PFQuery = PFUser.query()
+        query.whereKey("objectId", equalTo: toUser)
+        query.whereKey("signedIn", equalTo: true)
+        
+        var pushQuery:PFQuery = PFInstallation.query()
+        pushQuery.whereKeyExists("user")
+        pushQuery.whereKey("user", matchesQuery: query)
+        
+        var push:PFPush = PFPush()
+        push.setQuery(pushQuery)
+        push.setData(dataSend)
+        push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            
+            if(success == true){
+                
+                println("success!")
+                
+            }else{
+                
+                println("error")
+            }
+        })
+    }
+
+    
+    
+    
+    
     
     
     // called when the return key is pressed //
@@ -256,16 +460,11 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                     
                     if(self.arrayOfPictures.count > 0){
                         
-                        
-                        
-                        
                         println("sending stuff back to the main screen")
                         self.delegate?.updateCurrentUserInfo(PFUser.currentUser().username, userPicture:self.arrayOfPictures.last! as UIImage)
                         
-                        
-                        
-                        var imageData = UIImagePNGRepresentation(self.arrayOfPictures.last! as UIImage)
-                        var imageFile:PFFile = PFFile(name: "profilePic.png", data: imageData)
+                            var imageData = UIImagePNGRepresentation(self.arrayOfPictures.last! as UIImage)
+                            var imageFile:PFFile = PFFile(name: "profilePic.png", data: imageData)
                         
                         
                         
@@ -277,11 +476,16 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                         
                         if(success == true){
                             
+                            println("success in saving picture and stuff ")
+                            
                             self.nameLabel.text = currentUser.username
                             self.genderLabel.text = currentUser.objectForKey("gender") as? String
                             self.ageLabel.text = currentUser.objectForKey("age") as? String
                             self.personInterests = currentUser.objectForKey("interests") as? Array
                             
+                            
+                            // sends out notifications to the remaining users that they need to update //
+                            self.sendOutNotificationToSelectUsersThatTheyNeedToPollTheServer()
 
                         }else{
                             println("error:\(error.description)")
@@ -367,6 +571,12 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 println("add new entry")
                 
                 // should send the user to add a new entry view //
+                
+                
+                
+                
+                
+                
             }
             
         }
@@ -543,7 +753,6 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 
                             self.mainImage = UIImage(data: imageData)
 
-                            //self.flippedMainImage = UIImage(CGImage: self.mainImage!.CGImage, scale: 1.0, orientation:.DownMirrored)
 
                             self.takePictureButton.titleLabel!.text = "Use?"
                             self.cancelToggle = true
