@@ -119,13 +119,10 @@ class HelperClassOfProfilePics: NSObject {
         
             
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
-            
-            
-            //println("in here \(i)")
+
             
             var mainObjectArray:[AnyObject]? = newProfilePics[i] as? Array
-            
-            //println("main object array --> \(mainObjectArray!)")
+
             
             if(mainObjectArray != nil){
                 
@@ -135,9 +132,6 @@ class HelperClassOfProfilePics: NSObject {
                     var fileName = pictureObject!.name
                     if(fileName.rangeOfString("profilePic.png", options: nil, range: nil, locale: nil) != nil){
                         
-                        //println("is the profile pic")
-                        
-                        
                     }
                     
                     var tempImage:UIImage = UIImage(named: "default_center.png")!
@@ -145,69 +139,24 @@ class HelperClassOfProfilePics: NSObject {
                     
                     for(var j = 0; j < tempImageArray.count; j++){
                         
-                        self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
+                        // making sure that the amount of users on screen is less than 9 //
+                        if(tempImageArray.count < 9){
+                        
+                            self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
+                        }else{
+                            
+                            self.createProfilePics(x, yValue: y, sizeValue: 50.0, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
+                            
+                        }
                     }
                     
                     
                     // updating the picture //
                     self.updatePictureAtButtonIndex(pictureObject!, index: i, temporaryImageArray: tempImageArray)
-                    
-                    /*
-                    pictureObject!.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
-                        
-                        if(data != nil){
-                            
-                            if(fileName.rangeOfString("profilePic.png", options: nil, range: nil, locale: nil) != nil){
-                                
-                                println("is the profile pic")
-                                // need to flip the image if this is here //
-                                var image:UIImage = UIImage(data: data)!
-                                var flippedImage = UIImage(CGImage: image.CGImage, scale: 1.5, orientation:.LeftMirrored)
-                                
-                                println("index \(i)")
-                                
-                                tempImageArray.append(flippedImage!)
-                                
-                                
-                            }else{
-                                
-                                var image = UIImage(named: "default_center.png")
-                                
-                                
-                                println("index \(i)")
-                                tempImageArray.append(image!)
-                                // need to append an image here //
-                                //tempImageArray.insert(image!, atIndex: i)
-                                
-                            }
-                            
 
-                            
-                        }else{
-                            
-                            println("nope picture could not be downloaded -->\(error.description)")
-                            
-                            // just in case the image cannot be displayed //
-                            var image = UIImage(named: "default_center.png")
-
-                        }
-                        
-                        for(var j = 0; j < tempImageArray.count; j++){
-                            
-                            self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
-                        }
-                    })
-
-                    */
                 }
             }
-            
-            /*
-            for(var j = 0; j < tempImageArray.count; j++){
-                
-                self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
-            }
-            */
+
         }
     }
     
@@ -279,6 +228,12 @@ class HelperClassOfProfilePics: NSObject {
     
     // creation of the profile pics //
     func createProfilePics(xValue:Double, yValue:Double, sizeValue:Double, userPicture:UIImage, selfTag:Int, userNameString:String, userPicBlank:Bool){
+        
+        
+        if(sizeValue == 50.0){
+            
+            cornerRadius! = 25.0
+        }
         
         var mainButton:UIButton = UIButton()
         mainButton = UIButton(frame: CGRect(x: xValue, y: yValue, width: sizeValue, height: sizeValue))
