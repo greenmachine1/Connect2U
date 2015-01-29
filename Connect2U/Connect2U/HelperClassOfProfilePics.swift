@@ -29,6 +29,8 @@ class HelperClassOfProfilePics: NSObject {
     
     var delegate:ReturnWithPersonClicked?
     
+    var tempImageArray:[UIImage] = []
+    
 
     override init() {
         super.init()
@@ -79,13 +81,17 @@ class HelperClassOfProfilePics: NSObject {
         arrayPassedInFromMainClass!.removeAll(keepCapacity: false)
         arrayPassedInFromMainClass = newProfilePics
         
+        tempImageArray.removeAll(keepCapacity: false)
+        
         
         println("array passed in from main class \(arrayPassedInFromMainClass)")
         
-        var tempImageArray:[UIImage] = []
+        
+
         
         var cgpointToDoubleConversionForX:Double = Double(locationPointOfCircle!.x)
         var cgpointToDoubleConversionForY:Double = Double(locationPointOfCircle!.y)
+        
         
         for(var i = 0; i < arrayPassedInFromMainClass!.count; i++){
             
@@ -115,11 +121,24 @@ class HelperClassOfProfilePics: NSObject {
                         
                         
                     }
-
                     
+                    var tempImage:UIImage = UIImage(named: "default_center.png")!
+                    tempImageArray.append(tempImage)
+                    
+                    for(var j = 0; j < tempImageArray.count; j++){
+                        
+                        self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
+                    }
+                    
+                    
+                    // updating the picture //
+                    self.updatePictureAtButtonIndex(pictureObject!, index: i, temporaryImageArray: tempImageArray)
+                    
+                    /*
                     pictureObject!.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                        
                         if(data != nil){
-
+                            
                             if(fileName.rangeOfString("profilePic.png", options: nil, range: nil, locale: nil) != nil){
                                 
                                 println("is the profile pic")
@@ -127,21 +146,24 @@ class HelperClassOfProfilePics: NSObject {
                                 var image:UIImage = UIImage(data: data)!
                                 var flippedImage = UIImage(CGImage: image.CGImage, scale: 1.5, orientation:.LeftMirrored)
                                 
+                                println("index \(i)")
+                                
                                 tempImageArray.append(flippedImage!)
+                                
                                 
                             }else{
                                 
                                 var image = UIImage(named: "default_center.png")
                                 
+                                
+                                println("index \(i)")
                                 tempImageArray.append(image!)
                                 // need to append an image here //
-                                
+                                //tempImageArray.insert(image!, atIndex: i)
                                 
                             }
-                            for(var j = 0; j < tempImageArray.count; j++){
-                                
-                                self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
-                            }
+                            
+
                             
                         }else{
                             
@@ -149,15 +171,66 @@ class HelperClassOfProfilePics: NSObject {
                             
                             // just in case the image cannot be displayed //
                             var image = UIImage(named: "default_center.png")
+
+                        }
+                        
+                        for(var j = 0; j < tempImageArray.count; j++){
                             
-                            tempImageArray.append(image!)
-                            // need to append an image here //
-                            for(var j = 0; j < tempImageArray.count; j++){
-                                
-                                self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:true)
-                            }
+                            self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
                         }
                     })
+
+                    */
+                }
+            }
+            
+            /*
+            for(var j = 0; j < tempImageArray.count; j++){
+                
+                self.createProfilePics(x, yValue: y, sizeValue: self.circleRadius!, userPicture: tempImageArray[j], selfTag: j, userNameString: tempName!.firstObject! as String, userPicBlank:false)
+            }
+            */
+        }
+    }
+    
+    
+    
+    func updatePictureAtButtonIndex(pictureFile:PFFile ,index:Int, temporaryImageArray:Array<UIImage>){
+        
+        var subViews = callingViewMain!.subviews as Array<UIView>
+        
+        for someViews in subViews{
+            
+            if(someViews.isKindOfClass(UIButton)){
+                if(someViews.tag < subViews.count){
+                    
+                    println("index \(someViews.tag)")
+                    
+                    if(someViews.tag == index){
+                        
+                        var tempButton:UIButton = someViews as UIButton
+                        
+                        pictureFile.getDataInBackgroundWithBlock({ (data:NSData!, error:NSError!) -> Void in
+                            
+                            if(data != nil){
+                                
+                                var image:UIImage = UIImage(data: data)!
+                                
+                                var imageFlipped:UIImage = UIImage(CGImage: image.CGImage, scale: 1.0, orientation: .LeftMirrored)!
+                                
+                                tempButton.setImage(imageFlipped, forState: UIControlState.Normal)
+                                
+                            }else{
+                                
+                                println("error in uploading \(error.description)")
+                                self.updatePictureAtButtonIndex(pictureFile, index: index, temporaryImageArray:self.tempImageArray)
+                                
+                            }
+                            
+                        })
+                        
+                    }
+                    
                 }
             }
         }
@@ -174,6 +247,9 @@ class HelperClassOfProfilePics: NSObject {
         var newArray:Array<AnyObject> = newProfilePics
                 
         self.drawProfilePics(newArray)
+        
+        
+        
     }
     
     

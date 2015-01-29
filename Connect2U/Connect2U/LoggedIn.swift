@@ -718,7 +718,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
 
             aboutViewController.personsPic = "face_100x100.png"
-            //aboutViewController.personPassedInNotPFUser = self.userClickedOn
+
             aboutViewController.personPassedInNotPFUser = passedInPerson
             aboutViewController.cameFromMainUser = false
             
@@ -753,16 +753,14 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         println("\n \n update in here \(tempArrayPassedIn?)\n \n")
         //println("\n \n super temp array \(superTempArray?)")
         
+
+        // passes the users to the circle creator! //
+        helperClass.updateProfilePics(tempArrayPassedIn!)
         
         var userInfo = ["userInfo":tempArrayPassedIn!]
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.postNotificationName("updateOfPeople", object:self, userInfo:userInfo)
-        
-        
-        
-        // passes the users to the circle creator! //
-        helperClass.updateProfilePics(tempArrayPassedIn!)
 
         
         // making sure that if the side bar is out, that it will alway be on top //
