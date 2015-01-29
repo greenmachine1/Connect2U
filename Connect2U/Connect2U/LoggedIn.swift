@@ -166,7 +166,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                         println("in here debug ")
                         var imageOfMe:UIImage = UIImage(data: data)!
                         
-                        var flippedImage = UIImage(CGImage: imageOfMe.CGImage, scale: 1.5, orientation:.LeftMirrored)
+                        var flippedImage = UIImage(CGImage: imageOfMe.CGImage, scale: 1.5, orientation:.LeftMirrored
+                        )
                         
                         self.meButton!.setImage(flippedImage, forState: UIControlState.Normal)
                         self.meButton!.setImage(flippedImage, forState: UIControlState.Highlighted)

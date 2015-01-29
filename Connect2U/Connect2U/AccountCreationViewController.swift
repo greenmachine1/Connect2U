@@ -226,7 +226,7 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
         // so they can come back and edit them at a later time //
         
         var mainImage:UIImage = UIImage(named: "default_center.png")!
-        var flippedImage = UIImage(CGImage: mainImage.CGImage, scale: 1.5, orientation:.RightMirrored)
+        var flippedImage = UIImage(CGImage: mainImage.CGImage, scale: 1.5, orientation:.Right)
         
         var imageData = UIImagePNGRepresentation(flippedImage)
         

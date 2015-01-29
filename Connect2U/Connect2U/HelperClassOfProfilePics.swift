@@ -234,7 +234,9 @@ class HelperClassOfProfilePics: NSObject {
                                 
                                 var image:UIImage = UIImage(data: data)!
                                 
-                                var imageFlipped:UIImage = UIImage(CGImage: image.CGImage, scale: 1.0, orientation: .LeftMirrored)!
+                                var imageFlipped:UIImage = UIImage(CGImage: image.CGImage, scale: 1.0, orientation: .Right)!
+                                
+                                //var leftToRightFlipped:UIImage = UIImage(CGImage: imageFlipped.CGImage, scale: 1.0, orientation: .RightMirrored)!
                                 
                                 tempButton.setImage(imageFlipped, forState: UIControlState.Normal)
                                 
