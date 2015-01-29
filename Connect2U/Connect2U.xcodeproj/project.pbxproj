@@ -12,6 +12,8 @@
 		32490EDC1A6246A000F960A7 /* IBeaconGatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */; };
 		3249DDEA1A6F4DF000919B8F /* InComingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3249DDE91A6F4DF000919B8F /* InComingText.swift */; };
 		325A0F701A7AC37A006062BB /* NewConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A0F6F1A7AC37A006062BB /* NewConnectivity.swift */; };
+		325A0F741A7AEB83006062BB /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325A0F731A7AEB83006062BB /* LaunchScreen.swift */; };
+		325A0F761A7AEC7A006062BB /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 325A0F751A7AEC7A006062BB /* Launch Screen.xib */; };
 		325AEC9D1A7A3283004CEE94 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325AEC9C1A7A3283004CEE94 /* InterestsViewController.swift */; };
 		325AEC9F1A7A365F004CEE94 /* InterestLevelTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325AEC9E1A7A365F004CEE94 /* InterestLevelTwoViewController.swift */; };
 		325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */; };
@@ -84,6 +86,8 @@
 		32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = IBeaconGatherData.swift; sourceTree = "<group>"; };
 		3249DDE91A6F4DF000919B8F /* InComingText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InComingText.swift; sourceTree = "<group>"; };
 		325A0F6F1A7AC37A006062BB /* NewConnectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewConnectivity.swift; sourceTree = "<group>"; };
+		325A0F731A7AEB83006062BB /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		325A0F751A7AEC7A006062BB /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		325AEC9C1A7A3283004CEE94 /* InterestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
 		325AEC9E1A7A365F004CEE94 /* InterestLevelTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestLevelTwoViewController.swift; sourceTree = "<group>"; };
 		325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconTransmitData.swift; sourceTree = "<group>"; };
@@ -257,6 +261,7 @@
 				E5E6BC871A12E86000972580 /* AppDelegate.swift */,
 				E5E6BC891A12E86000972580 /* ViewController.swift */,
 				E5AC1CEE1A1C09AE00517A89 /* Main.storyboard */,
+				325A0F751A7AEC7A006062BB /* Launch Screen.xib */,
 				E5E6BC8E1A12E86000972580 /* Images.xcassets */,
 				E5E6BC851A12E86000972580 /* Supporting Files */,
 				E5238D441A18A22C00971A24 /* AccountCreationViewController.swift */,
@@ -279,6 +284,7 @@
 				32490EDB1A6246A000F960A7 /* IBeaconGatherData.swift */,
 				325B81211A62FACE0025DBAA /* IBeaconTransmitData.swift */,
 				325A0F6F1A7AC37A006062BB /* NewConnectivity.swift */,
+				325A0F731A7AEB83006062BB /* LaunchScreen.swift */,
 			);
 			path = Connect2U;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 				324696DB1A61C43100FDC9C8 /* LogIn.png in Resources */,
 				32F1D5D21A789BE100EB25B7 /* default_center.png in Resources */,
 				E545ADDE1A2E9631001D3D91 /* Connect_2_U_Log.png in Resources */,
+				325A0F761A7AEC7A006062BB /* Launch Screen.xib in Resources */,
 				E5BC4B191A20913300B39C8E /* Connected_2_U_Log.png in Resources */,
 				E5BC88521A1C71A300D3D0A5 /* face3.png in Resources */,
 				32DDC0BB1A6CE88600EDC11A /* DeleteButton.png in Resources */,
@@ -438,6 +445,7 @@
 			files = (
 				E5BE00BA1A1D48C700543FE8 /* ChatLeftCell.swift in Sources */,
 				E5E6BC8A1A12E86000972580 /* ViewController.swift in Sources */,
+				325A0F741A7AEB83006062BB /* LaunchScreen.swift in Sources */,
 				325B81221A62FACE0025DBAA /* IBeaconTransmitData.swift in Sources */,
 				E5A6E8141A293D930017E68B /* HelperClassOfProfilePics.swift in Sources */,
 				325AEC9D1A7A3283004CEE94 /* InterestsViewController.swift in Sources */,
