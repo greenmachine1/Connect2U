@@ -154,6 +154,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     // used throughout the chat //
                     userPassedInObjectId = secondLevel!.objectForKey("objectId")
                     userPassedInUserName = secondLevel!.objectForKey("username")
+                    
+                    
+                    
                 }
             }
         }
@@ -187,6 +190,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         println("second level and stuff \(secondLevel!)")
                 
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         userPassedInUserName = secondLevel!.valueForKey("username") as? String
                         userPassedInObjectId = secondLevel!.valueForKey("objectId")
                         

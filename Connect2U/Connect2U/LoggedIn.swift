@@ -164,7 +164,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             if((fileName?.rangeOfString("face.png", options: nil, range: nil, locale: nil)) != nil){
                 
                 self.meButton!.setTitle("Start Here!", forState: UIControlState.Normal)
-                self.meButton!.titleLabel!.font = UIFont(name: "MarkerFelt-Thin", size: 2)
+                self.meButton!.titleLabel!.font = UIFont(name: "Symbol", size: 15)
                 self.meButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                 self.meButton!.backgroundColor = UIColor.whiteColor()
                 
@@ -1198,6 +1198,13 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     // this is the return function from ChatRequest //
     // call back from when the user recieves a request to chat //
+    
+    
+    
+    
+    
+    
+    // group chat gets sent here as well //
     func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject,fromGroup:Bool) {
         
         var objectId:AnyObject?
@@ -1385,6 +1392,11 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 // personal Info contains everything //
                 // you info plus the object id's and names overyone //
                 // involved //
+                    
+                    
+                    
+                    
+                // new chat object is created and instantiated //
                 var newChat:NewChat = NewChat(personPassedIn: personalInfo)
                 
                 
@@ -1428,6 +1440,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
 
                 // sending over the stored conversation //
                 chatViewController.mainChatObject = listOfChats[tempIndex!]
+                    
+
+                    
+                    
+                    
+                println("list of chats --> \(listOfChats[tempIndex!])")
                 
                 chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
                 

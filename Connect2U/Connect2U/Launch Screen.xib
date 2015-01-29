@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Connect_2_U_Log.png" translatesAutoresizingMaskIntoConstraints="NO" id="TEx-KW-g6s">
-                    <rect key="frame" x="10" y="76.5" width="460" height="327"/>
+                    <rect key="frame" x="10" y="76" width="460" height="327"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="TEx-KW-g6s" secondAttribute="height" multiplier="69:49" id="6Ec-K8-SW7"/>
                         <constraint firstAttribute="width" constant="400" id="cpA-Sg-g7f"/>
@@ -24,13 +24,21 @@
                         </mask>
                     </variation>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asF-La-nEx">
+                    <rect key="frame" x="202" y="411" width="77" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="TEx-KW-g6s" firstAttribute="centerX" secondItem="asF-La-nEx" secondAttribute="centerX" constant="-0.5" id="109-tR-NXR"/>
                 <constraint firstAttribute="trailing" secondItem="TEx-KW-g6s" secondAttribute="trailing" constant="10" id="DEY-E0-L14"/>
                 <constraint firstAttribute="centerY" secondItem="TEx-KW-g6s" secondAttribute="centerY" id="ETs-y4-5ZX"/>
                 <constraint firstAttribute="centerX" secondItem="TEx-KW-g6s" secondAttribute="centerX" id="Jbh-R5-HzN"/>
                 <constraint firstAttribute="centerY" secondItem="TEx-KW-g6s" secondAttribute="centerY" constant="9" id="olO-YU-kdQ"/>
+                <constraint firstItem="asF-La-nEx" firstAttribute="top" secondItem="TEx-KW-g6s" secondAttribute="bottom" constant="8" id="q83-mj-37s"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

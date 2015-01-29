@@ -125,6 +125,11 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         mainTableView.delegate = self
         
+        
+        
+        
+        
+        
         if(passedInArrayOfUsers != nil){
             
             println("passed in array of users....... --> \(passedInArrayOfUsers!)")

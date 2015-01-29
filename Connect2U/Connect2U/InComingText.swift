@@ -71,6 +71,12 @@ class InComingText: NSObject {
         // used to get the id of the chat objects //
         if(arrayOfChats.count != 0){
             
+            
+            
+            
+            
+            println("array of Chats \(arrayOfChats)")
+            
             for(var i = 0; i < arrayOfChats.count; i++){
                 
                 var firstLayer:AnyObject? = arrayOfChats[i].personsPassedIn
@@ -114,6 +120,11 @@ class InComingText: NSObject {
             
             for(_index, _element) in enumerate(tempArrayForThoseInvolved){
                 
+                
+                
+                
+                
+                // comparing //
                 if(element.isEqual(_element)){
                     
                     println("the index invovled \(index)")
