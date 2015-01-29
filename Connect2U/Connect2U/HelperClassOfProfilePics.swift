@@ -57,8 +57,8 @@ class HelperClassOfProfilePics: NSObject {
     
     func drawProfilePics(newProfilePics:Array<AnyObject>){
         
-        println("new profile pics--- > \(newProfilePics)")
-        println("new Profile pics! \(newProfilePics.count)")
+        //println("new profile pics--- > \(newProfilePics)")
+        //println("new Profile pics! \(newProfilePics.count)")
     
         var subViews = callingViewMain!.subviews as Array<UIView>
         
@@ -84,7 +84,7 @@ class HelperClassOfProfilePics: NSObject {
         tempImageArray.removeAll(keepCapacity: false)
         
         
-        println("array passed in from main class \(arrayPassedInFromMainClass)")
+        //println("array passed in from main class \(arrayPassedInFromMainClass)")
         
         
 
@@ -103,11 +103,11 @@ class HelperClassOfProfilePics: NSObject {
             var tempName: AnyObject? = newProfilePics[i].valueForKey("username")
             
             
-            println("in here \(i)")
+            //println("in here \(i)")
             
             var mainObjectArray:[AnyObject]? = newProfilePics[i] as? Array
             
-            println("main object array --> \(mainObjectArray!)")
+            //println("main object array --> \(mainObjectArray!)")
             
             if(mainObjectArray != nil){
                 
@@ -117,7 +117,7 @@ class HelperClassOfProfilePics: NSObject {
                     var fileName = pictureObject!.name
                     if(fileName.rangeOfString("profilePic.png", options: nil, range: nil, locale: nil) != nil){
                         
-                        println("is the profile pic")
+                        //println("is the profile pic")
                         
                         
                     }

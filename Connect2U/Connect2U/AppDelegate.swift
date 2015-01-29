@@ -104,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // when a push comes in
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
-        println("recieved push notification! \(userInfo.description)")
+        println("\n \n \n recieved push notification! \(userInfo.description)\n \n \n ")
         
         println("count and stuff!!! \(userInfo.count)")
         
@@ -148,6 +148,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     notificationCenter.postNotificationName("textMessage", object:self, userInfo:userInfo)
                     
                     }
+                    
                 }else{
                     
                     // letting the rest of the app know that it needs to update the user info //

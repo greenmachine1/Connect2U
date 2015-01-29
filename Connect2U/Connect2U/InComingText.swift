@@ -122,25 +122,28 @@ class InComingText: NSObject {
                     
                     var userNamePassedIn:AnyObject?
                     
+                    
+                    
+                    
                     var firstLevel:AnyObject? = arrayOfChats[index].personsPassedIn
                     if(firstLevel != nil){
                         
                         var secondLevel:AnyObject? = firstLevel?.valueForKey("userInfo")
                         if(secondLevel != nil){
                             
+                            
+                            
+                            
                             userNamePassedIn = secondLevel!.valueForKey("username")
                             
                             println("user name passed in \(userNamePassedIn!)")
-                            println("recieved object \(object.description)")
+                            println("\n\nrecieved object \(object.description)\n\n")
                             
                             var tempDictionary = [messageRecieved :userNamePassedIn!]
                             
                             delegate?.updateChatObjectFromNewChatHelperClass(tempDictionary, index: index)
-                            
-                            //println("temp dictionary \(tempDictionary)")
-                            
-                            println("all is well")
-                            
+
+                    
                         }
                     }
                 }

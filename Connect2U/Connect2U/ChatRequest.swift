@@ -15,7 +15,7 @@ import Parse
     
     // the userClickedOnChatRequest var will be the index of the //
     // alert view button //
-    func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject)
+    func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject, fromGroup:Bool)
     func returnedUserResponseToChat(wantsToChatYesOrNo:Bool, user:AnyObject)
     
 }
@@ -47,7 +47,7 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // method used to send back to LoggedIn, the other users response to chat //
     func responseToTheRequestToChat(sender:NSNotification){
         
-        println("\n \n \n \n \n \(sender.description)\n \n \n \n \n \n \n \n \n")
+        println("\n \n \n \n \n sender description !!!! ----->\(sender.description)\n \n \n \n \n \n \n \n \n")
         
         
         var requestToChatVariable = sender.userInfo!.values.array.count
@@ -143,14 +143,47 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
             // this isnt the problem //
             currentUserInfo = notification.userInfo
         
+            println("\n\n\n\nnotification \(currentUserInfo!)\n\n\n")
+        
+        if var cameFromGroupChat:AnyObject? = currentUserInfo!.valueForKey("group"){
+            
+            println("\n \n \n \n \n \n cameFrom group chat boolean \(cameFromGroupChat?) \n \n \n \n \n \n ")
+            
+            
+            // group chat request //
+            if(cameFromGroupChat != nil){
+                var alert:UIAlertView = UIAlertView(title: "Group wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Dont Chat", otherButtonTitles:"Chat", "Respond Later")
+                
+                alert.tag = 0
+            
+                alert.show()
+                
+            }else{
+                
+                
+                // regular chat requests
+                var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Dont Chat", otherButtonTitles: "View Profile", "Chat", "Respond Later")
+                
+                alert.tag = 1
+                
+                alert.show()
+                
+            }
+            
+        }else{
+        
+        
+        
+            // group chat sends over different data //
+            // such as a group property which is a bool //
+            // also sends over the objectIds of those chatting with //
+        
         
             println("current user info sent in from chat request ---> \(currentUserInfo?.description)")
 
-            var alert:UIAlertView = UIAlertView(title: "\(nameString) wants to chat with you", message: "What do you want to do?", delegate: self, cancelButtonTitle: "Dont Chat", otherButtonTitles: "View Profile", "Chat", "Respond Later")
             
-            alert.show()
-        
-
+            
+        }
     }
     
     
@@ -191,46 +224,77 @@ class ChatRequest: NSObject, UIAlertViewDelegate {
     // request for chat by the other user //
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         
+        println("\n\n\nalert \(alertView.description)\n \n\n\n")
+        
         println("user info passed in to alertview --> \(self.currentUserInfo!)")
         
         println("clicked! : \(buttonIndex)")
         
-        if(buttonIndex == 0){
+        
+        
+        // for accepting group chat //
+        if(alertView.tag == 0){
+
+            if(buttonIndex == 0){
+                
+                println("cancel button")
+                
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:true)
+                
+            }else if(buttonIndex == 1){
+                
+                println("chat button")
+                
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:true)
+                
+            }else{
+                
+                println("respond later")
+                
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:true)
+                
+            }
             
-            // cancel //
-            println("clicked on \(buttonIndex)")
-            println("cancel")
-            
-            self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
             
             
-        }else if(buttonIndex == 1){
-            
-            // view profile //
-            println("clicked on \(buttonIndex)")
-            println("view profile")
-            
-            self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
-            
-        }else if(buttonIndex == 2){
-            
-            // chat //
-            println("clicked on \(buttonIndex)")
-            println("chat")
-            
-            self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
-            
-            
-            
+        // regular chat acceptance //
         }else{
+
+            if(buttonIndex == 0){
             
-            // respond later //
+                // cancel //
+                println("clicked on \(buttonIndex)")
+                println("cancel")
             
-            println("clicked on \(buttonIndex)")
-            println("save for later")
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:false)
             
-            self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!)
             
+            }else if(buttonIndex == 1){
+            
+                // view profile //
+                println("clicked on \(buttonIndex)")
+                println("view profile")
+            
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:false)
+            
+            }else if(buttonIndex == 2){
+            
+                // chat //
+                println("clicked on \(buttonIndex)")
+                println("chat")
+            
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:false)
+            
+            }else{
+            
+                // respond later //
+            
+                println("clicked on \(buttonIndex)")
+                println("save for later")
+            
+                self.delegate?.userClickedOnChatRequestAlert(buttonIndex, personalInfo: self.currentUserInfo!,fromGroup:false)
+            
+            }
         }
     }
 }

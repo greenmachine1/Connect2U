@@ -243,7 +243,7 @@ class FriendsTableViewController: UITableViewController {
     
     func reloadTableView(){
         
-        println("reload table view")
+        //println("reload table view")
         
         self.tableView.reloadData()
     }

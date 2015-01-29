@@ -17,7 +17,7 @@ import AVFoundation
     
 }
 
-class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SendDataBackToMain {
     
     
     var personName:String?
@@ -288,21 +288,21 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         if(cameFromMainUser == true){
         
-            println("notification \(peopleObject)")
+
         
             if var firstLevel:AnyObject? = peopleObject.userInfo{
             
-                println("first level \(firstLevel!)")
+
                 
                 if var secondLevelArray:Array<AnyObject> = firstLevel?.valueForKey("userInfo") as? Array{
                     
-                    println("\n second level array \(secondLevelArray)\n ")
+
                     
                     for (index, element) in enumerate(secondLevelArray){
                         
                         if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
                             
-                            println("user!!! --> \(userInfoAsPFUser!)")
+
                             
                             if var personPassedInObjectId:AnyObject? = userInfoAsPFUser?.objectId{
                                 
@@ -326,7 +326,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         for(index, element) in enumerate(finalArrayOfUsersAsPFUsersId){
             
-            println("elements id \(element)")
+            //println("elements id \(element)")
             
             self.sendUpdate(element)
         }
@@ -447,7 +447,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         
         var currentUser:PFUser = PFUser.currentUser()
         
-        if((nameTextField.text != personName) || (genderEditText.text != personGender) || (ageEditText.text != personAge) || self.arrayOfPictures.count > 0){
+        if((nameTextField.text != personName) || (genderEditText.text != personGender) || (ageEditText.text != personAge) || self.arrayOfPictures.count > 0) || (self.personInterests!.count > 0){
             
             if( (!(nameTextField.text.isEmpty)) || (!(genderEditText.text.isEmpty)) ||
                 (!(ageEditText.text.isEmpty)) || self.arrayOfPictures.count > 0){
@@ -523,12 +523,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
         var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
         
-        if(cell.textLabel?.text == "Add New Entry"){
-            
-            cell.textLabel?.textColor = UIColor.blueColor()
-            cell.textLabel?.textAlignment = .Center
-            
-        }
+        
         
         
         // creating the delete button per row //
@@ -554,8 +549,11 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             }
         }
         
+        
         return cell
     }
+    
+    
     
     
     
@@ -570,17 +568,37 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 
                 println("add new entry")
                 
-                // should send the user to add a new entry view //
+                let interestsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Interests") as InterestsViewController
                 
-                
-                
-                
-                
-                
+                interestsViewController.delegate = self
+
+                self.navigationController?.pushViewController(interestsViewController, animated: true)
+ 
             }
             
         }
         
+    }
+    
+    
+    func sendBackTheArray(interestArray: Array<String>) {
+        
+        for(index, element) in enumerate(interestArray){
+           
+            personInterests?.append(element)
+            
+            for(_index, _element) in enumerate(personInterests!){
+                
+                if(_element == "Add New Interest"){
+                    
+                    personInterests?.removeAtIndex(_index)
+                }
+            }
+        }
+        
+        
+        personInterests?.append("Add New Interest")
+        mainTableView.reloadData()
     }
     
     

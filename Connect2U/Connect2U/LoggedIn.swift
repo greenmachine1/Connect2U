@@ -308,7 +308,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             
             
-            // for the list view o
+            // for the list view //
             var userInfo = ["userInfo":tempArrayPassedIn!]
             
             chatViewController.updateFromRestOfApp(userInfo)
@@ -550,7 +550,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
             // delete the user in here //
             // need to send back to the original user that a request to chat was denied //
-            self.approvalOrDenialOfChat(self.listOfRequests[indexPath], approval: false)
+            self.approvalOrDenialOfChat(self.listOfRequests[indexPath], approval: false, group:false)
             
             self.listOfRequests.removeAtIndex(indexPath)
             self.sideBar.updateRequests(self.listOfRequests)
@@ -707,7 +707,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
         
             // start chatting and send over the ok to chat //
-            self.approvalOrDenialOfChat(passedInPerson, approval: true)
+            self.approvalOrDenialOfChat(passedInPerson, approval: true, group:false)
 
             if(section == 1){
             
@@ -781,7 +781,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         tempArrayPassedIn = users
         
-        println("\n \n update in here \(tempArrayPassedIn?)\n \n")
+        //println("\n \n update in here \(tempArrayPassedIn?)\n \n")
         //println("\n \n super temp array \(superTempArray?)")
         
 
@@ -985,7 +985,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     // this is the return function from ChatRequest //
     // call back from when the user recieves a request to chat //
-    func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject) {
+    func userClickedOnChatRequestAlert(userClickedOnChatRequest:Int, personalInfo:AnyObject,fromGroup:Bool) {
         
         var objectId:AnyObject?
         var firstObject:AnyObject?
@@ -1002,121 +1002,233 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
             }
         }
-
         
-        // cancel //
-        if(userClickedOnChatRequest == 0){
+        
+        // regular chat //
+        if(fromGroup == false){
+            // cancel //
+            if(userClickedOnChatRequest == 0){
             
-            println("logged in cancel")
+                println("logged in cancel")
 
-            // sending out the denial of chat //
-            self.approvalOrDenialOfChat(personalInfo, approval: false)
+                // sending out the denial of chat //
+                self.approvalOrDenialOfChat(personalInfo, approval: false, group:false)
             
             
-        // view profile //
-        }else if(userClickedOnChatRequest == 1){
+                // view profile //
+            }else if(userClickedOnChatRequest == 1){
             
-            println("logged in view profile")
-            println("in here and stuff!!!!!!!!!!!!! --> \(personalInfo.description)")
+                println("logged in view profile")
+                println("in here and stuff!!!!!!!!!!!!! --> \(personalInfo.description)")
             
             
-            // should send the user to the profile view //
-            // takes you the user to your personal settings //
-            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+                // should send the user to the profile view //
+                // takes you the user to your personal settings //
+                let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
             
-            aboutViewController.personPassedInNotPFUser = personalInfo
-            aboutViewController.cameFromMainUser = false
+                aboutViewController.personPassedInNotPFUser = personalInfo
+                aboutViewController.cameFromMainUser = false
             
-            println("description of person passed in \(personalInfo.description)")
+                println("description of person passed in \(personalInfo.description)")
             
-            self.navigationController?.pushViewController(aboutViewController, animated: true)
+                self.navigationController?.pushViewController(aboutViewController, animated: true)
             
             
             
             
             
 
-        // save for later //
-        }else if(userClickedOnChatRequest == 3){
+                // save for later //
+            }else if(userClickedOnChatRequest == 3){
             
-            // seeing if the incoming object has already been added //
-            // and if not, then add it //
-            if(!(listOfRequests as NSArray).containsObject(personalInfo)){
+                // seeing if the incoming object has already been added //
+                // and if not, then add it //
+                if(!(listOfRequests as NSArray).containsObject(personalInfo)){
                 
-                println("does not contain the object")
-                listOfRequests.append(personalInfo)
+                    println("does not contain the object")
+                    listOfRequests.append(personalInfo)
+                }
+
+                // refreshing the list view //
+                sideBar.updateRequests(listOfRequests)
+
+                // chat //
+            }else{
+            
+                // sending out the approval to chat //
+                self.approvalOrDenialOfChat(personalInfo, approval: true, group: false)
+            
+                println("in here finally....")
+            
+                println("personal info --> \(personalInfo.description)")
+            
+            
+                // creating a new chat object //
+                var newChat:NewChat = NewChat(personPassedIn: personalInfo)
+            
+        
+                // adding the newly created object to the list //
+                self.listOfChats.append(newChat)
+            
+                // the helper class for delegating in coming chats //
+                inComingChatHelperClass.updateListOfChats(listOfChats)
+            
+                self.convertChatListToStringForListView()
+            
+
+            
+            
+                // should send the person straight into chat with this person //
+                let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            
+                // starting up the chat view controller with new info //
+                chatViewController.delegate = self
+            
+                var tempIndex:Int?
+            
+                // getting the newly added chat object index within the listOfChats //
+                for(var i = 0; i < listOfChats.count; i++){
+                
+                    if(listOfChats[i].isEqual(newChat)){
+                    
+                        println("index \(i)")
+                        tempIndex = i
+                    }
+                
+                }
+            
+            
+            
+            
+                // for the list view o
+                var userInfo = ["userInfo":tempArrayPassedIn!]
+            
+                chatViewController.updateFromRestOfApp(userInfo)
+
+                chatViewController.indexNumber = tempIndex!
+            
+                // sending over the stored conversation //
+                chatViewController.mainChatObject = listOfChats[tempIndex!]
+            
+                chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
+            
+                self.navigationController?.pushViewController(chatViewController, animated: true)
+   
             }
-
-            // refreshing the list view //
-            sideBar.updateRequests(listOfRequests)
-
-        // chat //
+            
+        // for group chat //
         }else{
             
-            // sending out the approval to chat //
-            self.approvalOrDenialOfChat(personalInfo, approval: true)
-            
-            println("in here finally....")
-            
-            println("personal info --> \(personalInfo.description)")
             
             
-            // creating a new chat object //
-            var newChat:NewChat = NewChat(personPassedIn: personalInfo)
             
-        
-            // adding the newly created object to the list //
-            self.listOfChats.append(newChat)
+            println("\n\n--------- group info -----> \(personalInfo)")
             
-            // the helper class for delegating in coming chats //
-            inComingChatHelperClass.updateListOfChats(listOfChats)
-            
-            self.convertChatListToStringForListView()
-            
-
-            
-            
-            // should send the person straight into chat with this person //
-            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
-            
-            // starting up the chat view controller with new info //
-            chatViewController.delegate = self
-            
-            var tempIndex:Int?
-            
-            // getting the newly added chat object index within the listOfChats //
-            for(var i = 0; i < listOfChats.count; i++){
+            // cancel //
+            if(userClickedOnChatRequest == 0){
                 
-                if(listOfChats[i].isEqual(newChat)){
+                println("logged in cancel")
+                
+                // sending out the denial of chat //
+                self.approvalOrDenialOfChat(personalInfo, approval: false, group: true)
+                
+                
+                
+            // chat button //
+            }else if(userClickedOnChatRequest == 1){
+                
+                
+                
+                // this is going to be slightly different than normal chat in //
+                // that the person sending out the request will stay in their //
+                // current view and add the person to their chat //
+                // sending out the approval to chat //
+                self.approvalOrDenialOfChat(personalInfo, approval: true, group: true)
+                
+                
+                
+                // creating a new chat object //
+                // personal Info contains everything //
+                // you info plus the object id's and names overyone //
+                // involved //
+                var newChat:NewChat = NewChat(personPassedIn: personalInfo)
+                
+                
+                // adding the newly created object to the list //
+                self.listOfChats.append(newChat)
+                
+                
+                
+                // the helper class for delegating in coming chats //
+                inComingChatHelperClass.updateListOfChats(listOfChats)
+                
+                self.convertChatListToStringForListView()
+                
+                
+                // should send the person straight into chat with this person //
+                let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+                
+                // starting up the chat view controller with new info //
+                chatViewController.delegate = self
+                
+                var tempIndex:Int?
+                
+                // getting the newly added chat object index within the listOfChats //
+                for(var i = 0; i < listOfChats.count; i++){
                     
-                    println("index \(i)")
-                    tempIndex = i
+                    if(listOfChats[i].isEqual(newChat)){
+                        
+                        println("index \(i)")
+                        tempIndex = i
+                    }
+                    
                 }
                 
+                
+                
+                
+                // for the list view o
+                var userInfo = ["userInfo":tempArrayPassedIn!]
+                
+                chatViewController.updateFromRestOfApp(userInfo)
+                
+                
+                
+                
+                chatViewController.indexNumber = tempIndex!
+                
+                
+                
+                
+                
+                
+                // sending over the stored conversation //
+                chatViewController.mainChatObject = listOfChats[tempIndex!]
+                
+                chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
+                
+                self.navigationController?.pushViewController(chatViewController, animated: true)
+                
+                
+                
+                
+            // respond later //
+            }else{
+                
+                
+                // seeing if the incoming object has already been added //
+                // and if not, then add it //
+                if(!(listOfRequests as NSArray).containsObject(personalInfo)){
+                    
+                    println("does not contain the object")
+                    listOfRequests.append(personalInfo)
+                }
+                
+                // refreshing the list view //
+                sideBar.updateRequests(listOfRequests)
+                
+                
             }
-            
-            
-            
-            
-            // for the list view o
-            var userInfo = ["userInfo":tempArrayPassedIn!]
-            
-            chatViewController.updateFromRestOfApp(userInfo)
-            
-            
-            
-            
-            
-            
-            chatViewController.indexNumber = tempIndex!
-            
-            // sending over the stored conversation //
-            chatViewController.mainChatObject = listOfChats[tempIndex!]
-            
-            chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
-            
-            self.navigationController?.pushViewController(chatViewController, animated: true)
-   
         }
     }
     
@@ -1136,7 +1248,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
 
 
     // handles the sending out of the actual push notification //
-    func approvalOrDenialOfChat(toUser:AnyObject, approval:Bool){
+    func approvalOrDenialOfChat(toUser:AnyObject, approval:Bool, group:Bool){
         
         var objectId:AnyObject?
         var firstObject:AnyObject?
@@ -1168,8 +1280,6 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
 
         }
         
-        
-        
             // sending out the approval or denial of chat request //
             
             // setting up a dictionary of all the info to send over //
@@ -1181,7 +1291,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 "username":PFUser.currentUser().objectForKey("username")!]
             
 
-            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":approval]
+            var dataSend = ["userInfo": currentUserDictionary, "responseToRequest":approval, "group":group]
             
             var query:PFQuery = PFUser.query()
             query.whereKey("objectId", equalTo: objectId!)

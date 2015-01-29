@@ -48,6 +48,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var listOfOtherPeopleToGroupWith:Array<PFUser> = []
     
     
+    // for group chat //
+    var listOfObjectIdsInChat:Array<AnyObject> = []
+    var listOfNamesInChat:Array<String> = []
+    
+    
     
     // this holds the data being passed in //
     var mainChatObject:NewChat?
@@ -62,6 +67,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var passedInMessages:[AnyObject]?
     
     var arrayOfUsersInvolved:Array<AnyObject>?
+    
+    var arrayOfUsersFromMainObject:Array<AnyObject> = []
+    var arrayOfNamesFromMainObject:Array<AnyObject> = []
     
     
 
@@ -85,9 +93,50 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         tempArrayOfMessages = passedInMessages
         
 
+        
+        
+        
+        
+        
+        
+        
+        
+        // getting the names and object id's of those passed in //
         if(mainChatObject != nil){
             var mainChatObjectReturn:AnyObject? = mainChatObject?.returnLabelForListOfChats()
             if(mainChatObjectReturn != nil){
+                
+                if var listOfIds:[AnyObject]? = mainChatObject!.personsPassedIn.first?.objectForKey("with") as? Array{
+                    
+                    
+                    if(listOfIds != nil){
+                        println("list of ids \(listOfIds)")
+                    
+                        // if we are in here, we have made it to group chat //
+                        for (index, elements) in enumerate(listOfIds!){
+                        
+                            arrayOfUsersFromMainObject.append(elements)
+                        }
+                    }
+                }
+                
+                if var listOfNames:[AnyObject]? = mainChatObject!.personsPassedIn.first?.objectForKey("peopleNames") as? Array{
+                    
+                    if(listOfNames != nil){
+                        
+                        for(index, elements) in enumerate(listOfNames!){
+                            
+                            arrayOfNamesFromMainObject.append(elements)
+                        }
+                    }
+                    
+                }
+                
+                println("\n\n names of users from main objects \(arrayOfNamesFromMainObject) \n\n")
+                println("\n\narray of main objects \(arrayOfUsersFromMainObject)\n\n")
+                
+                
+                println("\n\n\n\n\n\n\n\nmain chat object -->\(mainChatObject!.personsPassedIn)\n\n\n\n\n\n\n\n")
                 
                 var secondLevel:AnyObject? = mainChatObjectReturn?.objectForKey("userInfo")
                 if(secondLevel != nil){
@@ -107,6 +156,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
 
+        // this is for when , you the person who initiated the chat, called this view //
         
         if(personPassedIn != nil){
             
@@ -203,21 +253,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         listOfOtherPeopleToGroupWith.removeAll(keepCapacity: false)
 
-        println("notification \(peopleObject)")
+        //println("notification \(peopleObject)")
             
         if var firstLevel:AnyObject? = peopleObject.userInfo{
                 
-            println("first level \(firstLevel!)")
+            //println("first level \(firstLevel!)")
                 
             if var secondLevelArray:Array<AnyObject> = firstLevel?.valueForKey("userInfo") as? Array{
                     
-                println("\n second level array \(secondLevelArray)\n ")
+                //println("\n second level array \(secondLevelArray)\n ")
                     
                 for (index, element) in enumerate(secondLevelArray){
                         
                     if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
                             
-                        println("user!!! --> \(userInfoAsPFUser!)")
+                        //println("user!!! --> \(userInfoAsPFUser!)")
 
                         if(userInfoAsPFUser!.objectId != userPassedInObjectId as? String){
                             
@@ -233,7 +283,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         if(!(listOfOtherPeopleToGroupWith.isEmpty)){
-            println("pf users passed in \(listOfOtherPeopleToGroupWith)")
+            
         }else{
             sideBar.updateGroup(Array<PFUser>())
             
@@ -257,13 +307,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if var firstLevel:Array<AnyObject> = peopleObject.valueForKey("userInfo") as? Array{
                 
-                println("\n ----second level array \(firstLevel)\n ")
+                //println("\n ----second level array \(firstLevel)\n ")
                 
                 for (index, element) in enumerate(firstLevel){
                     
                     if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
                         
-                        println("user!!! --> \(userInfoAsPFUser!)")
+                        //println("user!!! --> \(userInfoAsPFUser!)")
                         
                         if(userInfoAsPFUser!.objectId != userPassedInObjectId as? String){
                             
@@ -279,7 +329,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         if(!(listOfOtherPeopleToGroupWith.isEmpty)){
-            println("pf users passed in \(listOfOtherPeopleToGroupWith)")
+            //println("pf users passed in \(listOfOtherPeopleToGroupWith)")
         }else{
             sideBar.updateGroup(Array<PFUser>())
             
@@ -294,7 +344,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // updates the tableview remotely //
     func updateTheView(object:NSNotification){
         
-        println("object passed in -->\(object.description)")
+        //println("object passed in -->\(object.description)")
         
         
         var userInfobject:AnyObject? = object.valueForKey("userInfo")
@@ -310,15 +360,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     if(username != nil){
                         
                         var finalUserName:AnyObject? = username!.firstObject!
-                        println("username \(finalUserName!)")
+                        //println("username \(finalUserName!)")
                         
                         var stringConversionOfFinalName:String = finalUserName as String
                         
                         if(stringConversionOfFinalName == userPassedInUserName! as String){
                             
-                            println("final and passed \(stringConversionOfFinalName) and \(userPassedInUserName)")
+                            //println("final and passed \(stringConversionOfFinalName) and \(userPassedInUserName)")
                             
-                            println("its the same and you should be here")
+                            //println("its the same and you should be here")
                             
                             var firstLevel:AnyObject? = object.valueForKey("userInfo")
                             if(firstLevel != nil){
@@ -357,7 +407,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func textMessageRecieved(object:NSNotification){
         
-        //println("recieved text message and im in the sendTextMessage object : \(object.description)")
+        
+        println("\n\ntext message recieved -->\(object)")
+        
+        
         self.sendTextInfoBack(object)
         
     }
@@ -369,7 +422,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
-        println("text recieved!!! -->\(textInfo.description)")
+        println("\n\ntext recieved!!! -->\(textInfo.description)\n\n")
         
         var incomingPersonText:String? = ""
         var incomingPersonName:String? = ""
@@ -551,15 +604,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             
             // need to send out an alert to request for them to join the current chat //
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            self.sendRequestsForGroupChat(self.listOfOtherPeopleToGroupWith[index])
             
             
         }))
@@ -578,9 +623,54 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    
-    
-    
+    func sendRequestsForGroupChat(toUser:PFUser){
+        
+        // setting up a dictionary of all the info to send over //
+        var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+            "age":PFUser.currentUser().objectForKey("age")!,
+            "gender":PFUser.currentUser().objectForKey("gender")!,
+            "interests":PFUser.currentUser().objectForKey("interests")!,
+            "picture":PFUser.currentUser().objectForKey("picture")!,
+            "username":PFUser.currentUser().objectForKey("username")!]
+        
+        
+        listOfObjectIdsInChat = [PFUser.currentUser().objectId, userPassedInObjectId!]
+        listOfNamesInChat = [PFUser.currentUser().username, userPassedInUserName! as String]
+        
+        
+        // basically needs to send over an alert saying that 'You' want to chat with them and //
+        // the can either click ok or view profile //
+        var dataSend = ["userInfo": currentUserDictionary, "request":true, "group":true, "with":listOfObjectIdsInChat, "peopleNames": listOfNamesInChat]
+        
+        var query:PFQuery = PFInstallation.query()
+        query.whereKey("user", equalTo: toUser)
+        
+        var push:PFPush = PFPush()
+        push.setQuery(query)
+        push.setData(dataSend)
+        //push.setMessage("RequestToChat")
+        push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+            
+            if(success == true){
+                
+                println("success!")
+                
+            }else{
+                
+                println("error")
+            }
+        })
+
+    }
+
+
+
+
+
+
+
+
+
     // good place to disable elements when the friends list is out //
     func sideBarWillOpen() {
         

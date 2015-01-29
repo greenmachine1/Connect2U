@@ -238,11 +238,11 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
         
         finalGroupArray.removeAll(keepCapacity: false)
     
-        println("new group chat data \(newGroupData)")
+        //println("new group chat data \(newGroupData)")
         
         for (index, element) in enumerate(newGroupData){
             
-            println("elements \(element)")
+            //println("elements \(element)")
             
             if var name:String? = element.username{
                 
