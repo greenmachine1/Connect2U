@@ -16,7 +16,7 @@ import Parse
 }
 
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,SideBarDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SideBarDelegate {
 
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -33,16 +33,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var tempBoolToggle:Bool = true
     
-
     var mainArrayFullOfConversation:[AnyObject]?
     
     var arrayOfOtherPeoplePassedInForGroupingUpWith:AnyObject?
+    
     var finalArrayOfPeoplePassedInMinusYouMinusPerson:Array<AnyObject> = []
     
     var sideBar:SideBar = SideBar()
     
     var listOfFriends:[String] = ["Grant", "Mark", "Joe", "Brittany"]
     var listOfRequests:[String] = ["Joe", "David", "Steve", "Berry"]
+    
+    
+    var listOfOtherPeopleToGroupWith:Array<PFUser> = []
     
     
     
@@ -65,6 +68,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // observer for when new people come in //
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "update:", name: "updateOfPeople", object: nil)
+        
         mainArrayFullOfConversation = []
 
         self.setColors()
@@ -80,10 +86,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
 
         if(mainChatObject != nil){
-
-    
-            //println("main object ---> \(mainChatObject!.returnLabelForListOfChats())")
-            
             var mainChatObjectReturn:AnyObject? = mainChatObject?.returnLabelForListOfChats()
             if(mainChatObjectReturn != nil){
                 
@@ -96,8 +98,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
         }
-        
-        println("\n \n whats getting to the chat controller --> \(mainChatObject?.readFullMessage())\n \n ")
+
         
         
         
@@ -170,6 +171,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.addSubview(mainInputField!)
         
         
+        
+        
         // value for x for the return button //
         var sendButtonXValue:CGFloat = CGFloat(self.mainInputField!.frame.origin.x + self.mainInputField!.frame.width + 10.0)
         
@@ -191,6 +194,97 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // ** when a push notification comes in this gets called ** //
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTheView:", name: "updateTableView", object:nil)
     
+        
+    }
+    
+    
+    // passed in from the logged in View , came over as a notification//
+    func update(peopleObject:NSNotification){
+        
+        listOfOtherPeopleToGroupWith.removeAll(keepCapacity: false)
+
+        println("notification \(peopleObject)")
+            
+        if var firstLevel:AnyObject? = peopleObject.userInfo{
+                
+            println("first level \(firstLevel!)")
+                
+            if var secondLevelArray:Array<AnyObject> = firstLevel?.valueForKey("userInfo") as? Array{
+                    
+                println("\n second level array \(secondLevelArray)\n ")
+                    
+                for (index, element) in enumerate(secondLevelArray){
+                        
+                    if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
+                            
+                        println("user!!! --> \(userInfoAsPFUser!)")
+
+                        if(userInfoAsPFUser!.objectId != userPassedInObjectId as? String){
+                            
+                            listOfOtherPeopleToGroupWith.append(userInfoAsPFUser!)
+                            
+                            sideBar.updateGroup(listOfOtherPeopleToGroupWith)
+                            
+                        }
+  
+                    }
+                }
+            }
+        }
+        
+        if(!(listOfOtherPeopleToGroupWith.isEmpty)){
+            println("pf users passed in \(listOfOtherPeopleToGroupWith)")
+        }else{
+            sideBar.updateGroup(Array<PFUser>())
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func updateFromRestOfApp(peopleObject:AnyObject){
+        
+        listOfOtherPeopleToGroupWith.removeAll(keepCapacity: false)
+        
+        println("notification in here! \(peopleObject)")
+        
+
+            
+            if var firstLevel:Array<AnyObject> = peopleObject.valueForKey("userInfo") as? Array{
+                
+                println("\n ----second level array \(firstLevel)\n ")
+                
+                for (index, element) in enumerate(firstLevel){
+                    
+                    if var userInfoAsPFUser:PFUser? = element.firstObject as? PFUser{
+                        
+                        println("user!!! --> \(userInfoAsPFUser!)")
+                        
+                        if(userInfoAsPFUser!.objectId != userPassedInObjectId as? String){
+                            
+                            listOfOtherPeopleToGroupWith.append(userInfoAsPFUser!)
+                            
+                            sideBar.updateGroup(listOfOtherPeopleToGroupWith)
+                            
+                        }
+                        
+                    }
+                }
+            
+        }
+        
+        if(!(listOfOtherPeopleToGroupWith.isEmpty)){
+            println("pf users passed in \(listOfOtherPeopleToGroupWith)")
+        }else{
+            sideBar.updateGroup(Array<PFUser>())
+            
+        }
+  
         
     }
     
@@ -383,6 +477,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tempBoolToggle = true
         
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
         // removing the observer from recieving textMessage once left the view //
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "textMessage", object: nil)
         
@@ -393,9 +489,27 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // initializing the side bar //
     override func viewWillAppear(animated: Bool) {
         
+        
         sideBar = SideBar(callingView: self.view, friends: listOfFriends, requests:Array<String>(), fromLoggedInView:false)
         
+        
+        for(var i = 0; i < listOfOtherPeopleToGroupWith.count; i++){
+            
+            if(listOfOtherPeopleToGroupWith[i].objectId == userPassedInObjectId as? String){
+                
+                listOfOtherPeopleToGroupWith.removeAtIndex(i)
+                
+            }
+            
+        }
+        
+        
+        
+        sideBar.updateGroup(listOfOtherPeopleToGroupWith)
+        
         sideBar.delegate = self
+        
+        
         
     }
     
@@ -409,7 +523,62 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         println("index number selected \(index)")
         
+        println("listOf people to group with \(listOfOtherPeopleToGroupWith[index])")
+        
+        
+        // need to either view profile or chat //
+        
+        
+        var alert:UIAlertController = UIAlertController(title: "What so you want to do?", message: "" , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        // the profile alert button //
+        alert.addAction(UIAlertAction(title: "View Profile", style: UIAlertActionStyle.Default, handler: { action in
+            
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
+            
+            aboutViewController.personsPic = "face_100x100.png"
+            
+            aboutViewController.userPassedIn = self.listOfOtherPeopleToGroupWith[index]
+            aboutViewController.cameFromMainUser = false
+            
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+            
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Add to Chat", style: UIAlertActionStyle.Default, handler: { action in
+            
+            
+            // need to send out an alert to request for them to join the current chat //
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }))
+        // cancel button simply exits out and does nothing //
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    
+    
+    
     
     
     // good place to disable elements when the friends list is out //
@@ -429,6 +598,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 
     func group(){
+        
+        
+        println("pushed ")
         
         if(tempBoolToggle == false){
             

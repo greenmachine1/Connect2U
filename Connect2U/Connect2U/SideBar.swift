@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 // creating a new sidebar delegate //
 // one required function and 2 optional //
@@ -41,6 +42,7 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     var finalFriendsArray:Array<String> = []
     var finalRequestsArray:Array<String> = []
     var finalChatArray:Array<String> = []
+    var finalGroupArray:Array<String> = []
     
     
     override init(){
@@ -232,14 +234,44 @@ class SideBar: NSObject, FriendsTableViewControllerDelegate {
     
     
     // this will be used to update the list of available people to group with //
-    func updateGroup(newGroupData:AnyObject){
+    func updateGroup(newGroupData:Array<PFUser>){
         
+        finalGroupArray.removeAll(keepCapacity: false)
+    
+        println("new group chat data \(newGroupData)")
+        
+        for (index, element) in enumerate(newGroupData){
+            
+            println("elements \(element)")
+            
+            if var name:String? = element.username{
+                
+                finalGroupArray.append(name!)
+                sideBarTableViewController.groupChatData = finalGroupArray
+                sideBarTableViewController.reloadTableView()
+                
+            }
+        }
+        if(newGroupData.count == 0){
+            
+            sideBarTableViewController.groupChatData = Array<String>()
+            sideBarTableViewController.reloadTableView()
+        }
         
         
         
         
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func sideBarSetup(){
         

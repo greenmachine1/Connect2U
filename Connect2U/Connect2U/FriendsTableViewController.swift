@@ -15,6 +15,7 @@ protocol FriendsTableViewControllerDelegate{
     func returnRequestDidDeleteIndex(indexPath:Int)
     func returnFriendsListDidDeleteIndex(indexPath:Int)
     func returnChatListDidDeleteIndex(indexPath:Int)
+
     
 }
 
@@ -26,6 +27,9 @@ class FriendsTableViewController: UITableViewController {
     var friendsData:Array<String> = []
     var requestsData:Array<String> = []
     var chatData:Array<String> = []
+    
+    var groupChatData:Array<String> = []
+    
     var fromLoggedInView:Bool = true
 
     
@@ -65,11 +69,13 @@ class FriendsTableViewController: UITableViewController {
                 
             }
             
+            
+        // from group chat //
         }else{
             
             if(section == 0){
                 
-                return self.friendsData.count
+                return self.groupChatData.count
                 
             }
             
@@ -107,52 +113,63 @@ class FriendsTableViewController: UITableViewController {
         }
         
         // filling in the text with either friends or request data //
-        if(indexPath.section == 0){
-            
-            cell!.textLabel!.text = friendsData[indexPath.row]
-            
-            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
-            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-            
-            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
-            deleteButton.setImage(deleteImage, forState: .Normal)
-            deleteButton.tag = indexPath.row
-            deleteButton.addTarget(self, action: "deleteButtonPressedFromFriends:", forControlEvents: UIControlEvents.TouchUpInside)
-            
-            cell!.addSubview(deleteButton)
-            
-            
-        }
-        if(indexPath.section == 1){
-            
-            cell!.textLabel!.text = requestsData[indexPath.row]
-            
-            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
-            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
         
-            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
-            deleteButton.setImage(deleteImage, forState: .Normal)
-            deleteButton.tag = indexPath.row
-            deleteButton.addTarget(self, action: "deleteButtonPressedFromRequests:", forControlEvents: UIControlEvents.TouchUpInside)
-            
-            cell!.addSubview(deleteButton)
-            
-            
-        }
+        if(fromLoggedInView == true){
         
-        if(indexPath.section == 2){
+            if(indexPath.section == 0){
             
-            cell!.textLabel!.text = chatData[indexPath.row]
+
+                cell!.textLabel!.text = friendsData[indexPath.row]
             
-            var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
-            var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+                var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+                var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
             
-            deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
-            deleteButton.setImage(deleteImage, forState: .Normal)
-            deleteButton.tag = indexPath.row
-            deleteButton.addTarget(self, action: "deleteButtonPressedFromChat:", forControlEvents: UIControlEvents.TouchUpInside)
+                deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+                deleteButton.setImage(deleteImage, forState: .Normal)
+                deleteButton.tag = indexPath.row
+                deleteButton.addTarget(self, action: "deleteButtonPressedFromFriends:", forControlEvents: UIControlEvents.TouchUpInside)
             
-            cell!.addSubview(deleteButton)
+                cell!.addSubview(deleteButton)
+            
+            
+            }
+            if(indexPath.section == 1){
+            
+                cell!.textLabel!.text = requestsData[indexPath.row]
+            
+                var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+                var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        
+                deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+                deleteButton.setImage(deleteImage, forState: .Normal)
+                deleteButton.tag = indexPath.row
+                deleteButton.addTarget(self, action: "deleteButtonPressedFromRequests:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+                cell!.addSubview(deleteButton)
+            
+            
+            }
+        
+            if(indexPath.section == 2){
+            
+                cell!.textLabel!.text = chatData[indexPath.row]
+            
+                var deleteImage = UIImage(named: "DeleteButton.png") as UIImage?
+                var deleteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+            
+                deleteButton.frame = CGRectMake(140.0, 7.0, 35.0, 35.0)
+                deleteButton.setImage(deleteImage, forState: .Normal)
+                deleteButton.tag = indexPath.row
+                deleteButton.addTarget(self, action: "deleteButtonPressedFromChat:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+                cell!.addSubview(deleteButton)
+            
+            
+            }
+        }else{
+            
+            cell!.textLabel!.text = groupChatData[indexPath.row]
+
             
             
         }
@@ -215,7 +232,7 @@ class FriendsTableViewController: UITableViewController {
             
             if(section == 0){
                 
-                return "Group with"
+                return "Add to Chat"
             }
             
         }
@@ -253,7 +270,7 @@ class FriendsTableViewController: UITableViewController {
     }
     
 
-   }
+}
 
 
 

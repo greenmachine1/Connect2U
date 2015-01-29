@@ -304,6 +304,16 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             chatViewController.delegate = self
             
             
+            
+            
+            
+            
+            // for the list view o
+            var userInfo = ["userInfo":tempArrayPassedIn!]
+            
+            chatViewController.updateFromRestOfApp(userInfo)
+            
+            
             println("user returned! \(user.description)")
             
             var userInfoObject:AnyObject? = user.valueForKey("userInfo")
@@ -602,6 +612,23 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             // sending over the stored conversation //
             chatViewController.mainChatObject = listOfChats[index]
             
+            
+            
+            
+            
+            
+            
+            // for the list view o
+            var userInfo = ["userInfo":tempArrayPassedIn!]
+            
+            chatViewController.updateFromRestOfApp(userInfo)
+            
+            
+            
+            
+            
+            //chatViewController.listOfOtherPeopleToGroupWith
+            
             // the helper class for delegating in coming chats //
             inComingChatHelperClass.updateListOfChats(listOfChats)
             
@@ -637,6 +664,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     
+    
+    
+    
     // from the InComingText class //
     func updateChatObjectFromNewChatHelperClass(object:AnyObject, index:Int){
         
@@ -653,6 +683,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.postNotificationName("updateTableView", object:self, userInfo:tempUserInfoDictionary)
         
+
     }
     
     
@@ -1063,6 +1094,19 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 }
                 
             }
+            
+            
+            
+            
+            // for the list view o
+            var userInfo = ["userInfo":tempArrayPassedIn!]
+            
+            chatViewController.updateFromRestOfApp(userInfo)
+            
+            
+            
+            
+            
             
             chatViewController.indexNumber = tempIndex!
             
