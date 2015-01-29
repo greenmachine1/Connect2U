@@ -303,6 +303,11 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         }
     }
     
+    
+    
+    
+    
+    
     func popUpMessageForNoInternet(){
         
         // pop up with a notification saying that they need to connect to the internet in order to use //
@@ -316,6 +321,29 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+        
+        nameTextField.hidden = true
+        genderEditText.hidden = true
+        ageEditText.hidden = true
+        changePictureButton.hidden = true
+        
+        toggleBoolean = true
+        
+        // remove the '+' in the list //
+        personInterests?.removeLast()
+        
+        mainTableView.reloadData()
+        
+        self.navigationItem.rightBarButtonItem?.title = "Edit Profile"
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        
+        println("hit done!!")
+
+        // stops the camera //
+        captureSession.stopRunning()
+        
+        // saving the users info upon hitting done! //
+        self.saveUsersInfo()
 
     }
     
