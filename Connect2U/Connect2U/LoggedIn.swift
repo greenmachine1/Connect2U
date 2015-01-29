@@ -22,6 +22,12 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     var currentUserPic:String?
     var currentUserInterests:Array<String>?
     
+    var cornerRadiusOfCircle:CGFloat = 0.0
+    var size:CGSize?
+    
+    var personSize:CGFloat?
+    var sizeOfFont:CGFloat?
+    var mainCircleSize:Double?
 
     
     var meButton:UIButton?
@@ -62,6 +68,8 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         // setting up the main profile image //
         var screenCenter:CGPoint = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
@@ -107,17 +115,43 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         // coming back into the forground
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "startBackUpServicesFromAppDelegate:", name: "startiBeacon", object: nil)
         
+        if(self.view.frame.width == 414.0){
+            personSize = 100.0
+            mainCircleSize = 100.0
+            cornerRadiusOfCircle = personSize! / 2
+            sizeOfFont = 19.0
+        }else if(self.view.frame.width == 375.0){
+            personSize = 85.0
+            mainCircleSize = 85.0
+            cornerRadiusOfCircle = personSize! / 2
+            sizeOfFont = 16.0
+        }else if(self.view.frame.width == 320.0){
+            personSize = 75.0
+            mainCircleSize = 75.0
+            cornerRadiusOfCircle = personSize! / 2
+            sizeOfFont = 14.0
+        }else{
+            personSize = 0.0
+            mainCircleSize = 0.0
+            cornerRadiusOfCircle = CGFloat(0.0)
+        }
+        
+        
+        meButton = UIButton(frame: CGRectMake(screenCenter.x - (personSize! / 2) , screenCenter.y - (personSize! / 2), personSize!, personSize!))
+        
+        size = CGSizeMake(self.meButton!.frame.size.width / 1.0, self.meButton!.frame.size.height / 1.0)
+        
+
         
         
         var imageData:PFFile? = PFUser.currentUser().objectForKey("picture") as? PFFile
         if(imageData != nil){
-            
-            meButton = UIButton(frame: CGRectMake(screenCenter.x - 50 , screenCenter.y - 50, 100.0, 100.0))
-            
+
             var fileName = imageData?.name
             if((fileName?.rangeOfString("face.png", options: nil, range: nil, locale: nil)) != nil){
                 
                 self.meButton!.setTitle("Start Here!", forState: UIControlState.Normal)
+                self.meButton!.titleLabel!.font = UIFont(name: "MarkerFelt-Thin", size: 2)
                 self.meButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                 self.meButton!.backgroundColor = UIColor.whiteColor()
                 
@@ -144,13 +178,15 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }else{
             
             self.meButton!.setTitle("Start Here!", forState: UIControlState.Normal)
+            self.meButton!.titleLabel!.font = UIFont(name: "Symbol", size: sizeOfFont!)
+
             self.meButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             self.meButton!.backgroundColor = UIColor.whiteColor()
             
         }
 
         
-            meButton!.layer.cornerRadius = 50
+            meButton!.layer.cornerRadius = cornerRadiusOfCircle
             meButton!.layer.borderWidth = 3.0
             meButton!.layer.borderColor = UIColor.blackColor().CGColor
             meButton!.clipsToBounds = true
@@ -162,14 +198,23 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             meButtonLocation = CGPoint(x: meButton!.frame.origin.x, y: meButton!.frame.origin.y)
         
             // start of the label //
-            nameLabelForMe = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + 100, meButton!.frame.size.width, 30.0))
+            nameLabelForMe = UILabel(frame: CGRectMake(meButtonLocation!.x, meButtonLocation!.y + personSize!, meButton!.frame.size.width, 30.0))
+            nameLabelForMe!.font = UIFont(name: "Symbol", size: sizeOfFont!)
             nameLabelForMe!.tag = 1001
             nameLabelForMe!.textColor = UIColor.whiteColor()
             nameLabelForMe!.textAlignment = .Center
             nameLabelForMe!.text = PFUser.currentUser().username
         
+        
+        
+        
+        
             // creating the big circle in the center //
-            mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: 100.0, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+            mainBigCircle = MainBigCircle(mainView: self.view, radiusOfCircle: mainCircleSize!, location: CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y))
+        
+        
+        
+        
         
             
             // adding this to the subview //
@@ -178,7 +223,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         
         // creating the helper class for creating the profile pics //
-        helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:100.0)
+        helperClass = HelperClassOfProfilePics(callingView: self.view,location:CGPoint(x: meButtonLocation!.x, y: meButtonLocation!.y), arrayPassedIn: emptyInitialArray, circleOfRadius:mainCircleSize!)
         
         helperClass.delegate = self
         

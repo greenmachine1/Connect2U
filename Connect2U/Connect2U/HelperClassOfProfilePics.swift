@@ -25,6 +25,13 @@ class HelperClassOfProfilePics: NSObject {
     var callingViewMain:UIView?
     var palette:ColorPalettes?
     
+    var cornerRadius:CGFloat?
+    var sizeOfFont:CGFloat?
+    
+    
+    
+    
+    
     var previousPeopleArray:Array<AnyObject>?
     
     var delegate:ReturnWithPersonClicked?
@@ -50,8 +57,19 @@ class HelperClassOfProfilePics: NSObject {
         
         self.drawProfilePics(arrayPassedIn)
         
+    
+        cornerRadius = CGFloat(circleOfRadius / 2.0)
         
-        
+        if(callingViewMain!.frame.width == 414.0){
+            sizeOfFont = 19.0
+        }else if(callingViewMain!.frame.width == 375.0){
+            sizeOfFont = 16.0
+        }else if(callingViewMain!.frame.width == 320.0){
+            sizeOfFont = 14.0
+        }else{
+
+        }
+   
     }
     
     
@@ -272,7 +290,7 @@ class HelperClassOfProfilePics: NSObject {
             mainButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
 
         }
-        mainButton.layer.cornerRadius = 50
+        mainButton.layer.cornerRadius = cornerRadius!
         mainButton.layer.borderWidth = 3.0
         mainButton.layer.borderColor = UIColor.blackColor().CGColor
         mainButton.tag = selfTag
@@ -297,6 +315,7 @@ class HelperClassOfProfilePics: NSObject {
         
         
         mainLabel.text = userNameString
+        mainLabel.font = UIFont(name: "Symbol", size: sizeOfFont!)
         mainLabel.textColor = UIColor.blackColor()
         mainLabel.sizeToFit()
         mainLabel.layer.cornerRadius = 5.0
@@ -315,7 +334,7 @@ class HelperClassOfProfilePics: NSObject {
         
         
         // getting the exact center of the circle and putting a label there... slightly below center //
-        mainLabel.frame = CGRect(x: xValue + Double((mainButton.frame.width / 2) - personLabelFrame!.width / 2), y: yValue + Double((mainButton.frame.size.height / 2) + 50.0), width: Double(mainLabel.frame.size.width), height: Double(mainLabel.frame.size.height))
+        mainLabel.frame = CGRect(x: xValue + Double((mainButton.frame.width / 2) - personLabelFrame!.width / 2), y: yValue + Double((mainButton.frame.size.height / 2) + mainButton.frame.size.height / 2), width: Double(mainLabel.frame.size.width), height: Double(mainLabel.frame.size.height))
         
 
         mainLabel.backgroundColor = whiteColorWithOpacity
