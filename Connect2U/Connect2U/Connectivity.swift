@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 com.Cory. All rights reserved.
 //
 
+
+/*
 import Foundation
 import SystemConfiguration
 
@@ -61,3 +63,4 @@ public class Reachability {
         //return (isReachable && !needsConnection) ? true : false
     }
 }
+*/

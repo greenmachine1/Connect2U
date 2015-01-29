@@ -25,12 +25,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var forgotPassword: UIButton!
     
     @IBOutlet weak var moreOptionsButton: UIButton!
+    
+    let reachability = Reachability.reachabilityForInternetConnection()
 
     
     var loggedInVariable:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+        
+        
+        if(!(reachability.isReachable())){
+            self.popUpMessageForNoInternet()
+        }
+        
+        reachability.startNotifier()
+        
 
         self.setColors()
     
@@ -54,6 +68,78 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as Reachability
+        
+        if reachability.isReachable() {
+            if reachability.isReachableViaWiFi() {
+                println("Reachable via WiFi")
+                
+                userNameTextField.placeholder = "Username"
+                passwordTextField.placeholder = "Password"
+                
+                userNameTextField.enabled = true
+                passwordTextField.enabled = true
+                
+                logInButton.enabled = true
+                forgotPassword.enabled = true
+                moreOptionsButton.enabled = true
+                
+                newAccountButton.enabled = true
+                facebookButton.enabled = true
+            } else {
+                println("Reachable via Cellular")
+                userNameTextField.placeholder = "Username"
+                passwordTextField.placeholder = "Password"
+                
+                userNameTextField.enabled = true
+                passwordTextField.enabled = true
+                
+                logInButton.enabled = true
+                forgotPassword.enabled = true
+                moreOptionsButton.enabled = true
+                
+                newAccountButton.enabled = true
+                facebookButton.enabled = true
+                
+            }
+            self.userStillLoggedIn()
+        } else {
+            
+            // no internet //
+            self.popUpMessageForNoInternet()
+        }
+    }
+    
+    
+    
+    func popUpMessageForNoInternet(){
+        
+        // pop up with a notification saying that they need to connect to the internet in order to use //
+        var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+        userNameTextField.enabled = false
+        passwordTextField.enabled = false
+        
+        userNameTextField.placeholder = "No Connection"
+        passwordTextField.placeholder = "Please Connect"
+        
+        logInButton.enabled = false
+        forgotPassword.enabled = false
+        moreOptionsButton.enabled = false
+        newAccountButton.enabled = false
+        facebookButton.enabled = false
+    }
+    
     
     @IBAction func moreOptionsOnClick(sender: UIButton) {
         
@@ -72,6 +158,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     
+    // removing self from observer //
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 
     
     
@@ -98,9 +188,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func userStillLoggedIn(){
         
         var currentUser = PFUser.currentUser()
-        
-        if(Reachability.isConnectedToNetwork() != false){
-            
+
+        if(reachability.isReachable()){
             println("is connected ")
         
             if(currentUser != nil){
@@ -119,6 +208,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 self.navigationController?.pushViewController(login, animated: true)
             }
         }
+
     }
     
     

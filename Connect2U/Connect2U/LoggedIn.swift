@@ -65,10 +65,23 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     var emptyInitialArray:Array<AnyObject> = []
     
+    let reachability = Reachability.reachabilityForInternetConnection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+        
+        
+        if(!(reachability.isReachable())){
+            self.popUpMessageForNoInternet()
+            
+        }
+        
+        reachability.startNotifier()
+
         
 
         // setting up the main profile image //
@@ -232,30 +245,100 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     }
     
     
+    
+    
+    
+    // reachability //
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as Reachability
+        
+        if reachability.isReachable() {
+            if reachability.isReachableViaWiFi() {
+                println("Reachable via WiFi")
+                broadCast.enabled = true
+                self.navigationController?.navigationItem.leftBarButtonItem?.enabled = true
+                //self.startBackUpServices()
+
+            } else {
+                println("Reachable via Cellular")
+                broadCast.enabled = true
+                self.navigationController?.navigationItem.leftBarButtonItem?.enabled = true
+                
+            }
+
+            self.startBackUpServices()
+            broadCast.enabled = true
+        } else {
+            
+            // no internet //
+            self.popUpMessageForNoInternet()
+        }
+    }
+    
+    func popUpMessageForNoInternet(){
+        
+        // pop up with a notification saying that they need to connect to the internet in order to use //
+        var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+        // disabling elements //
+        broadCast.enabled = false
+        self.startBackUpServices()
+
+        self.navigationController?.navigationItem.leftBarButtonItem?.enabled = false
+
+    }
+    
+    
     func meClickedOn(sender:UIButton){
         
-        // takes you the user to your personal settings //
-        let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
-        
-        //aboutViewController.personsPic = "face_100x100.png"
-        aboutViewController.userPassedIn = PFUser.currentUser()
-        aboutViewController.cameFromMainUser = true
+        if(reachability.isReachable()){
         
         
-        // this is the main user view for the about view controller //
-        // I need to be passing in the entire list of people available so I can send notifications to those //
-        // to update their list of people after this person is done updating their profile //
+            // takes you the user to your personal settings //
+            let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
         
-        aboutViewController.passedInArrayOfUsers = tempArrayPassedIn
+            //aboutViewController.personsPic = "face_100x100.png"
+            aboutViewController.userPassedIn = PFUser.currentUser()
+            aboutViewController.cameFromMainUser = true
         
-        aboutViewController.delegate = self
+        
+            // this is the main user view for the about view controller //
+            // I need to be passing in the entire list of people available so I can send notifications to those //
+            // to update their list of people after this person is done updating their profile //
+        
+            aboutViewController.passedInArrayOfUsers = tempArrayPassedIn
+        
+            aboutViewController.delegate = self
                 
-        self.navigationController?.pushViewController(aboutViewController, animated: true)
+            self.navigationController?.pushViewController(aboutViewController, animated: true)
+        }else{
+            
+            // pop up with a notification saying that they need to connect to the internet in order to use //
+            var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // creates the Ok button that essentially does nothing //
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            
+        }
         
     }
     
     
-    
+
     
     func updateCurrentUserInfo(userName: String, userPicture: UIImage) {
         
@@ -278,6 +361,27 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
     
     
     func startBackUpServicesFromAppDelegate(notification:NSNotification){
+        
+        println("called each time the view comes back ")
+        
+        //self.loadDefaults()
+        
+        println("start up services again")
+        
+        if(tempBoolToggleForBroadCast == true){
+            
+            println("you are still on")
+            
+            beaconGatherData.initRegion()
+            
+        }else{
+            
+            println("you are off")
+            
+        }
+    }
+    
+    func startBackUpServices(){
         
         println("called each time the view comes back ")
         
@@ -474,6 +578,17 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         println("this is getting called")
         
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+        
+        if(!(reachability.isReachable())){
+            self.popUpMessageForNoInternet()
+            
+        }else{
+            
+            broadCast.enabled = true
+            
+        }
+        
         // loads the default settings for friends, requests and chat items //
         //self.loadDefaults()
         
@@ -482,6 +597,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         sideBar.updateRequests(listOfRequests)
         sideBar.updateFriends(listOfFriends)
         sideBar.updateChatData(self.tempArrayForHoldingJustUserData)
+        
         sideBar.delegate = self
         
     }
@@ -647,40 +763,55 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
         }else if(sectionOfSelection == 2){
             
-            // should send the person straight into chat with this person //
-            let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
+            if(reachability.isReachable()){
             
-            // starting up the chat view controller with new info //
-            chatViewController.delegate = self
+                // should send the person straight into chat with this person //
+                let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
-            chatViewController.indexNumber = index
+                // starting up the chat view controller with new info //
+                chatViewController.delegate = self
             
-            // sending over the stored conversation //
-            chatViewController.mainChatObject = listOfChats[index]
-            
-            
-            
-            
-            
-            
-            
-            // for the list view o
-            var userInfo = ["userInfo":tempArrayPassedIn!]
-            
-            chatViewController.updateFromRestOfApp(userInfo)
+                chatViewController.indexNumber = index
+                
+                // sending over the stored conversation //
+                chatViewController.mainChatObject = listOfChats[index]
             
             
             
             
             
-            //chatViewController.listOfOtherPeopleToGroupWith
             
-            // the helper class for delegating in coming chats //
-            inComingChatHelperClass.updateListOfChats(listOfChats)
             
-            chatViewController.passedInMessages = listOfChats[index].totalMessages
+                // for the list view o
+                var userInfo = ["userInfo":tempArrayPassedIn!]
             
-            self.navigationController?.pushViewController(chatViewController, animated: true)
+                chatViewController.updateFromRestOfApp(userInfo)
+            
+            
+            
+            
+            
+                //chatViewController.listOfOtherPeopleToGroupWith
+            
+                // the helper class for delegating in coming chats //
+                inComingChatHelperClass.updateListOfChats(listOfChats)
+            
+                chatViewController.passedInMessages = listOfChats[index].totalMessages
+            
+                self.navigationController?.pushViewController(chatViewController, animated: true)
+            }else{
+                
+                // pop up with a notification saying that they need to connect to the internet in order to use //
+                var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // creates the Ok button that essentially does nothing //
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                    
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            }
 
         }
         
@@ -786,7 +917,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         }))
         alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { action in
             
-            
+            if(self.reachability.isReachable()){
             println("under the profile info =--> \(passedInPerson.description)")
             
             // look at their profile //
@@ -800,7 +931,20 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             aboutViewController.cameFromMainUser = false
             
             self.navigationController?.pushViewController(aboutViewController, animated: true)
-            
+            }else{
+                
+                // pop up with a notification saying that they need to connect to the internet in order to use //
+                var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // creates the Ok button that essentially does nothing //
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                    
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+            }
             
             
             
@@ -950,6 +1094,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { action in
             
             
+                if(self.reachability.isReachable()){
                 // takes you the user to your personal settings //
                 let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
                 
@@ -958,7 +1103,17 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 aboutViewController.cameFromMainUser = false
                 
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
-
+                }else{
+                    // pop up with a notification saying that they need to connect to the internet in order to use //
+                    var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // creates the Ok button that essentially does nothing //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             
             }))
             
@@ -976,9 +1131,9 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             alert.addAction(UIAlertAction(title: "Chat", style: UIAlertActionStyle.Default, handler: {action in
 
             
-            
-                // setting up a dictionary of all the info to send over //
-                var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
+                if(self.reachability.isReachable()){
+                    // setting up a dictionary of all the info to send over //
+                    var currentUserDictionary = ["objectId":PFUser.currentUser().objectId,
                     "age":PFUser.currentUser().objectForKey("age")!,
                     "gender":PFUser.currentUser().objectForKey("gender")!,
                     "interests":PFUser.currentUser().objectForKey("interests")!,
@@ -986,33 +1141,45 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     "username":PFUser.currentUser().objectForKey("username")!]
                 
 
-                // basically needs to send over an alert saying that 'You' want to chat with them and //
-                // the can either click ok or view profile //
-                //self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
-                //var dataSend = ["request":true, "person": self.userClickedOn.username]
-                var dataSend = ["userInfo": currentUserDictionary, "request":true]
+                    // basically needs to send over an alert saying that 'You' want to chat with them and //
+                    // the can either click ok or view profile //
+                    //self.chatRequest.sendRequestToChat(self.userClickedOn, fromUser: PFUser.currentUser())
+                    //var dataSend = ["request":true, "person": self.userClickedOn.username]
+                    var dataSend = ["userInfo": currentUserDictionary, "request":true]
                 
-                var query:PFQuery = PFInstallation.query()
-                query.whereKey("user", equalTo: self.userClickedOn)
+                    var query:PFQuery = PFInstallation.query()
+                    query.whereKey("user", equalTo: self.userClickedOn)
                 
-                var push:PFPush = PFPush()
-                push.setQuery(query)
-                push.setData(dataSend)
-                //push.setMessage("RequestToChat")
-                push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
+                    var push:PFPush = PFPush()
+                    push.setQuery(query)
+                    push.setData(dataSend)
+                    //push.setMessage("RequestToChat")
+                    push.sendPushInBackgroundWithBlock({ (success:Bool, error:NSError!) -> Void in
                     
-                    if(success == true){
+                        if(success == true){
                         
-                        println("success!")
+                            println("success!")
                         
-                    }else{
+                        }else{
                         
-                        println("error")
-                    }
-                })
-                
+                            println("error")
+                        }
+                    })
+                }else{
+                    
+                    // pop up with a notification saying that they need to connect to the internet in order to use //
+                    var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // creates the Ok button that essentially does nothing //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             }))
-        
+                
+                
         
             // cancel button simply exits out and does nothing //
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
@@ -1067,7 +1234,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 println("logged in view profile")
                 println("in here and stuff!!!!!!!!!!!!! --> \(personalInfo.description)")
             
-            
+                if(reachability.isReachable()){
                 // should send the user to the profile view //
                 // takes you the user to your personal settings //
                 let aboutViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AboutPerson") as AboutThePersonViewController
@@ -1078,7 +1245,18 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 println("description of person passed in \(personalInfo.description)")
             
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
-            
+                }else{
+                    
+                    // pop up with a notification saying that they need to connect to the internet in order to use //
+                    var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // creates the Ok button that essentially does nothing //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             
             
             
@@ -1123,7 +1301,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             
 
             
-            
+                if(reachability.isReachable()){
                 // should send the person straight into chat with this person //
                 let chatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as ChatViewController
             
@@ -1159,7 +1337,17 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
             
                 self.navigationController?.pushViewController(chatViewController, animated: true)
-   
+                }else{
+                    // pop up with a notification saying that they need to connect to the internet in order to use //
+                    var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // creates the Ok button that essentially does nothing //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             }
             
         // for group chat //
@@ -1184,7 +1372,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
             }else if(userClickedOnChatRequest == 1){
                 
                 
-                
+                if(self.reachability.isReachable()){
                 // this is going to be slightly different than normal chat in //
                 // that the person sending out the request will stay in their //
                 // current view and add the person to their chat //
@@ -1229,32 +1417,33 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     }
                     
                 }
-                
-                
-                
-                
+
                 // for the list view o
                 var userInfo = ["userInfo":tempArrayPassedIn!]
                 
                 chatViewController.updateFromRestOfApp(userInfo)
                 
-                
-                
-                
+
                 chatViewController.indexNumber = tempIndex!
-                
-                
-                
-                
-                
-                
+
                 // sending over the stored conversation //
                 chatViewController.mainChatObject = listOfChats[tempIndex!]
                 
                 chatViewController.passedInMessages = listOfChats[tempIndex!].totalMessages
                 
                 self.navigationController?.pushViewController(chatViewController, animated: true)
-                
+                }else{
+                    
+                    // pop up with a notification saying that they need to connect to the internet in order to use //
+                    var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // creates the Ok button that essentially does nothing //
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                        
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
                 
                 
                 
@@ -1326,6 +1515,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
 
         }
         
+        if(reachability.isReachable()){
             // sending out the approval or denial of chat request //
             
             // setting up a dictionary of all the info to send over //
@@ -1363,6 +1553,19 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                     println("error")
                 }
             })
+        }else{
+            
+            
+            // pop up with a notification saying that they need to connect to the internet in order to use //
+            var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // creates the Ok button that essentially does nothing //
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+                
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
      }
     
     

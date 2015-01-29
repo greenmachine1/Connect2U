@@ -71,10 +71,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var arrayOfUsersFromMainObject:Array<AnyObject> = []
     var arrayOfNamesFromMainObject:Array<AnyObject> = []
     
-    
+    let reachability = Reachability.reachabilityForInternetConnection()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+        
+        
+        if(!(reachability.isReachable())){
+            self.popUpMessageForNoInternet()
+            
+        }
+        
+        reachability.startNotifier()
         
         // observer for when new people come in //
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "update:", name: "updateOfPeople", object: nil)
@@ -244,6 +254,45 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // ** when a push notification comes in this gets called ** //
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTheView:", name: "updateTableView", object:nil)
     
+        
+    }
+    
+    
+    
+    
+    // reachability //
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as Reachability
+        
+        if reachability.isReachable() {
+            if reachability.isReachableViaWiFi() {
+                println("Reachable via WiFi")
+             
+            } else {
+                println("Reachable via Cellular")
+
+            }
+
+        } else {
+            
+            // no internet //
+            self.popUpMessageForNoInternet()
+        }
+    }
+    
+    func popUpMessageForNoInternet(){
+        
+        // pop up with a notification saying that they need to connect to the internet in order to use //
+        var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+
         
     }
     
@@ -495,24 +544,30 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // send off the text //
     func mainReturn(){
         
-        // sending out a text message to the other user //
-        self.sendTextMessage(mainInputField!.text, toUser: self.userPassedInObjectId!)
         
-        var tempDictionaryToHoldPersonAndMessage = [mainInputField!.text:PFUser.currentUser().username]
+        if(reachability.isReachable()){
+            // sending out a text message to the other user //
+            self.sendTextMessage(mainInputField!.text, toUser: self.userPassedInObjectId!)
         
-        tempArrayOfMessages = delegate?.updateChatObject(tempDictionaryToHoldPersonAndMessage, atIndex: indexNumber!)
+            var tempDictionaryToHoldPersonAndMessage = [mainInputField!.text:PFUser.currentUser().username]
         
-        mainTableView.reloadData()
+            tempArrayOfMessages = delegate?.updateChatObject(tempDictionaryToHoldPersonAndMessage, atIndex: indexNumber!)
+        
+            mainTableView.reloadData()
         
         
-        // resetting the text field //
-        mainInputField!.text = ""
+            // resetting the text field //
+            mainInputField!.text = ""
         
-        // keeping the listview always at the bottom //
-        if mainTableView.contentSize.height > mainTableView.frame.size.height
-        {
-            let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
-            mainTableView.setContentOffset(offset, animated: false)
+            // keeping the listview always at the bottom //
+            if mainTableView.contentSize.height > mainTableView.frame.size.height
+            {
+                let offset = CGPoint(x: 0, y: mainTableView.contentSize.height - mainTableView.frame.size.height)
+                mainTableView.setContentOffset(offset, animated: false)
+            }
+        }else{
+            self.popUpMessageForNoInternet()
+
         }
     }
     
@@ -555,15 +610,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
         }
-        
-        
-        
+
         sideBar.updateGroup(listOfOtherPeopleToGroupWith)
         
         sideBar.delegate = self
-        
-        
-        
+  
     }
     
     
@@ -581,7 +632,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // need to either view profile or chat //
         
-        
+        if(reachability.isReachable()){
         var alert:UIAlertController = UIAlertController(title: "What so you want to do?", message: "" , preferredStyle: UIAlertControllerStyle.Alert)
         
         
@@ -611,7 +662,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // cancel button simply exits out and does nothing //
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
-        
+        }else{
+            
+            self.popUpMessageForNoInternet()
+            
+        }
         
         
         

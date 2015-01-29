@@ -74,8 +74,20 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var cancelTakePictureButton: UIButton!
     
+    let reachability = Reachability.reachabilityForInternetConnection()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
+        
+        
+        if(!(reachability.isReachable())){
+            self.popUpMessageForNoInternet()
+            
+        }
+        
+        reachability.startNotifier()
         
         size = CGSizeMake(self.picture.frame.size.width / 1.0, self.picture.frame.size.height / 1.0)
 
@@ -267,6 +279,44 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
         }
         
         
+    }
+    
+    // reachability //
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as Reachability
+        
+        if reachability.isReachable() {
+            if reachability.isReachableViaWiFi() {
+                println("Reachable via WiFi")
+                
+            } else {
+                println("Reachable via Cellular")
+                
+            }
+            
+        } else {
+            
+            // no internet //
+            self.popUpMessageForNoInternet()
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+    }
+    
+    func popUpMessageForNoInternet(){
+        
+        // pop up with a notification saying that they need to connect to the internet in order to use //
+        var alert:UIAlertController = UIAlertController(title: "No Internet Connection", message: "Please connect to the internet to log in", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // creates the Ok button that essentially does nothing //
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action in
+            
+            
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+
     }
     
     
