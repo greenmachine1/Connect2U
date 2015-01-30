@@ -19,40 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mc9-EF-tZl">
-                                <rect key="frame" x="320" y="429" width="80" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <state key="normal" title="Forgot Password">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="311" y="355" width="80" height="24"/>
-                                </variation>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-Rh-VPk">
-                                <rect key="frame" x="200" y="429" width="64" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <state key="normal" title="More Options">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="322" y="413" width="64" height="24"/>
-                                </variation>
-                                <connections>
-                                    <action selector="moreOptionsOnClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="u6c-Pk-l4D"/>
-                                </connections>
-                            </button>
-                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lxe-m1-bqp">
-                                <rect key="frame" x="200" y="285" width="200" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="I0O-GO-yhV"/>
-                                </constraints>
-                                <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="257" y="279" width="189" height="30"/>
-                                </variation>
-                            </textField>
                             <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-x9-Y3S">
                                 <rect key="frame" x="200" y="338" width="200" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -73,24 +39,13 @@
                                     <action selector="logInClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="VhT-CU-GAq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4K4-gj-axY">
-                                <rect key="frame" x="192" y="482" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="dgb-qr-Roa"/>
-                                    <constraint firstAttribute="height" constant="80" id="yJ1-bb-vvK"/>
-                                </constraints>
-                                <state key="normal" title="Facebook">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="401" y="450" width="80" height="80"/>
-                                </variation>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amY-pK-2ko">
                                 <rect key="frame" x="320" y="482" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="26G-fc-Yys"/>
-                                    <constraint firstAttribute="height" constant="80" id="AJX-RZ-3ev"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="0yy-z6-i0E"/>
+                                    <constraint firstAttribute="height" constant="80" id="2AX-0w-pde"/>
+                                    <constraint firstAttribute="width" constant="80" id="Jm4-SC-hJU"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="hgT-Et-V97"/>
                                 </constraints>
                                 <state key="normal" title="+Account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -102,28 +57,65 @@
                                     <segue destination="DP9-Mk-5EK" kind="show" id="pvo-ln-4mP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4K4-gj-axY">
+                                <rect key="frame" x="200" y="482" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="AQQ-cn-cym"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="SyI-kS-RCw"/>
+                                    <constraint firstAttribute="width" constant="80" id="dgb-qr-Roa"/>
+                                    <constraint firstAttribute="height" constant="80" id="yJ1-bb-vvK"/>
+                                </constraints>
+                                <state key="normal" title="Facebook">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="401" y="450" width="80" height="80"/>
+                                </variation>
+                            </button>
+                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lxe-m1-bqp">
+                                <rect key="frame" x="200" y="285" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="I0O-GO-yhV"/>
+                                </constraints>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="257" y="279" width="189" height="30"/>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xb5-Rh-VPk">
+                                <rect key="frame" x="268" y="431" width="64" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="More Options">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="322" y="413" width="64" height="24"/>
+                                </variation>
+                                <connections>
+                                    <action selector="moreOptionsOnClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="u6c-Pk-l4D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Mc9-EF-tZl" firstAttribute="trailing" secondItem="z5i-x9-Y3S" secondAttribute="trailing" id="6J9-uh-5Id"/>
+                            <constraint firstItem="amY-pK-2ko" firstAttribute="trailing" secondItem="z5i-x9-Y3S" secondAttribute="trailing" id="0XJ-xe-75h"/>
+                            <constraint firstItem="xb5-Rh-VPk" firstAttribute="centerX" secondItem="zIn-pZ-7SU" secondAttribute="centerX" id="4pC-l3-MOa"/>
                             <constraint firstItem="lxe-m1-bqp" firstAttribute="height" secondItem="z5i-x9-Y3S" secondAttribute="height" id="92C-hw-X2a"/>
                             <constraint firstItem="z5i-x9-Y3S" firstAttribute="top" secondItem="lxe-m1-bqp" secondAttribute="bottom" constant="23" id="D4O-g9-Rfu"/>
-                            <constraint firstItem="Vbh-fe-aYO" firstAttribute="top" secondItem="amY-pK-2ko" secondAttribute="bottom" constant="38" id="FIe-CW-HMO"/>
+                            <constraint firstItem="Vbh-fe-aYO" firstAttribute="top" secondItem="amY-pK-2ko" secondAttribute="bottom" constant="38" id="EPD-ec-COO"/>
                             <constraint firstItem="Vbh-fe-aYO" firstAttribute="top" secondItem="4K4-gj-axY" secondAttribute="bottom" constant="38" id="HeS-un-N6e"/>
                             <constraint firstItem="zIn-pZ-7SU" firstAttribute="top" secondItem="z5i-x9-Y3S" secondAttribute="bottom" constant="14" id="IJS-OE-6BF"/>
                             <constraint firstAttribute="centerY" secondItem="z5i-x9-Y3S" secondAttribute="centerY" id="LwE-Cm-VK3"/>
-                            <constraint firstItem="xb5-Rh-VPk" firstAttribute="top" secondItem="zIn-pZ-7SU" secondAttribute="bottom" constant="17" id="MWV-GO-0BN"/>
-                            <constraint firstItem="amY-pK-2ko" firstAttribute="centerX" secondItem="Mc9-EF-tZl" secondAttribute="centerX" id="Qdo-0g-6R5"/>
+                            <constraint firstItem="xb5-Rh-VPk" firstAttribute="top" secondItem="zIn-pZ-7SU" secondAttribute="bottom" constant="19" id="Q0F-8c-WUJ"/>
                             <constraint firstItem="zIn-pZ-7SU" firstAttribute="centerX" secondItem="z5i-x9-Y3S" secondAttribute="centerX" constant="-0.5" id="Tje-sq-RsP"/>
                             <constraint firstItem="4K4-gj-axY" firstAttribute="top" secondItem="amY-pK-2ko" secondAttribute="bottom" constant="8" id="Tkz-fL-fGM"/>
-                            <constraint firstItem="Mc9-EF-tZl" firstAttribute="top" secondItem="zIn-pZ-7SU" secondAttribute="bottom" constant="17" id="Vy9-Y8-DoN"/>
                             <constraint firstAttribute="centerX" secondItem="lxe-m1-bqp" secondAttribute="centerX" id="WfE-3c-b7q"/>
                             <constraint firstAttribute="centerY" secondItem="lxe-m1-bqp" secondAttribute="centerY" id="ZNI-hd-hTf"/>
                             <constraint firstItem="zIn-pZ-7SU" firstAttribute="width" secondItem="z5i-x9-Y3S" secondAttribute="width" id="owH-Bt-8nA"/>
                             <constraint firstItem="lxe-m1-bqp" firstAttribute="height" secondItem="z5i-x9-Y3S" secondAttribute="height" id="rBA-of-488"/>
                             <constraint firstItem="lxe-m1-bqp" firstAttribute="width" secondItem="z5i-x9-Y3S" secondAttribute="width" id="rmb-RA-Flg"/>
-                            <constraint firstItem="xb5-Rh-VPk" firstAttribute="centerX" secondItem="4K4-gj-axY" secondAttribute="centerX" id="sfd-J8-tRq"/>
                             <constraint firstAttribute="centerX" secondItem="z5i-x9-Y3S" secondAttribute="centerX" id="uSH-r0-p49"/>
-                            <constraint firstItem="xb5-Rh-VPk" firstAttribute="leading" secondItem="z5i-x9-Y3S" secondAttribute="leading" id="yLA-yk-aAO"/>
+                            <constraint firstItem="z5i-x9-Y3S" firstAttribute="leading" secondItem="4K4-gj-axY" secondAttribute="leading" id="x5C-ba-24q"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -137,7 +129,6 @@
                     <navigationItem key="navigationItem" title="Connect2U" id="PIq-gv-4MJ"/>
                     <connections>
                         <outlet property="facebookButton" destination="4K4-gj-axY" id="Nw1-11-NcO"/>
-                        <outlet property="forgotPassword" destination="Mc9-EF-tZl" id="eRd-IA-ji5"/>
                         <outlet property="logInButton" destination="zIn-pZ-7SU" id="KVZ-N1-gLE"/>
                         <outlet property="moreOptionsButton" destination="xb5-Rh-VPk" id="8yc-2F-fHE"/>
                         <outlet property="newAccountButton" destination="amY-pK-2ko" id="rKN-q2-0zc"/>

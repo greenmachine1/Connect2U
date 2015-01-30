@@ -22,7 +22,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
-    @IBOutlet weak var forgotPassword: UIButton!
+    //@IBOutlet weak var forgotPassword: UIButton!
     
     @IBOutlet weak var moreOptionsButton: UIButton!
     
@@ -83,7 +83,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 passwordTextField.enabled = true
                 
                 logInButton.enabled = true
-                forgotPassword.enabled = true
+                //forgotPassword.enabled = true
                 moreOptionsButton.enabled = true
                 
                 newAccountButton.enabled = true
@@ -97,7 +97,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 passwordTextField.enabled = true
                 
                 logInButton.enabled = true
-                forgotPassword.enabled = true
+                //forgotPassword.enabled = true
                 moreOptionsButton.enabled = true
                 
                 newAccountButton.enabled = true
@@ -134,7 +134,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.placeholder = "Please Connect"
         
         logInButton.enabled = false
-        forgotPassword.enabled = false
+        //forgotPassword.enabled = false
         moreOptionsButton.enabled = false
         newAccountButton.enabled = false
         facebookButton.enabled = false
@@ -343,7 +343,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
         //forgotPassword.backgroundColor = newColorPalette.greenColor
-        forgotPassword.tintColor = newColorPalette.whiteColor
+        //forgotPassword.tintColor = newColorPalette.whiteColor
         moreOptionsButton.tintColor = newColorPalette.whiteColor
         newAccountButton.tintColor = newColorPalette.whiteColor
         facebookButton.tintColor = newColorPalette.whiteColor
