@@ -267,7 +267,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
                 
             }
 
-            self.startBackUpServices()
+            //self.startBackUpServices()
             broadCast.enabled = true
         } else {
             
@@ -291,7 +291,7 @@ class LoggedIn: UIViewController, SideBarDelegate,  ReturnWithPersonClicked, Req
         
         // disabling elements //
         broadCast.enabled = false
-        self.startBackUpServices()
+        //self.startBackUpServices()
 
         self.navigationController?.navigationItem.leftBarButtonItem?.enabled = false
 
