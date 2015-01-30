@@ -33,6 +33,8 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
     var personPassedInNotPFUser:AnyObject?
     var cameFromMainUser:Bool?
     
+    var cameFromAccountCreation:Bool = false
+    
     var toggleBoolean:Bool?
     
     var size:CGSize?
@@ -86,6 +88,25 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             self.popUpMessageForNoInternet()
             
         }
+        
+        
+        
+        
+        if(cameFromAccountCreation == true){
+            
+            navigationController?.setNavigationBarHidden(false, animated: true)
+            var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+            backButton.addTarget(self, action: "PopToLoggedIn:", forControlEvents: UIControlEvents.TouchUpInside)
+            backButton.setTitle("Logged In", forState: UIControlState.Normal)
+            backButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            backButton.sizeToFit()
+            var customButtonItem:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+            self.navigationItem.leftBarButtonItem = customButtonItem
+            
+        }
+        
+        
+        
         
         reachability.startNotifier()
         
@@ -283,6 +304,18 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
             
         }
         
+        
+    }
+    
+    
+    
+    func PopToLoggedIn(sender:UIButton){
+        
+        println("in here touched ")
+        
+        let login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoggedIn
+        
+        self.navigationController?.pushViewController(login, animated: true)
         
     }
     

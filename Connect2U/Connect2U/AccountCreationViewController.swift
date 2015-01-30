@@ -129,18 +129,10 @@ class AccountCreationViewController: UIViewController, UITextFieldDelegate {
                 aboutViewController.personsPic = "face_100x100.png"
                 aboutViewController.userPassedIn = PFUser.currentUser()
                 aboutViewController.cameFromMainUser = true
+                aboutViewController.cameFromAccountCreation = true
                 
                 self.navigationController?.pushViewController(aboutViewController, animated: true)
-                
-                
-                
-                
-                
-                
-                
-                
-                
-  
+
             }))
             
             // the no button essentially takes the user to the main page //
