@@ -468,7 +468,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="u6k-oD-ntq">
-                                <rect key="frame" x="16" y="76" width="382" height="360"/>
+                                <rect key="frame" x="16" y="76" width="382" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellLeft" rowHeight="100" id="TEJ-ca-SwL" customClass="ChatLeftCell" customModule="Connect2U" customModuleProvider="target">
@@ -540,6 +540,7 @@
                                                 <constraint firstItem="Qar-mY-fuD" firstAttribute="top" secondItem="XR6-hF-SMd" secondAttribute="bottom" constant="8" symbolic="YES" id="tYN-IE-ero"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="0.99588108464335368" blue="0.5071229698627544" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="dataLabel" destination="Qar-mY-fuD" id="CgP-Js-X5W"/>
                                             <outlet property="rightLabel" destination="XR6-hF-SMd" id="DjX-ba-tpp"/>
@@ -560,7 +561,7 @@
                             <constraint firstItem="u6k-oD-ntq" firstAttribute="leading" secondItem="D5a-8N-L5j" secondAttribute="leadingMargin" id="Vut-Me-s2I"/>
                             <constraint firstItem="u6k-oD-ntq" firstAttribute="trailing" secondItem="D5a-8N-L5j" secondAttribute="trailingMargin" id="XfN-8D-lfb"/>
                             <constraint firstItem="u6k-oD-ntq" firstAttribute="top" secondItem="ScG-pw-6UE" secondAttribute="bottom" constant="12" id="ijZ-j5-q5k"/>
-                            <constraint firstItem="mP5-vE-pQX" firstAttribute="top" secondItem="u6k-oD-ntq" secondAttribute="bottom" constant="300" id="p9d-if-Ssc"/>
+                            <constraint firstItem="mP5-vE-pQX" firstAttribute="top" secondItem="u6k-oD-ntq" secondAttribute="bottom" constant="200" id="p9d-if-Ssc"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -611,7 +612,7 @@
                             <constraint firstAttribute="bottom" secondItem="5VF-KP-1L3" secondAttribute="bottom" constant="20" symbolic="YES" id="jUu-o2-LPY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Connected2U" id="lIv-Eb-4zA">
+                    <navigationItem key="navigationItem" title="Connect2U" id="lIv-Eb-4zA">
                         <barButtonItem key="leftBarButtonItem" tag="1" title="People" id="pVB-ob-XcJ">
                             <connections>
                                 <action selector="friendsOnClick:" destination="DFv-cq-0J2" id="Xx2-PG-qsl"/>

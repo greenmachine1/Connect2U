@@ -222,8 +222,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     
         // group chat button //
-        var editButton:UIBarButtonItem = UIBarButtonItem(title: "Group Chat", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("group"))
-        self.navigationItem.rightBarButtonItem = editButton
+        //var editButton:UIBarButtonItem = UIBarButtonItem(title: "Group Chat", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("group"))
+        //self.navigationItem.rightBarButtonItem = editButton
         
         
 
