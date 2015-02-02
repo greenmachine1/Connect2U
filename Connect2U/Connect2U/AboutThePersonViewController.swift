@@ -936,7 +936,7 @@ class AboutThePersonViewController: UIViewController, UITextFieldDelegate, UITab
                 println("cencelled from first cancel")
                 
                 // setting the default picture back //
-                self.picture.image = UIImage(named: "face3.png")
+                self.picture.image = UIImage(named: "default_center.png")
                 
                 println("cancelled photo")
                 
